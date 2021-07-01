@@ -1,0 +1,17 @@
+
+config samba
+	option workgroup 'WORKGROUP'
+	option charset 'UTF-8'
+	option interface 'lan'
+	option description 'LinkSys3200ACM-Samba'
+	option enable_extra_tuning '1'
+
+config sambashare
+	option path '/'
+	option read_only 'no'
+	option guest_ok 'yes'
+	option create_mask '0666'
+	option dir_mask '0777'
+	option name 'sambauser'
+	option users 'sambauser'
+

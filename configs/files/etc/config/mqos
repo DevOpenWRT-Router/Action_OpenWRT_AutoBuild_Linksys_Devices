@@ -1,0 +1,9 @@
+
+config global
+	option interface 'br-lan'
+	option enabled '0'
+	option Interface 'br-lan'
+	option download '9999999'
+	option upload '9999999'
+
+

@@ -1,0 +1,438 @@
+#
+# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
+#
+# Updated: 06/10/2021 Eliminater74
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
+# https://github.com/P3TERX/Actions-OpenWrt
+# Description: Build OpenWrt using GitHub Actions
+#
+
+name: Build OpenWrt Snapshot (TESTING)
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      hardware:
+        description: '[0] ALL [1] WRT3200ACM, [2] WRT32X, [3] WRT1200AC, [4] WRT1900ACS [5] WRT1900AC V1, [6] WRT1900AC V2'
+        required: true
+        default: '1'
+      source:
+        description: '[1] Stable, [2] Snapshot, [3] LED'
+        required: true
+        default: '2'
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
+      ngrok_ssh:
+        description: 'NGROK SSH connection to Actions'
+        required: false
+        default: 'false'
+      ssh_after_build:
+        description: 'SSH connection to Actions After Build'
+        required: false
+        default: 'false'
+#  schedule:
+#    - cron: 0 8 * * 5
+
+env:
+  FEEDS_CONF: feeds.conf.default
+  DIY_P1_SH: diy-part1.sh
+  DIY_P2_SH: diy-part2.sh
+  BEFORE_BUILD: before_build.sh
+  AFTER_BUILD: after_build.sh
+  KERNEL_VERSION: kernel_version.sh
+  EXT_INIT_ENV: environment.sh
+  USE_FILES: true
+  USE_DIYP2: true
+  DEBUG_COMPILE: false
+  IGNORE_COMPILE: false
+  KMODS: true
+  EXT_ENV: false
+  RUN_BEFORE_BUILD: false
+  RUN_AFTER_BUILD: false
+  UPLOAD_BUILD_LOGS: false
+  UPLOAD_BUILDLOG: false
+  UPLOAD_PACKAGES: false
+  UPLOAD_BIN_DIR: false
+  UPLOAD_FIRMWARE: true
+  UPLOAD_RELEASE: true
+#############################
+  UPLOAD_GOFILE: true
+  UPLOAD_LITTERBOX: true
+  UPLOAD_CATBOX: true
+  UPLOAD_FILEIO: true
+#############################
+
+  TZ: America/New_York
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
+
+    - name: Initialization environment
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo -E apt-get -qq remove --purge azure-cli ghc zulu* hhvm llvm* firefox google* dotnet* powershell mysql* php* mssql-tools msodbcsql17 android*
+        sudo -E apt-get -qq update
+        sudo -E apt-get -qq full-upgrade
+        sudo -E apt-get -qq install build-essential asciidoc binutils bzip2 coreutils gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-8 gcc++-8 gcc-8-multilib g++-8-multilib p7zip p7zip-full msmtp libssl-dev texinfo libreadline-dev libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint ccache curl wget vim nano python python3 python-pip python3-pip python-ply python3-ply haveged lrzsz device-tree-compiler scons antlr3 gperf ecj fastjar re2c xz-utils tar
+        sudo -E apt-get -qq install gcc-9 gcc++-9 gcc-9-multilib g++-9-multilib gcc-10 gcc++-10 gcc-10-multilib g++-10-multilib
+        for i in $(ls /usr/bin/*-8); do sudo -E ln -sf $i ${i%%-8*}; done
+        sudo -E ln -sf /usr/include/asm-generic /usr/include/asm
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean
+        sudo -E swapoff -a
+        sudo -E rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /etc/mysql /etc/php /usr/local/lib/android /opt/ghc /swapfile
+        sudo timedatectl set-timezone "$TZ"
+        sudo mkdir -p /workdir
+        sudo chown $USER:$GROUPS /workdir
+
+    - name: External Initialization environment
+      if: env.EXT_ENV == 'true' && !cancelled()
+      run: |
+        echo "Running External Environment."
+        chmod +x scripts/$EXT_INIT_ENV
+        /bin/bash ${GITHUB_WORKSPACE}/scripts/environment.sh
+
+    - name: Set .config
+      id: setConfig
+      run: |
+        if [[ "${{ github.event.inputs.hardware }}" == "0" ]]; then
+                echo "::set-output name=hardwareString::wrtmulti.config"
+        fi
+        if [[ "${{ github.event.inputs.hardware }}" == "1" ]]; then
+                echo "::set-output name=hardwareString::wrt3200acm.config"
+        fi
+        if [[ "${{ github.event.inputs.hardware }}" == "2" ]]; then
+                echo "::set-output name=hardwareString::wrt32x.config"
+        fi
+        if [[ "${{ github.event.inputs.hardware }}" == "3" ]]; then
+                echo "::set-output name=hardwareString::wrt1200ac.config"
+        fi
+        if [[ "${{ github.event.inputs.hardware }}" == "4" ]]; then
+                echo "::set-output name=hardwareString::wrt1900acs.config"
+        fi
+        if [[ "${{ github.event.inputs.hardware }}" == "5" ]]; then
+                echo "::set-output name=hardwareString::wrt1900acV1.config"
+        fi
+        if [[ "${{ github.event.inputs.hardware }}" == "6" ]]; then
+                echo "::set-output name=hardwareString::wrt1900acV2.config"
+        fi
+
+    - name: Set source and branch
+      id: setSource
+      run: |
+        if [[ "${{ github.event.inputs.source }}" == "1" ]]; then
+                echo "::set-output name=sourceString::https://github.com/openwrt/openwrt.git"
+                echo "::set-output name=branchString::openwrt-19.07"
+        fi
+        if [[ "${{ github.event.inputs.source }}" == "2" ]]; then
+                echo "::set-output name=sourceString::https://github.com/openwrt/openwrt.git"
+                echo "::set-output name=branchString::master"
+        fi
+        if [[ "${{ github.event.inputs.source }}" == "3" ]]; then
+                echo "::set-output name=sourceString::https://github.com/coolsnowwolf/lede"
+                echo "::set-output name=branchString::master"
+        fi
+
+    - name: Clone source code
+      working-directory: /workdir
+      run: |
+        df -hT $PWD
+        git clone ${{ steps.setSource.outputs.sourceString }} -b ${{ steps.setSource.outputs.branchString }} openwrt
+        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+
+    - name: Before Build
+      if: env.RUN_BEFORE_BUILD == 'true' && !cancelled()
+      run: |
+        chmod +x scripts/$BEFORE_BUILD
+        /bin/bash ${GITHUB_WORKSPACE}/scripts/before_build.sh
+
+    - name: Load custom feeds
+      run: |
+        [ -e configs/$FEEDS_CONF ] && mv configs/$FEEDS_CONF openwrt/feeds.conf.default
+        chmod +x scripts/$DIY_P1_SH
+        cd openwrt
+        $GITHUB_WORKSPACE/scripts/$DIY_P1_SH
+
+    - name: Update feeds Package
+      run: |
+           file=./scripts/feeds_update.txt
+           while read -r line; do
+           cd openwrt && ./scripts/feeds update $line
+           done < "$file"
+
+    - name: Install feeds Package
+      run: |
+           file=./scripts/feeds_install.txt
+           while read -r line; do
+           cd openwrt && ./scripts/feeds install $line
+           done < "$file"
+
+    - name: Uninstall feeds Package
+      run: |
+           file=./scripts/feeds_uninstall.txt
+           while read -r line; do
+           cd openwrt && ./scripts/feeds uninstall $line
+           done < "$file"
+
+    - name: Copy (files) Dir
+      if: env.USE_FILES == 'true' && !cancelled()
+      run: |
+        [ -e configs/files ] && mv configs/files openwrt/files
+
+    - name: Copy (.config)
+      run: |
+        [ -e configs/${{ steps.setConfig.outputs.hardwareString }} ] && mv configs/${{ steps.setConfig.outputs.hardwareString }} openwrt/.config
+
+    - name: Load custom configuration
+      if: env.USE_DIYP2 == 'true' && !cancelled()
+      run: |
+        chmod +x scripts/$DIY_P2_SH
+        cd openwrt
+        $GITHUB_WORKSPACE/scripts/$DIY_P2_SH
+
+    - name: SSH connection to Actions
+      uses: DevOpenWRT-Router/ssh2actions@v1.0.0
+      if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
+      env:
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+
+    - name: NGROK SSH connection to Actions
+      uses: DevOpenWRT-Router/ssh2actions@v1.0.0
+      if: (github.event.inputs.ngrok_ssh == 'true' && github.event.inputs.ngrok_ssh  != 'false') || contains(github.event.action, 'ssh')
+      env:
+        NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+        NGROK_REGION: jp
+        SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+    - name: Populating .config
+      id: config
+      run: |
+        cd openwrt
+        make defconfig
+
+    - name: Download package
+      id: package
+      run: |
+        cd openwrt
+        make download -j8
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+
+    - name: Settings
+      id: settings
+      run: |
+        echo -e "$(nproc) Threads to compile with."
+        echo -e "Creating (logs) Directory:"
+        cd openwrt
+        mkdir -p logs
+
+############################################################################################################################
+
+    - name: Compile the firmware (Debug)
+      id: compiledebug
+      if: env.DEBUG_COMPILE == 'true' && env.IGNORE_COMPILE == 'false'
+      run: |
+        cd openwrt
+        echo -e "$(nproc) thread compile"
+        make -j$(nproc) V=s 2>&1 | tee logs/build.log | grep -i -E "^make.*(error|[12345]...Entering directory)"
+        echo "::set-output name=status::success"
+        grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+        [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
+        echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+
+    - name: Compile the firmware (ignore Errors)
+      id: compileignore
+      if: env.IGNORE_COMPILE == 'true' && env.DEBUG_COMPILE == 'false'
+      run: |
+        cd openwrt
+        echo -e "$(nproc) thread compile"
+        IGNORE_ERRORS=1 make -j$(nproc) -i V=s 2>&1 | tee logs/build.log | grep -i -E "^make.*(error|[12345]...Entering directory)"
+        echo "::set-output name=status::success"
+        grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+        [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
+        echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+
+    - name: Compile the firmware
+      id: compile
+      if: env.DEBUG_COMPILE == 'false' && env.IGNORE_COMPILE == 'false'
+      run: |
+        cd openwrt
+        echo -e "$(nproc) thread compile"
+        make -j$(nproc) || make -j1 V=s 2>&1 | tee logs/build.log | grep -i -E "^make.*(error|[12345]...Entering directory)"
+        echo "::set-output name=status::success"
+        grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+        [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
+        echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+
+############################################################################################################################
+
+    - name: SSH connection to Actions After Build
+      uses: DevOpenWRT-Router/ssh2actions@v1.0.0
+      if: (github.event.inputs.ssh_after_build == 'true' && github.event.inputs.ssh_after_build  != 'false') || contains(github.event.action, 'ssh')
+      env:
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+
+    - name: Kernel Version
+      id: kernelversion
+      if: env.KMODS == 'true' && !cancelled()
+      run: |
+        chmod +x scripts/$KERNEL_VERSION
+        /bin/bash ${GITHUB_WORKSPACE}/scripts/kernel_version.sh
+
+    - name: After Build
+      if: env.RUN_AFTER_BUILD == 'true' && !cancelled()
+      run: |
+        chmod +x scripts/$AFTER_BUILD
+        /bin/bash ${GITHUB_WORKSPACE}/scripts/after_build.sh
+
+    - name: Check space usage
+      if: (!cancelled())
+      run: |
+        cd openwrt
+        echo "=============================================="
+        echo "Space usage:"
+        echo "=============================================="
+        df -hT
+        echo "=============================================="
+        du -h --max-depth=1 ./ --exclude=build_dir --exclude=bin
+        du -h --max-depth=1 ./build_dir
+        du -h --max-depth=1 ./bin
+        echo "=============================================="
+
+    - name: Upload Packages
+      uses: actions/upload-artifact@main
+      if: steps.compile.outputs.status == 'success' && env.UPLOAD_PACKAGES == 'true'
+      with:
+        name: OpenWrt_bin_packages${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        path: openwrt/bin/packages/
+
+    - name: Upload bin directory
+      uses: actions/upload-artifact@main
+      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
+      with:
+        name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        path: openwrt/bin
+
+    - name: Upload logs directory
+      uses: actions/upload-artifact@main
+      if: env.UPLOAD_BUILD_LOGS == 'true' && !cancelled()
+      with:
+        name: OpenWrt_logs${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        path: openwrt/logs/
+
+    - name: Upload build.log
+      uses: actions/upload-artifact@main
+      if: env.UPLOAD_BUILDLOG == 'true' && !cancelled()
+      with:
+        name: OpenWrt_buildlog${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        path: ${GITHUB_WORKSPACE}/openwrt/build.log
+
+    - name: Organize files
+      id: organize
+      if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      run: |
+        cd openwrt/bin/targets/*/*
+        rm -rf packages
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        echo "::set-output name=status::success"
+
+    - name: Upload firmware directory
+      uses: actions/upload-artifact@main
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      with:
+        name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        path: ${{ env.FIRMWARE }}
+
+############################################################################################################################
+
+    - name: Upload firmware to gofile
+      id: gofile
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_GOFILE == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer gof -s --no-progress ${FIRMWARE} 2>&1 | tee gofile.log
+        echo "::warning file=gofile.io::$(cat gofile.log | grep https)"
+        echo "::set-output name=url::$(cat gofile.log | grep https | cut -f3 -d" ")"
+
+    - name: Upload firmware to litterbox
+      id: litterbox
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_LITTERBOX == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer lit --no-progress ${FIRMWARE} 2>&1 | tee litterbox.log
+        echo "::warning file=litterbox.catbox.moe::$(cat litterbox.log | grep https)"
+        echo "::set-output name=url::$(cat litterbox.log | grep https | cut -f3 -d" ")"
+
+    - name: Upload firmware to catbox
+      id: catbox
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_CATBOX == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer cat --no-progress ${FIRMWARE} 2>&1 | tee catbox.log
+        echo "::warning file=catbox.moe::$(cat catbox.log | grep https)"
+        echo "::set-output name=url::$(cat catbox.log | grep https | cut -f3 -d" ")"
+
+    - name: Upload firmware to fileio
+      id: fileio
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_FILEIO == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer fio --no-progress ${FIRMWARE} 2>&1 | tee fileio.log
+        echo "::warning file=file.io::$(cat fileio.log | grep https)"
+        echo "::set-output name=url::$(cat fileio.log | grep https | cut -f3 -d" ")"
+
+############################################################################################################################
+
+    - name: Generate release tag
+      id: tag
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      run: |
+        echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
+        touch release.txt
+        [ $UPLOAD_GOFILE = true ] && echo "🔗 [GoFile](${{ steps.gofile.outputs.url }})" >> release.txt
+        [ $UPLOAD_LITTERBOX = true ] && echo "🔗 [LitterBox](${{ steps.litterbox.outputs.url }})" >> release.txt
+        [ $UPLOAD_CATBOX = true ] && echo "🔗 [CatBox](${{ steps.catbox.outputs.url }})" >> release.txt
+        [ $UPLOAD_FILEIO = true ] && echo "🔗 [FileIO](${{ steps.fileio.outputs.url }})" >> release.txt
+        echo "::set-output name=status::success"
+
+    - name: Upload firmware to release
+      uses: softprops/action-gh-release@master
+      if: steps.tag.outputs.status == 'success' && !cancelled()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_REPOSITORY: DevOpenWRT-Router/OpenWRT_LEDE_PureFusion_Releases
+      with:
+        tag_name: ${{ steps.tag.outputs.release_tag }}
+        body_path: release.txt
+        files: ${{ env.FIRMWARE }}/*
+
+    - name: Delete workflow runs
+      uses: GitRML/delete-workflow-runs@main
+      with:
+        retain_days: 1
+        keep_minimum_runs: 3
+
+    - name: Remove old Releases
+      uses: dev-drprasad/delete-older-releases@v0.2.0
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      with:
+        keep_latest: 10
+        delete_tags: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
