@@ -62,10 +62,10 @@ env:
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
 #############################
-  UPLOAD_GOFILE: true
-  UPLOAD_LITTERBOX: true
-  UPLOAD_CATBOX: true
-  UPLOAD_FILEIO: true
+  UPLOAD_GOFILE: false
+  UPLOAD_LITTERBOX: false
+  UPLOAD_CATBOX: false
+  UPLOAD_FILEIO: false
 #############################
 
   TZ: America/New_York
