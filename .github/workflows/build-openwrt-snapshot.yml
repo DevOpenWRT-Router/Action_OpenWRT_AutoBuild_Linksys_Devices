@@ -26,21 +26,9 @@ on:
         required: true
         default: '2'
       sshd:
-        description: '[0] NONE [1] SSH, [2] NGROK SSH'
+        description: '[0] NONE [1] SSH, [2] NGROK SSH [3] SSH After Build'
         required: true
         default: '0'
-      ssh:
-        description: 'SSH connection to Actions'
-        required: false
-        default: 'false'
-      ngrok_ssh:
-        description: 'NGROK SSH connection to Actions'
-        required: false
-        default: 'false'
-      ssh_after_build:
-        description: 'SSH connection to Actions After Build'
-        required: false
-        default: 'false'
 #  schedule:
 #    - cron: 0 8 * * 5
 
@@ -142,18 +130,28 @@ jobs:
                 echo "::set-output name=ssh_ngrokString::false"
                 echo "SSH=false" >> $GITHUB_ENV
                 echo "SSH_NGROK=false" >> $GITHUB_ENV
+                echo "SSH_AFTERBUILD=false" >> $GITHUB_ENV
         fi
         if [[ "${{ github.event.inputs.sshd }}" == "1" ]]; then
                 echo "::set-output name=sshString::true"
                 echo "::set-output name=ssh_ngrokString::false"
                 echo "SSH=true" >> $GITHUB_ENV
                 echo "SSH_NGROK=false" >> $GITHUB_ENV
+                echo "SSH_AFTERBUILD=false" >> $GITHUB_ENV
         fi
         if [[ "${{ github.event.inputs.sshd }}" == "2" ]]; then
                 echo "::set-output name=sshString::false"
                 echo "::set-output name=ssh_ngrokString::true"
                 echo "SSH=false" >> $GITHUB_ENV
                 echo "SSH_NGROK=true" >> $GITHUB_ENV
+                echo "SSH_AFTERBUILD=false" >> $GITHUB_ENV
+        fi
+        if [[ "${{ github.event.inputs.sshd }}" == "3" ]]; then
+                echo "::set-output name=sshString::false"
+                echo "::set-output name=ssh_ngrokString::false"
+                echo "SSH=false" >> $GITHUB_ENV
+                echo "SSH_NGROK=true" >> $GITHUB_ENV
+                echo "SSH_AFTERBUILD=true" >> $GITHUB_ENV
         fi
 
     - name: Set source and branch
@@ -227,14 +225,14 @@ jobs:
 
     - name: SSH connection to Actions
       uses: DevOpenWRT-Router/ssh2actions@v1.0.0
-      if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
+      if: (env.SSH == 'true' && !cancelled() && env.SSH != 'false') || contains(github.event.action, 'ssh')
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
     - name: NGROK SSH connection to Actions
       uses: DevOpenWRT-Router/ssh2actions@v1.0.0
-      if: (github.event.inputs.ngrok_ssh == 'true' && github.event.inputs.ngrok_ssh  != 'false') || contains(github.event.action, 'ssh')
+      if: (env.SSH_NGROK == 'true' && !cancelled() && env.SSH_NGROK != 'false') || contains(github.event.action, 'ssh')
       env:
         NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
         NGROK_REGION: jp
@@ -306,7 +304,7 @@ jobs:
 
     - name: SSH connection to Actions After Build
       uses: DevOpenWRT-Router/ssh2actions@v1.0.0
-      if: (github.event.inputs.ssh_after_build == 'true' && github.event.inputs.ssh_after_build  != 'false') || contains(github.event.action, 'ssh')
+      if: (env.SSH_AFTERBUILD == 'true' && !cancelled() && env.SSH_AFTERBUILD != 'false') || contains(github.event.action, 'ssh')
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
