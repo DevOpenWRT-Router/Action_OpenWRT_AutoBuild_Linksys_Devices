@@ -24,6 +24,10 @@ on:
         description: '[1] Stable, [2] Snapshot, [3] LED'
         required: true
         default: '2'
+      sshd:
+        description: '[0] NONE [1] SSH, [2] NGROK SSH'
+        required: true
+        default: '0'
       ssh:
         description: 'SSH connection to Actions'
         required: false
@@ -127,6 +131,22 @@ jobs:
         fi
         if [[ "${{ github.event.inputs.hardware }}" == "6" ]]; then
                 echo "::set-output name=hardwareString::wrt1900acV2.config"
+        fi
+
+    - name: Set SSH connection to Actions
+      id: setSSH
+      run: |
+        if [[ "${{ github.event.inputs.sshd }}" == "1" ]]; then
+                echo "::set-output name=sshString::true"
+                echo "::set-output name=ssh_ngrokString::false"
+                echo "SSH=true" >> $GITHUB_ENV
+                echo "SSH_NGROK=false" >> $GITHUB_ENV
+        fi
+        if [[ "${{ github.event.inputs.sshd }}" == "2" ]]; then
+                echo "::set-output name=sshString::false"
+                echo "::set-output name=ssh_ngrokString::true"
+                echo "SSH=false" >> $GITHUB_ENV
+                echo "SSH_NGROK=true" >> $GITHUB_ENV
         fi
 
     - name: Set source and branch
