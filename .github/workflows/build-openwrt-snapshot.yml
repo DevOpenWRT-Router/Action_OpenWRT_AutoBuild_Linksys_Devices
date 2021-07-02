@@ -17,11 +17,12 @@ on:
   workflow_dispatch:
     inputs:
       hardware:
-        description: '[0] ALL [1] WRT3200ACM, [2] WRT32X, [3] WRT1200AC, [4] WRT1900ACS [5] WRT1900AC V1, [6] WRT1900AC V2'
+        description: |
+          '[0] ALL [1] WRT3200ACM [2] WRT32X [3] WRT1200AC [4] WRT1900ACS [5] WRT1900AC V1 [6] WRT1900AC V2'
         required: true
         default: '1'
       source:
-        description: '[1] Stable, [2] Snapshot, [3] LED'
+        description: '[1] Stable, [2] Snapshot'
         required: true
         default: '2'
       sshd:
@@ -136,6 +137,12 @@ jobs:
     - name: Set SSH connection to Actions
       id: setSSH
       run: |
+        if [[ "${{ github.event.inputs.sshd }}" == "0" ]]; then
+                echo "::set-output name=sshString::false"
+                echo "::set-output name=ssh_ngrokString::false"
+                echo "SSH=false" >> $GITHUB_ENV
+                echo "SSH_NGROK=false" >> $GITHUB_ENV
+        fi
         if [[ "${{ github.event.inputs.sshd }}" == "1" ]]; then
                 echo "::set-output name=sshString::true"
                 echo "::set-output name=ssh_ngrokString::false"
@@ -158,10 +165,6 @@ jobs:
         fi
         if [[ "${{ github.event.inputs.source }}" == "2" ]]; then
                 echo "::set-output name=sourceString::https://github.com/openwrt/openwrt.git"
-                echo "::set-output name=branchString::master"
-        fi
-        if [[ "${{ github.event.inputs.source }}" == "3" ]]; then
-                echo "::set-output name=sourceString::https://github.com/coolsnowwolf/lede"
                 echo "::set-output name=branchString::master"
         fi
 
