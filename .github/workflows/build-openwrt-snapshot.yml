@@ -48,8 +48,8 @@ env:
   EXT_ENV: false
   RUN_BEFORE_BUILD: false
   RUN_AFTER_BUILD: false
-  UPLOAD_BUILD_LOGS: false
-  UPLOAD_BUILDLOG: false
+  UPLOAD_BUILD_LOGS: true
+  UPLOAD_BUILDLOG: true
   UPLOAD_PACKAGES: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
