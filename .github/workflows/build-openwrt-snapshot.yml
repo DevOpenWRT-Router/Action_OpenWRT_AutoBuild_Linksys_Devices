@@ -22,9 +22,9 @@ on:
         required: true
         default: '1'
       source:
-        description: '[1] Stable, [2] Snapshot'
+        description: '[0] Snapshot [1] openwrt-19.07, [2] openwrt-21.02'
         required: true
-        default: '2'
+        default: '0'
       sshd:
         description: '[0] NONE [1] SSH, [2] NGROK SSH [3] SSH After Build'
         required: true
@@ -157,13 +157,17 @@ jobs:
     - name: Set source and branch
       id: setSource
       run: |
+        if [[ "${{ github.event.inputs.source }}" == "0" ]]; then
+                echo "::set-output name=sourceString::https://github.com/openwrt/openwrt.git"
+                echo "::set-output name=branchString::master"
+        fi
         if [[ "${{ github.event.inputs.source }}" == "1" ]]; then
                 echo "::set-output name=sourceString::https://github.com/openwrt/openwrt.git"
                 echo "::set-output name=branchString::openwrt-19.07"
         fi
         if [[ "${{ github.event.inputs.source }}" == "2" ]]; then
                 echo "::set-output name=sourceString::https://github.com/openwrt/openwrt.git"
-                echo "::set-output name=branchString::master"
+                echo "::set-output name=branchString::openwrt-21.02"
         fi
 
     - name: Clone source code
