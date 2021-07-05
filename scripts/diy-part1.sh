@@ -34,6 +34,8 @@ git clone https://github.com/DevOpenWRT-Router/luci-app-disks-info.git package/l
 git clone https://github.com/DevOpenWRT-Router/luci-app-netmap.git package/luci-app-netmap
 ### NetSpeedTest
 git clone https://github.com/DevOpenWRT-Router/netspeedtest.git package/NetSpeedTest
+### luci-app-fileassistant
+git clone https://github.com/gztingting/luci-app-fileassistant.git package/luci-app-fileassistant
 ### luci-app-serverchan #WeChat push
 git clone https://github.com/tty228/luci-app-serverchan.git package/luci-app-serverchan
 
