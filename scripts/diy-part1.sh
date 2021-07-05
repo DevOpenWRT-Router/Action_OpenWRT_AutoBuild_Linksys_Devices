@@ -59,6 +59,7 @@ rm -rf ./package/lean/luci-app-netdata # Delete Lean's own luci-app-netdata
 rm -rf ./package/lean/luci-app-dnsfilter # Delete Lean's Own luci-app-dnsfilter
 rm -rf ./package/lean/default-settings # Delete lean's own default-settings
 # rm -rf ./package/lean/luci-app-turboacc # Delete lean's own luci-app-turboacc
+# rm -rf ./package/lean/luci-app-flowoffload # Delete lean's own luci-app-flowoffload
 rm -rf ./package/lean/.sync.sh # Delete lean's sync.sh files
 rm -rf ./package/lean/.list.txt # Delete lean's list.txt file
 
@@ -73,6 +74,7 @@ rm -rf ./package/lean/.list.txt # Delete lean's list.txt file
 
 ### luci-app-turboacc
 # git clone https://github.com/deplives/luci-app-turboacc.git package/luci-app-turboacc
+# get clone https://github.com/deplives/luci-app-flowoffload.git package/luci-app-flowoffload
 
 ### luci-app-dnsfilter
 git clone https://github.com/garypang13/luci-app-dnsfilter.git package/luci-app-dnsfilter
