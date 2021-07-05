@@ -58,8 +58,10 @@ rm -rf ./package/lean/luci-theme-argon # Delete Lean's own argon theme
 rm -rf ./package/lean/luci-app-netdata # Delete Lean's own luci-app-netdata
 rm -rf ./package/lean/luci-app-dnsfilter # Delete Lean's Own luci-app-dnsfilter
 rm -rf ./package/lean/default-settings # Delete lean's own default-settings
+# rm -rf ./package/lean/luci-app-turboacc # Delete lean's own luci-app-turboacc
 rm -rf ./package/lean/.sync.sh # Delete lean's sync.sh files
 rm -rf ./package/lean/.list.txt # Delete lean's list.txt file
+
 # WARNING: Not overriding core package 'csstidy'; use -f to force
 # WARNING: Not overriding core package 'luci-app-frpc'; use -f to force
 # WARNING: Not overriding core package 'luci-app-frps'; use -f to force
@@ -68,6 +70,9 @@ rm -rf ./package/lean/.list.txt # Delete lean's list.txt file
 # WARNING: Not overriding core package 'luci-app-ttyd'; use -f to force
 # WARNING: Not overriding core package 'luci-lib-docker'; use -f to force
 # WARNING: Not overriding core package 'luci-proto-bonding'; use -f to force
+
+### luci-app-turboacc
+# git clone https://github.com/deplives/luci-app-turboacc.git package/luci-app-turboacc
 
 ### luci-app-dnsfilter
 git clone https://github.com/garypang13/luci-app-dnsfilter.git package/luci-app-dnsfilter
