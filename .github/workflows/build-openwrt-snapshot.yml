@@ -22,7 +22,7 @@ on:
         required: true
         default: '1'
       source:
-        description: '[0] Snapshot [1] openwrt-19.07, [2] openwrt-21.02'
+        description: '[0] Snapshot [1] openwrt-19.07 [2] openwrt-21.02 [3] lede'
         required: true
         default: '0'
       sshd:
@@ -168,6 +168,10 @@ jobs:
         if [[ "${{ github.event.inputs.source }}" == "2" ]]; then
                 echo "::set-output name=sourceString::https://github.com/openwrt/openwrt.git"
                 echo "::set-output name=branchString::openwrt-21.02"
+        fi
+        if [[ "${{ github.event.inputs.source }}" == "3" ]]; then
+                echo "::set-output name=sourceString::https://github.com/coolsnowwolf/lede.git"
+                echo "::set-output name=branchString::master"
         fi
 
     - name: Clone source code
