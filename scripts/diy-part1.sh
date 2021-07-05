@@ -55,6 +55,15 @@ rm -rf ./package/lean/luci-app-netdata # Delete Lean's own luci-app-netdata
 rm -rf ./package/lean/default-settings # Delete lean's own default-settings
 rm -rf ./package/lean/.sync.sh # Delete lean's sync.sh files
 rm -rf ./package/lean/.list.txt # Delete lean's list.txt file
+# WARNING: Not overriding core package 'csstidy'; use -f to force
+# WARNING: Not overriding core package 'luci-app-frpc'; use -f to force
+# WARNING: Not overriding core package 'luci-app-frps'; use -f to force
+# WARNING: Not overriding core package 'luci-app-nft-qos'; use -f to force
+# WARNING: Not overriding core package 'luci-app-samba4'; use -f to force
+# WARNING: Not overriding core package 'luci-app-ttyd'; use -f to force
+# WARNING: Not overriding core package 'luci-lib-docker'; use -f to force
+# WARNING: Not overriding core package 'luci-proto-bonding'; use -f to force
+
 
 ### luci-app-netdata
 git clone https://github.com/DevOpenWRT-Router/luci-app-netdata.git package/luci-app-netdata
