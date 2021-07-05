@@ -52,6 +52,18 @@ wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Mak
 mkdir -p package/libs/libdouble-conversion
 wget https://raw.githubusercontent.com/coolsnowwolf/lede/master/package/libs/libdouble-conversion/Makefile -O package/libs/libdouble-conversion/Makefile
 
+
+### Extras From sirpdboy-package
+git clone https://github.com/DevOpenWRT-Router/openwrt-packages-extras.git package/extras
+rm -rf ./package/extras/luci-app-netspeedtest
+rm -rf ./package/extras/luci-app-onliner
+rm -rf ./package/extras/luci-app-advanced
+rm -rf ./package/extras/luci-app-eqos
+#rm -rf ./package/extras/
+#rm -rf ./package/extras/
+#rm -rf ./package/extras/
+#rm -rf ./package/extras/
+
 ### lean synced from lede source
 git clone https://github.com/DevOpenWRT-Router/openwrt-package-lean.git package/lean
 rm -rf ./package/lean/luci-theme-argon # Delete Lean's own argon theme
