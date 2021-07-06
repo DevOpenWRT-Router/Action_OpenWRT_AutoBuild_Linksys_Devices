@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
 #
-# Updated: 06/10/2021 Eliminater74
+# Updated: 07/06/2021 Eliminater74
 #
 # This is free software, licensed under the MIT License.
 # See /LICENSE for more information.
@@ -287,21 +287,29 @@ jobs:
         cd openwrt
         make defconfig
 
-    - name: Download package
-      id: package
-      run: |
-        cd openwrt
-        make download -j8
-        find dl -size -1024c -exec ls -l {} \;
-        find dl -size -1024c -exec rm -f {} \;
-
-    - name: Settings
-      id: settings
+    - name: Setup For Compiling
+      id: setup
       run: |
         echo -e "$(nproc) Threads to compile with."
         echo -e "Creating (logs) Directory:"
         cd openwrt
         mkdir -p logs
+
+    - name: Make Download
+      id: makedownload
+      run: |
+        cd openwrt
+        make download -j50
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+
+    - name: Make Toolchain
+      id: maketoolchain
+      run: |
+        df -h
+        cd openwrt
+        let make_process=$(nproc)+2
+        make toolchain/install -j${make_process} V=s
 
 ############################################################################################################################
 
