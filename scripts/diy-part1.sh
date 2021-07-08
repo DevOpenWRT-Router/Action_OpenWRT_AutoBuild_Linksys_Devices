@@ -52,19 +52,8 @@ wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Mak
 mkdir -p package/libs/libdouble-conversion
 wget https://raw.githubusercontent.com/coolsnowwolf/lede/master/package/libs/libdouble-conversion/Makefile -O package/libs/libdouble-conversion/Makefile
 
-
-### Extras From sirpdboy-package
-git clone https://github.com/DevOpenWRT-Router/openwrt-packages-extras.git package/extras
-rm -rf ./package/extras/luci-app-netspeedtest
-rm -rf ./package/extras/luci-app-onliner
-rm -rf ./package/extras/luci-app-advanced
-rm -rf ./package/extras/luci-app-eqos
-#rm -rf ./package/extras/
-#rm -rf ./package/extras/
-#rm -rf ./package/extras/
-#rm -rf ./package/extras/
-
 ### lean synced from lede source
+echo "Downloading coolsnowwolf's lean packages"
 git clone https://github.com/DevOpenWRT-Router/openwrt-package-lean.git package/lean
 rm -rf ./package/lean/luci-theme-argon # Delete Lean's own argon theme
 rm -rf ./package/lean/luci-app-netdata # Delete Lean's own luci-app-netdata
@@ -101,6 +90,25 @@ git clone https://github.com/DevOpenWRT-Router/openwrt-package-kernel-mwlwifi.gi
 ### luci-app-usbnet
 git clone https://github.com/a920025608/luci-app-usbnet.git package/luci-app-usbnet
 git clone https://github.com/a920025608/usbnet.git package/usbnet
+
+echo "Downloading sirpdboy's packages Visa SVN"
+svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-argon_new package/sirpdboy/luci-theme-argon_new
+svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-atmaterial package/sirpdboy/luci-theme-atmaterial
+svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-btmod package/sirpdboy/luci-theme-btmod
+svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-edge package/sirpdboy/luci-theme-edge
+svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-ifit package/sirpdboy/luci-theme-ifit
+svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-opentomato package/sirpdboy/luci-theme-opentomato
+svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-opentomcat package/sirpdboy/luci-theme-opentomcat
+svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-opentopd package/sirpdboy/luci-theme-opentopd
+svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-cpulimit package/sirpdboy/luci-app-cpulimit
+svn co https://github.com/sirpdboy/sirpdboy-package/trunk/cpulimit package/sirpdboy/cpulimit
+svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-rebootschedule package/sirpdboy/luci-app-rebootschedule
+svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-timecontrol package/sirpdboy/luci-app-timecontrol
+svn co https://github.com/sirpdboy/sirpdboy-package/trunk/speedtest-cli package/sirpdboy/speedtest-cli
+#svn co https://github.com/sirpdboy/sirpdboy-package/trunk/ package/sirpdboy/
+#svn co https://github.com/sirpdboy/sirpdboy-package/trunk/ package/sirpdboy/
+#svn co https://github.com/sirpdboy/sirpdboy-package/trunk/ package/sirpdboy/
+#svn co https://github.com/sirpdboy/sirpdboy-package/trunk/ package/sirpdboy/
 
 ### ----------------------------------------------------------------------- ###
 ### THEMES ###
