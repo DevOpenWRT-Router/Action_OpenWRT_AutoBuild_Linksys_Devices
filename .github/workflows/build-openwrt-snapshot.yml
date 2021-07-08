@@ -46,6 +46,7 @@ env:
   IGNORE_COMPILE: false
   KMODS: true
   EXT_ENV: false
+  CONVERT_TRANSLATION: true
   RUN_BEFORE_BUILD: false
   RUN_AFTER_BUILD: false
   UPLOAD_BUILD_LOGS: true
@@ -263,6 +264,13 @@ jobs:
         chmod +x scripts/$DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/scripts/$DIY_P2_SH
+
+    - name: Convert Translation
+      if: env.CONVERT_TRANSLATION == 'true' && !cancelled()
+      run: |
+        chmod +x scripts/convert_translation.sh
+        cd openwrt
+        $GITHUB_WORKSPACE/scripts/convert_translation.sh
 
     - name: SSH connection to Actions
       uses: DevOpenWRT-Router/ssh2actions@v1.0.0
