@@ -16,7 +16,7 @@ echo "Downloading sirpdboy's packages"
 
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/adguardhome package/sirpdboy/adguardhome
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/cpulimit package/sirpdboy/cpulimit
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/doc package/sirpdboy/doc
+# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/doc package/sirpdboy/doc
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/iptvhelper package/sirpdboy/iptvhelper
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/lua-maxminddb package/sirpdboy/lua-maxminddb
 # svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-access-control package/sirpdboy/luci-app-access-control ## NEEDS FIXED
@@ -71,5 +71,28 @@ svn co https://github.com/sirpdboy/sirpdboy-package/trunk/socat package/sirpdboy
 # svn co https://github.com/sirpdboy/sirpdboy-package/trunk/speedtest-cli package/sirpdboy/speedtest-cli ## NEEDS FIXED
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/switch-lan-play package/sirpdboy/switch-lan-play
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/wrtbwmon package/sirpdboy/wrtbwmon
+echo "From sirpdboy's BUILD packages"
+svn co https://github.com/sirpdboy/build/trunk/autocore package/sirpdboy/autocore
+svn co https://github.com/sirpdboy/build/trunk/automount package/sirpdboy/automount
+svn co https://github.com/sirpdboy/build/trunk/autosamba package/sirpdboy/autosamba
+svn co https://github.com/sirpdboy/build/trunk/default-settings package/sirpdboy/default-settings
+# svn co https://github.com/sirpdboy/build/trunk/doc package/sirpdboy/doc
+svn co https://github.com/sirpdboy/build/trunk/ksmbd-tools package/sirpdboy/ksmbd-tools
+svn co https://github.com/sirpdboy/build/trunk/libmill package/sirpdboy/libmill
+svn co https://github.com/sirpdboy/build/trunk/luci-app-arpbind package/sirpdboy/luci-app-arpbind
+svn co https://github.com/sirpdboy/build/trunk/luci-app-boostupnp package/sirpdboy/luci-app-boostupnp
+svn co https://github.com/sirpdboy/build/trunk/luci-app-ksmbd package/sirpdboy/luci-app-ksmbd
+svn co https://github.com/sirpdboy/build/trunk/luci-app-samba package/sirpdboy/luci-app-samba
+# svn co https://github.com/sirpdboy/build/trunk/luci-app-samba4 package/sirpdboy/luci-app-samba4
+svn co https://github.com/sirpdboy/build/trunk/miniupnpd package/sirpdboy/miniupnpd
+svn co https://github.com/sirpdboy/build/trunk/mwan3 package/sirpdboy/mwan3
+svn co https://github.com/sirpdboy/build/trunk/p7zip package/sirpdboy/p7zip
+svn co https://github.com/sirpdboy/build/trunk/qemu-userspace package/sirpdboy/qemu-userspace
+svn co https://github.com/sirpdboy/build/trunk/rrredir package/sirpdboy/rrredir
+svn co https://github.com/sirpdboy/build/trunk/samba36 package/sirpdboy/samba36
+svn co https://github.com/sirpdboy/build/trunk/samba4 package/sirpdboy/samba4
+# svn co https://github.com/sirpdboy/build/trunk/set package/sirpdboy/set
+# svn co https://github.com/sirpdboy/build/trunk/shortcut-fe package/sirpdboy/shortcut-fe
+svn co https://github.com/sirpdboy/build/trunk/sniproxy package/sirpdboy/sniproxy
 echo "END of sirpdboy's packages"
 exit 0
