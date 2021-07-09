@@ -1,0 +1,1 @@
+{"wan_info":"上网方式","wan_pppoe":"拨号上网","wan_static":"静态IP","wan_dhcp":"动态IP","wan_username":"上网账号","wan_password":"拨号密码","wan_ipaddr":"IP地址","wan_netmask":"子网掩码","wan_gateway":"网关地址","wan_dns0":"首选DNS","wan_dns1":"备选DNS","wan_dhcp_info":"允许路由器从上级路由中获取IP"}

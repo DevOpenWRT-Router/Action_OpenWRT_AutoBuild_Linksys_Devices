@@ -1,0 +1,1 @@
+<ul class="dialog-list"><li class="dialog-list-item" ng-repeat="item in Dialog.content" ng-if="item.value!=''" ng-bind="item.value|translate" ng-click="listItemClick(item)"></li><li class="dialog-list-item" ng-if="Dialog.options.cancel" ng-bind="'Cancel' | translate" ng-click="cancel()"></li></ul>

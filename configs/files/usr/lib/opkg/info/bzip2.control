@@ -1,0 +1,15 @@
+Package: bzip2
+Version: 1.0.8-1
+Depends: libc, libbz21.0
+Source: feeds/base/package/utils/bzip2
+SourceName: bzip2
+License: bzip2-1.0.8
+LicenseFiles: LICENSE
+Section: utils
+SourceDateEpoch: 1571482151
+CPE-ID: cpe:/a:bzip:bzip2
+Maintainer: Steven Barth <cyrus@openwrt.org>
+Architecture: x86_64
+Installed-Size: 11643
+Description:  bzip2 is a freely available, patent free, high-quality
+ data compressor. This package provides the binary.

@@ -1,0 +1,16 @@
+config user 'sys'
+	option guide '1'
+	option expert '0'
+
+config user 'wan'
+	option username ''
+	option password ''
+	option ipaddr ''
+	option subnet ''
+	option gateway ''
+	option mac_clone '0'
+	option macaddr ''
+
+config user 'lan'
+	option mac_clone '0'
+	option macaddr ''

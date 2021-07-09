@@ -1,0 +1,13 @@
+Package: xz-utils
+Version: 5.2.5-3
+Depends: libc
+Source: feeds/packages/utils/xz
+SourceName: xz-utils
+License: Public-Domain LGPL-2.1-or-later GPL-2.0-or-later GPL-3.0-or-later
+LicenseFiles: COPYING
+Section: utils
+SourceDateEpoch: 1605949199
+CPE-ID: cpe:/a:tukaani:xz
+Architecture: x86_64
+Installed-Size: 97
+Description:  XZ Utils (meta)
