@@ -219,6 +219,12 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/scripts/$DIY_P1_SH
 
+    - name: Load coolsnowwolf's Lean Packages
+      run: |
+        chmod +x scripts/lean_packages.sh
+        cd openwrt
+        $GITHUB_WORKSPACE/scripts/lean_packages.sh
+
     - name: Update feeds Package
       run: |
            file=./scripts/feeds_update.txt
