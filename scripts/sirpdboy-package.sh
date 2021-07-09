@@ -19,7 +19,7 @@ svn co https://github.com/sirpdboy/sirpdboy-package/trunk/cpulimit package/sirpd
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/doc package/sirpdboy/doc
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/iptvhelper package/sirpdboy/iptvhelper
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/lua-maxminddb package/sirpdboy/lua-maxminddb
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-access-control package/sirpdboy/luci-app-access-control
+# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-access-control package/sirpdboy/luci-app-access-control ## NEEDS FIXED
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-adguardhome package/sirpdboy/luci-app-adguardhome
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-advanced package/sirpdboy/luci-app-advanced
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-airwhu package/sirpdboy/luci-app-airwhu
@@ -68,7 +68,7 @@ svn co https://github.com/sirpdboy/sirpdboy-package/trunk/netdata package/sirpdb
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/smartdns-le package/sirpdboy/smartdns-le
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/smartdns package/sirpdboy/smartdns
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/socat package/sirpdboy/socat
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/speedtest-cli package/sirpdboy/speedtest-cli
+# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/speedtest-cli package/sirpdboy/speedtest-cli ## NEEDS FIXED
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/switch-lan-play package/sirpdboy/switch-lan-play
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/wrtbwmon package/sirpdboy/wrtbwmon
 echo "END of sirpdboy's packages"
