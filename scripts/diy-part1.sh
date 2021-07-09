@@ -20,26 +20,22 @@
 git clone https://github.com/DevOpenWRT-Router/luci-app-log.git package/luci-app-log
 ### luci-app-mqos
 git clone https://github.com/DevOpenWRT-Router/luci-app-mqos.git package/luci-app-mqos
+### luci-app-disks-info
+git clone https://github.com/DevOpenWRT-Router/luci-app-disks-info.git package/luci-app-disks-info
+### NetSpeedTest
+git clone https://github.com/DevOpenWRT-Router/netspeedtest.git package/NetSpeedTest
+### luci-app-netdata
+git clone https://github.com/DevOpenWRT-Router/luci-app-netdata.git package/luci-app-netdata
 ### luci-app-filebrowser
 git clone https://github.com/xiaozhuai/luci-app-filebrowser.git package/luci-app-filebrowser
 ### luci-app-eqos
 git clone https://github.com/MapesxGM/luci-app-eqos.git package/luci-app-eqos
-### luci-app-advanced
-git clone https://github.com/sirpdboy/luci-app-advanced.git package/luci-app-advanced
 ### luci-app-onliner
 git clone https://github.com/rufengsuixing/luci-app-onliner.git package/luci-app-onliner
-### luci-app-disks-info
-git clone https://github.com/DevOpenWRT-Router/luci-app-disks-info.git package/luci-app-disks-info
-### luci-app-netmap
-git clone https://github.com/DevOpenWRT-Router/luci-app-netmap.git package/luci-app-netmap
-### NetSpeedTest
-git clone https://github.com/DevOpenWRT-Router/netspeedtest.git package/NetSpeedTest
 ### luci-app-fileassistant
 git clone https://github.com/gztingting/luci-app-fileassistant.git package/luci-app-fileassistant
 ### luci-app-wifimac
 git clone https://github.com/qianmuyixiao/luci-app-wifimac.git package/luci-app-wifimac
-### luci-app-serverchan #WeChat push
-git clone https://github.com/tty228/luci-app-serverchan.git package/luci-app-serverchan
 
 ### luci-app-diskman
 ## A Simple Disk Manager for LuCI, support disk partition and format, support raid / btrfs-raid / btrfs-snapshot
@@ -51,31 +47,9 @@ wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Mak
 ### luci-app-dnsfilter
 git clone https://github.com/garypang13/luci-app-dnsfilter.git package/luci-app-dnsfilter
 
-### luci-app-netdata
-git clone https://github.com/DevOpenWRT-Router/luci-app-netdata.git package/luci-app-netdata
-
 ### luci-app-usbnet
 git clone https://github.com/a920025608/luci-app-usbnet.git package/luci-app-usbnet
 git clone https://github.com/a920025608/usbnet.git package/usbnet
-
-echo "Downloading sirpdboy's packages Visa SVN"
-#svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-argon_new package/sirpdboy/luci-theme-argon_new
-#svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-atmaterial package/sirpdboy/luci-theme-atmaterial
-#svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-btmod package/sirpdboy/luci-theme-btmod
-#svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-edge package/sirpdboy/luci-theme-edge
-#svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-ifit package/sirpdboy/luci-theme-ifit
-#svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-opentomato package/sirpdboy/luci-theme-opentomato
-#svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-opentomcat package/sirpdboy/luci-theme-opentomcat
-#svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-opentopd package/sirpdboy/luci-theme-opentopd
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-cpulimit package/sirpdboy/luci-app-cpulimit
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/cpulimit package/sirpdboy/cpulimit
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-rebootschedule package/sirpdboy/luci-app-rebootschedule
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-timecontrol package/sirpdboy/luci-app-timecontrol
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/speedtest-cli package/sirpdboy/speedtest-cli
-#svn co https://github.com/sirpdboy/sirpdboy-package/trunk/ package/sirpdboy/
-#svn co https://github.com/sirpdboy/sirpdboy-package/trunk/ package/sirpdboy/
-#svn co https://github.com/sirpdboy/sirpdboy-package/trunk/ package/sirpdboy/
-#svn co https://github.com/sirpdboy/sirpdboy-package/trunk/ package/sirpdboy/
 
 ### ----------------------------------------------------------------------- ###
 ### THEMES ###
