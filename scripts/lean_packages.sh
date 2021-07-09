@@ -9,10 +9,10 @@
 # File name: lean_packages.sh
 # Description: OpenWRT Packages by coolsnowwolf (Before Update feeds)
 #
-# Updated By Eliminater74 
+# Updated By Eliminater74
 ################################################################################
 
-
+echo "Downloading coolsnowwolf's lean packages"
 
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/UnblockNeteaseMusic package/lean/UnblockNeteaseMusic
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/UnblockNeteaseMusicGo package/lean/UnblockNeteaseMusicGo
@@ -26,7 +26,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/baidupcs-web pack
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/csstidy package/lean/csstidy
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ddns-scripts_aliyun package/lean/ddns-scripts_aliyun
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ddns-scripts_dnspod package/lean/ddns-scripts_dnspod
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/default-settings package/lean/default-settings
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/default-settings package/lean/default-settings
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/dns2socks package/lean/dns2socks
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/dnsforwarder package/lean/dnsforwarder
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/dnsproxy package/lean/dnsproxy
@@ -49,7 +49,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-cifs-mou
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-cifsd package/lean/luci-app-cifsd
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-cpufreq package/lean/luci-app-cpufreq
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-diskman package/lean/luci-app-diskman
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-dnsfilter package/lean/luci-app-dnsfilter
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-dnsfilter package/lean/luci-app-dnsfilter
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-dnsforwarder package/lean/luci-app-dnsforwarder
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-docker package/lean/luci-app-docker
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-easymesh package/lean/luci-app-easymesh
@@ -65,7 +65,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-kodexplo
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-music-remote-center package/lean/luci-app-music-remote-center
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-mwan3helper package/lean/luci-app-mwan3helper
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-n2n_v2 package/lean/luci-app-n2n_v2
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-netdata package/lean/luci-app-netdata
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-netdata package/lean/luci-app-netdata
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-nfs package/lean/luci-app-nfs
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-nft-qos package/lean/luci-app-nft-qos
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-nps package/lean/luci-app-nps
@@ -95,7 +95,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-zerotier
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-lib-docker package/lean/luci-lib-docker
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-lib-fs package/lean/luci-lib-fs
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-proto-bonding package/lean/luci-proto-bonding
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-theme-argon package/lean/luci-theme-argon
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-theme-argon package/lean/luci-theme-argon
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-theme-netgear package/lean/luci-theme-netgear
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/microsocks package/lean/microsocks
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/mt package/lean/mt
@@ -130,3 +130,4 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/vlmcsd package/le
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/vsftpd-alt package/lean/vsftpd-alt
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/wol package/lean/wol
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/wxbase package/lean/wxbase
+echo "END of coolsnowwolf's lean packages"
