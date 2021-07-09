@@ -42,6 +42,8 @@ env:
   EXT_INIT_ENV: environment.sh
   USE_FILES: true
   USE_DIYP2: true
+  USE_COOLSNOWWOLF: true
+  USE_SIRPDBOY: true
   DEBUG_COMPILE: false
   IGNORE_COMPILE: false
   KMODS: true
@@ -220,12 +222,15 @@ jobs:
         $GITHUB_WORKSPACE/scripts/$DIY_P1_SH
 
     - name: Load coolsnowwolf's Lean Packages
+
+      if: env.USE_COOLSNOWWOLF == 'true' && !cancelled()
       run: |
         chmod +x scripts/lean_packages.sh
         cd openwrt
         $GITHUB_WORKSPACE/scripts/lean_packages.sh
 
     - name: Load Sirpdboy's Packages
+      if: env.USE_SIRPDBOY == 'true' && !cancelled()
       run: |
         chmod +x scripts/sirpdboy-package.sh
         cd openwrt
