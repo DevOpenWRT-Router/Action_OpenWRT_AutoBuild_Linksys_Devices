@@ -29,7 +29,6 @@ config internal 'themes'
 	option Bootstrap '/luci-static/bootstrap'
 	option OpenTomato '/luci-static/opentomato'
 	option Argon '/luci-static/argon'
-	option infinityfreedom '/luci-static/infinityfreedom'
 
 config internal 'apply'
 	option rollback '90'
