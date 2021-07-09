@@ -71,10 +71,6 @@ git clone https://github.com/garypang13/luci-app-dnsfilter.git package/luci-app-
 ### luci-app-netdata
 git clone https://github.com/DevOpenWRT-Router/luci-app-netdata.git package/luci-app-netdata
 
-### Use lede's edition of mwlwifi
-rm -rf ./package/kernel/mwlwifi # Delete openWRT's version replace with sync lede
-svn co https://github.com/coolsnowwolf/lede/trunk/package/kernel/mwlwifi package/kernel/mwlwifi
-
 ### luci-app-usbnet
 git clone https://github.com/a920025608/luci-app-usbnet.git package/luci-app-usbnet
 git clone https://github.com/a920025608/usbnet.git package/usbnet
