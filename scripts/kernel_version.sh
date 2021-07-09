@@ -52,3 +52,4 @@ echo "CMD: $BUILD_SUFFIX"
 echo "CMD: $SUBDIR"
 echo "CMD: $BUILD_SUBDIR"
 echo "--------------------------------------"
+exit 0

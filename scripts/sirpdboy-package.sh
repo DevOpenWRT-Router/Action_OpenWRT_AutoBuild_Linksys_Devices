@@ -72,3 +72,4 @@ svn co https://github.com/sirpdboy/sirpdboy-package/trunk/speedtest-cli package/
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/switch-lan-play package/sirpdboy/switch-lan-play
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/wrtbwmon package/sirpdboy/wrtbwmon
 echo "END of sirpdboy's packages"
+exit 0

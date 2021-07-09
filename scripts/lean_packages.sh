@@ -140,3 +140,4 @@ echo "Add coolsnowwolf's edition of mwlwifi"
 rm -rf ./package/kernel/mwlwifi # Delete openWRT's version replace with sync lede
 svn co https://github.com/coolsnowwolf/lede/trunk/package/kernel/mwlwifi package/kernel/mwlwifi
 echo "END coolsnowwolf's edition of mwlwifi"
+exit 0
