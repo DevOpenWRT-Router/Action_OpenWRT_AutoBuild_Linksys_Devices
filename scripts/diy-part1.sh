@@ -52,18 +52,6 @@ wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Mak
 mkdir -p package/libs/libdouble-conversion
 wget https://raw.githubusercontent.com/coolsnowwolf/lede/master/package/libs/libdouble-conversion/Makefile -O package/libs/libdouble-conversion/Makefile
 
-### lean synced from lede source
-echo "Downloading coolsnowwolf's lean packages"
-git clone https://github.com/DevOpenWRT-Router/openwrt-package-lean.git package/lean
-rm -rf ./package/lean/luci-theme-argon # Delete Lean's own argon theme
-rm -rf ./package/lean/luci-app-netdata # Delete Lean's own luci-app-netdata
-rm -rf ./package/lean/luci-app-dnsfilter # Delete Lean's Own luci-app-dnsfilter
-rm -rf ./package/lean/default-settings # Delete lean's own default-settings
-# rm -rf ./package/lean/luci-app-turboacc # Delete lean's own luci-app-turboacc
-# rm -rf ./package/lean/luci-app-flowoffload # Delete lean's own luci-app-flowoffload
-rm -rf ./package/lean/.sync.sh # Delete lean's sync.sh files
-rm -rf ./package/lean/.list.txt # Delete lean's list.txt file
-
 # WARNING: Not overriding core package 'csstidy'; use -f to force
 # WARNING: Not overriding core package 'luci-app-frpc'; use -f to force
 # WARNING: Not overriding core package 'luci-app-frps'; use -f to force
