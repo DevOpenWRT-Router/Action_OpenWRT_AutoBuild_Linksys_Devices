@@ -75,7 +75,7 @@ echo "From sirpdboy's BUILD packages"
 svn co https://github.com/sirpdboy/build/trunk/autocore package/sirpdboy/autocore
 svn co https://github.com/sirpdboy/build/trunk/automount package/sirpdboy/automount
 svn co https://github.com/sirpdboy/build/trunk/autosamba package/sirpdboy/autosamba
-svn co https://github.com/sirpdboy/build/trunk/default-settings package/sirpdboy/default-settings
+# svn co https://github.com/sirpdboy/build/trunk/default-settings package/sirpdboy/default-settings
 # svn co https://github.com/sirpdboy/build/trunk/doc package/sirpdboy/doc
 svn co https://github.com/sirpdboy/build/trunk/ksmbd-tools package/sirpdboy/ksmbd-tools
 svn co https://github.com/sirpdboy/build/trunk/libmill package/sirpdboy/libmill
