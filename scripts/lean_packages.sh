@@ -96,7 +96,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-lib-docker p
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-lib-fs package/lean/luci-lib-fs
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-proto-bonding package/lean/luci-proto-bonding
 # svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-theme-argon package/lean/luci-theme-argon
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-theme-netgear package/lean/luci-theme-netgear
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-theme-netgear package/lean/luci-theme-netgear
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/microsocks package/lean/microsocks
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/mt package/lean/mt
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/n2n_v2 package/lean/n2n_v2
