@@ -53,8 +53,8 @@ sed -ne '/^CONFIG_LIBC=/ { s!^CONFIG_LIBC="\(.*\)"!\1!; s!^musl$!!; s!.\+!-&!p }
 ### Modify  luci-theme-opentomato  as the default theme, you can modify according to your,
 ### favorite into the other (do not select the default theme theme will automatically,
 ### have the effect of those changes to)
-# echo "Changing default luci-theme-bootstap to luci-theme-opentomato"
-# sed -i 's/luci-theme-bootstrap/luci-theme-opentomato/g' feeds/luci/collections/luci/Makefile
+echo "Changing default luci-theme-bootstap to luci-theme-opentomato"
+sed -i 's/luci-theme-bootstrap/luci-theme-opentomato/g' feeds/luci/collections/luci/Makefile
 
 ##########################################################################################
 ### Modify default IP
