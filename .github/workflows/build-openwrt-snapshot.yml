@@ -225,6 +225,12 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/scripts/lean_packages.sh
 
+    - name: Load Sirpdboy's Packages
+      run: |
+        chmod +x scripts/sirpdboy-package.sh
+        cd openwrt
+        $GITHUB_WORKSPACE/scripts/sirpdboy-package.sh
+
     - name: Update feeds Package
       run: |
            file=./scripts/feeds_update.txt
