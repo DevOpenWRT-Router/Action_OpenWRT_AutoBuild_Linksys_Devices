@@ -63,6 +63,8 @@ git clone -b master https://github.com/jerrykuku/luci-app-argon-config.git packa
 git clone https://github.com/chaoxiaozhu/luci-theme-opentomcat.git package/luci-theme-opentomcat
 ### luci-theme-rosy
 git clone https://github.com/rosywrt/luci-theme-rosy.git package/luci-theme-rosy
+### luci-theme-netgear
+git clone https://github.com/ysoyipek/luci-theme-netgear.git package/luci-theme-netgear
 ### luci-theme-edge2 ###
 #git clone -b main https://github.com/YL2209/luci-theme-edge2.git package/luci-theme-edge2
 ### luci-theme-opentopd thme openwrt theme
