@@ -73,7 +73,7 @@ git clone https://github.com/DevOpenWRT-Router/luci-app-netdata.git package/luci
 
 ### Use lede's edition of mwlwifi
 rm -rf ./package/kernel/mwlwifi # Delete openWRT's version replace with sync lede
-git clone https://github.com/DevOpenWRT-Router/openwrt-package-kernel-mwlwifi.git package/kernel/mwlwifi
+svn co https://github.com/coolsnowwolf/lede/trunk/package/kernel/mwlwifi package/kernel/mwlwifi
 
 ### luci-app-usbnet
 git clone https://github.com/a920025608/luci-app-usbnet.git package/luci-app-usbnet
