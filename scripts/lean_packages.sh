@@ -131,6 +131,10 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/vsftpd-alt packag
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/wol package/lean/wol
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/wxbase package/lean/wxbase
 echo "END of coolsnowwolf's lean packages"
+### Needed for qBittorrent qt5
+echo "Add coolsnowwolf's libdouble-conversion"
+svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/libdouble-conversion package/libs/libdouble-conversion
+echo "END coolsnowwolf's libdouble-conversion"
 ### Use lede's edition of mwlwifi
 echo "Add coolsnowwolf's edition of mwlwifi"
 rm -rf ./package/kernel/mwlwifi # Delete openWRT's version replace with sync lede

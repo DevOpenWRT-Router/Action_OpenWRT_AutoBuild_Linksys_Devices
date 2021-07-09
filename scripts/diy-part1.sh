@@ -48,23 +48,6 @@ wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/applicatio
 mkdir -p package/parted
 wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Makefile -O package/parted/Makefile
 
-### LIBS: libdouble-conversion NEEDED for qBittorrent qt5
-mkdir -p package/libs/libdouble-conversion
-wget https://raw.githubusercontent.com/coolsnowwolf/lede/master/package/libs/libdouble-conversion/Makefile -O package/libs/libdouble-conversion/Makefile
-
-# WARNING: Not overriding core package 'csstidy'; use -f to force
-# WARNING: Not overriding core package 'luci-app-frpc'; use -f to force
-# WARNING: Not overriding core package 'luci-app-frps'; use -f to force
-# WARNING: Not overriding core package 'luci-app-nft-qos'; use -f to force
-# WARNING: Not overriding core package 'luci-app-samba4'; use -f to force
-# WARNING: Not overriding core package 'luci-app-ttyd'; use -f to force
-# WARNING: Not overriding core package 'luci-lib-docker'; use -f to force
-# WARNING: Not overriding core package 'luci-proto-bonding'; use -f to force
-
-### luci-app-turboacc
-# git clone https://github.com/deplives/luci-app-turboacc.git package/luci-app-turboacc
-# get clone https://github.com/deplives/luci-app-flowoffload.git package/luci-app-flowoffload
-
 ### luci-app-dnsfilter
 git clone https://github.com/garypang13/luci-app-dnsfilter.git package/luci-app-dnsfilter
 
