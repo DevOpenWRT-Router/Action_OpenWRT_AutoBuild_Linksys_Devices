@@ -36,6 +36,8 @@ git clone https://github.com/rufengsuixing/luci-app-onliner.git package/luci-app
 git clone https://github.com/gztingting/luci-app-fileassistant.git package/luci-app-fileassistant
 ### luci-app-wifimac
 git clone https://github.com/qianmuyixiao/luci-app-wifimac.git package/luci-app-wifimac
+### luci-app-telegrambot
+git clone https://github.com/koshev-msk/luci-app-telegrambot.git package/luci-app-telegrambot
 
 ### luci-app-diskman
 ## A Simple Disk Manager for LuCI, support disk partition and format, support raid / btrfs-raid / btrfs-snapshot
