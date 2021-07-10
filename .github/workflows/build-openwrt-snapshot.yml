@@ -344,7 +344,7 @@ jobs:
         let make_process=$(nproc)+2
         make tools/tar/compile -j${make_process} V=s
 
-    - name: Make Tools
+    - name: Building and installing tools
       id: maketools
       run: |
         df -h
@@ -352,7 +352,7 @@ jobs:
         let make_process=$(nproc)+2
         make tools/install -j${make_process} V=s
 
-    - name: Make Toolchain
+    - name: Building and installing toolchain
       id: maketoolchain
       run: |
         df -h
