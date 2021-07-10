@@ -360,6 +360,14 @@ jobs:
         let make_process=$(nproc)+2
         make toolchain/install -j${make_process} V=s
 
+    - name: Building kmods
+      id: makekmods
+      run: |
+        df -h
+        cd openwrt
+        let make_process=$(nproc)+2
+        make target/compile -j${make_process} V=s
+
 ############################################################################################################################
 
     - name: Compile the firmware (Debug)
