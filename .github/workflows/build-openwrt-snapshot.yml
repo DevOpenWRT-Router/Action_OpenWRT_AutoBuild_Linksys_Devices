@@ -336,6 +336,14 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
 
+    - name: Building and installing GNU tar
+      id: GNUTAR
+      run: |
+        df -h
+        cd openwrt
+        let make_process=$(nproc)+2
+        make tools/tar/compile -j${make_process} V=s
+
     - name: Make Tools
       id: maketools
       run: |
