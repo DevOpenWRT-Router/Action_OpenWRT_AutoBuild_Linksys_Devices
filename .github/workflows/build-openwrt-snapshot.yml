@@ -368,14 +368,6 @@ jobs:
         let make_process=$(nproc)+2
         make target/compile -j${make_process} V=s
 
-    - name: property kernelversion set
-      id: kernelversionset
-      run: |
-        df -h
-        cd openwrt
-        let make_process=$(nproc)+2
-        make --no-print-directory -C target/linux/ val.LINUX_VERSION val.LINUX_RELEASE val.LINUX_VERMAGIC | xargs printf '%s-%s-%s\n'
-
 ############################################################################################################################
 
     - name: Compile the firmware (Debug)
