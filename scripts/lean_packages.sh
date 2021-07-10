@@ -23,7 +23,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/autocore package/
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/automount package/lean/automount
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/autosamba package/lean/autosamba
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/baidupcs-web package/lean/baidupcs-web
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/csstidy package/lean/csstidy
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/csstidy package/lean/csstidy
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ddns-scripts_aliyun package/lean/ddns-scripts_aliyun
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ddns-scripts_dnspod package/lean/ddns-scripts_dnspod
 # svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/default-settings package/lean/default-settings
@@ -31,7 +31,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/dns2socks package
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/dnsforwarder package/lean/dnsforwarder
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/dnsproxy package/lean/dnsproxy
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/dsmboot package/lean/dsmboot
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/frp package/lean/frp
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/frp package/lean/frp
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/gmediarender package/lean/gmediarender
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ipt2socks package/lean/ipt2socks
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ipv6-helper package/lean/ipv6-helper
@@ -55,8 +55,8 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-docker p
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-easymesh package/lean/luci-app-easymesh
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-familycloud package/lean/luci-app-familycloud
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-filetransfer package/lean/luci-app-filetransfer
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-frpc package/lean/luci-app-frpc
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-frps package/lean/luci-app-frps
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-frpc package/lean/luci-app-frpc
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-frps package/lean/luci-app-frps
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-guest-wifi package/lean/luci-app-guest-wifi
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-haproxy-tcp package/lean/luci-app-haproxy-tcp
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ipsec-vpnd package/lean/luci-app-ipsec-vpnd
@@ -67,7 +67,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-mwan3hel
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-n2n_v2 package/lean/luci-app-n2n_v2
 # svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-netdata package/lean/luci-app-netdata
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-nfs package/lean/luci-app-nfs
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-nft-qos package/lean/luci-app-nft-qos
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-nft-qos package/lean/luci-app-nft-qos
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-nps package/lean/luci-app-nps
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-openvpn-server package/lean/luci-app-openvpn-server
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-pppoe-relay package/lean/luci-app-pppoe-relay
@@ -75,11 +75,11 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ps3netsr
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-qbittorrent package/lean/luci-app-qbittorrent
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ramfree package/lean/luci-app-ramfree
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-rclone package/lean/luci-app-rclone
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-samba4 package/lean/luci-app-samba4
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-samba4 package/lean/luci-app-samba4
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-softethervpn package/lean/luci-app-softethervpn
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ssrserver-python package/lean/luci-app-ssrserver-python
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-syncdial package/lean/luci-app-syncdial
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ttyd package/lean/luci-app-ttyd
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ttyd package/lean/luci-app-ttyd
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-turboacc package/lean/luci-app-turboacc
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-unblockmusic package/lean/luci-app-unblockmusic
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-usb-printer package/lean/luci-app-usb-printer
@@ -92,9 +92,9 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-webadmin
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-wrtbwmon package/lean/luci-app-wrtbwmon
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-xlnetacc package/lean/luci-app-xlnetacc
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-zerotier package/lean/luci-app-zerotier
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-lib-docker package/lean/luci-lib-docker
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-lib-docker package/lean/luci-lib-docker
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-lib-fs package/lean/luci-lib-fs
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-proto-bonding package/lean/luci-proto-bonding
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-proto-bonding package/lean/luci-proto-bonding
 # svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-theme-argon package/lean/luci-theme-argon
 # svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-theme-netgear package/lean/luci-theme-netgear
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/microsocks package/lean/microsocks
