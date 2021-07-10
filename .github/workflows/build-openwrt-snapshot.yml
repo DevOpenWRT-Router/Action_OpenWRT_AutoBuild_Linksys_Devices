@@ -336,6 +336,14 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
 
+    - name: Make Tools
+      id: maketools
+      run: |
+        df -h
+        cd openwrt
+        let make_process=$(nproc)+2
+        make tools/install -j${make_process} V=s
+
     - name: Make Toolchain
       id: maketoolchain
       run: |
