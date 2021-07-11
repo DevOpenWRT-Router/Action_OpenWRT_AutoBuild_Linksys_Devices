@@ -46,7 +46,8 @@ env:
   USE_SIRPDBOY: true
   ### ------------------------------------------------------------------ ###
   ## Disabling any of these will still build said section,
-  ## Just wont be debugable showing
+  ## Just wont be debugable showing. Enabling them will add,
+  ## more time to final completion.
   BUILD_KMODS: true
   BUILD_PACKAGES: true
   INSTALL_PACKAGES: true
