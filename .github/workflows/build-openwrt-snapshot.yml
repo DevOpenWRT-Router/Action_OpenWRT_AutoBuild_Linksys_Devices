@@ -44,6 +44,14 @@ env:
   USE_DIYP2: true
   USE_COOLSNOWWOLF: true
   USE_SIRPDBOY: true
+  ### ------------------------------------------------------------------ ###
+  ## Disabling any of these will still build said section,
+  ## Just wont be debugable showing
+  BUILD_KMODS: true
+  BUILD_PACKAGES: true
+  INSTALL_PACKAGES: true
+  INDEX_PACKAGES: true
+  ### ------------------------------------------------------------------ ###
   DEBUG_COMPILE: false
   IGNORE_COMPILE: false
   KMODS: true
@@ -362,6 +370,7 @@ jobs:
 
     - name: Building kmods
       id: makekmods
+      if: env.BUILD_KMODS == 'true' && !cancelled()
       run: |
         df -h
         cd openwrt
@@ -370,6 +379,7 @@ jobs:
 
     - name: Building packages
       id: makepackages
+      if: env.BUILD_PACKAGES == 'true' && !cancelled()
       run: |
         df -h
         cd openwrt
@@ -378,6 +388,7 @@ jobs:
 
     - name: Installing packages
       id: installpackages
+      if: env.INSTALL_PACKAGES == 'true' && !cancelled()
       run: |
         df -h
         cd openwrt
@@ -386,6 +397,7 @@ jobs:
 
     - name: Indexing packages
       id: indexingpackages
+      if: env.INDEX_PACKAGES == 'true' && !cancelled()
       run: |
         df -h
         cd openwrt
