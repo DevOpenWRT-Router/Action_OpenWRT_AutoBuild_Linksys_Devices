@@ -342,7 +342,7 @@ jobs:
         df -h
         cd openwrt
         let make_process=$(nproc)+2
-        make tools/tar/compile -j${make_process} V=s
+        make tools/tar/compile -j${make_process} V=s || make -j1 V=s 2>&1 | tee logs/build.log | grep -i -E "^make.*(error|[12345]...Entering directory)"
 
     - name: Building and installing tools
       id: maketools
@@ -350,7 +350,7 @@ jobs:
         df -h
         cd openwrt
         let make_process=$(nproc)+2
-        make tools/install -j${make_process} V=s
+        make tools/install -j${make_process} V=s || make -j1 V=s 2>&1 | tee logs/build.log | grep -i -E "^make.*(error|[12345]...Entering directory)"
 
     - name: Building and installing toolchain
       id: maketoolchain
@@ -358,7 +358,7 @@ jobs:
         df -h
         cd openwrt
         let make_process=$(nproc)+2
-        make toolchain/install -j${make_process} V=s
+        make toolchain/install -j${make_process} V=s || make -j1 V=s 2>&1 | tee logs/build.log | grep -i -E "^make.*(error|[12345]...Entering directory)"
 
     - name: Building kmods
       id: makekmods
@@ -366,7 +366,31 @@ jobs:
         df -h
         cd openwrt
         let make_process=$(nproc)+2
-        make target/compile -j${make_process} V=s
+        make target/compile -j${make_process} V=s || make -j1 V=s 2>&1 | tee logs/build.log | grep -i -E "^make.*(error|[12345]...Entering directory)"
+
+    - name: Building packages
+      id: makepackages
+      run: |
+        df -h
+        cd openwrt
+        let make_process=$(nproc)+2
+        make package/compile -j${make_process} V=s || make -j1 V=s 2>&1 | tee logs/build.log | grep -i -E "^make.*(error|[12345]...Entering directory)"
+
+    - name: Installing packages
+      id: installpackages
+      run: |
+        df -h
+        cd openwrt
+        let make_process=$(nproc)+2
+        make package/install -j${make_process} V=s
+
+    - name: Indexing packages
+      id: indexingpackages
+      run: |
+        df -h
+        cd openwrt
+        let make_process=$(nproc)+2
+        make package/index -j${make_process} CONFIG_SIGNED_PACKAGES= V=s
 
 ############################################################################################################################
 
