@@ -378,6 +378,13 @@ jobs:
         let make_process=$(nproc)+2
         make target/compile -j${make_process} V=s || make -j1 V=s 2>&1 | tee logs/build.log | grep -i -E "^make.*(error|[12345]...Entering directory)"
 
+    - name: Kernel Version
+      id: kernelversion
+      if: env.KMODS == 'true' && !cancelled()
+      run: |
+        chmod +x scripts/$KERNEL_VERSION
+        /bin/bash ${GITHUB_WORKSPACE}/scripts/kernel_version.sh
+
     - name: Building packages
       id: makepackages
       if: env.BUILD_PACKAGES == 'true' && !cancelled()
@@ -451,13 +458,6 @@ jobs:
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-
-    - name: Kernel Version
-      id: kernelversion
-      if: env.KMODS == 'true' && !cancelled()
-      run: |
-        chmod +x scripts/$KERNEL_VERSION
-        /bin/bash ${GITHUB_WORKSPACE}/scripts/kernel_version.sh
 
     - name: After Build
       if: env.RUN_AFTER_BUILD == 'true' && !cancelled()
