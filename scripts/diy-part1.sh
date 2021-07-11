@@ -22,6 +22,8 @@ git clone https://github.com/DevOpenWRT-Router/luci-app-log.git package/luci-app
 git clone https://github.com/DevOpenWRT-Router/luci-app-interfaces-statistics.git package/luci-app-interfaces-statistics
 ### luci-app-cpu-status
 git clone https://github.com/DevOpenWRT-Router/luci-app-cpu-status.git package/luci-app-cpu-status
+### luci-app-temp-status
+git clone https://github.com/DevOpenWRT-Router/luci-app-temp-status.git package/luci-app-temp-status
 ### luci-app-mqos
 git clone https://github.com/DevOpenWRT-Router/luci-app-mqos.git package/luci-app-mqos
 ### luci-app-disks-info
