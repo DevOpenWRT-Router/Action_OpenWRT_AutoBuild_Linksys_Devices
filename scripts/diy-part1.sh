@@ -52,18 +52,6 @@ git clone https://github.com/qianmuyixiao/luci-app-wifimac.git package/luci-app-
 git clone https://github.com/koshev-msk/luci-app-telegrambot.git package/luci-app-telegrambot
 ### luci-app-observatory
 git clone https://gitlab.com/serenascopycats/luci-app-observatory.git package/luci-app-
-### luci-app-tn-ttyd
-git clone https://github.com/tano-systems/luci-app-tn-ttyd.git package/luci-app-tn-ttyd
-### luci-app-tn-watchdog
-git clone https://github.com/tano-systems/luci-app-tn-watchdog.git package/luci-app-tn-watchdog
-### luci-app-tn-logview
-git clone https://github.com/tano-systems/luci-app-tn-logview.git package/luci-app-tn-logview
-### luci-app-tn-snmpd
-git clone https://github.com/tano-systems/luci-app-tn-snmpd.git package/luci-app-tn-snmpd
-### luci-app-tn-shellinabox
-git clone https://github.com/tano-systems/luci-app-tn-shellinabox.git package/luci-app-tn-shellinabox
-### luci-app-tn-netports
-git clone https://github.com/tano-systems/luci-app-tn-netports.git package/luci-app-tn-netports
 ### luci-app-shortcutmenu
 git clone https://github.com/doushang/luci-app-shortcutmenu.git package/luci-app-shortcutmenu
 
@@ -81,14 +69,30 @@ git clone https://github.com/garypang13/luci-app-dnsfilter.git package/luci-app-
 git clone https://github.com/a920025608/luci-app-usbnet.git package/luci-app-usbnet
 git clone https://github.com/a920025608/usbnet.git package/usbnet
 
+### ----------------------------------------------------------------------------------------------------- ###
+#### TANO SYSTEMS: DONT USE:
+### luci-app-tn-ttyd
+# git clone https://github.com/tano-systems/luci-app-tn-ttyd.git package/luci-app-tn-ttyd
+### luci-app-tn-watchdog
+# git clone https://github.com/tano-systems/luci-app-tn-watchdog.git package/luci-app-tn-watchdog
+### luci-app-tn-logview
+# git clone https://github.com/tano-systems/luci-app-tn-logview.git package/luci-app-tn-logview
+### luci-app-tn-snmpd
+# git clone https://github.com/tano-systems/luci-app-tn-snmpd.git package/luci-app-tn-snmpd
+### luci-app-tn-shellinabox
+# git clone https://github.com/tano-systems/luci-app-tn-shellinabox.git package/luci-app-tn-shellinabox
+### luci-app-tn-netports
+# git clone https://github.com/tano-systems/luci-app-tn-netports.git package/luci-app-tn-netports
+### luci-theme-tano
+git clone https://github.com/tano-systems/luci-theme-tano.git package/luci-theme-tano
+### ----------------------------------------------------------------------------------------------------- ###
+
 ### ----------------------------------------------------------------------- ###
 ### THEMES ###
 ### new argon theme
 git clone -b master https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
 ### New argon theme control program
 git clone -b master https://github.com/jerrykuku/luci-app-argon-config.git package/luci-app-argon-config
-### luci-theme-tano
-git clone https://github.com/tano-systems/luci-theme-tano.git package/luci-theme-tano
 ### luci-theme-opentomcat
 git clone https://github.com/chaoxiaozhu/luci-theme-opentomcat.git package/luci-theme-opentomcat
 ### luci-theme-rosy
