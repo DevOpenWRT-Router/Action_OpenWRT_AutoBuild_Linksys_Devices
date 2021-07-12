@@ -27,6 +27,7 @@ svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-aliddns packa
 # svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-baidupcs-web package/sirpdboy/luci-app-baidupcs-web
 # svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-chinadns-ng package/sirpdboy/luci-app-chinadns-ng
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-control-timewol package/sirpdboy/luci-app-control-timewol
+svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-control-webrestriction package/sirpdboy/luci-app-control-webrestriction
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-control-weburl package/sirpdboy/luci-app-control-weburl
 # svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-cpulimit package/sirpdboy/luci-app-cpulimit
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-dnspod package/sirpdboy/luci-app-dnspod
