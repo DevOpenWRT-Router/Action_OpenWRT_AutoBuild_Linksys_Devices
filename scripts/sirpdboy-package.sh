@@ -52,7 +52,7 @@ svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-pushbot packa
 # svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-socat package/sirpdboy/luci-app-socat
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-switch-lan-play package/sirpdboy/luci-app-switch-lan-play
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-tencentddns package/sirpdboy/luci-app-tencentddns
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-timecontrol package/sirpdboy/luci-app-timecontrol
+# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-timecontrol package/sirpdboy/luci-app-timecontrol
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-wolplus package/sirpdboy/luci-app-wolplus
 # svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-wrtbwmon package/sirpdboy/luci-app-wrtbwmon
 # svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-argon_new package/sirpdboy/luci-theme-argon_new
