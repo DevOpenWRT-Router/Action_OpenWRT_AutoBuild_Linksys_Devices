@@ -56,6 +56,8 @@ git clone https://gitlab.com/serenascopycats/luci-app-observatory.git package/lu
 git clone https://github.com/tano-systems/luci-app-tn-ttyd.git package/luci-app-tn-ttyd
 ### luci-app-tn-watchdog
 git clone https://github.com/tano-systems/luci-app-tn-watchdog.git package/luci-app-tn-watchdog
+### luci-app-tn-logview
+git clone https://github.com/tano-systems/luci-app-tn-logview.git package/luci-app-tn-logview
 
 ### luci-app-diskman
 ## A Simple Disk Manager for LuCI, support disk partition and format, support raid / btrfs-raid / btrfs-snapshot
