@@ -12,380 +12,380 @@
 # Updated By Eliminater74
 ################################################################################
 
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/Adguardhome
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ChinaDNS
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/GoQuiet
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/UnblockNeteaseMusic
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/alsa-utils
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/amule
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/annie
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/antfs-mount
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/antileech
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/aria2
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ariang
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/atinout
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/autocore
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/automount
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/autosamba
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/baidupcs-web
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/bash
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/bc
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/bcm27xx-eeprom
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/boost
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/bpytop
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/brcmfmac4366c0-firmware-vendor
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/brook
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/btrfs-progs
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/cgroupfs-mount
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/chinadns-ng
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/cifs-utils
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/compressed-memory
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/containerd
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/coreutils
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/cpp-httplib
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/cpulimit-ng
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/cpulimit
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/csstidy
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/cxxopts
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ddns-scripts
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/default-settings
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/dns-forwarder
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/dns2socks
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/dnscrypt-proxy2
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/dnsforwarder
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/dnsmasq-china-list
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/docker
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/dockerd
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/dsmboot
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/duktape
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/dvb
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/etherwake
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/expat
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/fast-classifier
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/fcgi
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ffmpeg
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/filebrowser
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/filerun
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/forked-daapd
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/frp
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/fullconenat
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/glib2
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/gmediarender
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/gnunet
-svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/gost
-gotop
-gowebdav
-gstreamer1
-haproxy
-httping
-https-dns-proxy
-i2c-tools
-imagemagick
-ipset-lists
-ipt2socks-alt
-ipt2socks
-iptvhelper
-jpcre2
-k3-brcmfmac4366c-firmware
-k3screenctrl
-kcptun
-libcap
-libcryptopp
-libcups
-libev
-libgcrypt
-libgd
-libmaxminddb
-libnetwork
-libpam
-libpng
-libseccomp
-libssh2
-libtar
-libtorrent-rasterbar
-libunistring
-libupnp
-lm-sensors
-lua-cjson
-lua-maxminddb
-lua-md5
-luasec
-luasocket
-luci-app-accesscontrol
-luci-app-adguardhome
-luci-app-advanced
-luci-app-airplay2
-luci-app-airwhu
-luci-app-aliddns
-luci-app-amule
-luci-app-argon-config
-luci-app-arpbind
-luci-app-atinout
-luci-app-autoipsetadder
-luci-app-autopoweroff
-luci-app-autoreboot
-luci-app-autorepeater
-luci-app-baidupcs-web
-luci-app-beamInDocker
-luci-app-beardropper
-luci-app-brook-server
-luci-app-brook
-luci-app-bypass
-luci-app-cd8021x
-luci-app-chinadns-ng
-luci-app-chinadns
-luci-app-cifs-mount
-luci-app-cifs
-luci-app-cifsd
-luci-app-clash
-luci-app-compressed-memory
-luci-app-control-timewol
-luci-app-control-webrestriction
-luci-app-control-weburl
-luci-app-cpufreq
-luci-app-cpulimit
-luci-app-diskman
-luci-app-dnscrypt-proxy2
-luci-app-dnsfilter
-luci-app-dnsforwarder
-luci-app-dnsmasq-ipset
-luci-app-docker
-luci-app-dockerman
-luci-app-eqos
-luci-app-familycloud
-luci-app-fileassistant
-luci-app-filebrowser
-luci-app-filerun
-luci-app-filetransfer
-luci-app-frpc
-luci-app-frps
-luci-app-godproxy
-luci-app-gost
-luci-app-gowebdav
-luci-app-guest-wifi
-luci-app-haproxy-tcp
-luci-app-homebridge
-luci-app-ipsec-server
-luci-app-ipsec-vpnd
-luci-app-ipsec-vpnserver-manyusers
-luci-app-iptvhelper
-luci-app-jd-dailybonus
-luci-app-k3screenctrl
-luci-app-k3usb
-luci-app-kcptun
-luci-app-kodexplorer
-luci-app-mentohust
-luci-app-minieap
-luci-app-mtwifi
-luci-app-music-remote-center
-luci-app-mwan3helper
-luci-app-mwol
-luci-app-n2n_v2
-luci-app-naiveproxy
-luci-app-netdata
-luci-app-netkeeper-interception
-luci-app-nextdns
-luci-app-nfs
-luci-app-nft-qos
-luci-app-nginx-pingos
-luci-app-ngrokc
-luci-app-njitclient
-luci-app-nodogsplash
-luci-app-nps
-luci-app-oaf
-luci-app-oled
-luci-app-onliner
-luci-app-openclash
-luci-app-openvpn-server
-luci-app-oscam
-luci-app-passwall
-luci-app-pcap-dnsproxy
-luci-app-phtunnel
-luci-app-poweroff
-luci-app-pppoe-relay
-luci-app-pppoe-server
-luci-app-pptp-server
-luci-app-ps3netsrv
-luci-app-qbittorrent
-luci-app-ramfree
-luci-app-rclone
-luci-app-samba4
-luci-app-scutclient
-luci-app-serverchan
-luci-app-smartdns
-luci-app-smstool
-luci-app-socat
-luci-app-softethervpn5
-luci-app-speederv2
-luci-app-ssocks
-luci-app-ssr-libev-server
-luci-app-ssr-mudb-server
-luci-app-ssr-plus
-luci-app-ssrserver-python
-luci-app-syncdial
-luci-app-syncthing
-luci-app-sysuh3c
-luci-app-tcpdump
-luci-app-tencentddns
-luci-app-terminal
-luci-app-timecontrol
-luci-app-timewol
-luci-app-trojan-server
-luci-app-ttnode
-luci-app-ttyd
-luci-app-turboacc
-luci-app-udp2raw
-luci-app-unblockmusic
-luci-app-upnp
-luci-app-usb-printer
-luci-app-usb3disable
-luci-app-uugamebooster
-luci-app-v2ray-server
-luci-app-verysync
-luci-app-vlmcsd
-luci-app-vsftpd
-luci-app-vssr
-luci-app-webadmin
-luci-app-webrestriction
-luci-app-weburl
-luci-app-wifidog
-luci-app-wrtbwmon
-luci-app-xlnetacc
-luci-app-xunlei
-luci-app-zerotier
-luci-lib-docker
-luci-lib-fs
-luci-proto-bonding
-luci-proto-minieap
-luci-proto-netkeeper
-luci-theme-argon
-luci-theme-atmaterial
-luci-theme-bootstrap-blue
-luci-theme-bootstrap-mod
-luci-theme-edge
-luci-theme-infinityfreedom
-luci-theme-netgear
-luci-theme-opentomato
-luci-theme-opentomcat
-luci-theme-opentopd
-mentohust
-microsocks
-microsocks11
-minieap
-miniupnpd
-msgpack-c
-mt-drivers
-mt7601u-ap
-mtk-eip93
-mwan3
-mwol
-n2n_v2
-naiveproxy
-ndpi-netfilter
-net-snmp
-netdata
-netkeeper-interception
-netkeeper
-nextdns
-nfs-kernel-server
-nft-qos
-nginx
-ngrokc
-njitclient
-node-request
-node
-nps
-ntfs-3g
-oaf
-ootoc
-open-app-filter
-open-vm-tools
-openldap
-openssl1.1
-openvpn-easy-rsa-whisky
-openvpn
-openwrt-Pcap_DNSProxy
-openwrt-dnsforwarder
-openwrt-pdnsd-full
-openwrt-shadowvpn-master
-openwrt-udp2raw
-oscam
-p7zip
-pandownload-fake-server
-parted
-pcre2
-pdnsd-alt
-phicomm-k3screenctrl
-php7
-phtunnel
-polarssl
-proxychains-ng
-ps3netsrv
-python3
-qBittorrent-Enhanced-Edition
-qBittorrent
-quickjs
-r8125
-r8152
-r8168
-rapidjson
-rblibtorrent
-rclone-ng
-rclone-webui-react
-rclone
-redsocks2
-rtl8192du
-rtl8812au-ac
-rtl8821cu
-rtl88x2bu
-ruby
-runc
-samba4
-scutclient
-shadowsocks-libev
-shadowsocksr-libev
-shairport-sync
-shellsync
-shortcut-fe
-simple-obfs
-simple-torrent
-smartdns
-smartmontools
-softethervpn5
-spawn-fcgi
-sqm-scripts
-srelay
-ssocks
-strongswan
-sub-web
-subconverter
-subweb
-sysuh3c
-tcping-simple
-tcping
-tcpping
-tini
-tinyfecvpn
-tinyportmapper
-tmate
-trojan-go
-trojan-plus
-trojan
-ttyd
-udpspeeder
-unzip
-uugamebooster
-v2ray-plugin
-v2ray
-verysync
-vlmcsd
-vsftpd-alt
-vssr
-webdav-go
-wget
-wol
-wrtbwmon
-wsdd2
-wxbase
-xray-core
-zoneinfo
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/Adguardhome package/tcsr200722/Adguardhome
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ChinaDNS package/tcsr200722/ChinaDNS
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/GoQuiet package/tcsr200722/GoQuiet
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/UnblockNeteaseMusic package/tcsr200722/UnblockNeteaseMusic
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/alsa-utils package/tcsr200722/alsa-utils
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/amule package/tcsr200722/amule
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/annie package/tcsr200722/annie
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/antfs-mount package/tcsr200722/antfs-mount
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/antileech package/tcsr200722/antileech
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/aria2 package/tcsr200722/aria2
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ariang package/tcsr200722/ariang
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/atinout package/tcsr200722/atinou
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/autocore package/tcsr200722/autocor
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/automount package/tcsr200722/automoun
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/autosamba package/tcsr200722/autosamba
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/baidupcs-web package/tcsr200722/baidupcs-web
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/bash package/tcsr200722/bash
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/bc package/tcsr200722/bc
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/bcm27xx-eeprom package/tcsr200722/bcm27xx-eeprom
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/boost package/tcsr200722/boost
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/bpytop package/tcsr200722/bpytop
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/brcmfmac4366c0-firmware-vendor package/tcsr200722/brcmfmac4366c0-firmware-vendor
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/brook package/tcsr200722/brook
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/btrfs-progs package/tcsr200722/btrfs-progs
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/cgroupfs-mount package/tcsr200722/cgroupfs-mount
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/chinadns-ng package/tcsr200722/chinadns-ng
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/cifs-utils package/tcsr200722/cifs-utils
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/compressed-memory package/tcsr200722/compressed-memory
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/containerd package/tcsr200722/containerd
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/coreutils package/tcsr200722/coreutils
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/cpp-httplib package/tcsr200722/cpp-httplib
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/cpulimit-ng package/tcsr200722/cpulimit-ng
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/cpulimit package/tcsr200722/cpulimit
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/csstidy package/tcsr200722/csstidy
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/cxxopts package/tcsr200722/cxxopts
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ddns-scripts package/tcsr200722/ddns-scripts
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/default-settings package/tcsr200722/default-settings
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/dns-forwarder package/tcsr200722/dns-forwarder
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/dns2socks package/tcsr200722/dns2socks
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/dnscrypt-proxy2 package/tcsr200722/dnscrypt-proxy2
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/dnsforwarder package/tcsr200722/dnsforwarder
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/dnsmasq-china-list package/tcsr200722/dnsmasq-china-list
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/docker package/tcsr200722/docker
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/dockerd package/tcsr200722/dockerd
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/dsmboot package/tcsr200722/dsmboot
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/duktape package/tcsr200722/duktape
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/dvb package/tcsr200722/dvb
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/etherwake package/tcsr200722/etherwake
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/expat package/tcsr200722/expat
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/fast-classifier package/tcsr200722/fast-classifier
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/fcgi package/tcsr200722/fcgi
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ffmpeg package/tcsr200722/ffmpeg
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/filebrowser package/tcsr200722/filebrowser
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/filerun package/tcsr200722/filerun
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/forked-daapd package/tcsr200722/forked-daap
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/frp package/tcsr200722/frp
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/fullconenat package/tcsr200722/fullconenat
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/glib2 package/tcsr200722/glib2
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/gmediarender package/tcsr200722/gmediarender
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/gnunet package/tcsr200722/gnunet
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/gost package/tcsr200722/gost
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/gotop package/tcsr200722/gotop
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/gowebdav package/tcsr200722/gowebdav
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/gstreamer1 package/tcsr200722/gstreamer1
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/haproxy package/tcsr200722/haproxy
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/httping package/tcsr200722/httping
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/https-dns-proxy package/tcsr200722/https-dns-proxy
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/i2c-tools package/tcsr200722/i2c-tools
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/imagemagick package/tcsr200722/imagemagick
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ipset-lists package/tcsr200722/ipset-lists
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ipt2socks-alt package/tcsr200722/ipt2socks-alt
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ipt2socks package/tcsr200722/ipt2socks
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/iptvhelper package/tcsr200722/iptvhelper
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/jpcre2 package/tcsr200722/jpcre2
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/k3-brcmfmac4366c-firmware package/tcsr200722/k3-brcmfmac4366c-firmware
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/k3screenctrl package/tcsr200722/k3screenctrl
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/kcptun package/tcsr200722/kcptun
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/libcap package/tcsr200722/libcap
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/libcryptopp package/tcsr200722/libcryptopp
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/libcups package/tcsr200722/libcups
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/libev package/tcsr200722/libev
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/libgcrypt package/tcsr200722/libgcrypt
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/libgd package/tcsr200722/libgd
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/libmaxminddb package/tcsr200722/libmaxmindd
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/libnetwork package/tcsr200722/libnetwork
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/libpam package/tcsr200722/libpam
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/libpng package/tcsr200722/libpng
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/libseccomp package/tcsr200722/libseccomp
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/libssh2 package/tcsr200722/libssh2
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/libtar package/tcsr200722/libtar
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/libtorrent-rasterbar package/tcsr200722/libtorrent-rasterbar
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/libunistring package/tcsr200722/libunistring
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/libupnp package/tcsr200722/libupnp
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/lm-sensors package/tcsr200722/lm-sensors
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/lua-cjson package/tcsr200722/lua-cjson
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/lua-maxminddb package/tcsr200722/lua-maxminddb
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/lua-md5 package/tcsr200722/lua-md5
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luasec package/tcsr200722/luasec
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luasocket package/tcsr200722/luasocket
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-accesscontrol package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-adguardhome package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-advanced package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-airplay2 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-airwhu package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-aliddns package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-amule package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-argon-config package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-arpbind package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-atinout package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-autoipsetadder package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-autopoweroff package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-autoreboot package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-autorepeater package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-baidupcs-web package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-beamInDocker package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-beardropper package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-brook-server package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-brook package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-bypass package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-cd8021x package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-chinadns-ng package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-chinadns package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-cifs-mount package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-cifs package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-cifsd package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-clash package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-compressed-memory package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-control-timewol package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-control-webrestriction package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-control-weburl package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-cpufreq package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-cpulimit package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-diskman package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-dnscrypt-proxy2 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-dnsfilter package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-dnsforwarder package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-dnsmasq-ipset package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-docker package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-dockerman package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-eqos package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-familycloud package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-fileassistant package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-filebrowser package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-filerun package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-filetransfer package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-frpc package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-frps package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-godproxy package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-gost package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-gowebdav package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-guest-wifi package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-haproxy-tcp package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-homebridge package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-ipsec-server package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-ipsec-vpnd package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-ipsec-vpnserver-manyusers package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-iptvhelper package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-jd-dailybonus package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-k3screenctrl package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-k3usb package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-kcptun package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-kodexplorer package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-mentohust package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-minieap package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-mtwifi package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-music-remote-center package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-mwan3helper package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-mwol package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-n2n_v2 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-naiveproxy package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-netdata package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-netkeeper-interception package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-nextdns package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-nfs package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-nft-qos package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-nginx-pingos package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-ngrokc package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-njitclient package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-nodogsplash package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-nps package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-oaf package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-oled package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-onliner package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-openclash package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-openvpn-server package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-oscam package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-passwall package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-pcap-dnsproxy package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-phtunnel package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-poweroff package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-pppoe-relay package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-pppoe-server package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-pptp-server package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-ps3netsrv package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-qbittorrent package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-ramfree package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-rclone package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-samba4 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-scutclient package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-serverchan package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-smartdns package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-smstool package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-socat package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-softethervpn5 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-speederv2 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-ssocks package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-ssr-libev-server package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-ssr-mudb-server package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-ssr-plus package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-ssrserver-python package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-syncdial package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-syncthing package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-sysuh3c package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-tcpdump package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-tencentddns package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-terminal package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-timecontrol package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-timewol package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-trojan-server package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-ttnode package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-ttyd package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-turboacc package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-udp2raw package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-unblockmusic package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-upnp package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-usb-printer package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-usb3disable package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-uugamebooster package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-v2ray-server package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-verysync package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-vlmcsd package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-vsftpd package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-vssr package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-webadmin package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-webrestriction package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-weburl package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-wifidog package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-wrtbwmon package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-xlnetacc package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-xunlei package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-app-zerotier package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-lib-docker package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-lib-fs package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-proto-bonding package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-proto-minieap package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-proto-netkeeper package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-theme-argon package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-theme-atmaterial package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-theme-bootstrap-blue package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-theme-bootstrap-mod package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-theme-edge package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-theme-infinityfreedom package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-theme-netgear package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-theme-opentomato package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-theme-opentomcat package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/luci-theme-opentopd package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/mentohust package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/microsocks package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/microsocks11 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/minieap package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/miniupnpd package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/msgpack-c package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/mt-drivers package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/mt7601u-ap package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/mtk-eip93 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/mwan3 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/mwol package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/n2n_v2 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/naiveproxy package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ndpi-netfilter package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/net-snmp package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/netdata package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/netkeeper-interception package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/netkeeper package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/nextdns package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/nfs-kernel-server package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/nft-qos package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/nginx package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ngrokc package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/njitclient package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/node-request package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/node package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/nps package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ntfs-3g package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/oaf package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ootoc package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/open-app-filter package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/open-vm-tools package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/openldap package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/openssl1.1 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/openvpn-easy-rsa-whisky package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/openvpn package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/openwrt-Pcap_DNSProxy package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/openwrt-dnsforwarder package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/openwrt-pdnsd-full package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/openwrt-shadowvpn-master package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/openwrt-udp2raw package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/oscam package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/p7zip package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/pandownload-fake-server package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/parted package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/pcre2 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/pdnsd-alt package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/phicomm-k3screenctrl package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/php7 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/phtunnel package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/polarssl package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/proxychains-ng package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ps3netsrv package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/python3 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/qBittorrent-Enhanced-Edition package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/qBittorrent package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/quickjs package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/r8125 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/r8152 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/r8168 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/rapidjson package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/rblibtorrent package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/rclone-ng package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/rclone-webui-react package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/rclone package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/redsocks2 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/rtl8192du package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/rtl8812au-ac package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/rtl8821cu package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/rtl88x2bu package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ruby package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/runc package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/samba4 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/scutclient package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/shadowsocks-libev package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/shadowsocksr-libev package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/shairport-sync package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/shellsync package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/shortcut-fe package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/simple-obfs package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/simple-torrent package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/smartdns package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/smartmontools package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/softethervpn5 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/spawn-fcgi package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/sqm-scripts package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/srelay package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ssocks package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/strongswan package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/sub-web package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/subconverter package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/subweb package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/sysuh3c package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/tcping-simple package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/tcping package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/tcpping package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/tini package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/tinyfecvpn package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/tinyportmapper package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/tmate package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/trojan-go package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/trojan-plus package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/trojan package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/ttyd package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/udpspeeder package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/unzip package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/uugamebooster package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/v2ray-plugin package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/v2ray package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/verysync package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/vlmcsd package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/vsftpd-alt package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/vssr package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/webdav-go package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/wget package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/wol package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/wrtbwmon package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/wsdd2 package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/wxbase package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/xray-core package/tcsr200722/
+svn co https://github.com/tcsr200722/openwrt-luci-app/trunk/zoneinfo package/tcsr200722/
