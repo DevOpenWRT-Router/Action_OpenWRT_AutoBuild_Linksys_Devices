@@ -378,13 +378,6 @@ jobs:
         let make_process=$(nproc)+2
         make target/compile -j${make_process} V=s || make -j1 V=s 2>&1 | tee logs/build.log | grep -i -E "^make.*(error|[12345]...Entering directory)"
 
-    - name: Kernel Version
-      id: kernelversion
-      if: env.KMODS == 'true' && !cancelled()
-      run: |
-        chmod +x scripts/$KERNEL_VERSION
-        /bin/bash ${GITHUB_WORKSPACE}/scripts/kernel_version.sh
-
     - name: Building packages
       id: makepackages
       if: env.BUILD_PACKAGES == 'true' && !cancelled()
@@ -402,6 +395,13 @@ jobs:
         cd openwrt
         let make_process=$(nproc)+2
         make package/install -j${make_process} V=s
+
+    - name: Kernel Version
+      id: kernelversion
+      if: env.KMODS == 'true' && !cancelled()
+      run: |
+        chmod +x scripts/$KERNEL_VERSION
+        /bin/bash ${GITHUB_WORKSPACE}/scripts/kernel_version.sh
 
     - name: Indexing packages
       id: indexingpackages
