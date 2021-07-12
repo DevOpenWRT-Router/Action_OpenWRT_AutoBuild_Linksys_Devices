@@ -85,6 +85,8 @@ git clone https://github.com/a920025608/usbnet.git package/usbnet
 git clone -b master https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
 ### New argon theme control program
 git clone -b master https://github.com/jerrykuku/luci-app-argon-config.git package/luci-app-argon-config
+### luci-theme-tano
+git clone https://github.com/tano-systems/luci-theme-tano.git package/luci-theme-tano
 ### luci-theme-opentomcat
 git clone https://github.com/chaoxiaozhu/luci-theme-opentomcat.git package/luci-theme-opentomcat
 ### luci-theme-rosy
