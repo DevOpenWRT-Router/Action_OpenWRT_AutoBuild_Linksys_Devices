@@ -56,7 +56,6 @@ env:
   DEBUG_COMPILE: false
   IGNORE_COMPILE: false
   KMODS: true
-  EXT_ENV: false
   CONVERT_TRANSLATION: false
   ACL_LUCI: true
   RUN_BEFORE_BUILD: false
@@ -125,13 +124,6 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
-
-    - name: External Initialization environment
-      if: env.EXT_ENV == 'true' && !cancelled()
-      run: |
-        echo "Running External Environment."
-        chmod +x scripts/$EXT_INIT_ENV
-        /bin/bash ${GITHUB_WORKSPACE}/scripts/environment.sh
 
     - name: Set .config
       id: setConfig
