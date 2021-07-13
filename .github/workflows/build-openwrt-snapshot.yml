@@ -354,7 +354,7 @@ jobs:
         df -h
         cd openwrt
         let make_process=$(nproc)+2
-        make package/install -j${make_process} || make tools/tar/compile -j${make_process} V=s 2>&1 | tee logs/build.log | grep -i -E "^make.*(error|[12345]...Entering directory)"
+        make tools/tar/compile -j${make_process} V=s
 
     - name: Building and installing tools
       id: maketools
@@ -362,7 +362,7 @@ jobs:
         df -h
         cd openwrt
         let make_process=$(nproc)+2
-        make tools/install -j${make_process} || make tools/install -j${make_process} V=s 2>&1 | tee logs/build.log | grep -i -E "^make.*(error|[12345]...Entering directory)"
+        make tools/install -j${make_process} V=s
 
     - name: Building and installing toolchain
       id: maketoolchain
@@ -370,7 +370,7 @@ jobs:
         df -h
         cd openwrt
         let make_process=$(nproc)+2
-        make toolchain/install -j${make_process} || make toolchain/install -j${make_process} V=s 2>&1 | tee logs/build.log | grep -i -E "^make.*(error|[12345]...Entering directory)"
+        make toolchain/install -j${make_process} V=s
 
     - name: Building kmods
       id: makekmods
@@ -379,7 +379,7 @@ jobs:
         df -h
         cd openwrt
         let make_process=$(nproc)+2
-        make target/compile -j${make_process} || make target/compile -j${make_process} V=s 2>&1 | tee logs/build.log | grep -i -E "^make.*(error|[12345]...Entering directory)"
+        make target/compile -j${make_process} V=s
 
     - name: Building packages
       id: makepackages
