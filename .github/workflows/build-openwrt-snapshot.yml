@@ -26,7 +26,7 @@ on:
         required: true
         default: '0'
       sshd:
-        description: '[0] NONE [1] SSH, [2] NGROK SSH [3] SSH After Build'
+        description: '[0] NONE [1] TMATE SSH, [2] NGROK SSH [3] SSH After Build'
         required: true
         default: '0'
 #  schedule:
@@ -306,20 +306,31 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/scripts/create_acl_for_luci.sh -a
 
-    - name: SSH connection to Actions
-      uses: DevOpenWRT-Router/ssh2actions@v1.0.0
+    - name: Start SSH via tmate
+      uses: P3TERX/ssh2actions@main
       if: (env.SSH == 'true' && !cancelled() && env.SSH != 'false') || contains(github.event.action, 'ssh')
+      # Send connection info to Telegram (optional)
+      # You can find related documents here: https://core.telegram.org/bots
       env:
-        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
-    - name: NGROK SSH connection to Actions
-      uses: DevOpenWRT-Router/ssh2actions@v1.0.0
+    - name: Start SSH via ngrok
+      uses: P3TERX/ssh2actions@main
       if: (env.SSH_NGROK == 'true' && !cancelled() && env.SSH_NGROK != 'false') || contains(github.event.action, 'ssh')
+      with:
+        mode: ngrok
       env:
+        # After sign up on the https://ngrok.com
+        # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
         NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
-        NGROK_REGION: jp
+        # ngrok server region [us, eu, au, ap, sa, jp, in] (optional, default: us)
+        # You can find this server region here: https://ngrok.com/docs#global-locations
+        NGROK_REGION: us
+        # This password you will use when authorizing via SSH
         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+        # Send connection info to Telegram (optional)
+        # You can find related documents here: https://core.telegram.org/bots
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
