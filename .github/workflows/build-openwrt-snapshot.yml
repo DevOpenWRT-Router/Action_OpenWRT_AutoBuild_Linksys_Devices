@@ -56,7 +56,6 @@ env:
   DEBUG_COMPILE: false
   IGNORE_COMPILE: false
   KMODS: true
-  CONVERT_TRANSLATION: false
   ACL_LUCI: true
   RUN_BEFORE_BUILD: false
   RUN_AFTER_BUILD: false
@@ -283,13 +282,6 @@ jobs:
         chmod +x scripts/$DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/scripts/$DIY_P2_SH
-
-    - name: Convert Translation
-      if: env.CONVERT_TRANSLATION == 'true' && !cancelled()
-      run: |
-        chmod +x scripts/convert_translation.sh
-        cd openwrt
-        $GITHUB_WORKSPACE/scripts/convert_translation.sh
 
     - name: Add ACL
       if: env.ACL_LUCI == 'true' && !cancelled()
