@@ -32,8 +32,9 @@ echo "------------------------------------------------"
 echo "------------------------------------------------"
 cd $TARGET_DIR
 mkdir -p kmods/$KMOD_DIR
-rsync '--include=/kmod-*.ipk' '--exclude=*' -va $TARGET_DIR/packages $TARGET_DIR/kmods/$KMOD_DIR
-echo "rsync '--include=/kmod-*.ipk' '--exclude=*' -va $TARGET_DIR/packages $TARGET_DIR/kmods/$KMOD_DIR"
+#rsync '--include=/kmod-*.ipk' '--exclude=*' -va $TARGET_DIR/packages $TARGET_DIR/kmods/$KMOD_DIR
+rsync '--include=/kmod-*.ipk' '--exclude=*' -va bin/targets/mvebu/cortexa9/packages bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR
+#echo "rsync '--include=/kmod-*.ipk' '--exclude=*' -va $TARGET_DIR/packages $TARGET_DIR/kmods/$KMOD_DIR"
 cd ${GITHUB_WORKSPACE}/openwrt
 make -j1 package/index V=s CONFIG_SIGNED_PACKAGES= PACKAGE_SUBDIRS=$TARGET_DIR/kmods/$KMOD_DIR
 cd $TARGET_DIR/kmods/$KMOD_DIR
