@@ -25,7 +25,7 @@ git clone https://github.com/DevOpenWRT-Router/luci-app-cpu-status.git package/l
 ### luci-app-temp-status
 git clone https://github.com/DevOpenWRT-Router/luci-app-temp-status.git package/luci-app-temp-status
 ### luci-app-rebootschedule
-# git clone https://github.com/DevOpenWRT-Router/luci-app-rebootschedule.git package/luci-app-rebootschedule
+git clone https://github.com/DevOpenWRT-Router/luci-app-rebootschedule.git package/luci-app-rebootschedule
 ### luci-app-timecontrol
 git clone https://github.com/DevOpenWRT-Router/luci-app-timecontrol.git package/luci-app-timecontrol
 ### luci-app-cpulimit

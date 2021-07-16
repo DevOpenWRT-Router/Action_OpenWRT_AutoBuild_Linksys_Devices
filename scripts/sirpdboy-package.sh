@@ -48,7 +48,7 @@ svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-pppoe-server 
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-pptp-server package/sirpdboy/luci-app-pptp-server
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-pushbot package/sirpdboy/luci-app-pushbot
 # svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-ramfree package/sirpdboy/luci-app-ramfree
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-rebootschedule package/sirpdboy/luci-app-rebootschedule
+# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-rebootschedule package/sirpdboy/luci-app-rebootschedule
 # svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-smartdns package/sirpdboy/luci-app-smartdns
 # svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-socat package/sirpdboy/luci-app-socat
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-switch-lan-play package/sirpdboy/luci-app-switch-lan-play
