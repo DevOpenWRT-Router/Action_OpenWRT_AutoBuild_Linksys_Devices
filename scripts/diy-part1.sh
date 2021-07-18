@@ -46,24 +46,6 @@ git clone https://github.com/garypang13/luci-app-dnsfilter.git package/luci-app-
 git clone https://github.com/a920025608/luci-app-usbnet.git package/luci-app-usbnet
 git clone https://github.com/a920025608/usbnet.git package/usbnet
 
-### ----------------------------------------------------------------------------------------------------- ###
-#### TANO SYSTEMS: DONT USE:
-### luci-app-tn-ttyd
-# git clone https://github.com/tano-systems/luci-app-tn-ttyd.git package/luci-app-tn-ttyd
-### luci-app-tn-watchdog
-# git clone https://github.com/tano-systems/luci-app-tn-watchdog.git package/luci-app-tn-watchdog
-### luci-app-tn-logview
-# git clone https://github.com/tano-systems/luci-app-tn-logview.git package/luci-app-tn-logview
-### luci-app-tn-snmpd
-# git clone https://github.com/tano-systems/luci-app-tn-snmpd.git package/luci-app-tn-snmpd
-### luci-app-tn-shellinabox
-# git clone https://github.com/tano-systems/luci-app-tn-shellinabox.git package/luci-app-tn-shellinabox
-### luci-app-tn-netports
-# git clone https://github.com/tano-systems/luci-app-tn-netports.git package/luci-app-tn-netports
-### luci-theme-tano
-git clone https://github.com/tano-systems/luci-theme-tano.git package/luci-theme-tano
-### ----------------------------------------------------------------------------------------------------- ###
-
 ### ----------------------------------------------------------------------- ###
 ### THEMES ###
 ### new argon theme
@@ -71,31 +53,31 @@ git clone -b master https://github.com/jerrykuku/luci-theme-argon.git package/lu
 ### New argon theme control program
 git clone -b master https://github.com/jerrykuku/luci-app-argon-config.git package/luci-app-argon-config
 ### luci-theme-opentomcat
-git clone https://github.com/chaoxiaozhu/luci-theme-opentomcat.git package/luci-theme-opentomcat
+# git clone https://github.com/chaoxiaozhu/luci-theme-opentomcat.git package/luci-theme-opentomcat
 ### luci-theme-rosy
-git clone https://github.com/rosywrt/luci-theme-rosy.git package/luci-theme-rosy
+# git clone https://github.com/rosywrt/luci-theme-rosy.git package/luci-theme-rosy
 ### luci-theme-netgear
-git clone https://github.com/ysoyipek/luci-theme-netgear.git package/luci-theme-netgear
+# git clone https://github.com/ysoyipek/luci-theme-netgear.git package/luci-theme-netgear
 ### luci-theme-edge2 ###
-#git clone -b main https://github.com/YL2209/luci-theme-edge2.git package/luci-theme-edge2
+# git clone -b main https://github.com/YL2209/luci-theme-edge2.git package/luci-theme-edge2
 ### luci-theme-opentopd thme openwrt theme
-#git clone https://github.com/sirpdboy/luci-theme-opentopd.git package/luci-theme-opentopd
+# git clone https://github.com/sirpdboy/luci-theme-opentopd.git package/luci-theme-opentopd
 ### btmod theme
-#git clone https://github.com/sirpdboy/luci-theme-btmod.git package/luci-theme-btmob
+# git clone https://github.com/sirpdboy/luci-theme-btmod.git package/luci-theme-btmob
 ### luci-theme-opentomcat
-#git clone https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
+# git clone https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
 ### luci-theme-netgear
-#git clone https://github.com/i028/luci-theme-netgear.git package/luci-theme-netgear
+# git clone https://github.com/i028/luci-theme-netgear.git package/luci-theme-netgear
 ### luci-theme-ifit
-#git clone https://github.com/YL2209/luci-theme-ifit.git package/luci-theme-ifit
+# git clone https://github.com/YL2209/luci-theme-ifit.git package/luci-theme-ifit
 ### luci-theme-surfboard
-#git clone https://github.com/SURFBOARD-ONE/luci-theme-surfboard.git package/luci-theme-surfboard
+# git clone https://github.com/SURFBOARD-ONE/luci-theme-surfboard.git package/luci-theme-surfboard
 ### luci-theme-atmaterial
-#git clone https://github.com/miccjing/luci-theme-atmaterial.git package/luci-theme-atmaterial
+# git clone https://github.com/miccjing/luci-theme-atmaterial.git package/luci-theme-atmaterial
 ### luci-theme-mcat
-#git clone https://github.com/fszok/luci-theme-mcat.git package/luci-theme-mcat
+# git clone https://github.com/fszok/luci-theme-mcat.git package/luci-theme-mcat
 ### luci-theme-fate
-#git clone https://github.com/fatelpc/luci-theme-fate.git package/luci-theme-fate
+# git clone https://github.com/fatelpc/luci-theme-fate.git package/luci-theme-fate
 ### ----------------------------------------------------------------------- ###
 
 
