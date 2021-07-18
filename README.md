@@ -4,34 +4,34 @@
 ## Original from [P3TERX](https://github.com/P3TERX/Actions-OpenWrt)
 ### Created to make building OpenWRT easier using github actions.
 
-Changelog:
-
-1. Added configs Directory
-2. Added scripts directory
-3. Added update, install, uninstall feeds config txt files
-4. Added ability to choose openwrt snapshot or official as well as LED source firmware builds
-5. Added Upload to GOFILE
-6. Added Upload to LITTERBOX
-7. Added Upload to CATBOX
-8. Added Upload to FILEIO
-9. Can create buildlog.txt and upload it
-10. Added build in standard, debugging or ignore all errors mode
-11. Move upload logs section and try and fix it
-12. Added sync from [coolsnowwolf/lede](https://github.com/coolsnowwolf/lede) package/Lean
-13. Same as above but synced from package/libs/libdouble-conversion
-14. Same as above but synced from package/kernel/mwlwifi
 
 ![LinksysWRT3200ACM](images/2021/06/linksys-wrt3200acm.jpg)
 
-![GitHub Downloads](https://img.shields.io/github/downloads/DevOpenWRT-Router/Actions_Build-00_LinksysWRT3200ACM-Private/total?label=Total%20Downloads)
+![GitHub Downloads](https://img.shields.io/github/release-date/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices?style=plastic)
 
+### Latest Release Downloads:
+![GitHub Downloads](https://img.shields.io/github/downloads/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/latest/total?style=for-the-badge)
+
+### Total Downloads:
+![GitHub Downloads](https://img.shields.io/github/downloads/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/total?style=for-the-badge)
 # Actions-OpenWrt
 
+[![Visits Badge](https://badges.pufler.dev/visits/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices)](https://badges.pufler.dev)
+
+[![Cleaning](https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/actions/workflows/cleanup.yml/badge.svg)](https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/actions/workflows/cleanup.yml)
+
+[![Build OpenWrt Snapshot (TESTING)](https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/actions/workflows/build-openwrt-snapshot.yml/badge.svg)](https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/actions/workflows/build-openwrt-snapshot.yml)
+
+[![Build OpenWrt Snapshot (TESTING)](https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/actions/workflows/build-openwrt-snapshot.yml/badge.svg?branch=linksys&event=workflow_run)](https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/actions/workflows/build-openwrt-snapshot.yml)
+
+### Repo Updated:
+[![Updated Badge](https://badges.pufler.dev/updated/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices)](https://badges.pufler.dev)
+
+![Your Repository’s Stats](https://github-readme-stats.vercel.app/api?username=Eliminater74&show_icons=true)
+--------------------------------------------------------------------
 
 
-
-
-`Build OpenWrt using GitHub Actions
+Build OpenWrt using GitHub Actions
 
 [Instructions (Use Translater)](https://p3terx.com/archives/build-openwrt-with-github-actions.html)
 
