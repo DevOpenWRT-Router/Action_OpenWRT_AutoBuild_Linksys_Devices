@@ -28,7 +28,7 @@ git clone https://github.com/qianmuyixiao/luci-app-wifimac.git package/luci-app-
 ### luci-app-telegrambot
 git clone https://github.com/koshev-msk/luci-app-telegrambot.git package/luci-app-telegrambot
 ### luci-app-observatory
-git clone https://gitlab.com/serenascopycats/luci-app-observatory.git package/luci-app-
+git clone https://gitlab.com/serenascopycats/luci-app-observatory.git package/luci-app-observatory
 ### luci-app-shortcutmenu
 git clone https://github.com/doushang/luci-app-shortcutmenu.git package/luci-app-shortcutmenu
 
