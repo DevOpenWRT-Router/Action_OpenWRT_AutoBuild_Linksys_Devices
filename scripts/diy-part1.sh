@@ -20,6 +20,8 @@
 git clone https://github.com/DevOpenWRT-Router/luci-app-log.git package/luci-app-log
 ### luci-app-tn-logview
 git clone https://github.com/DevOpenWRT-Router/luci-app-tn-logview.git package/luci-app-tn-logview
+### luci-app-tn-ttyd
+git clone https://github.com/DevOpenWRT-Router/luci-app-tn-ttyd.git package/luci-app-tn-ttyd
 ### luci-app-interfaces-statistics
 git clone https://github.com/DevOpenWRT-Router/luci-app-interfaces-statistics.git package/luci-app-interfaces-statistics
 ### luci-app-cpu-status
