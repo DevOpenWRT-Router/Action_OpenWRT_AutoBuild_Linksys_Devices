@@ -24,6 +24,8 @@ git clone https://github.com/DevOpenWRT-Router/luci-app-tn-logview.git package/l
 git clone https://github.com/DevOpenWRT-Router/luci-app-tn-ttyd.git package/luci-app-tn-ttyd
 ### luci-app-tn-shellinabox
 git clone https://github.com/DevOpenWRT-Router/luci-app-tn-shellinabox.git package/luci-app-tn-shellinabox
+### luci-app-tn-watchdog
+git clone https://github.com/DevOpenWRT-Router/luci-app-tn-watchdog.git package/luci-app-tn-watchdog
 ### luci-app-interfaces-statistics
 git clone https://github.com/DevOpenWRT-Router/luci-app-interfaces-statistics.git package/luci-app-interfaces-statistics
 ### luci-app-cpu-status
