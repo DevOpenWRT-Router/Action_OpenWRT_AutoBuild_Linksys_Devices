@@ -42,6 +42,7 @@ env:
   EXT_INIT_ENV: environment.sh
   USE_FILES: true
   USE_DIYP2: true
+  USE_PATCHES: true
   USE_DEVOPENWRT: true
   USE_COOLSNOWWOLF: true
   USE_SIRPDBOY: true
@@ -274,6 +275,13 @@ jobs:
     - name: Copy (.config)
       run: |
         [ -e configs/${{ steps.setConfig.outputs.hardwareString }} ] && mv configs/${{ steps.setConfig.outputs.hardwareString }} openwrt/.config
+
+    - name: Run Custom Patches
+      if: env.USE_PATCHES == 'true' && !cancelled()
+      run: |
+        mv configs/patches openwrt/patches
+        cd openwrt
+        git am patches/*.patch
 
     - name: Smart chmod
       run: |
