@@ -40,6 +40,7 @@
 ./scripts/feeds install -a
 ./scripts/feeds uninstall bluld
 cp wrt3200acm.config .config
+git am patches/*.patch
 ./diy-part2.sh
 make menuconfig
 exit 0
