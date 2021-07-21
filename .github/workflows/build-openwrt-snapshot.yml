@@ -25,6 +25,12 @@ on:
         description: '[0] Snapshot [1] openwrt-19.07 [2] openwrt-21.02 [3] lede'
         required: true
         default: '0'
+      lucisource:
+        description: |
+          'LUCI Feeds Location:'
+          '[0] Snapshot [1] openwrt-19.07 [2] openwrt-21.02 [3] lede'
+        required: true
+        default: '0'
       sshd:
         description: '[0] NONE [1] TMATE SSH, [2] NGROK SSH [3] SSH After Build'
         required: true
@@ -227,6 +233,26 @@ jobs:
         chmod +x scripts/$DIY_P1_SH
         cd openwrt
         $GITHUB_WORKSPACE/scripts/$DIY_P1_SH
+
+    - name: Set LUCI Source
+      id: setLuci
+      run: |
+        if [[ "${{ github.event.inputs.lucisource }}" == "0" ]]; then
+            cd openwrt
+            sed -i 's#/git.openwrt.org/project/luci.git#/git.openwrt.org/project/luci.git#g' feeds.conf.default
+            sed -i 's#/github.com/coolsnowwolf/luci#/git.openwrt.org/project/luci.git#g' feeds.conf.default
+        fi
+        if [[ "${{ github.event.inputs.lucisource }}" == "1" ]]; then
+            echo "NOT IMPLANTED"
+        fi
+        if [[ "${{ github.event.inputs.lucisource }}" == "2" ]]; then
+            echo "NOT IMPLANTED"
+        fi
+        if [[ "${{ github.event.inputs.lucisource }}" == "3" ]]; then
+            cd openwrt
+            sed -i 's#/github.com/coolsnowwolf/luci#/github.com/coolsnowwolf/luci#g' feeds.conf.default
+            sed -i 's#/git.openwrt.org/project/luci.git#/github.com/coolsnowwolf/luci#g' feeds.conf.default
+        fi
 
     - name: Load DevOpenWRT-Router's Packages
 
