@@ -4,9 +4,13 @@
 ## Original from [P3TERX](https://github.com/P3TERX/Actions-OpenWrt)
 ### Created to make building OpenWRT easier using github actions.
 
-
 ![LinksysWRT3200ACM](images/2021/06/linksys-wrt3200acm.jpg)
 
+## Notes:
+- Patches directory are taken from: [Divested-WRT: UNOFFICIAL OpenWrt builds](https://divested.dev/unofficial-openwrt-builds/mvebu-linksys/patches/)
+- mwlwifi is taken from: [Lean's Openwrt source code repository](https://github.com/coolsnowwolf/lede/tree/master/package/kernel/mwlwifi)
+- modifications to action script By Eliminater74
+_______________________________________________________________________
 ![GitHub Downloads](https://img.shields.io/github/release-date/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices?style=plastic)
 
 ### Latest Release Downloads:
@@ -28,9 +32,9 @@
 [![Updated Badge](https://badges.pufler.dev/updated/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices)](https://badges.pufler.dev)
 
 ![Your Repository’s Stats](https://github-readme-stats.vercel.app/api?username=Eliminater74&show_icons=true)
---------------------------------------------------------------------
 
 
+_______________________________________________________________________
 Build OpenWrt using GitHub Actions
 
 [Instructions (Use Translater)](https://p3terx.com/archives/build-openwrt-with-github-actions.html)
@@ -49,26 +53,6 @@ Build OpenWrt using GitHub Actions
 - It may take a long time to create a `.config` file and build the OpenWrt firmware. Thus, before create repository to build your own firmware, you may check out if others have already built it which meet your needs by simply [search `Actions-Openwrt` in GitHub](https://github.com/search?q=Actions-openwrt).
 - Add some meta info of your built firmware (such as firmware architecture and installed packages) to your repository introduction, this will save others' time.
 
-## Acknowledgments
-
-- [P3TERX](https://github.com/P3TERX/Actions-OpenWrt)
-- [Microsoft Azure](https://azure.microsoft.com)
-- [GitHub Actions](https://github.com/features/actions)
-- [OpenWrt](https://github.com/openwrt/openwrt)
-- [Lean's OpenWrt](https://github.com/coolsnowwolf/lede)
-- [tmate](https://github.com/tmate-io/tmate)
-- [mxschmitt/action-tmate](https://github.com/mxschmitt/action-tmate)
-- [csexton/debugger-action](https://github.com/csexton/debugger-action)
-- [Cowtransfer](https://cowtransfer.com)
-- [WeTransfer](https://wetransfer.com/)
-- [Mikubill/transfer](https://github.com/Mikubill/transfer)
-- [softprops/action-gh-release](https://github.com/softprops/action-gh-release)
-- [c-hive/gha-remove-artifacts](https://github.com/c-hive/gha-remove-artifacts)
-- [dev-drprasad/delete-older-releases](https://github.com/dev-drprasad/delete-older-releases)
-
-[![LICENSE](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square&label=License)](https://github.com/DevOpenWRT-Router/Actions_Build-00_LinksysWRT3200ACM-Private/blob/master/LICENSE) ![GitHub Stars](https://img.shields.io/github/stars/DevOpenWRT-Router/Actions_Build-00_LinksysWRT3200ACM-Private.svg?style=flat-square&label=Stars&logo=github) ![GitHub Forks](https://img.shields.io/github/forks/DevOpenWRT-Router/Actions_Build-00_LinksysWRT3200ACM-Private.svg?style=flat-square&label=Forks&logo=github)
-
-Connect to GitHub Actions via SSH, get macOS or Linux VM for free.
 
 ## Usage
 
@@ -100,3 +84,23 @@ Click the `Settings` tab on your own repository, and then click the `Secrets` bu
 - `TELEGRAM_CHAT_ID`: Get your chat ID by talking to [@GetMyID_bot](https://t.me/getmyid_bot) or other similar bots.
 
 You can find Telegram Bot related documents [here](https://core.telegram.org/bots).`
+
+
+## Acknowledgments
+
+- [P3TERX](https://github.com/P3TERX/Actions-OpenWrt)
+- [Microsoft Azure](https://azure.microsoft.com)
+- [GitHub Actions](https://github.com/features/actions)
+- [OpenWrt](https://github.com/openwrt/openwrt)
+- [Lean's OpenWrt](https://github.com/coolsnowwolf/lede)
+- [tmate](https://github.com/tmate-io/tmate)
+- [mxschmitt/action-tmate](https://github.com/mxschmitt/action-tmate)
+- [csexton/debugger-action](https://github.com/csexton/debugger-action)
+- [Cowtransfer](https://cowtransfer.com)
+- [WeTransfer](https://wetransfer.com/)
+- [Mikubill/transfer](https://github.com/Mikubill/transfer)
+- [softprops/action-gh-release](https://github.com/softprops/action-gh-release)
+- [c-hive/gha-remove-artifacts](https://github.com/c-hive/gha-remove-artifacts)
+- [dev-drprasad/delete-older-releases](https://github.com/dev-drprasad/delete-older-releases)
+
+[![LICENSE](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square&label=License)](https://github.com/DevOpenWRT-Router/Actions_Build-00_LinksysWRT3200ACM-Private/blob/master/LICENSE) ![GitHub Stars](https://img.shields.io/github/stars/DevOpenWRT-Router/Actions_Build-00_LinksysWRT3200ACM-Private.svg?style=flat-square&label=Stars&logo=github) ![GitHub Forks](https://img.shields.io/github/forks/DevOpenWRT-Router/Actions_Build-00_LinksysWRT3200ACM-Private.svg?style=flat-square&label=Forks&logo=github)
