@@ -126,6 +126,11 @@ jobs:
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
 
+    - name: Initialization GIT environment
+      run: |
+        git config --global user.email "BuildBot2021@gmail.com"
+        git config --global user.name "BuildBot"
+
     - name: Set .config
       id: setConfig
       run: |
