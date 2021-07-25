@@ -31,6 +31,8 @@ git clone https://github.com/koshev-msk/luci-app-telegrambot.git package/luci-ap
 git clone https://gitlab.com/serenascopycats/luci-app-observatory.git package/luci-app-observatory
 ### luci-app-shortcutmenu
 git clone https://github.com/doushang/luci-app-shortcutmenu.git package/luci-app-shortcutmenu
+### luci-app-rtorrent-js
+git clone https://github.com/wolandmaster/luci-app-rtorrent-js.git package/luci-app-rtorrent-js
 
 ### luci-app-diskman
 ## A Simple Disk Manager for LuCI, support disk partition and format, support raid / btrfs-raid / btrfs-snapshot
