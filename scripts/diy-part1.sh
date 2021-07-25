@@ -41,6 +41,8 @@ git clone https://github.com/wolandmaster/luci-app-rtorrent.git package/luci-app
 git clone https://github.com/zhengwenxiao/luci-app-zospusher.git package/luci-app-zospusher
 ### luci-app-sfe
 git clone https://github.com/lsydy1021/luci-app-sfe.git package/luci-app-sfe
+### luci-app-change-mac
+git clone https://github.com/muink/luci-app-change-mac.git package/luci-app-change-mac
 
 ### luci-app-diskman
 ## A Simple Disk Manager for LuCI, support disk partition and format, support raid / btrfs-raid / btrfs-snapshot
