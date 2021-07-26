@@ -35,6 +35,66 @@ _______________________________________________________________________
 
 
 _______________________________________________________________________
+## INSTRUCTIONS FOR USE:
+
+
+
+Use Template or fork Github,
+
+once you have it, then git clone it to your linux box. Yes I think its possible to use the windows ubuntu. But dont quote me on that..
+
+anyhow, after you do that
+
+clone openwrt github to your linux box as well..
+
+then inside the Action github, copy this:
+
+From: CONFIGS Dir:
+
+- patches <----- Directory Copy whole Dir
+
+- feeds.conf.default
+
+- wrt3200acm.config <---- in my case,
+
+NOTE: I could personally copy the above wrt3200acm.config no matter what device your running on,
+and make changes from that config, since its always updated to latest test.. you can just change the device from within the menuconfig for your device.
+
+From SCRIPTS Dir:
+
+- manual-generate.sh
+
+- diy-part1.sh
+
+- diy-part2.sh
+
+- lean_packages.sh
+
+- sirpdboy-package.sh
+
+- DevOpenWRT-Router.sh
+
+Copy all the above files and or Dir's to root of cloned openwrt,
+
+then type
+- ./manual-generate.sh
+
+and sit back and wait till you see the menuconfig startup screen..
+then make your changes and save as your device name that you see in configs dir.
+once you understand what ypur doing, you can edit: manual-generate.sh
+to rename your device .config file and not the wrt3200acm.config .
+
+For now use the wrt3200acm.config and make your changes from there.
+once you have your device config,\copy it over to the Action github under CONFIGS,
+push back to git;
+
+then run your Action workflow.
+and wait.. about 4 - 5 hours.. possibly less.
+
+_______________________________________________________________________
+
+
+
 Build OpenWrt using GitHub Actions
 
 [Instructions (Use Translater)](https://p3terx.com/archives/build-openwrt-with-github-actions.html)
