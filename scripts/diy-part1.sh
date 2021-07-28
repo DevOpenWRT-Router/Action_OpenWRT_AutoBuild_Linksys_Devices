@@ -26,9 +26,9 @@ git clone https://github.com/gztingting/luci-app-fileassistant.git package/luci-
 ### luci-app-wifimac
 git clone https://github.com/qianmuyixiao/luci-app-wifimac.git package/luci-app-wifimac
 ### luci-app-telegrambot
-git clone https://github.com/koshev-msk/luci-app-telegrambot.git package/luci-app-telegrambot
+# git clone https://github.com/koshev-msk/luci-app-telegrambot.git package/luci-app-telegrambot
 ### openwrt-telegram-bot
-git clone https://github.com/koshev-msk/openwrt-telegram-bot.git package/openwrt-telegram-bot
+# git clone https://github.com/koshev-msk/openwrt-telegram-bot.git package/openwrt-telegram-bot
 ### luci-app-observatory
 git clone https://gitlab.com/serenascopycats/luci-app-observatory.git package/luci-app-observatory
 ### luci-app-shortcutmenu
@@ -42,9 +42,9 @@ git clone https://github.com/zhengwenxiao/luci-app-zospusher.git package/luci-ap
 ### luci-app-sfe
 git clone https://github.com/lsydy1021/luci-app-sfe.git package/luci-app-sfe
 ### luci-app-change-mac
-git clone https://github.com/muink/luci-app-change-mac.git package/luci-app-change-mac
+# git clone https://github.com/muink/luci-app-change-mac.git package/luci-app-change-mac
 ### rgmac
-git clone https://github.com/muink/rgmac.git package/rgmac
+# git clone https://github.com/muink/rgmac.git package/rgmac
 ### luci-app-control-weburl
 git clone https://github.com/gdck/luci-app-control-weburl.git package/luci-app-control-weburl
 ### luci-app-autowms

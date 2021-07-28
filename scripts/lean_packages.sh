@@ -14,13 +14,13 @@
 
 echo "Downloading coolsnowwolf's lean packages"
 
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/UnblockNeteaseMusic package/lean/UnblockNeteaseMusic
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/UnblockNeteaseMusicGo package/lean/UnblockNeteaseMusicGo
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/UnblockNeteaseMusic package/lean/UnblockNeteaseMusic
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/UnblockNeteaseMusicGo package/lean/UnblockNeteaseMusicGo
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/adbyby package/lean/adbyby
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/amule package/lean/amule
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/antileech package/lean/antileech
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/autocore package/lean/autocore
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/automount package/lean/automount
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/automount package/lean/automount
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/autosamba package/lean/autosamba
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/baidupcs-web package/lean/baidupcs-web
 # svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/csstidy package/lean/csstidy
