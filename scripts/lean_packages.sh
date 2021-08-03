@@ -21,7 +21,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/amule package/lea
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/antileech package/lean/antileech
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/autocore package/lean/autocore
 # svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/automount package/lean/automount
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/autosamba package/lean/autosamba
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/autosamba package/lean/autosamba
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/baidupcs-web package/lean/baidupcs-web
 # svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/csstidy package/lean/csstidy
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ddns-scripts_aliyun package/lean/ddns-scripts_aliyun
@@ -81,7 +81,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ssrserve
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-syncdial package/lean/luci-app-syncdial
 # svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ttyd package/lean/luci-app-ttyd
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-turboacc package/lean/luci-app-turboacc
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-unblockmusic package/lean/luci-app-unblockmusic
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-unblockmusic package/lean/luci-app-unblockmusic
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-usb-printer package/lean/luci-app-usb-printer
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-uugamebooster package/lean/luci-app-uugamebooster
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-v2ray-server package/lean/luci-app-v2ray-server
