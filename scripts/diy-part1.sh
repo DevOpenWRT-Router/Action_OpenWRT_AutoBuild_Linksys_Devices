@@ -43,6 +43,8 @@ git clone https://github.com/lsydy1021/luci-app-sfe.git package/luci-app-sfe
 # git clone https://github.com/muink/rgmac.git package/rgmac
 ### luci-app-control-weburl
 git clone https://github.com/gdck/luci-app-control-weburl.git package/luci-app-control-weburl
+### luci-app-unlocker
+git clone https://gitlab.com/Nooblord/luci-app-unlocker.git package/luci-app-unlocker
 
 ### luci-app-diskman
 ## A Simple Disk Manager for LuCI, support disk partition and format, support raid / btrfs-raid / btrfs-snapshot
