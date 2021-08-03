@@ -30,11 +30,11 @@ git clone https://github.com/qianmuyixiao/luci-app-wifimac.git package/luci-app-
 ### openwrt-telegram-bot
 # git clone https://github.com/koshev-msk/openwrt-telegram-bot.git package/openwrt-telegram-bot
 ### luci-app-observatory
-git clone https://gitlab.com/serenascopycats/luci-app-observatory.git package/luci-app-observatory
+git clone https://github.com/DevOpenWRT-Router/luci-app-observatory.git package/luci-app-observatory
 ### luci-app-shortcutmenu
 git clone https://github.com/doushang/luci-app-shortcutmenu.git package/luci-app-shortcutmenu
 ### luci-app-rtorrent-js
-git clone https://github.com/wolandmaster/luci-app-rtorrent-js.git package/luci-app-rtorrent-js
+git clone https://github.com/DevOpenWRT-Router/luci-app-rtorrent-js.git package/luci-app-rtorrent-js
 ### luci-app-rtorrent
 git clone https://github.com/wolandmaster/luci-app-rtorrent.git package/luci-app-rtorrent
 ### luci-app-zospusher
@@ -48,7 +48,7 @@ git clone https://github.com/lsydy1021/luci-app-sfe.git package/luci-app-sfe
 ### luci-app-control-weburl
 git clone https://github.com/gdck/luci-app-control-weburl.git package/luci-app-control-weburl
 ### luci-app-autowms
-git clone https://github.com/mh4nx7net/luci-app-autowms.git package/luci-app-autowms
+git clone https://github.com/DevOpenWRT-Router/luci-app-autowms.git package/luci-app-autowms
 
 ### luci-app-diskman
 ## A Simple Disk Manager for LuCI, support disk partition and format, support raid / btrfs-raid / btrfs-snapshot

@@ -18,14 +18,7 @@ git clone https://github.com/DevOpenWRT-Router/luci-app-log.git package/luci-app
 git clone https://github.com/DevOpenWRT-Router/luci-app-tn-logview.git package/luci-app-tn-logview
 ### syslog_fc
 git clone https://github.com/DevOpenWRT-Router/syslog_fc.git package/syslog_fc
-### luci-app-tn-ttyd
-# git clone https://github.com/DevOpenWRT-Router/luci-app-tn-ttyd.git package/luci-app-tn-ttyd
-### luci-app-tn-shellinabox
-# git clone https://github.com/DevOpenWRT-Router/luci-app-tn-shellinabox.git package/luci-app-tn-shellinabox
-### luci-app-tn-watchdog
-# git clone https://github.com/DevOpenWRT-Router/luci-app-tn-watchdog.git package/luci-app-tn-watchdog
-### luci-app-tn-netports
-# git clone https://github.com/DevOpenWRT-Router/luci-app-tn-netports.git package/luci-app-tn-netports
+
 ### luci-app-interfaces-statistics
 git clone https://github.com/DevOpenWRT-Router/luci-app-interfaces-statistics.git package/luci-app-interfaces-statistics
 ### luci-app-cpu-status
@@ -46,9 +39,21 @@ git clone https://github.com/DevOpenWRT-Router/luci-app-disks-info.git package/l
 git clone https://github.com/DevOpenWRT-Router/netspeedtest.git package/NetSpeedTest
 ### luci-app-netdata
 git clone https://github.com/DevOpenWRT-Router/luci-app-netdata.git package/luci-app-netdata
+### luci-app-observatory
+git clone https://github.com/DevOpenWRT-Router/luci-app-observatory.git package/luci-app-observatory
+### luci-app-rtorrent-js
+git clone https://github.com/DevOpenWRT-Router/luci-app-rtorrent-js.git package/luci-app-rtorrent-js
+### luci-app-autowms
+git clone https://github.com/DevOpenWRT-Router/luci-app-autowms.git package/luci-app-autowms
 
-
-
+### luci-app-tn-ttyd DO NOT USE
+# git clone https://github.com/DevOpenWRT-Router/luci-app-tn-ttyd.git package/luci-app-tn-ttyd
+### luci-app-tn-shellinabox
+# git clone https://github.com/DevOpenWRT-Router/luci-app-tn-shellinabox.git package/luci-app-tn-shellinabox
+### luci-app-tn-watchdog
+# git clone https://github.com/DevOpenWRT-Router/luci-app-tn-watchdog.git package/luci-app-tn-watchdog
+### luci-app-tn-netports
+# git clone https://github.com/DevOpenWRT-Router/luci-app-tn-netports.git package/luci-app-tn-netports
 
 echo "End of DevOpenWRT-Router.sh"
 exit 0
