@@ -65,6 +65,7 @@ env:
   IGNORE_COMPILE: false
   KMODS: true
   ACL_LUCI: true
+  GITLOG: true
   RUN_BEFORE_BUILD: false
   RUN_AFTER_BUILD: false
   UPLOAD_BUILD_LOGS: true
@@ -226,6 +227,11 @@ jobs:
       run: |
         chmod +x scripts/$BEFORE_BUILD
         /bin/bash ${GITHUB_WORKSPACE}/scripts/before_build.sh
+
+    - name: Get Current Commit History
+      if: env.GITLOG == 'true' && !cancelled()
+      run: |
+         git log --pretty=oneline -n 1
 
     - name: Load custom feeds
       run: |
