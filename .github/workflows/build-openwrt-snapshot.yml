@@ -65,7 +65,8 @@ env:
   IGNORE_COMPILE: false
   KMODS: true
   ACL_LUCI: true
-  GITLOG: true
+  GITLOGA: true
+  GITLOGB: true
   RUN_BEFORE_BUILD: false
   RUN_AFTER_BUILD: false
   UPLOAD_BUILD_LOGS: true
@@ -229,7 +230,7 @@ jobs:
         /bin/bash ${GITHUB_WORKSPACE}/scripts/before_build.sh
 
     - name: Get Current Commit History
-      if: env.GITLOG == 'true' && !cancelled()
+      if: env.GITLOGA == 'true' && !cancelled()
       run: |
          git log --pretty=oneline -n 1
 
@@ -319,6 +320,12 @@ jobs:
         mv configs/patches openwrt/patches
         cd openwrt
         git am patches/*.patch
+
+    - name: Get Current Commit History
+      if: env.GITLOGB == 'true' && !cancelled()
+      run: |
+         cd openwrt
+         git log --pretty=oneline -n 1
 
     - name: Smart chmod
       run: |
