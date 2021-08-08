@@ -229,7 +229,7 @@ jobs:
         chmod +x scripts/$BEFORE_BUILD
         /bin/bash ${GITHUB_WORKSPACE}/scripts/before_build.sh
 
-    - name: Get Current Commit History
+    - name: Current Commit: Before Feeds/Patches
       if: env.GITLOGA == 'true' && !cancelled()
       run: |
          git log --pretty=oneline -n 1
@@ -321,7 +321,7 @@ jobs:
         cd openwrt
         git am patches/*.patch
 
-    - name: Get Current Commit History
+    - name: Current Commit: After Feeds/Patches
       if: env.GITLOGB == 'true' && !cancelled()
       run: |
          cd openwrt
