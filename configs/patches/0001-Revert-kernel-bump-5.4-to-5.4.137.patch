@@ -1,0 +1,30 @@
+From 0fe3f1da9ec23dff1e3f06e6e9ec943d0d066dbc Mon Sep 17 00:00:00 2001
+From: Eliminater74 <eliminater74@gmail.com>
+Date: Thu, 5 Aug 2021 08:34:50 -0400
+Subject: [PATCH 1/5] Revert "kernel: bump 5.4 to 5.4.137"
+
+This reverts commit 9993e3e3e6ceadb9bb5dfaf6b8de5d94f159a8ac.
+---
+ include/kernel-version.mk | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/include/kernel-version.mk b/include/kernel-version.mk
+index 1d00565c8f..c95a2e8325 100644
+--- a/include/kernel-version.mk
++++ b/include/kernel-version.mk
+@@ -6,10 +6,10 @@ ifdef CONFIG_TESTING_KERNEL
+   KERNEL_PATCHVER:=$(KERNEL_TESTING_PATCHVER)
+ endif
+ 
+-LINUX_VERSION-5.4 = .137
++LINUX_VERSION-5.4 = .136
+ LINUX_VERSION-5.10 = .54
+ 
+-LINUX_KERNEL_HASH-5.4.137 = f09e5e366ce5d8bde887cda229ef17138fd1653706a702221f934f99aaa31f7c
++LINUX_KERNEL_HASH-5.4.136 = 4322dd36bf86b82d410fb2d4df196d1f3b78819aa9dd78b555703bcbf49bad16
+ LINUX_KERNEL_HASH-5.10.54 = bf50c63261847187eca4a1793e5df5c1355b21697409589f6ca03e32b629be44
+ 
+ remove_uri_prefix=$(subst git://,,$(subst http://,,$(subst https://,,$(1))))
+-- 
+2.32.0
+

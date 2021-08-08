@@ -1,0 +1,307 @@
+From 8309e8dc42a720fd4f99b035a9e7b46b2853fe48 Mon Sep 17 00:00:00 2001
+From: Eliminater74 <eliminater74@gmail.com>
+Date: Thu, 5 Aug 2021 08:35:38 -0400
+Subject: [PATCH 4/5] Revert "kernel: bump 5.10 to 5.10.54"
+
+This reverts commit a20e6149b3aceaf9c5ded756ec6665d3866f640e.
+---
+ include/kernel-version.mk                     |  4 +-
+ .../802-usb-xhci-force-msi-renesas-xhci.patch |  2 +-
+ ...pi-poll-functionality-to-__napi_poll.patch |  8 +--
+ ...threaded-able-napi-poll-loop-support.patch |  8 +--
+ ...tribute-to-control-napi-threaded-mod.patch |  2 +-
+ ...ween-napi-kthread-mode-and-busy-poll.patch |  4 +-
+ ...up-on-napi_disable-for-threaded-napi.patch |  4 +-
+ ...T-skip-GRO-for-foreign-MAC-addresses.patch | 10 ++--
+ ...equest-assisted-learning-on-CPU-port.patch |  2 +-
+ .../patches-5.10/000-spi-fix-fifo.patch       | 49 +++++++++++++++++++
+ 10 files changed, 71 insertions(+), 22 deletions(-)
+ create mode 100644 target/linux/mediatek/patches-5.10/000-spi-fix-fifo.patch
+
+diff --git a/include/kernel-version.mk b/include/kernel-version.mk
+index b70dc5b89d..c2fb813c92 100644
+--- a/include/kernel-version.mk
++++ b/include/kernel-version.mk
+@@ -7,10 +7,10 @@ ifdef CONFIG_TESTING_KERNEL
+ endif
+ 
+ LINUX_VERSION-5.4 = .134
+-LINUX_VERSION-5.10 = .54
++LINUX_VERSION-5.10 = .53
+ 
+ LINUX_KERNEL_HASH-5.4.134 = c9fb861642161c256e10c97c35ccce18831e688d87ead53c18e3226778e05841
+-LINUX_KERNEL_HASH-5.10.54 = bf50c63261847187eca4a1793e5df5c1355b21697409589f6ca03e32b629be44
++LINUX_KERNEL_HASH-5.10.53 = f0058d902933986dbaf03b2a0304d2babe5fe1c8e3f41f156ffd3c3f210106dc
+ 
+ remove_uri_prefix=$(subst git://,,$(subst http://,,$(subst https://,,$(1))))
+ sanitize_uri=$(call qstrip,$(subst @,_,$(subst :,_,$(subst .,_,$(subst -,_,$(subst /,_,$(1)))))))
+diff --git a/target/linux/apm821xx/patches-5.10/802-usb-xhci-force-msi-renesas-xhci.patch b/target/linux/apm821xx/patches-5.10/802-usb-xhci-force-msi-renesas-xhci.patch
+index 3148e5b465..038213bd00 100644
+--- a/target/linux/apm821xx/patches-5.10/802-usb-xhci-force-msi-renesas-xhci.patch
++++ b/target/linux/apm821xx/patches-5.10/802-usb-xhci-force-msi-renesas-xhci.patch
+@@ -43,7 +43,7 @@ produce a noisy warning.
+  		hcd->msi_enabled = 1;
+ --- a/drivers/usb/host/xhci.h
+ +++ b/drivers/usb/host/xhci.h
+-@@ -1888,6 +1888,7 @@ struct xhci_hcd {
++@@ -1887,6 +1887,7 @@ struct xhci_hcd {
+  	struct xhci_hub		usb2_rhub;
+  	struct xhci_hub		usb3_rhub;
+  	/* support xHCI 1.0 spec USB2 hardware LPM */
+diff --git a/target/linux/generic/backport-5.10/600-v5.12-net-extract-napi-poll-functionality-to-__napi_poll.patch b/target/linux/generic/backport-5.10/600-v5.12-net-extract-napi-poll-functionality-to-__napi_poll.patch
+index b036b5852e..7f92a1307d 100644
+--- a/target/linux/generic/backport-5.10/600-v5.12-net-extract-napi-poll-functionality-to-__napi_poll.patch
++++ b/target/linux/generic/backport-5.10/600-v5.12-net-extract-napi-poll-functionality-to-__napi_poll.patch
+@@ -18,7 +18,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
+ 
+ --- a/net/core/dev.c
+ +++ b/net/core/dev.c
+-@@ -6793,15 +6793,10 @@ void __netif_napi_del(struct napi_struct
++@@ -6779,15 +6779,10 @@ void __netif_napi_del(struct napi_struct
+  }
+  EXPORT_SYMBOL(__netif_napi_del);
+  
+@@ -35,7 +35,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
+  	weight = n->weight;
+  
+  	/* This NAPI_STATE_SCHED test is for avoiding a race
+-@@ -6821,7 +6816,7 @@ static int napi_poll(struct napi_struct
++@@ -6807,7 +6802,7 @@ static int napi_poll(struct napi_struct
+  			    n->poll, work, weight);
+  
+  	if (likely(work < weight))
+@@ -44,7 +44,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
+  
+  	/* Drivers must not modify the NAPI state if they
+  	 * consume the entire weight.  In such cases this code
+-@@ -6830,7 +6825,7 @@ static int napi_poll(struct napi_struct
++@@ -6816,7 +6811,7 @@ static int napi_poll(struct napi_struct
+  	 */
+  	if (unlikely(napi_disable_pending(n))) {
+  		napi_complete(n);
+@@ -53,7 +53,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
+  	}
+  
+  	if (n->gro_bitmask) {
+-@@ -6848,12 +6843,29 @@ static int napi_poll(struct napi_struct
++@@ -6834,12 +6829,29 @@ static int napi_poll(struct napi_struct
+  	if (unlikely(!list_empty(&n->poll_list))) {
+  		pr_warn_once("%s: Budget exhausted after napi rescheduled\n",
+  			     n->dev ? n->dev->name : "backlog");
+diff --git a/target/linux/generic/backport-5.10/601-v5.12-net-implement-threaded-able-napi-poll-loop-support.patch b/target/linux/generic/backport-5.10/601-v5.12-net-implement-threaded-able-napi-poll-loop-support.patch
+index 05f89932e8..6396499e4d 100644
+--- a/target/linux/generic/backport-5.10/601-v5.12-net-implement-threaded-able-napi-poll-loop-support.patch
++++ b/target/linux/generic/backport-5.10/601-v5.12-net-implement-threaded-able-napi-poll-loop-support.patch
+@@ -153,7 +153,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
+  	list_add_tail(&napi->poll_list, &sd->poll_list);
+  	__raise_softirq_irqoff(NET_RX_SOFTIRQ);
+  }
+-@@ -6746,6 +6783,12 @@ void netif_napi_add(struct net_device *d
++@@ -6732,6 +6769,12 @@ void netif_napi_add(struct net_device *d
+  	set_bit(NAPI_STATE_NPSVC, &napi->state);
+  	list_add_rcu(&napi->dev_list, &dev->napi_list);
+  	napi_hash_add(napi);
+@@ -166,7 +166,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
+  }
+  EXPORT_SYMBOL(netif_napi_add);
+  
+-@@ -6762,9 +6805,28 @@ void napi_disable(struct napi_struct *n)
++@@ -6748,9 +6791,28 @@ void napi_disable(struct napi_struct *n)
+  	hrtimer_cancel(&n->timer);
+  
+  	clear_bit(NAPI_STATE_DISABLE, &n->state);
+@@ -195,7 +195,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
+  static void flush_gro_hash(struct napi_struct *napi)
+  {
+  	int i;
+-@@ -6790,6 +6852,11 @@ void __netif_napi_del(struct napi_struct
++@@ -6776,6 +6838,11 @@ void __netif_napi_del(struct napi_struct
+  
+  	flush_gro_hash(napi);
+  	napi->gro_bitmask = 0;
+@@ -207,7 +207,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
+  }
+  EXPORT_SYMBOL(__netif_napi_del);
+  
+-@@ -6871,6 +6938,51 @@ static int napi_poll(struct napi_struct
++@@ -6857,6 +6924,51 @@ static int napi_poll(struct napi_struct
+  	return work;
+  }
+  
+diff --git a/target/linux/generic/backport-5.10/602-v5.12-net-add-sysfs-attribute-to-control-napi-threaded-mod.patch b/target/linux/generic/backport-5.10/602-v5.12-net-add-sysfs-attribute-to-control-napi-threaded-mod.patch
+index 1009d82046..323e93860a 100644
+--- a/target/linux/generic/backport-5.10/602-v5.12-net-add-sysfs-attribute-to-control-napi-threaded-mod.patch
++++ b/target/linux/generic/backport-5.10/602-v5.12-net-add-sysfs-attribute-to-control-napi-threaded-mod.patch
+@@ -69,7 +69,7 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
+  		 * wake_up_process() when it's not NULL.
+  		 */
+  		thread = READ_ONCE(napi->thread);
+-@@ -6756,6 +6757,49 @@ static void init_gro_hash(struct napi_st
++@@ -6742,6 +6743,49 @@ static void init_gro_hash(struct napi_st
+  	napi->gro_bitmask = 0;
+  }
+  
+diff --git a/target/linux/generic/backport-5.10/603-v5.12-net-fix-race-between-napi-kthread-mode-and-busy-poll.patch b/target/linux/generic/backport-5.10/603-v5.12-net-fix-race-between-napi-kthread-mode-and-busy-poll.patch
+index a7fe9b360f..cdab47e0cc 100644
+--- a/target/linux/generic/backport-5.10/603-v5.12-net-fix-race-between-napi-kthread-mode-and-busy-poll.patch
++++ b/target/linux/generic/backport-5.10/603-v5.12-net-fix-race-between-napi-kthread-mode-and-busy-poll.patch
+@@ -54,7 +54,7 @@ Cc: Hannes Frederic Sowa <hannes@stressinduktion.org>
+  			wake_up_process(thread);
+  			return;
+  		}
+-@@ -6548,7 +6550,8 @@ bool napi_complete_done(struct napi_stru
++@@ -6534,7 +6536,8 @@ bool napi_complete_done(struct napi_stru
+  
+  		WARN_ON_ONCE(!(val & NAPIF_STATE_SCHED));
+  
+@@ -64,7 +64,7 @@ Cc: Hannes Frederic Sowa <hannes@stressinduktion.org>
+  
+  		/* If STATE_MISSED was set, leave STATE_SCHED set,
+  		 * because we will call napi->poll() one more time.
+-@@ -6984,16 +6987,25 @@ static int napi_poll(struct napi_struct
++@@ -6970,16 +6973,25 @@ static int napi_poll(struct napi_struct
+  
+  static int napi_thread_wait(struct napi_struct *napi)
+  {
+diff --git a/target/linux/generic/backport-5.10/604-v5.12-net-fix-hangup-on-napi_disable-for-threaded-napi.patch b/target/linux/generic/backport-5.10/604-v5.12-net-fix-hangup-on-napi_disable-for-threaded-napi.patch
+index d921856668..5894099fff 100644
+--- a/target/linux/generic/backport-5.10/604-v5.12-net-fix-hangup-on-napi_disable-for-threaded-napi.patch
++++ b/target/linux/generic/backport-5.10/604-v5.12-net-fix-hangup-on-napi_disable-for-threaded-napi.patch
+@@ -34,7 +34,7 @@ Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+ 
+ --- a/net/core/dev.c
+ +++ b/net/core/dev.c
+-@@ -6991,7 +6991,7 @@ static int napi_thread_wait(struct napi_
++@@ -6977,7 +6977,7 @@ static int napi_thread_wait(struct napi_
+  
+  	set_current_state(TASK_INTERRUPTIBLE);
+  
+@@ -43,7 +43,7 @@ Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  		/* Testing SCHED_THREADED bit here to make sure the current
+  		 * kthread owns this napi and could poll on this napi.
+  		 * Testing SCHED bit is not enough because SCHED bit might be
+-@@ -7009,6 +7009,7 @@ static int napi_thread_wait(struct napi_
++@@ -6995,6 +6995,7 @@ static int napi_thread_wait(struct napi_
+  		set_current_state(TASK_INTERRUPTIBLE);
+  	}
+  	__set_current_state(TASK_RUNNING);
+diff --git a/target/linux/generic/pending-5.10/680-NET-skip-GRO-for-foreign-MAC-addresses.patch b/target/linux/generic/pending-5.10/680-NET-skip-GRO-for-foreign-MAC-addresses.patch
+index a0aac3d140..8a47b3ab21 100644
+--- a/target/linux/generic/pending-5.10/680-NET-skip-GRO-for-foreign-MAC-addresses.patch
++++ b/target/linux/generic/pending-5.10/680-NET-skip-GRO-for-foreign-MAC-addresses.patch
+@@ -32,7 +32,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
+  	__u16			tc_index;	/* traffic control index */
+ --- a/net/core/dev.c
+ +++ b/net/core/dev.c
+-@@ -6050,6 +6050,9 @@ static enum gro_result dev_gro_receive(s
++@@ -6037,6 +6037,9 @@ static enum gro_result dev_gro_receive(s
+  	int same_flow;
+  	int grow;
+  
+@@ -42,7 +42,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
+  	if (netif_elide_gro(skb->dev))
+  		goto normal;
+  
+-@@ -8027,6 +8030,48 @@ static void __netdev_adjacent_dev_unlink
++@@ -8013,6 +8016,48 @@ static void __netdev_adjacent_dev_unlink
+  					   &upper_dev->adj_list.lower);
+  }
+  
+@@ -91,7 +91,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
+  static int __netdev_upper_dev_link(struct net_device *dev,
+  				   struct net_device *upper_dev, bool master,
+  				   void *upper_priv, void *upper_info,
+-@@ -8078,6 +8123,7 @@ static int __netdev_upper_dev_link(struc
++@@ -8064,6 +8109,7 @@ static int __netdev_upper_dev_link(struc
+  	if (ret)
+  		return ret;
+  
+@@ -99,7 +99,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
+  	ret = call_netdevice_notifiers_info(NETDEV_CHANGEUPPER,
+  					    &changeupper_info.info);
+  	ret = notifier_to_errno(ret);
+-@@ -8174,6 +8220,7 @@ static void __netdev_upper_dev_unlink(st
++@@ -8160,6 +8206,7 @@ static void __netdev_upper_dev_unlink(st
+  
+  	__netdev_adjacent_dev_unlink_neighbour(dev, upper_dev);
+  
+@@ -107,7 +107,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
+  	call_netdevice_notifiers_info(NETDEV_CHANGEUPPER,
+  				      &changeupper_info.info);
+  
+-@@ -8960,6 +9007,7 @@ int dev_set_mac_address(struct net_devic
++@@ -8946,6 +8993,7 @@ int dev_set_mac_address(struct net_devic
+  	if (err)
+  		return err;
+  	dev->addr_assign_type = NET_ADDR_SET;
+diff --git a/target/linux/generic/pending-5.10/768-net-dsa-mv88e6xxx-Request-assisted-learning-on-CPU-port.patch b/target/linux/generic/pending-5.10/768-net-dsa-mv88e6xxx-Request-assisted-learning-on-CPU-port.patch
+index f7ebbd9ae6..add1be7bd0 100644
+--- a/target/linux/generic/pending-5.10/768-net-dsa-mv88e6xxx-Request-assisted-learning-on-CPU-port.patch
++++ b/target/linux/generic/pending-5.10/768-net-dsa-mv88e6xxx-Request-assisted-learning-on-CPU-port.patch
+@@ -17,7 +17,7 @@ Signed-off-by: Tobias Waldekranz <tobias@waldekranz.com>
+ 
+ --- a/drivers/net/dsa/mv88e6xxx/chip.c
+ +++ b/drivers/net/dsa/mv88e6xxx/chip.c
+-@@ -5419,6 +5419,7 @@ static int mv88e6xxx_register_switch(str
++@@ -5409,6 +5409,7 @@ static int mv88e6xxx_register_switch(str
+  	ds->ops = &mv88e6xxx_switch_ops;
+  	ds->ageing_time_min = chip->info->age_time_coeff;
+  	ds->ageing_time_max = chip->info->age_time_coeff * U8_MAX;
+diff --git a/target/linux/mediatek/patches-5.10/000-spi-fix-fifo.patch b/target/linux/mediatek/patches-5.10/000-spi-fix-fifo.patch
+new file mode 100644
+index 0000000000..7a1462fc92
+--- /dev/null
++++ b/target/linux/mediatek/patches-5.10/000-spi-fix-fifo.patch
+@@ -0,0 +1,49 @@
++From 3a70dd2d050331ee4cf5ad9d5c0a32d83ead9a43 Mon Sep 17 00:00:00 2001
++From: Peter Hess <peter.hess@ph-home.de>
++Date: Tue, 6 Jul 2021 14:16:09 +0200
++Subject: spi: mediatek: fix fifo rx mode
++
++In FIFO mode were two problems:
++- RX mode was never handled and
++- in this case the tx_buf pointer was NULL and caused an exception
++
++fix this by handling RX mode in mtk_spi_fifo_transfer
++
++Fixes: a568231f4632 ("spi: mediatek: Add spi bus for Mediatek MT8173")
++Signed-off-by: Peter Hess <peter.hess@ph-home.de>
++Signed-off-by: Frank Wunderlich <frank-w@public-files.de>
++Link: https://lore.kernel.org/r/20210706121609.680534-1-linux@fw-web.de
++Signed-off-by: Mark Brown <broonie@kernel.org>
++---
++ drivers/spi/spi-mt65xx.c | 16 +++++++++++++---
++ 1 file changed, 13 insertions(+), 3 deletions(-)
++
++--- a/drivers/spi/spi-mt65xx.c
+++++ b/drivers/spi/spi-mt65xx.c
++@@ -434,13 +434,23 @@ static int mtk_spi_fifo_transfer(struct
++ 	mtk_spi_setup_packet(master);
++ 
++ 	cnt = xfer->len / 4;
++-	iowrite32_rep(mdata->base + SPI_TX_DATA_REG, xfer->tx_buf, cnt);
+++	if (xfer->tx_buf)
+++		iowrite32_rep(mdata->base + SPI_TX_DATA_REG, xfer->tx_buf, cnt);
+++
+++	if (xfer->rx_buf)
+++		ioread32_rep(mdata->base + SPI_RX_DATA_REG, xfer->rx_buf, cnt);
++ 
++ 	remainder = xfer->len % 4;
++ 	if (remainder > 0) {
++ 		reg_val = 0;
++-		memcpy(&reg_val, xfer->tx_buf + (cnt * 4), remainder);
++-		writel(reg_val, mdata->base + SPI_TX_DATA_REG);
+++		if (xfer->tx_buf) {
+++			memcpy(&reg_val, xfer->tx_buf + (cnt * 4), remainder);
+++			writel(reg_val, mdata->base + SPI_TX_DATA_REG);
+++		}
+++		if (xfer->rx_buf) {
+++			reg_val = readl(mdata->base + SPI_RX_DATA_REG);
+++			memcpy(xfer->rx_buf + (cnt * 4), &reg_val, remainder);
+++		}
++ 	}
++ 
++ 	mtk_spi_enable_transfer(master);
+-- 
+2.32.0
+

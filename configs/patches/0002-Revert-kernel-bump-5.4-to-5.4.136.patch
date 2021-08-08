@@ -1,0 +1,344 @@
+From 8fc4198004931624b668cfa892c9b65a085858ba Mon Sep 17 00:00:00 2001
+From: Eliminater74 <eliminater74@gmail.com>
+Date: Thu, 5 Aug 2021 08:35:14 -0400
+Subject: [PATCH 2/5] Revert "kernel: bump 5.4 to 5.4.136"
+
+This reverts commit bd3cb93034ef266190a1a8885d131c85956f6ee2.
+---
+ include/kernel-version.mk                            |  4 ++--
+ .../802-usb-xhci-force-msi-renesas-xhci.patch        |  2 +-
+ .../patches-5.4/950-0037-Add-dwc_otg-driver.patch    |  2 +-
+ ...mgenet-Better-coalescing-parameter-defaults.patch |  4 ++--
+ ...quirk-for-host-controllers-that-don-t-updat.patch |  6 +++---
+ ...bcmgenet-Workaround-2-for-Pi4-Ethernet-fail.patch |  2 +-
+ ...i-Use-more-event-ring-segment-table-entries.patch |  2 +-
+ .../950-0336-drm-v3d-The-third-IRQ-is-optional.patch |  2 +-
+ ...-0973-net-bcmgenet-Reset-RBUF-on-first-open.patch | 12 ++++++------
+ ...93-xhci-quirks-add-link-TRB-quirk-for-VL805.patch |  4 ++--
+ ...ci-add-support-for-performing-fake-doorbell.patch |  2 +-
+ ...-4-usb-host-xhci-add-EH-SINGLE_STEP_SET_FEA.patch |  4 ++--
+ ...-MLK-16735-usb-host-add-XHCI_CDNS_HOST-flag.patch |  2 +-
+ ...-2-usb-host-xhci-do-not-return-error-status.patch |  2 +-
+ ...4-1-usb-host-xhci-add-.bus_suspend-override.patch |  2 +-
+ ...usb-core-print-suggested-message-if-failed-.patch |  2 +-
+ ...-usb-host-xhci-do-warm-reset-for-link-state.patch |  2 +-
+ ...uirk-for-Gateworks-PLX-PEX860x-switch-with-.patch |  2 +-
+ 18 files changed, 29 insertions(+), 29 deletions(-)
+
+diff --git a/include/kernel-version.mk b/include/kernel-version.mk
+index c95a2e8325..0ec155de2d 100644
+--- a/include/kernel-version.mk
++++ b/include/kernel-version.mk
+@@ -6,10 +6,10 @@ ifdef CONFIG_TESTING_KERNEL
+   KERNEL_PATCHVER:=$(KERNEL_TESTING_PATCHVER)
+ endif
+ 
+-LINUX_VERSION-5.4 = .136
++LINUX_VERSION-5.4 = .135
+ LINUX_VERSION-5.10 = .54
+ 
+-LINUX_KERNEL_HASH-5.4.136 = 4322dd36bf86b82d410fb2d4df196d1f3b78819aa9dd78b555703bcbf49bad16
++LINUX_KERNEL_HASH-5.4.135 = 83efa4c8c725bd2a5e66e2db5612d0ee586449d36661d13889b9ddf0203efdf1
+ LINUX_KERNEL_HASH-5.10.54 = bf50c63261847187eca4a1793e5df5c1355b21697409589f6ca03e32b629be44
+ 
+ remove_uri_prefix=$(subst git://,,$(subst http://,,$(subst https://,,$(1))))
+diff --git a/target/linux/apm821xx/patches-5.4/802-usb-xhci-force-msi-renesas-xhci.patch b/target/linux/apm821xx/patches-5.4/802-usb-xhci-force-msi-renesas-xhci.patch
+index 3c33253ec4..9a0bab5c4b 100644
+--- a/target/linux/apm821xx/patches-5.4/802-usb-xhci-force-msi-renesas-xhci.patch
++++ b/target/linux/apm821xx/patches-5.4/802-usb-xhci-force-msi-renesas-xhci.patch
+@@ -43,7 +43,7 @@ produce a noisy warning.
+  		hcd->msi_enabled = 1;
+ --- a/drivers/usb/host/xhci.h
+ +++ b/drivers/usb/host/xhci.h
+-@@ -1884,6 +1884,7 @@ struct xhci_hcd {
++@@ -1883,6 +1883,7 @@ struct xhci_hcd {
+  	struct xhci_hub		usb2_rhub;
+  	struct xhci_hub		usb3_rhub;
+  	/* support xHCI 1.0 spec USB2 hardware LPM */
+diff --git a/target/linux/bcm27xx/patches-5.4/950-0037-Add-dwc_otg-driver.patch b/target/linux/bcm27xx/patches-5.4/950-0037-Add-dwc_otg-driver.patch
+index ea3c8abd20..9280ab3f17 100644
+--- a/target/linux/bcm27xx/patches-5.4/950-0037-Add-dwc_otg-driver.patch
++++ b/target/linux/bcm27xx/patches-5.4/950-0037-Add-dwc_otg-driver.patch
+@@ -1040,7 +1040,7 @@ Signed-off-by: Jonathan Bell <jonathan@raspberrypi.org>
+  }
+ --- a/drivers/usb/core/hub.c
+ +++ b/drivers/usb/core/hub.c
+-@@ -5369,7 +5369,7 @@ static void port_event(struct usb_hub *h
++@@ -5321,7 +5321,7 @@ static void port_event(struct usb_hub *h
+  		port_dev->over_current_count++;
+  		port_over_current_notify(port_dev);
+  
+diff --git a/target/linux/bcm27xx/patches-5.4/950-0208-bcmgenet-Better-coalescing-parameter-defaults.patch b/target/linux/bcm27xx/patches-5.4/950-0208-bcmgenet-Better-coalescing-parameter-defaults.patch
+index b245fbbbfd..1d3765b93c 100644
+--- a/target/linux/bcm27xx/patches-5.4/950-0208-bcmgenet-Better-coalescing-parameter-defaults.patch
++++ b/target/linux/bcm27xx/patches-5.4/950-0208-bcmgenet-Better-coalescing-parameter-defaults.patch
+@@ -18,7 +18,7 @@ Signed-off-by: Phil Elwell <phil@raspberrypi.org>
+ 
+ --- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+ +++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+-@@ -2150,7 +2150,7 @@ static void bcmgenet_init_tx_ring(struct
++@@ -2149,7 +2149,7 @@ static void bcmgenet_init_tx_ring(struct
+  
+  	bcmgenet_tdma_ring_writel(priv, index, 0, TDMA_PROD_INDEX);
+  	bcmgenet_tdma_ring_writel(priv, index, 0, TDMA_CONS_INDEX);
+@@ -27,7 +27,7 @@ Signed-off-by: Phil Elwell <phil@raspberrypi.org>
+  	/* Disable rate control for now */
+  	bcmgenet_tdma_ring_writel(priv, index, flow_period_val,
+  				  TDMA_FLOW_PERIOD);
+-@@ -3574,9 +3574,12 @@ static int bcmgenet_probe(struct platfor
++@@ -3579,9 +3579,12 @@ static int bcmgenet_probe(struct platfor
+  	netif_set_real_num_rx_queues(priv->dev, priv->hw_params->rx_queues + 1);
+  
+  	/* Set default coalescing parameters */
+diff --git a/target/linux/bcm27xx/patches-5.4/950-0264-xhci-add-quirk-for-host-controllers-that-don-t-updat.patch b/target/linux/bcm27xx/patches-5.4/950-0264-xhci-add-quirk-for-host-controllers-that-don-t-updat.patch
+index 0c3f290ea2..e60468c848 100644
+--- a/target/linux/bcm27xx/patches-5.4/950-0264-xhci-add-quirk-for-host-controllers-that-don-t-updat.patch
++++ b/target/linux/bcm27xx/patches-5.4/950-0264-xhci-add-quirk-for-host-controllers-that-don-t-updat.patch
+@@ -37,7 +37,7 @@ Signed-off-by: Jonathan Bell <jonathan@raspberrypi.org>
+  		pdev->device == PCI_DEVICE_ID_ASMEDIA_1042_XHCI)
+ --- a/drivers/usb/host/xhci-ring.c
+ +++ b/drivers/usb/host/xhci-ring.c
+-@@ -550,7 +550,10 @@ void xhci_find_new_dequeue_state(struct
++@@ -527,7 +527,10 @@ void xhci_find_new_dequeue_state(struct
+  	struct xhci_virt_ep *ep = &dev->eps[ep_index];
+  	struct xhci_ring *ep_ring;
+  	struct xhci_segment *new_seg;
+@@ -48,7 +48,7 @@ Signed-off-by: Jonathan Bell <jonathan@raspberrypi.org>
+  	dma_addr_t addr;
+  	u64 hw_dequeue;
+  	bool cycle_found = false;
+-@@ -588,7 +591,28 @@ void xhci_find_new_dequeue_state(struct
++@@ -565,7 +568,28 @@ void xhci_find_new_dequeue_state(struct
+  	hw_dequeue = xhci_get_hw_deq(xhci, dev, ep_index, stream_id);
+  	new_seg = ep_ring->deq_seg;
+  	new_deq = ep_ring->dequeue;
+@@ -80,7 +80,7 @@ Signed-off-by: Jonathan Bell <jonathan@raspberrypi.org>
+  	/*
+ --- a/drivers/usb/host/xhci.h
+ +++ b/drivers/usb/host/xhci.h
+-@@ -1874,6 +1874,7 @@ struct xhci_hcd {
++@@ -1873,6 +1873,7 @@ struct xhci_hcd {
+  #define XHCI_DEFAULT_PM_RUNTIME_ALLOW	BIT_ULL(33)
+  #define XHCI_RESET_PLL_ON_DISCONNECT	BIT_ULL(34)
+  #define XHCI_SNPS_BROKEN_SUSPEND    BIT_ULL(35)
+diff --git a/target/linux/bcm27xx/patches-5.4/950-0292-net-bcmgenet-Workaround-2-for-Pi4-Ethernet-fail.patch b/target/linux/bcm27xx/patches-5.4/950-0292-net-bcmgenet-Workaround-2-for-Pi4-Ethernet-fail.patch
+index 321cdb548c..db1866d6e7 100644
+--- a/target/linux/bcm27xx/patches-5.4/950-0292-net-bcmgenet-Workaround-2-for-Pi4-Ethernet-fail.patch
++++ b/target/linux/bcm27xx/patches-5.4/950-0292-net-bcmgenet-Workaround-2-for-Pi4-Ethernet-fail.patch
+@@ -38,7 +38,7 @@ Signed-off-by: Phil Elwell <phil@raspberrypi.org>
+  static inline void bcmgenet_writel(u32 value, void __iomem *offset)
+  {
+  	/* MIPS chips strapped for BE will automagically configure the
+-@@ -1996,6 +2000,11 @@ static void reset_umac(struct bcmgenet_p
++@@ -1995,6 +1999,11 @@ static void reset_umac(struct bcmgenet_p
+  	bcmgenet_rbuf_ctrl_set(priv, 0);
+  	udelay(10);
+  
+diff --git a/target/linux/bcm27xx/patches-5.4/950-0293-xhci-Use-more-event-ring-segment-table-entries.patch b/target/linux/bcm27xx/patches-5.4/950-0293-xhci-Use-more-event-ring-segment-table-entries.patch
+index 1758e49761..25c23a8257 100644
+--- a/target/linux/bcm27xx/patches-5.4/950-0293-xhci-Use-more-event-ring-segment-table-entries.patch
++++ b/target/linux/bcm27xx/patches-5.4/950-0293-xhci-Use-more-event-ring-segment-table-entries.patch
+@@ -47,7 +47,7 @@ Signed-off-by: Jonathan Bell <jonathan@raspberrypi.org>
+  			val);
+ --- a/drivers/usb/host/xhci.h
+ +++ b/drivers/usb/host/xhci.h
+-@@ -1650,8 +1650,8 @@ struct urb_priv {
++@@ -1649,8 +1649,8 @@ struct urb_priv {
+   * Each segment table entry is 4*32bits long.  1K seems like an ok size:
+   * (1K bytes * 8bytes/bit) / (4*32 bits) = 64 segment entries in the table,
+   * meaning 64 ring segments.
+diff --git a/target/linux/bcm27xx/patches-5.4/950-0336-drm-v3d-The-third-IRQ-is-optional.patch b/target/linux/bcm27xx/patches-5.4/950-0336-drm-v3d-The-third-IRQ-is-optional.patch
+index 2f9eb20add..ab3c053c3f 100644
+--- a/target/linux/bcm27xx/patches-5.4/950-0336-drm-v3d-The-third-IRQ-is-optional.patch
++++ b/target/linux/bcm27xx/patches-5.4/950-0336-drm-v3d-The-third-IRQ-is-optional.patch
+@@ -13,7 +13,7 @@ Signed-off-by: Phil Elwell <phil@raspberrypi.org>
+ 
+ --- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+ +++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+-@@ -3475,7 +3475,7 @@ static int bcmgenet_probe(struct platfor
++@@ -3480,7 +3480,7 @@ static int bcmgenet_probe(struct platfor
+  	priv = netdev_priv(dev);
+  	priv->irq0 = platform_get_irq(pdev, 0);
+  	priv->irq1 = platform_get_irq(pdev, 1);
+diff --git a/target/linux/bcm27xx/patches-5.4/950-0973-net-bcmgenet-Reset-RBUF-on-first-open.patch b/target/linux/bcm27xx/patches-5.4/950-0973-net-bcmgenet-Reset-RBUF-on-first-open.patch
+index 706244f5c8..60505cf4ed 100644
+--- a/target/linux/bcm27xx/patches-5.4/950-0973-net-bcmgenet-Reset-RBUF-on-first-open.patch
++++ b/target/linux/bcm27xx/patches-5.4/950-0973-net-bcmgenet-Reset-RBUF-on-first-open.patch
+@@ -24,7 +24,7 @@ Signed-off-by: Phil Elwell <phil@raspberrypi.com>
+ 
+ --- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+ +++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+-@@ -2791,7 +2791,7 @@ static void bcmgenet_set_hw_addr(struct
++@@ -2790,7 +2790,7 @@ static void bcmgenet_set_hw_addr(struct
+  }
+  
+  /* Returns a reusable dma control register value */
+@@ -33,7 +33,7 @@ Signed-off-by: Phil Elwell <phil@raspberrypi.com>
+  {
+  	unsigned int i;
+  	u32 reg;
+-@@ -2816,6 +2816,14 @@ static u32 bcmgenet_dma_disable(struct b
++@@ -2815,6 +2815,14 @@ static u32 bcmgenet_dma_disable(struct b
+  	udelay(10);
+  	bcmgenet_umac_writel(priv, 0, UMAC_TX_FLUSH);
+  
+@@ -48,9 +48,9 @@ Signed-off-by: Phil Elwell <phil@raspberrypi.com>
+  	return dma_ctrl;
+  }
+  
+-@@ -2911,8 +2919,8 @@ static int bcmgenet_open(struct net_devi
+- 
+- 	bcmgenet_set_hw_addr(priv, dev->dev_addr);
++@@ -2916,8 +2924,8 @@ static int bcmgenet_open(struct net_devi
++ 		bcmgenet_ext_writel(priv, reg, EXT_EXT_PWR_MGMT);
++ 	}
+  
+ -	/* Disable RX/TX DMA and flush TX queues */
+ -	dma_ctrl = bcmgenet_dma_disable(priv);
+@@ -59,7 +59,7 @@ Signed-off-by: Phil Elwell <phil@raspberrypi.com>
+  
+  	/* Reinitialize TDMA and RDMA and SW housekeeping */
+  	ret = bcmgenet_init_dma(priv);
+-@@ -3665,7 +3673,7 @@ static int bcmgenet_resume(struct device
++@@ -3677,7 +3685,7 @@ static int bcmgenet_resume(struct device
+  		bcmgenet_power_up(priv, GENET_POWER_WOL_MAGIC);
+  
+  	/* Disable RX/TX DMA and flush TX queues */
+diff --git a/target/linux/bcm27xx/patches-5.4/950-0993-xhci-quirks-add-link-TRB-quirk-for-VL805.patch b/target/linux/bcm27xx/patches-5.4/950-0993-xhci-quirks-add-link-TRB-quirk-for-VL805.patch
+index 149fd08d06..355421ee26 100644
+--- a/target/linux/bcm27xx/patches-5.4/950-0993-xhci-quirks-add-link-TRB-quirk-for-VL805.patch
++++ b/target/linux/bcm27xx/patches-5.4/950-0993-xhci-quirks-add-link-TRB-quirk-for-VL805.patch
+@@ -32,7 +32,7 @@ Signed-off-by: Jonathan Bell <jonathan@raspberrypi.com>
+  	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA &&
+ --- a/drivers/usb/host/xhci-ring.c
+ +++ b/drivers/usb/host/xhci-ring.c
+-@@ -647,6 +647,16 @@ void xhci_find_new_dequeue_state(struct
++@@ -624,6 +624,16 @@ void xhci_find_new_dequeue_state(struct
+  
+  	} while (!cycle_found || !td_last_trb_found);
+  
+@@ -51,7 +51,7 @@ Signed-off-by: Jonathan Bell <jonathan@raspberrypi.com>
+  
+ --- a/drivers/usb/host/xhci.h
+ +++ b/drivers/usb/host/xhci.h
+-@@ -1877,6 +1877,7 @@ struct xhci_hcd {
++@@ -1876,6 +1876,7 @@ struct xhci_hcd {
+  #define XHCI_EP_CTX_BROKEN_DCS	BIT_ULL(36)
+  #define XHCI_SKIP_PHY_INIT	BIT_ULL(37)
+  #define XHCI_DISABLE_SPARSE	BIT_ULL(38)
+diff --git a/target/linux/bcm53xx/patches-5.4/180-usb-xhci-add-support-for-performing-fake-doorbell.patch b/target/linux/bcm53xx/patches-5.4/180-usb-xhci-add-support-for-performing-fake-doorbell.patch
+index 72ea0cbd3b..5427d7368e 100644
+--- a/target/linux/bcm53xx/patches-5.4/180-usb-xhci-add-support-for-performing-fake-doorbell.patch
++++ b/target/linux/bcm53xx/patches-5.4/180-usb-xhci-add-support-for-performing-fake-doorbell.patch
+@@ -127,7 +127,7 @@ it on BCM4708 family.
+  /*
+ --- a/drivers/usb/host/xhci.h
+ +++ b/drivers/usb/host/xhci.h
+-@@ -1874,6 +1874,7 @@ struct xhci_hcd {
++@@ -1873,6 +1873,7 @@ struct xhci_hcd {
+  #define XHCI_DEFAULT_PM_RUNTIME_ALLOW	BIT_ULL(33)
+  #define XHCI_RESET_PLL_ON_DISCONNECT	BIT_ULL(34)
+  #define XHCI_SNPS_BROKEN_SUSPEND    BIT_ULL(35)
+diff --git a/target/linux/layerscape/patches-5.4/820-usb-0015-MLK-17380-4-usb-host-xhci-add-EH-SINGLE_STEP_SET_FEA.patch b/target/linux/layerscape/patches-5.4/820-usb-0015-MLK-17380-4-usb-host-xhci-add-EH-SINGLE_STEP_SET_FEA.patch
+index ffe429929b..58cccfff5e 100644
+--- a/target/linux/layerscape/patches-5.4/820-usb-0015-MLK-17380-4-usb-host-xhci-add-EH-SINGLE_STEP_SET_FEA.patch
++++ b/target/linux/layerscape/patches-5.4/820-usb-0015-MLK-17380-4-usb-host-xhci-add-EH-SINGLE_STEP_SET_FEA.patch
+@@ -42,7 +42,7 @@ Signed-off-by: Peter Chen <peter.chen@nxp.com>
+  			retval = xhci_enter_test_mode(xhci, test_mode, wIndex,
+ --- a/drivers/usb/host/xhci-ring.c
+ +++ b/drivers/usb/host/xhci-ring.c
+-@@ -3624,6 +3624,129 @@ int xhci_queue_ctrl_tx(struct xhci_hcd *
++@@ -3592,6 +3592,129 @@ int xhci_queue_ctrl_tx(struct xhci_hcd *
+  	return 0;
+  }
+  
+@@ -184,7 +184,7 @@ Signed-off-by: Peter Chen <peter.chen@nxp.com>
+  void xhci_init_driver(struct hc_driver *drv,
+ --- a/drivers/usb/host/xhci.h
+ +++ b/drivers/usb/host/xhci.h
+-@@ -2151,6 +2151,16 @@ int xhci_find_raw_port_number(struct usb
++@@ -2150,6 +2150,16 @@ int xhci_find_raw_port_number(struct usb
+  struct xhci_hub *xhci_get_rhub(struct usb_hcd *hcd);
+  
+  void xhci_hc_died(struct xhci_hcd *xhci);
+diff --git a/target/linux/layerscape/patches-5.4/820-usb-0016-MLK-16735-usb-host-add-XHCI_CDNS_HOST-flag.patch b/target/linux/layerscape/patches-5.4/820-usb-0016-MLK-16735-usb-host-add-XHCI_CDNS_HOST-flag.patch
+index e866bef1df..40d6399439 100644
+--- a/target/linux/layerscape/patches-5.4/820-usb-0016-MLK-16735-usb-host-add-XHCI_CDNS_HOST-flag.patch
++++ b/target/linux/layerscape/patches-5.4/820-usb-0016-MLK-16735-usb-host-add-XHCI_CDNS_HOST-flag.patch
+@@ -32,7 +32,7 @@ Signed-off-by: Peter Chen <peter.chen@nxp.com>
+  	ret = xhci_handshake(&xhci->op_regs->command,
+ --- a/drivers/usb/host/xhci.h
+ +++ b/drivers/usb/host/xhci.h
+-@@ -1874,6 +1874,7 @@ struct xhci_hcd {
++@@ -1873,6 +1873,7 @@ struct xhci_hcd {
+  #define XHCI_DEFAULT_PM_RUNTIME_ALLOW	BIT_ULL(33)
+  #define XHCI_RESET_PLL_ON_DISCONNECT	BIT_ULL(34)
+  #define XHCI_SNPS_BROKEN_SUSPEND    BIT_ULL(35)
+diff --git a/target/linux/layerscape/patches-5.4/820-usb-0017-MLK-19153-2-usb-host-xhci-do-not-return-error-status.patch b/target/linux/layerscape/patches-5.4/820-usb-0017-MLK-19153-2-usb-host-xhci-do-not-return-error-status.patch
+index 637d514d76..b08633eb88 100644
+--- a/target/linux/layerscape/patches-5.4/820-usb-0017-MLK-19153-2-usb-host-xhci-do-not-return-error-status.patch
++++ b/target/linux/layerscape/patches-5.4/820-usb-0017-MLK-19153-2-usb-host-xhci-do-not-return-error-status.patch
+@@ -22,7 +22,7 @@ Signed-off-by: Peter Chen <peter.chen@nxp.com>
+ 
+ --- a/drivers/usb/host/xhci-ring.c
+ +++ b/drivers/usb/host/xhci-ring.c
+-@@ -2091,12 +2091,9 @@ static int process_ctrl_td(struct xhci_h
++@@ -2058,12 +2058,9 @@ static int process_ctrl_td(struct xhci_h
+  
+  	switch (trb_comp_code) {
+  	case COMP_SUCCESS:
+diff --git a/target/linux/layerscape/patches-5.4/820-usb-0018-MLK-18794-1-usb-host-xhci-add-.bus_suspend-override.patch b/target/linux/layerscape/patches-5.4/820-usb-0018-MLK-18794-1-usb-host-xhci-add-.bus_suspend-override.patch
+index 2fc5ba3f06..3f805756fa 100644
+--- a/target/linux/layerscape/patches-5.4/820-usb-0018-MLK-18794-1-usb-host-xhci-add-.bus_suspend-override.patch
++++ b/target/linux/layerscape/patches-5.4/820-usb-0018-MLK-18794-1-usb-host-xhci-add-.bus_suspend-override.patch
+@@ -35,7 +35,7 @@ Signed-off-by: Peter Chen <peter.chen@nxp.com>
+  EXPORT_SYMBOL_GPL(xhci_init_driver);
+ --- a/drivers/usb/host/xhci.h
+ +++ b/drivers/usb/host/xhci.h
+-@@ -1917,6 +1917,7 @@ struct xhci_driver_overrides {
++@@ -1916,6 +1916,7 @@ struct xhci_driver_overrides {
+  	int (*start)(struct usb_hcd *hcd);
+  	int (*check_bandwidth)(struct usb_hcd *, struct usb_device *);
+  	void (*reset_bandwidth)(struct usb_hcd *, struct usb_device *);
+diff --git a/target/linux/layerscape/patches-5.4/820-usb-0019-MLK-9829-usb-core-print-suggested-message-if-failed-.patch b/target/linux/layerscape/patches-5.4/820-usb-0019-MLK-9829-usb-core-print-suggested-message-if-failed-.patch
+index e02f08579c..e444af408a 100644
+--- a/target/linux/layerscape/patches-5.4/820-usb-0019-MLK-9829-usb-core-print-suggested-message-if-failed-.patch
++++ b/target/linux/layerscape/patches-5.4/820-usb-0019-MLK-9829-usb-core-print-suggested-message-if-failed-.patch
+@@ -20,7 +20,7 @@ Signed-off-by: Li Jun <jun.li@freescale.com>
+ 
+ --- a/drivers/usb/core/hub.c
+ +++ b/drivers/usb/core/hub.c
+-@@ -4779,7 +4779,8 @@ hub_port_init(struct usb_hub *hub, struc
++@@ -4731,7 +4731,8 @@ hub_port_init(struct usb_hub *hub, struc
+  			}
+  			if (r) {
+  				if (r != -ENODEV)
+diff --git a/target/linux/layerscape/patches-5.4/820-usb-0021-MLK-22099-usb-host-xhci-do-warm-reset-for-link-state.patch b/target/linux/layerscape/patches-5.4/820-usb-0021-MLK-22099-usb-host-xhci-do-warm-reset-for-link-state.patch
+index 00034e38f3..fd64f2f10b 100644
+--- a/target/linux/layerscape/patches-5.4/820-usb-0021-MLK-22099-usb-host-xhci-do-warm-reset-for-link-state.patch
++++ b/target/linux/layerscape/patches-5.4/820-usb-0021-MLK-22099-usb-host-xhci-do-warm-reset-for-link-state.patch
+@@ -16,7 +16,7 @@ Signed-off-by: Li Jun <jun.li@nxp.com>
+ 
+ --- a/drivers/usb/host/xhci-hub.c
+ +++ b/drivers/usb/host/xhci-hub.c
+-@@ -1738,7 +1738,8 @@ static bool xhci_port_missing_cas_quirk(
++@@ -1737,7 +1737,8 @@ static bool xhci_port_missing_cas_quirk(
+  		return false;
+  
+  	if (((portsc & PORT_PLS_MASK) != XDEV_POLLING) &&
+diff --git a/target/linux/octeontx/patches-5.4/0004-PCI-add-quirk-for-Gateworks-PLX-PEX860x-switch-with-.patch b/target/linux/octeontx/patches-5.4/0004-PCI-add-quirk-for-Gateworks-PLX-PEX860x-switch-with-.patch
+index 1c51ca5841..086fc0ab96 100644
+--- a/target/linux/octeontx/patches-5.4/0004-PCI-add-quirk-for-Gateworks-PLX-PEX860x-switch-with-.patch
++++ b/target/linux/octeontx/patches-5.4/0004-PCI-add-quirk-for-Gateworks-PLX-PEX860x-switch-with-.patch
+@@ -22,7 +22,7 @@ Signed-off-by: Tim Harvey <tharvey@gateworks.com>
+  #include <linux/platform_data/x86/apple.h>
+  #include <linux/pm_runtime.h>
+  #include <linux/suspend.h>
+-@@ -5727,3 +5728,34 @@ static void apex_pci_fixup_class(struct
++@@ -5725,3 +5726,34 @@ static void apex_pci_fixup_class(struct
+  }
+  DECLARE_PCI_FIXUP_CLASS_HEADER(0x1ac1, 0x089a,
+  			       PCI_CLASS_NOT_DEFINED, 8, apex_pci_fixup_class);
+-- 
+2.32.0
+
