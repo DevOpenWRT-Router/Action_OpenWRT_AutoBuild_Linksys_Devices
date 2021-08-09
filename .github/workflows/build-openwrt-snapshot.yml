@@ -551,7 +551,7 @@ jobs:
 
     - name: Upload logs directory
       uses: actions/upload-artifact@main
-      if: env.UPLOAD_BUILD_LOGS == 'true' && !cancelled()
+      if: env.UPLOAD_BUILD_LOGS == 'true'
       with:
         name: OpenWrt_logs${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/logs/
