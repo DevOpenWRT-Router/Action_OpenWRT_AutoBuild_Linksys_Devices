@@ -70,7 +70,6 @@ env:
   RUN_BEFORE_BUILD: false
   RUN_AFTER_BUILD: false
   UPLOAD_BUILD_LOGS: true
-  UPLOAD_BUILDLOG: false
   UPLOAD_PACKAGES: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
@@ -555,13 +554,6 @@ jobs:
       with:
         name: OpenWrt_logs${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/logs/
-
-    - name: Upload build.log
-      uses: actions/upload-artifact@main
-      if: env.UPLOAD_BUILDLOG == 'true' && !cancelled()
-      with:
-        name: OpenWrt_buildlog${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: ${GITHUB_WORKSPACE}/openwrt/build.log
 
     - name: Organize files
       id: organize
