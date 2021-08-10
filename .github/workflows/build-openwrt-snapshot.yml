@@ -61,8 +61,11 @@ env:
   INSTALL_PACKAGES: true
   INDEX_PACKAGES: true
   ### ------------------------------------------------------------------ ###
+  ## Enable DEBUG will show more INFO
   DEBUG_COMPILE: false
+  ## Enable IGNORE is debug with IGNORE_ERRORS=1
   IGNORE_COMPILE: false
+  ### ------------------------------------------------------------------ ###
   KMODS: true
   ACL_LUCI: true
   GITLOGA: true
