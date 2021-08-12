@@ -70,7 +70,7 @@ env:
   ACL_LUCI: true
   GITLOGA: true
   GITLOGB: true
-  RUN_BEFORE_BUILD: false
+  RUN_BEFORE_BUILD: true
   RUN_AFTER_BUILD: false
   UPLOAD_BUILD_LOGS: true
   UPLOAD_PACKAGES: false
