@@ -234,6 +234,7 @@ jobs:
     - name: Current Commit Before Feeds/Patches
       if: env.GITLOGA == 'true' && !cancelled()
       run: |
+         cd openwrt
          git log --pretty=oneline -n 1
 
     - name: Load custom feeds
