@@ -246,8 +246,8 @@ jobs:
         $GITHUB_WORKSPACE/scripts/$DIY_P1_SH
 
     - name: Load LUCI custom Themes
+      if: env.USE_CUST_THEMES == 'true' && !cancelled()
       run: |
-        if: env.USE_CUST_THEMES == 'true' && !cancelled()
         chmod +x scripts/luci_themes.sh
         cd openwrt
         $GITHUB_WORKSPACE/scripts/luci_themes.sh
