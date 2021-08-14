@@ -1,0 +1,26 @@
+From 4baf7608c95cf6f353c7c609f50f85419067fc2c Mon Sep 17 00:00:00 2001
+From: Chen Minqiang <ptpt52@gmail.com>
+Date: Thu, 5 Aug 2021 09:17:15 +0800
+Subject: [PATCH] ethtool: fix depends
+
+Fixes: #430
+Signed-off-by: Eliminater74 <eliminater74@gmail.com>
+---
+ package/network/utils/ethtool/Makefile | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/package/network/utils/ethtool/Makefile b/package/network/utils/ethtool/Makefile
+index a82e5c92fa..16b3c4e46f 100644
+--- a/package/network/utils/ethtool/Makefile
++++ b/package/network/utils/ethtool/Makefile
+@@ -38,7 +38,6 @@ define Package/ethtool-full
+   TITLE += (full)
+   VARIANT:=full
+   PROVIDES:=ethtool
+-  CONFLICTS:=ethtool
+   DEPENDS:=+libmnl
+ endef
+ 
+-- 
+2.32.0
+
