@@ -507,6 +507,7 @@ jobs:
 
     - name: Compile the firmware
       id: compile
+      continue-on-error: true
       if: env.DEBUG_COMPILE == 'false' && env.IGNORE_COMPILE == 'false'
       run: |
         cd openwrt
