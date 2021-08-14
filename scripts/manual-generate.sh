@@ -33,6 +33,7 @@
 #
 ### ============================================= ###
 ./diy-part1.sh
+./luci_themes.sh
 ./DevOpenWRT-Router.sh
 ./lean_packages.sh
 ./sirpdboy-package.sh

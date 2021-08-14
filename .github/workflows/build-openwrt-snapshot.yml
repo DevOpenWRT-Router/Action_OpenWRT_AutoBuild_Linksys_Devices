@@ -48,6 +48,7 @@ env:
   EXT_INIT_ENV: environment.sh
   USE_FILES: true
   USE_DIYP2: true
+  USE_CUST_THEMES: true
   USE_PATCHES: true
   USE_DEVOPENWRT: true
   USE_COOLSNOWWOLF: true
@@ -243,6 +244,13 @@ jobs:
         chmod +x scripts/$DIY_P1_SH
         cd openwrt
         $GITHUB_WORKSPACE/scripts/$DIY_P1_SH
+
+    - name: Load LUCI custom Themes
+      run: |
+        if: env.USE_CUST_THEMES == 'true' && !cancelled()
+        chmod +x scripts/luci_themes.sh
+        cd openwrt
+        $GITHUB_WORKSPACE/scripts/luci_themes.sh
 
     - name: Set LUCI Source
       id: setLuci
