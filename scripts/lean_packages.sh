@@ -72,6 +72,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-nps pack
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-openvpn-server package/lean/luci-app-openvpn-server
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-pppoe-relay package/lean/luci-app-pppoe-relay
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ps3netsrv package/lean/luci-app-ps3netsrv
+svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-pushbot package/lean/luci-app-pushbot
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-qbittorrent package/lean/luci-app-qbittorrent
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ramfree package/lean/luci-app-ramfree
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-rclone package/lean/luci-app-rclone
