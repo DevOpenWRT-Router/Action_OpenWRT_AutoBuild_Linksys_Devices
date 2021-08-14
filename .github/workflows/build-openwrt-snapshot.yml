@@ -38,6 +38,7 @@ on:
 #  schedule:
 #    - cron: 0 8 * * 5
 
+### --------------------------------------------------------------------- ###
 env:
   FEEDS_CONF: feeds.conf.default
   DIY_P1_SH: diy-part1.sh
@@ -49,7 +50,7 @@ env:
   USE_FILES: true
   USE_DIYP2: true
   USE_CUST_THEMES: true
-  USE_PATCHES: false
+  USE_PATCHES: true
   USE_DEVOPENWRT: true
   USE_COOLSNOWWOLF: true
   USE_SIRPDBOY: true
@@ -86,6 +87,8 @@ env:
 #############################
 
   TZ: America/New_York
+
+### --------------------------------------------------------------------- ###
 
 jobs:
   build:
