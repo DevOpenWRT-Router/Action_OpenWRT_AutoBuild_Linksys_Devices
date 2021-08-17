@@ -38,7 +38,7 @@ git clone https://github.com/DevOpenWRT-Router/luci-app-disks-info.git package/l
 ### NetSpeedTest
 git clone https://github.com/DevOpenWRT-Router/netspeedtest.git package/NetSpeedTest
 ### luci-app-netdata
-git clone https://github.com/DevOpenWRT-Router/luci-app-netdata.git package/luci-app-netdata
+# git clone https://github.com/DevOpenWRT-Router/luci-app-netdata.git package/luci-app-netdata
 ### luci-app-observatory
 git clone https://github.com/DevOpenWRT-Router/luci-app-observatory.git package/luci-app-observatory
 ### luci-app-rtorrent-js
