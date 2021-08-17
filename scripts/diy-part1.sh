@@ -25,10 +25,6 @@ git clone https://github.com/rufengsuixing/luci-app-onliner.git package/luci-app
 git clone https://github.com/gztingting/luci-app-fileassistant.git package/luci-app-fileassistant
 ### luci-app-wifimac
 git clone https://github.com/qianmuyixiao/luci-app-wifimac.git package/luci-app-wifimac
-### luci-app-telegrambot
-# git clone https://github.com/koshev-msk/luci-app-telegrambot.git package/luci-app-telegrambot
-### openwrt-telegram-bot
-# git clone https://github.com/koshev-msk/openwrt-telegram-bot.git package/openwrt-telegram-bot
 ### luci-app-shortcutmenu
 git clone https://github.com/doushang/luci-app-shortcutmenu.git package/luci-app-shortcutmenu
 ### luci-app-rtorrent
@@ -37,10 +33,8 @@ git clone https://github.com/wolandmaster/luci-app-rtorrent.git package/luci-app
 git clone https://github.com/zhengwenxiao/luci-app-zospusher.git package/luci-app-zospusher
 ### luci-app-sfe
 git clone https://github.com/lsydy1021/luci-app-sfe.git package/luci-app-sfe
-### luci-app-change-mac
-# git clone https://github.com/muink/luci-app-change-mac.git package/luci-app-change-mac
-### rgmac
-# git clone https://github.com/muink/rgmac.git package/rgmac
+
+
 ### luci-app-control-weburl
 git clone https://github.com/gdck/luci-app-control-weburl.git package/luci-app-control-weburl
 ### luci-app-unlocker
@@ -61,7 +55,16 @@ git clone https://github.com/a920025608/luci-app-usbnet.git package/luci-app-usb
 git clone https://github.com/a920025608/usbnet.git package/usbnet
 
 
-
+### ------------------------------------------------------------------------------------------ ###
+### DISABLED ###
+### luci-app-telegrambot
+# git clone https://github.com/koshev-msk/luci-app-telegrambot.git package/luci-app-telegrambot
+### openwrt-telegram-bot
+# git clone https://github.com/koshev-msk/openwrt-telegram-bot.git package/openwrt-telegram-bot
+### luci-app-change-mac
+# git clone https://github.com/muink/luci-app-change-mac.git package/luci-app-change-mac
+### rgmac
+# git clone https://github.com/muink/rgmac.git package/rgmac
 
 echo "End of diy-part1.sh"
 exit 0
