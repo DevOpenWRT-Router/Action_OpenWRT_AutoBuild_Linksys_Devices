@@ -1,7 +1,7 @@
 #!/bin/bash
 #################################################################
 # (C) 2021 By Eliminater74 For OpenWRT
-# Updated: 20210624
+# Updated: 20210818
 #
 #
 #################################################################
@@ -29,18 +29,15 @@ echo "------------------------------------------------"
 echo "Kernel: $KERNEL_VER" # testing
 echo "DIR: $KMOD_DIR"
 echo "------------------------------------------------"
-echo "------------------------------------------------"
-cd $TARGET_DIR
-mkdir -p kmods/$KMOD_DIR
-rsync '--include=/kmod-*.ipk' '--exclude=*' -va $TARGET_DIR/packages $TARGET_DIR/kmods/$KMOD_DIR
-echo "rsync '--include=/kmod-*.ipk' '--exclude=*' -va $TARGET_DIR/packages $TARGET_DIR/kmods/$KMOD_DIR"
 cd ${GITHUB_WORKSPACE}/openwrt
-# make -j1 package/index V=s CONFIG_SIGNED_PACKAGES= PACKAGE_SUBDIRS=$TARGET_DIR/kmods/$KMOD_DIR
-cd $TARGET_DIR/kmods/$KMOD_DIR
+mkdir -p bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR
+rsync '--include=/kmod-*.ipk' '--exclude=*' -va bin/targets/mvebu/cortexa9/packages/ bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR/
+make -j32 package/index V=s CONFIG_SIGNED_PACKAGES= PACKAGE_SUBDIRS=bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR/
+cd bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR
 tar -cvzf kmods_$KMOD_DIR.tar.gz ./*
-mv kmods_$KMOD_DIR.tar.gz $TARGET_DIR
-cd $TARGET_DIR
-rm -rf $TARGET_DIR/kmods # Remove kmods folder
+mv kmods_$KMOD_DIR.tar.gz ${GITHUB_WORKSPACE}/openwrt/bin/targets/mvebu/cortexa9/
+cd ${GITHUB_WORKSPACE}/openwrt
+rm -rf bin/targets/mvebu/cortexa9/kmods
 cd ${GITHUB_WORKSPACE}/openwrt
 
 exit 0
