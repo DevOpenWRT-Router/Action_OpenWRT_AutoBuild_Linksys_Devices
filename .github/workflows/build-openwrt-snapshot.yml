@@ -76,6 +76,7 @@ env:
   GITLOGB: true
   RUN_BEFORE_BUILD: true
   RUN_AFTER_BUILD: false
+  FTP_UPLOAD: true
   UPLOAD_BUILD_LOGS: true
   UPLOAD_PACKAGES: false
   UPLOAD_BIN_DIR: false
@@ -576,6 +577,16 @@ jobs:
         du -h --max-depth=1 ./build_dir
         du -h --max-depth=1 ./bin
         echo "=============================================="
+
+    - name: FTP Upload
+      uses: genietim/ftp-action@master
+      if: steps.compile.outputs.status == 'success' && env.FTP_UPLOAD == 'true'
+      with:
+        host: ${{ secrets.FTP_SERVER }}
+        user: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        localDir: "openwrt/bin/packages/"
+        remoteDir: "packages/"
 
     - name: Upload Packages
       uses: actions/upload-artifact@main
