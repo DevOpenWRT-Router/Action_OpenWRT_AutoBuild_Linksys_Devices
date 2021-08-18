@@ -50,7 +50,9 @@ env:
   USE_FILES: true
   USE_DIYP2: true
   USE_CUST_THEMES: true
-  USE_PATCHES: true
+  USE_OPENWRT_PATCHES: true
+  USE_LUCI_PATCHES: false
+  USE_PACKAGES_PATCHES: false
   USE_DEVOPENWRT: true
   USE_COOLSNOWWOLF: true
   USE_SIRPDBOY: true
@@ -328,12 +330,29 @@ jobs:
       run: |
         [ -e configs/${{ steps.setConfig.outputs.hardwareString }} ] && mv configs/${{ steps.setConfig.outputs.hardwareString }} openwrt/.config
 
-    - name: Run Custom Patches
-      if: env.USE_PATCHES == 'true' && !cancelled()
+    - name: Run Custom OpenWRT Patches
+      if: env.USE_OPENWRT_PATCHES == 'true' && !cancelled()
       run: |
         mv configs/patches openwrt/patches
         cd openwrt
         git am patches/*.patch
+        rm -rf patches
+
+    - name: Run Custom LUCI Patches
+      if: env.USE_LUCI_PATCHES == 'true' && !cancelled()
+      run: |
+        mv configs/patches/luci openwrt/feeds/luci/patches
+        cd openwrt/feeds/luci
+        git am patches/*.patch
+        rm -rf patches
+
+    - name: Run Custom Packages Patches
+      if: env.USE_PACKAGES_PATCHES == 'true' && !cancelled()
+      run: |
+        mv configs/patches/packages openwrt/feeds/packages/patches
+        cd openwrt/feeds/packages
+        git am patches/*.patch
+        rm -rf patches
 
     - name: Current Commit After Feeds/Patches
       if: env.GITLOGB == 'true' && !cancelled()
