@@ -65,7 +65,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-kodexplo
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-music-remote-center package/lean/luci-app-music-remote-center
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-mwan3helper package/lean/luci-app-mwan3helper
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-n2n_v2 package/lean/luci-app-n2n_v2
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-netdata package/lean/luci-app-netdata
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-netdata package/lean/luci-app-netdata
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-nfs package/lean/luci-app-nfs
 # svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-nft-qos package/lean/luci-app-nft-qos
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-nps package/lean/luci-app-nps
