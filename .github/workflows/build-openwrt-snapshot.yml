@@ -78,6 +78,7 @@ env:
   RUN_AFTER_BUILD: false
   FTP_UPLOAD: false
   UPLOAD_BUILD_LOGS: true
+  UPLOAD_KMODS: true
   UPLOAD_PACKAGES: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
@@ -587,6 +588,13 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         localDir: "openwrt/bin/packages/"
         remoteDir: "packages/"
+
+    - name: Upload kmods
+      uses: actions/upload-artifact@main
+      if: steps.compile.outputs.status == 'success' && env.UPLOAD_KMODS == 'true'
+      with:
+        name: OpenWrt_kmods${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        path: openwrt/bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR/
 
     - name: Upload Packages
       uses: actions/upload-artifact@main
