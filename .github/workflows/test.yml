@@ -1,0 +1,20 @@
+name: TEST FTP
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+
+  FTP-Upload-Test:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Upload ftp
+      uses: genietim/ftp-action@master
+      with:
+        host: ${{ secrets.FTP_SERVER }}
+        user: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        localDir: "scripts"
+        remoteDir: "www"
