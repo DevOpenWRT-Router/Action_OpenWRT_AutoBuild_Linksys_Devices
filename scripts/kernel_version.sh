@@ -37,7 +37,7 @@ cd bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR
 tar -cvzf kmods_$KMOD_DIR.tar.gz ./*
 mv kmods_$KMOD_DIR.tar.gz ${GITHUB_WORKSPACE}/openwrt/bin/targets/mvebu/cortexa9/
 cd ${GITHUB_WORKSPACE}/openwrt
-rm -rf bin/targets/mvebu/cortexa9/kmods
-cd ${GITHUB_WORKSPACE}/openwrt
+# rm -rf bin/targets/mvebu/cortexa9/kmods
+# cd ${GITHUB_WORKSPACE}/openwrt
 
 exit 0
