@@ -1,0 +1,19 @@
+name: TESTC GITHUB
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+
+  GITHUB-Test:
+      runs-on: ubuntu-20.04
+      steps:
+      - uses: actions/checkout@v2
+      - name: Pushes to another repository folder
+        uses: NoahDragon/action-push-repo-as-subdirectory-in-another-repo@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          dest-repo: 'DevOpenWRT-Router/Linksys_OpenWRT_Releases'
+          dest-folder: 'scripts'
