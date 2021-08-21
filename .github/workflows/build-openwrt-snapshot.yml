@@ -120,7 +120,6 @@ jobs:
       run: |
         sudo -E swapoff -a
         sudo -E rm -f /swapfile
-        sudo -E docker image prune -a -f
         sudo -E snap set system refresh.retain=2
         sudo -E apt-get -qq purge azure* dotnet* firefox ghc* google* hhvm llvm* mono* mysql* openjdk* php* zulu*
         sudo -E apt-get -qq remove --purge powershell mysql* mssql-tools msodbcsql17 android*
