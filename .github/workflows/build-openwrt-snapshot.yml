@@ -76,6 +76,7 @@ env:
   GITLOGB: true
   RUN_BEFORE_BUILD: true
   RUN_AFTER_BUILD: false
+  PACKAGES_KMODS_UPLOAD: false
   FTP_UPLOAD: false
   UPLOAD_BUILD_LOGS: true
   UPLOAD_KMODS: true
@@ -579,6 +580,18 @@ jobs:
         du -h --max-depth=1 ./bin
         echo "=============================================="
 
+    - name: Upload Packages/Kmods To Target Repo
+      uses: DevOpenWRT-Router/github-action-push-to-another-repository@main
+      if: steps.compile.outputs.status == 'success' && env.PACKAGES_KMODS_UPLOAD == 'true'
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      with:
+        source-directory: 'bin/packages'
+        target-directory: 'packages'
+        destination-github-username: 'DevOpenWRT-Router'
+        destination-repository-name: 'Linksys_OpenWRT_Releases'
+        user-email: BuildBot2021@gmail.com
+
     - name: FTP Upload
       uses: genietim/ftp-action@master
       if: steps.compile.outputs.status == 'success' && env.FTP_UPLOAD == 'true'
@@ -690,7 +703,6 @@ jobs:
       if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        GITHUB_REPOSITORY: DevOpenWRT-Router/OpenWRT_LEDE_PureFusion_Releases
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
