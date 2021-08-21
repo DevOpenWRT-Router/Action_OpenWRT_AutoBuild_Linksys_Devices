@@ -586,7 +586,7 @@ jobs:
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
-        source-directory: 'bin/packages'
+        source-directory: 'openwrt/bin/packages'
         target-directory: 'packages'
         destination-github-username: 'DevOpenWRT-Router'
         destination-repository-name: 'Linksys_OpenWRT_Releases'
