@@ -46,6 +46,7 @@ env:
   BEFORE_BUILD: before_build.sh
   AFTER_BUILD: after_build.sh
   KERNEL_VERSION: kernel_version.sh
+  GITHUB_RUN: github_run.sh
   EXT_INIT_ENV: environment.sh
   USE_FILES: true
   USE_DIYP2: true
@@ -584,10 +585,8 @@ jobs:
       id: distribution
       if: (!cancelled())
       run: |
-        cd openwrt/bin
-        echo "::set-output name=release_dir::$(date +"%Y.%m.%d-%H%M")"
-        mkdir ${{ steps.distribution.outputs.release_dir }}
-        mv bin/packages bin/${{ steps.distribution.outputs.release_dir }}/
+        chmod +x scripts/$GITHUB_RUN
+        /bin/bash ${GITHUB_WORKSPACE}/scripts/github_run.sh
 
     - name: Upload Packages/Kmods To Target Repo
       uses: DevOpenWRT-Router/github-action-push-to-another-repository@main
