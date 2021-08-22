@@ -577,6 +577,7 @@ jobs:
         du -h --max-depth=1 ./ --exclude=build_dir --exclude=bin
         du -h --max-depth=1 ./build_dir
         du -h --max-depth=1 ./bin
+        du -h --max-depth=10 ./bin
         echo "=============================================="
 
     - name: Prepare Packages/Kmods for Distribution
