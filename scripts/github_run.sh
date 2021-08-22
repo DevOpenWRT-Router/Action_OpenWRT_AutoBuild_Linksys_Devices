@@ -10,3 +10,11 @@
 #
 #################################################################
 cd openwrt/bin
+D="$(date +"%Y.%m.%d-%H%M")"
+echo "[+] Creating Directory: $D"
+mkdir $D
+
+
+
+
+exit 0
