@@ -12,7 +12,7 @@
 
 cd openwrt
 find build_dir/ -name .vermagic -exec cat {} \; >VERMAGIC  # Find hash
-find build_dir/ -name "linux-*.*.*" -type d >KERNELVERSION # find kernel version
+find build_dir/ -name "linux-5.*.*" -type d >KERNELVERSION # find kernel version
 lineA=$(head -n 1 KERNELVERSION)                           # Read kernel version from file
 lineB=$(head -n 1 VERMAGIC)                                # read kernel hash from file
 lineC="${lineA: -13}"                                      # Get last 13 chars from kernel version
