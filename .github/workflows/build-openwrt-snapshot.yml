@@ -85,6 +85,7 @@ env:
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
+  TARGZIP_PACKAGES: true
 #############################
   UPLOAD_GOFILE: false
   UPLOAD_LITTERBOX: false
@@ -615,7 +616,7 @@ jobs:
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_KMODS == 'true'
       with:
         name: OpenWrt_kmods${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: openwrt/bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR
+        path: openwrt/bin/targets/mvebu/cortexa9/kmods/${{ env.KMOD_DIR }}
 
     - name: Upload Packages
       uses: actions/upload-artifact@main
@@ -653,6 +654,13 @@ jobs:
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
+
+    - name: tar.gz bin/packages
+      if: env.TARGZIP_PACKAGES == 'true' && !cancelled()
+      run: |
+           cd openwrt/bin/packages
+           tar -cvzf OpenWrt_bin_packages${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}.tar.gz ./*
+           mv OpenWrt_bin_packages${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}.tar.gz ${GITHUB_WORKSPACE}/openwrt/bin/targets/mvebu/cortexa9/       
 
 ############################################################################################################################
 
