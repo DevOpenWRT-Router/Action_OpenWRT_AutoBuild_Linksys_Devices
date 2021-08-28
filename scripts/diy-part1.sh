@@ -31,8 +31,6 @@ git clone https://github.com/doushang/luci-app-shortcutmenu.git package/luci-app
 git clone https://github.com/wolandmaster/luci-app-rtorrent.git package/luci-app-rtorrent
 ### luci-app-zospusher
 git clone https://github.com/zhengwenxiao/luci-app-zospusher.git package/luci-app-zospusher
-### luci-app-sfe
-git clone https://github.com/lsydy1021/luci-app-sfe.git package/luci-app-sfe
 ### helmiwrt-packages
 git clone https://github.com/helmiau/helmiwrt-packages.git package/helmiwrt-packages
 
