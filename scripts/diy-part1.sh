@@ -23,8 +23,6 @@ git clone https://github.com/MapesxGM/luci-app-eqos.git package/luci-app-eqos
 git clone https://github.com/rufengsuixing/luci-app-onliner.git package/luci-app-onliner
 ### luci-app-fileassistant
 git clone https://github.com/gztingting/luci-app-fileassistant.git package/luci-app-fileassistant
-### luci-app-wifimac
-git clone https://github.com/qianmuyixiao/luci-app-wifimac.git package/luci-app-wifimac
 ### luci-app-shortcutmenu
 git clone https://github.com/doushang/luci-app-shortcutmenu.git package/luci-app-shortcutmenu
 ### luci-app-rtorrent
