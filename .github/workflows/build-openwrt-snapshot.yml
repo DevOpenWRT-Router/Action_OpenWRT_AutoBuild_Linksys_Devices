@@ -587,6 +587,15 @@ jobs:
       if: (!cancelled())
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        source-directory: openwrt/bin/packages
+        destination-github-username: DevOpenWRT-Router
+        destination-repository-name: Linksys_OpenWRT_Releases
+        user-email: BuildBot2021@gmail.com
+        user-name:
+        destination-repository-username:
+        target-branch: main
+        commit-message:
+        target-directory: packages
       run: |
         ls -al
         ls openwrt/bin
