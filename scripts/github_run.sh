@@ -12,6 +12,8 @@
 set -e  # if a command fails it stops the execution
 set -u  # script fails if trying to access to an undefined variable
 
+CLONE_DIR=$(mktemp -d)
+TEMP_DIR=$(mktemp -d)
 
 cd openwrt/bin
 D="$(date +"%Y.%m.%d-%H%M")"
