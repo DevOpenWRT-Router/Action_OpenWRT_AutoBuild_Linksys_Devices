@@ -77,7 +77,7 @@ env:
   GITLOGB: true
   RUN_BEFORE_BUILD: true
   RUN_AFTER_BUILD: false
-  PACKAGES_KMODS_UPLOAD: false
+  PACKAGES_KMODS_UPLOAD: true
   FTP_UPLOAD: false
   UPLOAD_BUILD_LOGS: true
   UPLOAD_KMODS: true
@@ -608,7 +608,8 @@ jobs:
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
-        source-directory: 'openwrt/bin/packages/'
+        source-before-directory: 'openwrt/bin'
+        source-directory: 'packages'
         target-directory: 'packages'
         destination-github-username: 'DevOpenWRT-Router'
         destination-repository-name: 'Linksys_OpenWRT_Releases'
