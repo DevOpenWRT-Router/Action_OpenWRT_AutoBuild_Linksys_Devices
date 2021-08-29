@@ -18,7 +18,7 @@ on:
     inputs:
       hardware:
         description: |
-          '[0] ALL [1] WRT3200ACM [2] WRT32X [3] WRT1200AC [4] WRT1900ACS [5] WRT1900AC V1 [6] WRT1900AC V2'
+          '[0] ALL [1] WRT3200ACM [2] WRT32X [3] WRT1200AC [4] WRT1900ACS V1 [5] WRT1900AC V1 [6] WRT1900AC V2'
         required: true
         default: '1'
       source:
@@ -167,7 +167,7 @@ jobs:
                 echo "::set-output name=hardwareString::wrt1200ac.config"
         fi
         if [[ "${{ github.event.inputs.hardware }}" == "4" ]]; then
-                echo "::set-output name=hardwareString::wrt1900acs.config"
+                echo "::set-output name=hardwareString::wrt1900acsV1.config"
         fi
         if [[ "${{ github.event.inputs.hardware }}" == "5" ]]; then
                 echo "::set-output name=hardwareString::wrt1900acV1.config"
