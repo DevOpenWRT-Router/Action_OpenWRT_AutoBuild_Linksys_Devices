@@ -585,6 +585,8 @@ jobs:
     - name: Prepare Packages/Kmods for Distribution
       id: distribution
       if: (!cancelled())
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       run: |
         ls -al
         ls openwrt/bin
