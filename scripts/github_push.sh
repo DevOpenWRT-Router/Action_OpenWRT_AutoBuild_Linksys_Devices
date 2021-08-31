@@ -14,7 +14,8 @@ set -u  # script fails if trying to access to an undefined variable
 D="$(date +"%Y.%m.%d-%H%M")"
 
 echo "[+] Action start"
-SOURCE_DIRECTORY="openwrt/bin/packages/arm_cortex-a9_vfpv3-d16"
+SOURCE_DIRECTORY_A="openwrt/bin/packages/arm_cortex-a9_vfpv3-d16"
+SOURCE_DIRECTORY_B="openwrt/bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR"
 DESTINATION_GITHUB_USERNAME="DevOpenWRT-Router"
 DESTINATION_REPOSITORY_NAME="Linksys_OpenWRT_Releases"
 USER_EMAIL="BuildBot2021@gmail.com"
@@ -22,7 +23,8 @@ USER_NAME="BuildBot2021"
 DESTINATION_REPOSITORY_USERNAME="DevOpenWRT-Router"
 TARGET_BRANCH="main"
 COMMIT_MESSAGE="Updated: $D"
-TARGET_DIRECTORY="packages"
+TARGET_DIRECTORY_A="packages"
+TARGET_DIRECTORY_B="kmods/$KMOD_DIR"
 
 if [ -z "$DESTINATION_REPOSITORY_USERNAME" ]
 then
@@ -49,25 +51,32 @@ TEMP_DIR=$(mktemp -d)
 # including "." and with the exception of ".git/"
 mv "$CLONE_DIR/.git" "$TEMP_DIR/.git"
 
-echo "[+] Checking if $TARGET_DIRECTORY exist in git repo $DESTINATION_REPOSITORY_NAME"
+echo "[+] Checking if $TARGET_DIRECTORY_A exist in git repo $DESTINATION_REPOSITORY_NAME"
 # Remove contents of target directory and create a new empty one
-if [ -d "$CLONE_DIR/$TARGET_DIRECTORY/" ]
+if [ -d "$CLONE_DIR/$TARGET_DIRECTORY_A/" ]
 then
-echo "[+] Deleting files from $TARGET_DIRECTORY in git repo $DESTINATION_REPOSITORY_NAME"
-rm -R "${CLONE_DIR:?}/$TARGET_DIRECTORY/"
+echo "[+] Deleting files from $TARGET_DIRECTORY_A in git repo $DESTINATION_REPOSITORY_NAME"
+rm -R "${CLONE_DIR:?}/$TARGET_DIRECTORY_A/"
 fi
-echo "[+] Creating $TARGET_DIRECTORY if doesnt already exist"
-mkdir -p "$CLONE_DIR/$TARGET_DIRECTORY"
+echo "[+] Creating $TARGET_DIRECTORY_A if doesnt already exist"
+mkdir -p "$CLONE_DIR/$TARGET_DIRECTORY_A"
+
+echo "[+] Checking if $TARGET_DIRECTORY_B exist in git repo $DESTINATION_REPOSITORY_NAME"
+# Remove contents of target directory and create a new empty one
+if [ -d "$CLONE_DIR/$TARGET_DIRECTORY_B/" ]
+then
+echo "[+] Deleting files from $TARGET_DIRECTORY_B in git repo $DESTINATION_REPOSITORY_NAME"
+rm -R "${CLONE_DIR:?}/$TARGET_DIRECTORY_B/"
+fi
+echo "[+] Creating $TARGET_DIRECTORY_B if doesnt already exist"
+mkdir -p "$CLONE_DIR/$TARGET_DIRECTORY_B"
 
 mv "$TEMP_DIR/.git" "$CLONE_DIR/.git"
 
-echo "[+] List contents of $SOURCE_DIRECTORY"
-ls "$SOURCE_DIRECTORY"
-
-echo "[+] Checking if local $SOURCE_DIRECTORY exist"
-if [ ! -d "$SOURCE_DIRECTORY" ]
+echo "[+] Checking if local $SOURCE_DIRECTORY_A exist"
+if [ ! -d "$SOURCE_DIRECTORY_A" ]
 then
-	echo "ERROR: $SOURCE_DIRECTORY does not exist"
+	echo "ERROR: $SOURCE_DIRECTORY_A does not exist"
 	echo "This directory needs to exist when push-to-another-repository is executed"
 	echo
 	echo "In the example it is created by ./build.sh: https://github.com/cpina/push-to-another-repository-example/blob/main/.github/workflows/ci.yml#L19"
@@ -79,8 +88,27 @@ then
 	exit 1
 fi
 
-echo "[+] Copying contents of source repository folder $SOURCE_DIRECTORY to folder $TARGET_DIRECTORY in git repo $DESTINATION_REPOSITORY_NAME"
-cp -ra "$SOURCE_DIRECTORY"/. "$CLONE_DIR/$TARGET_DIRECTORY"
+echo "[+] Checking if local $SOURCE_DIRECTORY_B exist"
+if [ ! -d "$SOURCE_DIRECTORY_B" ]
+then
+	echo "ERROR: $SOURCE_DIRECTORY_B does not exist"
+	echo "This directory needs to exist when push-to-another-repository is executed"
+	echo
+	echo "In the example it is created by ./build.sh: https://github.com/cpina/push-to-another-repository-example/blob/main/.github/workflows/ci.yml#L19"
+	echo
+	echo "If you want to copy a directory that exist in the source repository"
+	echo "to the target repository: you need to clone the source repository"
+	echo "in a previous step in the same build section. For example using"
+	echo "actions/checkout@v2. See: https://github.com/cpina/push-to-another-repository-example/blob/main/.github/workflows/ci.yml#L16"
+	exit 1
+fi
+
+echo "[+] Copying contents of source repository folder $SOURCE_DIRECTORY_A to folder $TARGET_DIRECTORY_A in git repo $DESTINATION_REPOSITORY_NAME"
+cp -ra "$SOURCE_DIRECTORY_A"/. "$CLONE_DIR/$TARGET_DIRECTORY_A"
+cd "$CLONE_DIR"
+
+echo "[+] Copying contents of source repository folder $SOURCE_DIRECTORY_B to folder $TARGET_DIRECTORY_B in git repo $DESTINATION_REPOSITORY_NAME"
+cp -ra "$SOURCE_DIRECTORY_B"/. "$CLONE_DIR/$TARGET_DIRECTORY_B"
 cd "$CLONE_DIR"
 
 echo "[+] Files that will be pushed"
