@@ -616,6 +616,7 @@ jobs:
           echo "=============================================="
       - name: Prepare Packages/Kmods for Distribution
         id: distribution
+        continue-on-error: true
         if: (!cancelled())
         env:
           API_TOKEN_GITHUB: '${{ secrets.API_TOKEN_GITHUB }}'
@@ -624,6 +625,12 @@ jobs:
           ls openwrt/bin
           chmod +x scripts/$GITHUB_RUN
           /bin/bash ${GITHUB_WORKSPACE}/scripts/github_run.sh
+### ----- ERROR CONTROL ----- ###
+      - name: If Error
+        if: steps.distribution.outcome == 'failure'
+        run: |
+              echo "[+] Prepare Packages/Kmods for Distribution Failed"
+### ------------------------------------------------------------------------------ ###
       - name: Upload Packages/Kmods To Target Repo
         id: uploadrepo
         continue-on-error: true
