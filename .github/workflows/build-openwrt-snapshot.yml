@@ -73,8 +73,7 @@ env:
   GITLOGB: true
   RUN_BEFORE_BUILD: true
   RUN_AFTER_BUILD: false
-  PACKAGES_KMODS_UPLOAD: true
-  FTP_UPLOAD: false
+  RUN_GITHUB_PUSH: true
   UPLOAD_BUILD_LOGS: true
   UPLOAD_KMODS: true
   UPLOAD_PACKAGES: true
@@ -595,11 +594,13 @@ jobs:
         env:
           TELEGRAM_CHAT_ID: '${{ secrets.TELEGRAM_CHAT_ID }}'
           TELEGRAM_BOT_TOKEN: '${{ secrets.TELEGRAM_BOT_TOKEN }}'
+### ------------------------------------------------------------------------------ ###
       - name: After Build
         if: env.RUN_AFTER_BUILD == 'true' && !cancelled()
         run: |
           chmod +x scripts/$AFTER_BUILD
           /bin/bash ${GITHUB_WORKSPACE}/scripts/after_build.sh
+### ------------------------------------------------------------------------------ ###
       - name: Check space usage
         if: (!cancelled())
         run: |
@@ -614,54 +615,22 @@ jobs:
           du -h --max-depth=1 ./bin
           du -h --max-depth=10 ./bin
           echo "=============================================="
+### ------------------------------------------------------------------------------ ###
       - name: Prepare Packages/Kmods for Distribution
         id: distribution
         continue-on-error: true
-        if: (!cancelled())
+        if: env.RUN_GITHUB_PUSH == 'true' && (!cancelled())
         env:
           API_TOKEN_GITHUB: '${{ secrets.API_TOKEN_GITHUB }}'
         run: |
-          ls -al
-          ls openwrt/bin
           chmod +x scripts/$GITHUB_RUN
-          /bin/bash ${GITHUB_WORKSPACE}/scripts/github_run.sh
+          /bin/bash ${GITHUB_WORKSPACE}/scripts/github_push.sh
 ### ----- ERROR CONTROL ----- ###
       - name: If Error
         if: steps.distribution.outcome == 'failure'
         run: |
               echo "[+] Prepare Packages/Kmods for Distribution Failed"
 ### ------------------------------------------------------------------------------ ###
-      - name: Upload Packages/Kmods To Target Repo
-        id: uploadrepo
-        continue-on-error: true
-        uses: DevOpenWRT-Router/github-action-push-to-another-repository@main
-        if: >-
-          steps.compile.outputs.status == 'success' && env.PACKAGES_KMODS_UPLOAD
-          == 'true'
-        env:
-          API_TOKEN_GITHUB: '${{ secrets.API_TOKEN_GITHUB }}'
-        with:
-          source-before-directory: openwrt/bin
-          source-directory: packages
-          target-directory: packages
-          destination-github-username: DevOpenWRT-Router
-          destination-repository-name: Linksys_OpenWRT_Releases
-          user-email: BuildBot2021@gmail.com
-### ----- ERROR CONTROL ----- ###
-      - name: If Error
-        if: steps.uploadrepo.outcome == 'failure'
-        run: |
-              echo "[+] Uploading to GITHUB Failed"
-### ------------------------------------------------------------------------------ ###
-      - name: FTP Upload
-        uses: genietim/ftp-action@master
-        if: steps.compile.outputs.status == 'success' && env.FTP_UPLOAD == 'true'
-        with:
-          host: '${{ secrets.FTP_SERVER }}'
-          user: '${{ secrets.FTP_USERNAME }}'
-          password: '${{ secrets.FTP_PASSWORD }}'
-          localDir: openwrt/bin/packages/
-          remoteDir: packages/
       - name: Upload kmods
         uses: actions/upload-artifact@main
         if: >-
