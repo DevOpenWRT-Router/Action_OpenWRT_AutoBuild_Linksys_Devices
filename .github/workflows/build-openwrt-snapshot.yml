@@ -42,7 +42,7 @@ env:
   BEFORE_BUILD: before_build.sh
   AFTER_BUILD: after_build.sh
   KERNEL_VERSION: kernel_version.sh
-  GITHUB_RUN: github_run.sh
+  GITHUB_RUN: github_push.sh
   EXT_INIT_ENV: environment.sh
   USE_FILES: true
   USE_DIYP2: true
@@ -638,7 +638,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: '${{ secrets.API_TOKEN_GITHUB }}'
         run: |
-          chmod +x scripts/$GITHUB_RUN
+          chmod +x scripts/$GITHUB_PUSH
           /bin/bash ${GITHUB_WORKSPACE}/scripts/github_push.sh
 ### ----- ERROR CONTROL ----- ###
       - name: If Error
