@@ -69,8 +69,10 @@ env:
   ### ------------------------------------------------------------------ ###
   KMODS: true
   ACL_LUCI: true
+### [ LOGS ] ###
   GITLOGA: true
   GITLOGB: true
+### -------------------- ###
   RUN_BEFORE_BUILD: true
   RUN_AFTER_BUILD: false
   RUN_GITHUB_PUSH: true
@@ -81,12 +83,25 @@ env:
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   TARGZIP_PACKAGES: true
-  #############################
+### -------------------- ###
   UPLOAD_GOFILE: false
   UPLOAD_LITTERBOX: false
   UPLOAD_CATBOX: false
   UPLOAD_FILEIO: false
-  #############################
+### -------------------- ###
+### [ GITHUB PUSH ENV ] ###
+  SOURCE_DIRECTORY_A: "openwrt/bin/packages/arm_cortex-a9_vfpv3-d16"
+  SOURCE_DIRECTORY_B: "openwrt/bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR"
+  DESTINATION_GITHUB_USERNAME: "DevOpenWRT-Router"
+  DESTINATION_REPOSITORY_NAME: "Linksys_OpenWRT_Releases"
+  USER_EMAIL: "BuildBot2021@gmail.com"
+  USER_NAME: "BuildBot2021"
+  DESTINATION_REPOSITORY_USERNAME: "DevOpenWRT-Router"
+  TARGET_BRANCH: "main"
+  COMMIT_MESSAGE: "Updated: $D"
+  TARGET_DIRECTORY_A: "packages"
+  TARGET_DIRECTORY_B: "kmods/$KMOD_DIR"
+### -------------------- ###
   TZ: America/New_York
 jobs:
   build:
