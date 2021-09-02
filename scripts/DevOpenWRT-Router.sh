@@ -45,6 +45,8 @@ git clone https://github.com/DevOpenWRT-Router/luci-app-observatory.git package/
 git clone https://github.com/DevOpenWRT-Router/luci-app-rtorrent-js.git package/luci-app-rtorrent-js
 ### luci-app-autowms
 git clone https://github.com/DevOpenWRT-Router/luci-app-autowms.git package/luci-app-autowms
+### luci-default-settings
+git clone https://github.com/DevOpenWRT-Router/luci-default-settings.git package/luci-default-settings
 
 ### luci-app-tn-ttyd DO NOT USE
 # git clone https://github.com/DevOpenWRT-Router/luci-app-tn-ttyd.git package/luci-app-tn-ttyd
