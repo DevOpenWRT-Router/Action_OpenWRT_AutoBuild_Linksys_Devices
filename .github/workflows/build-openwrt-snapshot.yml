@@ -176,6 +176,7 @@ jobs:
         run: |
           git config --global user.email "BuildBot2021@gmail.com"
           git config --global user.name "BuildBot"
+### ------------------------------------------------------------------------------ ###
       - name: Set .config
         id: setConfig
         run: |
@@ -200,6 +201,7 @@ jobs:
           if [[ "${{ github.event.inputs.hardware }}" == "6" ]]; then
                   echo "::set-output name=hardwareString::wrt1900acV2.config"
           fi
+### ------------------------------------------------------------------------------ ###
       - name: Set SSH connection to Actions
         id: setSSH
         run: |
@@ -231,6 +233,7 @@ jobs:
                   echo "SSH_NGROK=true" >> $GITHUB_ENV
                   echo "SSH_AFTERBUILD=true" >> $GITHUB_ENV
           fi
+### ------------------------------------------------------------------------------ ###
       - name: Set source and branch
         id: setSource
         run: |
@@ -250,6 +253,7 @@ jobs:
                   echo "::set-output name=sourceString::https://github.com/coolsnowwolf/lede.git"
                   echo "::set-output name=branchString::master"
           fi
+### ------------------------------------------------------------------------------ ###
       - name: Clone source code
         working-directory: /workdir
         run: >
@@ -259,16 +263,19 @@ jobs:
           steps.setSource.outputs.branchString }} openwrt
 
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+### ------------------------------------------------------------------------------ ###
       - name: Before Build
         if: env.RUN_BEFORE_BUILD == 'true' && !cancelled()
         run: |
           chmod +x scripts/$BEFORE_BUILD
           /bin/bash ${GITHUB_WORKSPACE}/scripts/before_build.sh
+### ------------------------------------------------------------------------------ ###
       - name: Current Commit Before Feeds/Patches
         if: env.GITLOGA == 'true' && !cancelled()
         run: |
           cd openwrt
           git log --pretty=oneline -n 1
+### ------------------------------------------------------------------------------ ###
       - name: Load custom feeds
         run: >
           [ -e configs/$FEEDS_CONF ] && mv configs/$FEEDS_CONF
@@ -279,12 +286,14 @@ jobs:
           cd openwrt
 
           $GITHUB_WORKSPACE/scripts/$DIY_P1_SH
+### ------------------------------------------------------------------------------ ###
       - name: Load LUCI custom Themes
         if: env.USE_CUST_THEMES == 'true' && !cancelled()
         run: |
           chmod +x scripts/luci_themes.sh
           cd openwrt
           $GITHUB_WORKSPACE/scripts/luci_themes.sh
+### ------------------------------------------------------------------------------ ###
       - name: Set LUCI Source
         id: setLuci
         run: |
@@ -304,50 +313,59 @@ jobs:
               sed -i 's#/github.com/coolsnowwolf/luci#/github.com/coolsnowwolf/luci#g' feeds.conf.default
               sed -i 's#/git.openwrt.org/project/luci.git#/github.com/coolsnowwolf/luci#g' feeds.conf.default
           fi
+### ------------------------------------------------------------------------------ ###
       - name: Load DevOpenWRT-Router's Packages
         if: env.USE_DEVOPENWRT == 'true' && !cancelled()
         run: |
           chmod +x scripts/DevOpenWRT-Router.sh
           cd openwrt
           $GITHUB_WORKSPACE/scripts/DevOpenWRT-Router.sh
+### ------------------------------------------------------------------------------ ###
       - name: Load coolsnowwolf's Lean Packages
         if: env.USE_COOLSNOWWOLF == 'true' && !cancelled()
         run: |
           chmod +x scripts/lean_packages.sh
           cd openwrt
           $GITHUB_WORKSPACE/scripts/lean_packages.sh
+### ------------------------------------------------------------------------------ ###
       - name: Load Sirpdboy's Packages
         if: env.USE_SIRPDBOY == 'true' && !cancelled()
         run: |
           chmod +x scripts/sirpdboy-package.sh
           cd openwrt
           $GITHUB_WORKSPACE/scripts/sirpdboy-package.sh
+### ------------------------------------------------------------------------------ ###
       - name: Update feeds Package
         run: |
           file=./scripts/feeds_update.txt
           while read -r line; do
           cd openwrt && ./scripts/feeds update $line
           done < "$file"
+### ------------------------------------------------------------------------------ ###
       - name: Install feeds Package
         run: |
           file=./scripts/feeds_install.txt
           while read -r line; do
           cd openwrt && ./scripts/feeds install $line
           done < "$file"
+### ------------------------------------------------------------------------------ ###
       - name: Uninstall feeds Package
         run: |
           file=./scripts/feeds_uninstall.txt
           while read -r line; do
           cd openwrt && ./scripts/feeds uninstall $line
           done < "$file"
+### ------------------------------------------------------------------------------ ###
       - name: Copy (files) Dir
         if: env.USE_FILES == 'true' && !cancelled()
         run: |
           [ -e configs/files ] && mv configs/files openwrt/files
+### ------------------------------------------------------------------------------ ###
       - name: Copy (.config)
         run: >
           [ -e configs/${{ steps.setConfig.outputs.hardwareString }} ] && mv
           configs/${{ steps.setConfig.outputs.hardwareString }} openwrt/.config
+### ------------------------------------------------------------------------------ ###
       - name: Run Custom OpenWRT Patches
         if: env.USE_OPENWRT_PATCHES == 'true' && !cancelled()
         run: |
@@ -355,6 +373,7 @@ jobs:
           cd openwrt
           git am patches/*.patch
           rm -rf patches
+### ------------------------------------------------------------------------------ ###
       - name: Run Custom LUCI Patches
         if: env.USE_LUCI_PATCHES == 'true' && !cancelled()
         run: |
@@ -362,6 +381,7 @@ jobs:
           cd openwrt/feeds/luci
           git am patches/*.patch
           rm -rf patches
+### ------------------------------------------------------------------------------ ###
       - name: Run Custom Packages Patches
         if: env.USE_PACKAGES_PATCHES == 'true' && !cancelled()
         run: |
@@ -369,11 +389,13 @@ jobs:
           cd openwrt/feeds/packages
           git am patches/*.patch
           rm -rf patches
+### ------------------------------------------------------------------------------ ###
       - name: Current Commit After Feeds/Patches
         if: env.GITLOGB == 'true' && !cancelled()
         run: |
           cd openwrt
           git log --pretty=oneline -n 1
+### ------------------------------------------------------------------------------ ###
       - name: Smart chmod
         run: >
           MY_Filter=$(mktemp)
@@ -391,18 +413,22 @@ jobs:
           rm -f ${MY_Filter}
 
           unset MY_Filter
+### ------------------------------------------------------------------------------ ###
       - name: Load custom configuration
         if: env.USE_DIYP2 == 'true' && !cancelled()
         run: |
           chmod +x scripts/$DIY_P2_SH
           cd openwrt
           $GITHUB_WORKSPACE/scripts/$DIY_P2_SH
+
+### ------------------------------------------------------------------------------ ###
       - name: Add ACL
         if: env.ACL_LUCI == 'true' && !cancelled()
         run: |
           chmod +x scripts/create_acl_for_luci.sh
           cd openwrt
           $GITHUB_WORKSPACE/scripts/create_acl_for_luci.sh -a
+### ------------------------------------------------------------------------------ ###
       - name: Start SSH via tmate
         uses: P3TERX/ssh2actions@main
         if: >-
@@ -413,6 +439,7 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: '${{ secrets.TELEGRAM_BOT_TOKEN }}'
           TELEGRAM_CHAT_ID: '${{ secrets.TELEGRAM_CHAT_ID }}'
+### ------------------------------------------------------------------------------ ###
       - name: Start SSH via ngrok
         uses: P3TERX/ssh2actions@main
         if: >-
@@ -433,11 +460,13 @@ jobs:
       # You can find related documents here: https://core.telegram.org/bots
           TELEGRAM_BOT_TOKEN: '${{ secrets.TELEGRAM_BOT_TOKEN }}'
           TELEGRAM_CHAT_ID: '${{ secrets.TELEGRAM_CHAT_ID }}'
+### ------------------------------------------------------------------------------ ###
       - name: Populating .config
         id: config
         run: |
           cd openwrt
           make defconfig
+### ------------------------------------------------------------------------------ ###
       - name: Setup For Compiling
         id: setup
         run: |
@@ -445,6 +474,7 @@ jobs:
           echo -e "Creating (logs) Directory:"
           cd openwrt
           mkdir -p logs
+### ------------------------------------------------------------------------------ ###
       - name: Make Download
         id: makedownload
         run: |
@@ -452,6 +482,7 @@ jobs:
           make download -j50
           find dl -size -1024c -exec ls -l {} \;
           find dl -size -1024c -exec rm -f {} \;
+### ------------------------------------------------------------------------------ ###
       - name: Building and installing GNU tar
         id: GNUTAR
         run: |
@@ -459,6 +490,7 @@ jobs:
           cd openwrt
           let make_process=$(nproc)+2
           make tools/tar/compile -j${make_process} V=s
+### ------------------------------------------------------------------------------ ###
       - name: Building and installing tools
         id: maketools
         run: |
@@ -466,6 +498,7 @@ jobs:
           cd openwrt
           let make_process=$(nproc)+2
           make tools/install -j${make_process} V=s
+### ------------------------------------------------------------------------------ ###
       - name: Building and installing toolchain
         id: maketoolchain
         run: |
@@ -473,6 +506,7 @@ jobs:
           cd openwrt
           let make_process=$(nproc)+2
           make toolchain/install -j${make_process} V=s
+### ------------------------------------------------------------------------------ ###
       - name: Building kmods
         id: makekmods
         if: env.BUILD_KMODS == 'true' && !cancelled()
@@ -481,6 +515,7 @@ jobs:
           cd openwrt
           let make_process=$(nproc)+2
           make target/compile -j${make_process} V=s
+### ------------------------------------------------------------------------------ ###
       - name: Building packages
         id: makepackages
         if: env.BUILD_PACKAGES == 'true' && !cancelled()
@@ -494,6 +529,7 @@ jobs:
           make package/compile -j${make_process} || make package/compile
           -j${make_process} V=s 2>&1 | tee logs/build.log | grep -i -E
           "^make.*(error|[12345]...Entering directory)"
+### ------------------------------------------------------------------------------ ###
       - name: Installing packages
         id: installpackages
         if: env.INSTALL_PACKAGES == 'true' && !cancelled()
@@ -507,12 +543,14 @@ jobs:
           make package/install -j${make_process} || make package/install
           -j${make_process} V=s 2>&1 | tee logs/build.log | grep -i -E
           "^make.*(error|[12345]...Entering directory)"
+### ------------------------------------------------------------------------------ ###
       - name: Kernel Version
         id: kernelversion
         if: env.KMODS == 'true' && !cancelled()
         run: |
           chmod +x scripts/$KERNEL_VERSION
           /bin/bash ${GITHUB_WORKSPACE}/scripts/kernel_version.sh
+### ------------------------------------------------------------------------------ ###
       - name: Indexing packages
         id: indexingpackages
         if: env.INDEX_PACKAGES == 'true' && !cancelled()
@@ -568,6 +606,7 @@ jobs:
           $GITHUB_ENV
 
           echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+### ------------------------------------------------------------------------------ ###
       - name: Compile the firmware
         id: compile
         continue-on-error: true
@@ -654,6 +693,7 @@ jobs:
         with:
           name: 'OpenWrt_kmods${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
           path: 'openwrt/bin/targets/mvebu/cortexa9/kmods/${{ env.KMOD_DIR }}'
+### ------------------------------------------------------------------------------ ###
       - name: Upload Packages
         uses: actions/upload-artifact@main
         if: >-
@@ -670,6 +710,7 @@ jobs:
         with:
           name: 'OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
           path: openwrt/bin
+### ------------------------------------------------------------------------------ ###
       - name: Upload logs directory
         uses: actions/upload-artifact@main
         if: env.UPLOAD_BUILD_LOGS == 'true'
@@ -684,6 +725,7 @@ jobs:
           rm -rf packages
           echo "FIRMWARE=$PWD" >> $GITHUB_ENV
           echo "::set-output name=status::success"
+### ------------------------------------------------------------------------------ ###
       - name: Upload firmware directory
         uses: actions/upload-artifact@main
         if: steps.organize.outputs.status == 'success' && !cancelled()
@@ -700,6 +742,7 @@ jobs:
 
           mv OpenWrt_bin_packages${{ env.DEVICE_NAME }}${{ env.FILE_DATE
           }}.tar.gz ${GITHUB_WORKSPACE}/openwrt/bin/targets/mvebu/cortexa9/
+### ------------------------------------------------------------------------------ ###
       - name: Upload firmware to gofile
         id: gofile
         if: >-
@@ -714,6 +757,7 @@ jobs:
 
           echo "::set-output name=url::$(cat gofile.log | grep https | cut -f3
           -d" ")"
+### ------------------------------------------------------------------------------ ###
       - name: Upload firmware to litterbox
         id: litterbox
         if: >-
@@ -729,6 +773,7 @@ jobs:
 
           echo "::set-output name=url::$(cat litterbox.log | grep https | cut
           -f3 -d" ")"
+### ------------------------------------------------------------------------------ ###
       - name: Upload firmware to catbox
         id: catbox
         if: >-
@@ -743,6 +788,7 @@ jobs:
 
           echo "::set-output name=url::$(cat catbox.log | grep https | cut -f3
           -d" ")"
+### ------------------------------------------------------------------------------ ###
       - name: Upload firmware to fileio
         id: fileio
         if: >-
@@ -757,6 +803,7 @@ jobs:
 
           echo "::set-output name=url::$(cat fileio.log | grep https | cut -f3
           -d" ")"
+### ------------------------------------------------------------------------------ ###
       - name: Generate release tag
         id: tag
         if: env.UPLOAD_RELEASE == 'true' && !cancelled()
@@ -770,6 +817,7 @@ jobs:
           tag_name: '${{ steps.tag.outputs.release_tag }}'
           body_path: release.txt
           files: '${{ env.FIRMWARE }}/*'
+### ------------------------------------------------------------------------------ ###
       - name: Delete workflow runs
         uses: GitRML/delete-workflow-runs@main
         with:
