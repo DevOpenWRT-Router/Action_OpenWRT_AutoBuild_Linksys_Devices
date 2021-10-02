@@ -1,0 +1,107 @@
+
+config interface 'loopback'
+	option device 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+	option ula_prefix 'xxxx:xxxx:xxxx::/48'
+
+config device
+	option name 'br-lan'
+	option type 'bridge'
+	list ports 'lan1'
+	list ports 'lan2'
+	list ports 'lan3'
+	list ports 'lan4'
+
+config interface 'lan'
+	option device 'br-lan.1'
+	option proto 'static'
+	option ipaddr '192.168.0.1'
+	option netmask '255.255.255.0'
+	option ip6assign '60'
+
+config device
+	option name 'wan'
+	option macaddr 'xx:xx:xx:xx:xx:xx'
+
+config interface 'wan6'
+	option device 'wan'
+	option proto 'dhcpv6'
+
+config bridge-vlan
+	option device 'br-lan'
+	option vlan '1'
+	list ports 'lan1'
+	list ports 'lan4:t*'
+
+config bridge-vlan
+	option device 'br-lan'
+	option vlan '10'
+	list ports 'lan2:u*'
+	list ports 'lan4:t'
+
+config bridge-vlan
+	option device 'br-lan'
+	option vlan '11'
+	list ports 'lan3:u*'
+	list ports 'lan4:t'
+
+config bridge-vlan
+	option device 'br-lan'
+	option vlan '12'
+	list ports 'lan4:t'
+
+config bridge-vlan
+	option device 'br-lan'
+	option vlan '13'
+	list ports 'lan4:t'
+
+config bridge-vlan
+	option device 'br-lan'
+	option vlan '14'
+	list ports 'lan4:t'
+
+config bridge-vlan
+	option device 'br-lan'
+	option vlan '15'
+	list ports 'lan4:t'
+
+config interface 'Admin'
+	option proto 'static'
+	option device 'br-lan.10'
+	option ipaddr '192.168.10.1'
+	option netmask '255.255.255.0'
+
+config interface 'Data'
+	option proto 'static'
+	option device 'br-lan.11'
+	option ipaddr '192.168.11.1'
+	option netmask '255.255.255.0'
+
+config interface 'Guest'
+	option proto 'static'
+	option device 'br-lan.12'
+	option ipaddr '192.168.12.1'
+	option netmask '255.255.255.0'
+
+config interface 'IoT'
+	option proto 'static'
+	option device 'br-lan.13'
+	option ipaddr '192.168.13.1'
+	option netmask '255.255.255.0'
+
+config interface 'Media'
+	option proto 'static'
+	option device 'br-lan.14'
+	option ipaddr '192.168.14.1'
+	option netmask '255.255.255.0'
+
+config interface 'Kids'
+	option proto 'static'
+	option device 'br-lan.15'
+	option ipaddr '192.168.15.1'
+	option netmask '255.255.255.0'
+
