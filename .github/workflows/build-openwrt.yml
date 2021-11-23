@@ -182,24 +182,31 @@ jobs:
         run: |
           if [[ "${{ github.event.inputs.hardware }}" == "0" ]]; then
                   echo "::set-output name=hardwareString::wrtmulti.config"
+                  echo "HARDWARE_DEVICE=wrtMulti" >> $GITHUB_ENV
           fi
           if [[ "${{ github.event.inputs.hardware }}" == "1" ]]; then
                   echo "::set-output name=hardwareString::wrt3200acm.config"
+                  echo "HARDWARE_DEVICE=wrt3200acm" >> $GITHUB_ENV
           fi
           if [[ "${{ github.event.inputs.hardware }}" == "2" ]]; then
                   echo "::set-output name=hardwareString::wrt32x.config"
+                  echo "HARDWARE_DEVICE=wrt32x" >> $GITHUB_ENV
           fi
           if [[ "${{ github.event.inputs.hardware }}" == "3" ]]; then
                   echo "::set-output name=hardwareString::wrt1200ac.config"
+                  echo "HARDWARE_DEVICE=wrt1200ac" >> $GITHUB_ENV
           fi
           if [[ "${{ github.event.inputs.hardware }}" == "4" ]]; then
                   echo "::set-output name=hardwareString::wrt1900acsV1.config"
+                  echo "HARDWARE_DEVICE=wrt1900acsV1" >> $GITHUB_ENV
           fi
           if [[ "${{ github.event.inputs.hardware }}" == "5" ]]; then
                   echo "::set-output name=hardwareString::wrt1900acV1.config"
+                  echo "HARDWARE_DEVICE=wrt1900acV2" >> $GITHUB_ENV
           fi
           if [[ "${{ github.event.inputs.hardware }}" == "6" ]]; then
                   echo "::set-output name=hardwareString::wrt1900acV2.config"
+                  echo "HARDWARE_DEVICE=wrt1900acV2" >> $GITHUB_ENV
           fi
 ### ------------------------------------------------------------------------------ ###
       - name: Set SSH connection to Actions
