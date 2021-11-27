@@ -177,7 +177,7 @@ jobs:
           git config --global user.email "BuildBot2021@gmail.com"
           git config --global user.name "BuildBot"
 ### ------------------------------------------------------------------------------ ###
-      - name: Set .config
+      - name: Set .config and assign hardware Device Tag
         id: setConfig
         run: |
           if [[ "${{ github.event.inputs.hardware }}" == "0" ]]; then
