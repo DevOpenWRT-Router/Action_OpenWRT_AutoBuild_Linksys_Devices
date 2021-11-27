@@ -84,11 +84,6 @@ env:
   UPLOAD_RELEASE: true
   TARGZIP_PACKAGES: true
 ### -------------------- ###
-  UPLOAD_GOFILE: false
-  UPLOAD_LITTERBOX: false
-  UPLOAD_CATBOX: false
-  UPLOAD_FILEIO: false
-### -------------------- ###
 ### [ GITHUB PUSH ENV ] ###
   SOURCE_DIRECTORY_A: "openwrt/bin/packages/arm_cortex-a9_vfpv3-d16"
   SOURCE_DIRECTORY_B: "openwrt/bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR"
@@ -750,71 +745,10 @@ jobs:
           mv OpenWrt_bin_packages${{ env.DEVICE_NAME }}${{ env.FILE_DATE
           }}.tar.gz ${GITHUB_WORKSPACE}/openwrt/bin/targets/mvebu/cortexa9/
 ### ------------------------------------------------------------------------------ ###
-      - name: Upload firmware to gofile
-        id: gofile
-        if: >-
-          steps.organize.outputs.status == 'success' && env.UPLOAD_GOFILE ==
-          'true' && !cancelled()
-        run: >
-          curl -fsSL git.io/file-transfer | sh
-
-          ./transfer gof -s --no-progress ${FIRMWARE} 2>&1 | tee gofile.log
-
-          echo "::warning file=gofile.io::$(cat gofile.log | grep https)"
-
-          echo "::set-output name=url::$(cat gofile.log | grep https | cut -f3
-          -d" ")"
-### ------------------------------------------------------------------------------ ###
-      - name: Upload firmware to litterbox
-        id: litterbox
-        if: >-
-          steps.organize.outputs.status == 'success' && env.UPLOAD_LITTERBOX ==
-          'true' && !cancelled()
-        run: >
-          curl -fsSL git.io/file-transfer | sh
-
-          ./transfer lit --no-progress ${FIRMWARE} 2>&1 | tee litterbox.log
-
-          echo "::warning file=litterbox.catbox.moe::$(cat litterbox.log | grep
-          https)"
-
-          echo "::set-output name=url::$(cat litterbox.log | grep https | cut
-          -f3 -d" ")"
-### ------------------------------------------------------------------------------ ###
-      - name: Upload firmware to catbox
-        id: catbox
-        if: >-
-          steps.organize.outputs.status == 'success' && env.UPLOAD_CATBOX ==
-          'true' && !cancelled()
-        run: >
-          curl -fsSL git.io/file-transfer | sh
-
-          ./transfer cat --no-progress ${FIRMWARE} 2>&1 | tee catbox.log
-
-          echo "::warning file=catbox.moe::$(cat catbox.log | grep https)"
-
-          echo "::set-output name=url::$(cat catbox.log | grep https | cut -f3
-          -d" ")"
-### ------------------------------------------------------------------------------ ###
-      - name: Upload firmware to fileio
-        id: fileio
-        if: >-
-          steps.organize.outputs.status == 'success' && env.UPLOAD_FILEIO ==
-          'true' && !cancelled()
-        run: >
-          curl -fsSL git.io/file-transfer | sh
-
-          ./transfer fio --no-progress ${FIRMWARE} 2>&1 | tee fileio.log
-
-          echo "::warning file=file.io::$(cat fileio.log | grep https)"
-
-          echo "::set-output name=url::$(cat fileio.log | grep https | cut -f3
-          -d" ")"
-### ------------------------------------------------------------------------------ ###
       - name: Generate release tag
         id: tag
         if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-        run: "echo \"::set-output name=release_tag::$(date +\"%Y.%m.%d-%H%M\")\"\ntouch release.txt\n[ $UPLOAD_GOFILE = true ] && echo \"\U0001F517 [GoFile](${{ steps.gofile.outputs.url }})\" >> release.txt\n[ $UPLOAD_LITTERBOX = true ] && echo \"\U0001F517 [LitterBox](${{ steps.litterbox.outputs.url }})\" >> release.txt\n[ $UPLOAD_CATBOX = true ] && echo \"\U0001F517 [CatBox](${{ steps.catbox.outputs.url }})\" >> release.txt\n[ $UPLOAD_FILEIO = true ] && echo \"\U0001F517 [FileIO](${{ steps.fileio.outputs.url }})\" >> release.txt\necho \"::set-output name=status::success\"\n"
+        run: "echo \"::set-output name=release_tag::$(date +\"%Y.%m.%d-%H%M\")\"\ntouch release.txt\necho \"::set-output name=status::success\"\n"
       - name: Upload firmware to release
         uses: softprops/action-gh-release@59c3b4891632ff9a897f99a91d7bc557467a3a22
         if: steps.tag.outputs.status == 'success' && !cancelled()
