@@ -14,86 +14,77 @@
 
 echo "Downloading sirpdboy's packages"
 
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/adguardhome package/sirpdboy/adguardhome
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/cpulimit package/sirpdboy/cpulimit
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/doc package/sirpdboy/doc
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/iptvhelper package/sirpdboy/iptvhelper
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/lua-maxminddb package/sirpdboy/lua-maxminddb
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-access-control package/sirpdboy/luci-app-access-control ## NEEDS FIXED
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-adguardhome package/sirpdboy/luci-app-adguardhome
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-advanced package/sirpdboy/luci-app-advanced
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-airwhu package/sirpdboy/luci-app-airwhu
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-aliddns package/sirpdboy/luci-app-aliddns
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-baidupcs-web package/sirpdboy/luci-app-baidupcs-web
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-chinadns-ng package/sirpdboy/luci-app-chinadns-ng
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-control-timewol package/sirpdboy/luci-app-control-timewol
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-control-webrestriction package/sirpdboy/luci-app-control-webrestriction
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-control-weburl package/sirpdboy/luci-app-control-weburl
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-cpulimit package/sirpdboy/luci-app-cpulimit
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-dnspod package/sirpdboy/luci-app-dnspod
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-dnsto package/sirpdboy/luci-app-dnsto
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-dockerman package/sirpdboy/luci-app-dockerman
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-easymesh package/sirpdboy/luci-app-easymesh
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-eqos package/sirpdboy/luci-app-eqos
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-ipsec-server package/sirpdboy/luci-app-ipsec-server
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-iptvhelper package/sirpdboy/luci-app-iptvhelper
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-koolddns package/sirpdboy/luci-app-koolddns
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-koolproxyR package/sirpdboy/luci-app-koolproxyR
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-mentohust package/sirpdboy/luci-app-mentohust
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-netdata package/sirpdboy/luci-app-netdata
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-netspeedtest package/sirpdboy/luci-app-netspeedtest
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-onliner package/sirpdboy/luci-app-onliner
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-poweroffdevice package/sirpdboy/luci-app-poweroffdevice
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-pppoe-server package/sirpdboy/luci-app-pppoe-server
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-pptp-server package/sirpdboy/luci-app-pptp-server
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-pushbot package/sirpdboy/luci-app-pushbot
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-ramfree package/sirpdboy/luci-app-ramfree
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-rebootschedule package/sirpdboy/luci-app-rebootschedule
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-smartdns package/sirpdboy/luci-app-smartdns
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-socat package/sirpdboy/luci-app-socat
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-switch-lan-play package/sirpdboy/luci-app-switch-lan-play
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-tencentddns package/sirpdboy/luci-app-tencentddns
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-timecontrol package/sirpdboy/luci-app-timecontrol
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-wolplus package/sirpdboy/luci-app-wolplus
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-wrtbwmon package/sirpdboy/luci-app-wrtbwmon
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-argon_new package/sirpdboy/luci-theme-argon_new
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-atmaterial package/sirpdboy/luci-theme-atmaterial
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-btmod package/sirpdboy/luci-theme-btmod
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-edge package/sirpdboy/luci-theme-edge
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-ifit package/sirpdboy/luci-theme-ifit
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-opentomato package/sirpdboy/luci-theme-opentomato
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-opentomcat package/sirpdboy/luci-theme-opentomcat
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-theme-opentopd package/sirpdboy/luci-theme-opentopd
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/mentohust package/sirpdboy/mentohust
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/netdata package/sirpdboy/netdata
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/smartdns-le package/sirpdboy/smartdns-le
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/smartdns package/sirpdboy/smartdns
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/socat package/sirpdboy/socat
-# svn co https://github.com/sirpdboy/sirpdboy-package/trunk/speedtest-cli package/sirpdboy/speedtest-cli ## NEEDS FIXED
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/switch-lan-play package/sirpdboy/switch-lan-play
-svn co https://github.com/sirpdboy/sirpdboy-package/trunk/wrtbwmon package/sirpdboy/wrtbwmon
+i=0
+while read line
+do
+    array[ $i ]="$line"
+    (( i++ ))
+done < <(svn list https://github.com/sirpdboy/sirpdboy-package/trunk)
+
+for i in {1..56}
+do
+  echo ${array[$i]}
+  svn co https://github.com/sirpdboy/sirpdboy-package/trunk/${array[$i]} package/sirpdboy/${array[$i]}
+done
+
+rm -rf  package/sirpdboy/adguardhome
+rm -rf  package/sirpdboy/doc
+rm -rf  package/sirpdboy/luci-app-access-control ## NEEDS FIXED
+rm -rf  package/sirpdboy/luci-app-baidupcs-web
+rm -rf  package/sirpdboy/luci-app-chinadns-ng
+rm -rf  package/sirpdboy/luci-app-cpulimit
+rm -rf  package/sirpdboy/luci-app-dockerman
+rm -rf  package/sirpdboy/luci-app-easymesh
+rm -rf  package/sirpdboy/luci-app-netdata
+rm -rf  package/sirpdboy/luci-app-netspeedtest
+rm -rf  package/sirpdboy/luci-app-onliner
+rm -rf  package/sirpdboy/luci-app-ramfree
+rm -rf  package/sirpdboy/luci-app-rebootschedule
+rm -rf  package/sirpdboy/luci-app-smartdns
+rm -rf  package/sirpdboy/luci-app-socat
+rm -rf  package/sirpdboy/luci-app-timecontrol
+rm -rf  package/sirpdboy/luci-app-wrtbwmon
+rm -rf  package/sirpdboy/luci-theme-argon_new
+rm -rf  package/sirpdboy/luci-theme-atmaterial
+rm -rf  package/sirpdboy/luci-theme-btmod
+rm -rf  package/sirpdboy/luci-theme-edge
+rm -rf  package/sirpdboy/luci-theme-ifit
+rm -rf  package/sirpdboy/luci-theme-opentomato
+rm -rf  package/sirpdboy/luci-theme-opentomcat
+rm -rf  package/sirpdboy/luci-theme-opentopd
+rm -rf  package/sirpdboy/netdata
+rm -rf  package/sirpdboy/speedtest-cli ## NEEDS FIXED
+
+
 echo "From sirpdboy's BUILD packages"
-# svn co https://github.com/sirpdboy/build/trunk/autocore package/sirpdboy/autocore
-# svn co https://github.com/sirpdboy/build/trunk/automount package/sirpdboy/automount
-# svn co https://github.com/sirpdboy/build/trunk/autosamba package/sirpdboy/autosamba
-# svn co https://github.com/sirpdboy/build/trunk/default-settings package/sirpdboy/default-settings
-# svn co https://github.com/sirpdboy/build/trunk/doc package/sirpdboy/doc
-# svn co https://github.com/sirpdboy/build/trunk/ksmbd-tools package/sirpdboy/ksmbd-tools
-svn co https://github.com/sirpdboy/build/trunk/libmill package/sirpdboy/libmill
-svn co https://github.com/sirpdboy/build/trunk/luci-app-arpbind package/sirpdboy/luci-app-arpbind
-svn co https://github.com/sirpdboy/build/trunk/luci-app-boostupnp package/sirpdboy/luci-app-boostupnp
-# svn co https://github.com/sirpdboy/build/trunk/luci-app-ksmbd package/sirpdboy/luci-app-ksmbd
-# svn co https://github.com/sirpdboy/build/trunk/luci-app-samba package/sirpdboy/luci-app-samba
-# svn co https://github.com/sirpdboy/build/trunk/luci-app-samba4 package/sirpdboy/luci-app-samba4
-# svn co https://github.com/sirpdboy/build/trunk/miniupnpd package/sirpdboy/miniupnpd
-# svn co https://github.com/sirpdboy/build/trunk/mwan3 package/sirpdboy/mwan3
-svn co https://github.com/sirpdboy/build/trunk/p7zip package/sirpdboy/p7zip
-svn co https://github.com/sirpdboy/build/trunk/qemu-userspace package/sirpdboy/qemu-userspace
-svn co https://github.com/sirpdboy/build/trunk/rrredir package/sirpdboy/rrredir
-# svn co https://github.com/sirpdboy/build/trunk/samba36 package/sirpdboy/samba36
-# svn co https://github.com/sirpdboy/build/trunk/samba4 package/sirpdboy/samba4
-# svn co https://github.com/sirpdboy/build/trunk/set package/sirpdboy/set
-# svn co https://github.com/sirpdboy/build/trunk/shortcut-fe package/sirpdboy/shortcut-fe
-svn co https://github.com/sirpdboy/build/trunk/sniproxy package/sirpdboy/sniproxy
+
+i=0
+while read line
+do
+    array[ $i ]="$line"
+    (( i++ ))
+done < <(svn list https://github.com/sirpdboy/build/trunk)
+
+for i in {1..25}
+do
+  echo ${array[$i]}
+  svn co https://github.com/sirpdboy/build/trunk/${array[$i]} package/sirpdboy/${array[$i]}
+done
+
+rm -rf  package/sirpdboy/autocore
+rm -rf  package/sirpdboy/automount
+rm -rf  package/sirpdboy/autosamba
+rm -rf  package/sirpdboy/default-settings
+rm -rf  package/sirpdboy/doc
+rm -rf  package/sirpdboy/ksmbd-tools
+rm -rf  package/sirpdboy/luci-app-ksmbd
+rm -rf  package/sirpdboy/luci-app-samba
+rm -rf  package/sirpdboy/luci-app-samba4
+rm -rf  package/sirpdboy/miniupnpd
+rm -rf  package/sirpdboy/mwan3
+rm -rf  package/sirpdboy/samba36
+rm -rf  package/sirpdboy/samba4
+rm -rf  package/sirpdboy/set
+rm -rf  package/sirpdboy/shortcut-fe
 echo "END of sirpdboy's packages"
 exit 0
