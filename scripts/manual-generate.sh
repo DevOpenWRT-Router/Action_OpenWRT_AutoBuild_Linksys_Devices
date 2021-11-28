@@ -37,6 +37,7 @@ echo "-------------------"
 echo "                   "
 echo "scripts (Directory)"
 echo "       diy-part1.sh"
+echo "       diy-part2.sh"
 echo "       luci_themes.sh"
 echo "       DevOpenWRT-Router.sh"
 echo "       lean_packages.sh"
@@ -47,7 +48,53 @@ echo "       wrt3200acm.config"
 echo "       patches (Directory)"
 echo "                          "
 sleep 5
-
+### ------------------------------------------------------------------------------- ###
+FILE=diy-part1.sh
+if [ ! -f "$FILE" ]; then
+    echo "$FILE does not exist."
+    exit
+fi
+FILE=diy-part2.sh
+if [ ! -f "$FILE" ]; then
+    echo "$FILE does not exist."
+    exit
+fi
+FILE=luci_themes.sh
+if [ ! -f "$FILE" ]; then
+    echo "$FILE does not exist."
+    exit
+fi
+FILE=DevOpenWRT-Router.sh
+if [ ! -f "$FILE" ]; then
+    echo "$FILE does not exist."
+    exit
+fi
+FILE=lean_packages.sh
+if [ ! -f "$FILE" ]; then
+    echo "$FILE does not exist."
+    exit
+fi
+FILE=sirpdboy-package.sh
+if [ ! -f "$FILE" ]; then
+    echo "$FILE does not exist."
+    exit
+fi
+FILE=feeds.conf.default
+if [ ! -f "$FILE" ]; then
+    echo "$FILE does not exist."
+    exit
+fi
+FILE=wrt3200acm.config
+if [ ! -f "$FILE" ]; then
+    echo "$FILE does not exist. Or Dif device Chosen, Change Name here:"
+    exit
+fi
+FILE=patches
+if [ ! -d "$FILE" ]; then
+    echo "$FILE Directory not exist."
+    exit
+fi
+### ------------------------------------------------------------------------------- ###
 
 echo "Running: diy-part1.sh"
 ./diy-part1.sh
