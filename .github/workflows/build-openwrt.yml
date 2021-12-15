@@ -748,7 +748,7 @@ jobs:
       - name: Generate release tag
         id: tag
         if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-        run: "echo \"::set-output name=release_tag::$HARDWARE_DEVICE_$(date +\"%Y.%m.%d-%H%M\")\"\ntouch release.txt\necho \"::set-output name=status::success\"\n"
+        run: "echo \"::set-output name=release_tag::$(date +\"%Y.%m.%d-%H%M\")\"\ntouch release.txt\necho \"::set-output name=status::success\"\n"
       - name: Upload firmware to release
         uses: softprops/action-gh-release@master
         if: steps.tag.outputs.status == 'success' && !cancelled()
