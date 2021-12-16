@@ -26,15 +26,26 @@ _______________________________________________________________________
 
 [Get The Latest Release][a6e54f9f]
 
-1. [WRT3200ACM][a6e54f9f]
-2. [WRT32X][a6e54f9f]
-3. [WRT1200AC][a6e54f9f]
-4. [WRT1900ACS V1][a6e54f9f]
-5. [WRT1900AC V1][a6e54f9f]
-6. [WRT1900AC V2][a6e54f9f]
+0. [wrt All-In-One][307783dd]
+1. [wrt3200acm][f99bedf0]
+2. [wrt32x][760fae37]
+3. [wrt1200ac][fdfb4c79]
+4. [wrt1900acs V1][2f3448bf]
+5. [wrt1900ac V1][6f3faf69]
+6. [wrt1900ac V2][e6d46545]
 _______________________________________________________________________
-![Older Releases](images/2021/09/older-releases.png)
 
+  [307783dd]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases?q=wrtMulti&expanded=true "wrt All-In-One"
+
+
+  [f99bedf0]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases?q=wrt3200acm&expanded=true "wrt3200acm"
+  [760fae37]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases?q=wrt32x&expanded=true "wrt32x"
+  [fdfb4c79]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases?q=wrt1200ac&expanded=true "wrt1200ac"
+  [2f3448bf]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases?q=wrt1900acsV1&expanded=true "wrt1900acs V1"
+  [6f3faf69]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases?q=wrt1900acV1&expanded=true "wrt1900ac V1"
+  [e6d46545]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases?q=wrt1900acV2&expanded=true "wrt1900ac V2"
+
+![Older Releases](images/2021/09/older-releases.png)
 [Get Older Releases][48fb9c00]
 
   [a6e54f9f]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases/latest "Latest Release"
