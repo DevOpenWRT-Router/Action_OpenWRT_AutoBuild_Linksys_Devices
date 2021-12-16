@@ -25,6 +25,13 @@ _______________________________________________________________________
 ![New Releases](images/2021/09/new-releases.png)
 
 [Get The Latest Release][a6e54f9f]
+
+1. [WRT3200ACM][a6e54f9f]
+2. [WRT32X][a6e54f9f]
+3. [WRT1200AC][a6e54f9f]
+4. [WRT1900ACS V1][a6e54f9f]
+5. [WRT1900AC V1][a6e54f9f]
+6. [WRT1900AC V2][a6e54f9f]
 _______________________________________________________________________
 ![Older Releases](images/2021/09/older-releases.png)
 
