@@ -197,7 +197,7 @@ jobs:
           fi
           if [[ "${{ github.event.inputs.hardware }}" == "5" ]]; then
                   echo "::set-output name=hardwareString::wrt1900acV1.config"
-                  echo "HARDWARE_DEVICE=wrt1900acV2" >> $GITHUB_ENV
+                  echo "HARDWARE_DEVICE=wrt1900acV1" >> $GITHUB_ENV
           fi
           if [[ "${{ github.event.inputs.hardware }}" == "6" ]]; then
                   echo "::set-output name=hardwareString::wrt1900acV2.config"
