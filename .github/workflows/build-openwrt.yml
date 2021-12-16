@@ -17,7 +17,7 @@ name: Build OpenWrt (Linksys Devices)
     inputs:
       hardware:
         description: >
-          '[0] ALL [1] WRT3200ACM [2] WRT32X [3] WRT1200AC [4] WRT1900ACS V1 [5]
+          '[0] ALL [1] WRT3200ACM [2] WRT32X [3] WRT1200AC [4] WRT1900ACS V1 V2 [5]
           WRT1900AC V1 [6] WRT1900AC V2'
         required: true
         default: '1'
@@ -192,8 +192,8 @@ jobs:
                   echo "HARDWARE_DEVICE=wrt1200ac" >> $GITHUB_ENV
           fi
           if [[ "${{ github.event.inputs.hardware }}" == "4" ]]; then
-                  echo "::set-output name=hardwareString::wrt1900acsV1.config"
-                  echo "HARDWARE_DEVICE=wrt1900acsV1" >> $GITHUB_ENV
+                  echo "::set-output name=hardwareString::wrt1900acsV1V2.config"
+                  echo "HARDWARE_DEVICE=wrt1900acsV1V2" >> $GITHUB_ENV
           fi
           if [[ "${{ github.event.inputs.hardware }}" == "5" ]]; then
                   echo "::set-output name=hardwareString::wrt1900acV1.config"
