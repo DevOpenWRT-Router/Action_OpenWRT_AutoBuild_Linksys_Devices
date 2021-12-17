@@ -14,6 +14,10 @@ name: wrt3200acm (Linksys Devices)
 'on':
   repository_dispatch: null
   workflow_dispatch:
+  schedule:
+          # * is a special character in YAML so you have to quote this string
+          # * “At 12:00.”
+    - cron:  '00 12 * * *'
 
 env:
   FEEDS_CONF: feeds.conf.default
