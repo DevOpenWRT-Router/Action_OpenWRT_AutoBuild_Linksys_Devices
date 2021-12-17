@@ -1,0 +1,24 @@
+#
+# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
+#
+# Updated: 09/06/2021 Eliminater74
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
+# https://github.com/P3TERX/Actions-OpenWrt
+# Description: Build OpenWrt using GitHub Actions
+#
+
+name: Build OpenWrt (Linksys Devices)
+'on':
+  repository_dispatch: null
+  workflow_dispatch:
+
+### ------------------------------------------------------------------------------ ###
+      - name: Set .config and assign hardware Device Tag
+        id: setConfig
+        run: |
+                  echo "::set-output name=hardwareString::wrt3200acm.config"
+                  echo "HARDWARE_DEVICE=wrt3200acm" >> $GITHUB_ENV
+### ------------------------------------------------------------------------------ ###
