@@ -1,0 +1,707 @@
+#
+# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
+#
+# Updated: 09/06/2021 Eliminater74
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
+# https://github.com/P3TERX/Actions-OpenWrt
+# Description: Build OpenWrt using GitHub Actions
+#
+
+name: Build OpenWrt (Linksys Devices)
+'on':
+  repository_dispatch: null
+  workflow_dispatch:
+
+env:
+  FEEDS_CONF: feeds.conf.default
+  DIY_P1_SH: diy-part1.sh
+  DIY_P2_SH: diy-part2.sh
+  BEFORE_BUILD: before_build.sh
+  AFTER_BUILD: after_build.sh
+  KERNEL_VERSION: kernel_version.sh
+  GITHUB_RUN: github_push.sh
+  EXT_INIT_ENV: environment.sh
+  USE_FILES: true
+  USE_DIYP2: true
+  USE_CUST_THEMES: true
+  USE_OPENWRT_PATCHES: true
+  USE_LUCI_PATCHES: false
+  USE_PACKAGES_PATCHES: false
+  USE_DEVOPENWRT: true
+  USE_COOLSNOWWOLF: true
+  USE_SIRPDBOY: true
+  ### ------------------------------------------------------------------ ###
+  ## Disabling any of these will still build said section,
+  ## Just wont be debugable showing. Enabling them will add,
+  ## more time to final completion.
+  BUILD_KMODS: true
+  BUILD_PACKAGES: true
+  INSTALL_PACKAGES: true
+  INDEX_PACKAGES: true
+  ### ------------------------------------------------------------------ ###
+  ## Enable DEBUG will show more INFO
+  DEBUG_COMPILE: false
+  ## Enable IGNORE is debug with IGNORE_ERRORS=1
+  IGNORE_COMPILE: false
+  ### ------------------------------------------------------------------ ###
+  KMODS: true
+  ACL_LUCI: true
+### [ LOGS ] ###
+  GITLOGA: true
+  GITLOGB: true
+### -------------------- ###
+  RUN_BEFORE_BUILD: true
+  RUN_AFTER_BUILD: false
+  RUN_GITHUB_PUSH: true
+  UPLOAD_BUILD_LOGS: true
+  UPLOAD_KMODS: true
+  UPLOAD_PACKAGES: true
+  UPLOAD_BIN_DIR: false
+  UPLOAD_FIRMWARE: true
+  UPLOAD_RELEASE: true
+  TARGZIP_PACKAGES: true
+### -------------------- ###
+### [ GITHUB PUSH ENV ] ###
+  SOURCE_DIRECTORY_A: "openwrt/bin/packages/arm_cortex-a9_vfpv3-d16"
+  SOURCE_DIRECTORY_B: "openwrt/bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR"
+  DESTINATION_GITHUB_USERNAME: "DevOpenWRT-Router"
+  DESTINATION_REPOSITORY_NAME: "Linksys_OpenWRT_Releases"
+  USER_EMAIL: "BuildBot2021@gmail.com"
+  USER_NAME: "BuildBot2021"
+  DESTINATION_REPOSITORY_USERNAME: "DevOpenWRT-Router"
+  TARGET_BRANCH: "main"
+  COMMIT_MESSAGE: "Updated: $D"
+  TARGET_DIRECTORY_A: "packages"
+  TARGET_DIRECTORY_B: "kmods/$KMOD_DIR"
+### -------------------- ###
+  TZ: America/New_York
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+      - name: Show system
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          echo -e "Total CPU cores\t: $(nproc)"
+          cat /proc/cpuinfo | grep 'model name'
+          free -h
+          uname -a
+          [ -f /proc/version ] && cat /proc/version
+          [ -f /etc/issue.net ] && cat /etc/issue.net
+          [ -f /etc/issue ] && cat /etc/issue
+          ulimit -a
+      - name: Free disk space
+        run: >
+          sudo -E swapoff -a
+
+          sudo -E rm -f /swapfile
+
+          sudo -E snap set system refresh.retain=2
+
+          sudo -E apt-get -qq purge azure* dotnet* firefox ghc* google* hhvm
+          llvm* mono* mysql* openjdk* php* zulu*
+
+          sudo -E apt-get -qq remove --purge powershell mysql* mssql-tools
+          msodbcsql17 android*
+
+          sudo -E apt-get -qq autoremove --purge
+
+          sudo -E apt-get clean -qq
+
+          sudo -E rm -rf /usr/share/dotnet /usr/local/lib/android/sdk /etc/mysql
+          /etc/php /usr/local/share/boost
+
+          sudo -E rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /etc/mysql
+          /etc/php /usr/local/lib/android /opt/ghc /swapfile
+
+          [ -n "$AGENT_TOOLSDIRECTORY" ] && sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+
+          df -h
+      - name: Initialization environment
+        run: >
+          sudo -E apt-get update -qq
+
+          sudo -E apt-get -qq update
+
+          sudo -E apt-get -qq full-upgrade
+
+          sudo -E apt-get -qq install $(curl -fsSL bit.ly/depends-ubuntu-2004)
+
+          wget -qO - https://bit.ly/build-env-on-ubuntu-bionic | sed
+          's/python-/python3-/g' | /bin/bash
+
+          sudo -E apt-get clean -qq
+
+          for i in $(ls /usr/bin/*-8); do sudo -E ln -sf $i ${i%%-8*}; done
+
+          sudo -E ln -sf /usr/include/asm-generic /usr/include/asm
+
+          sudo timedatectl set-timezone "$TZ"
+
+          sudo mkdir -p /workdir
+
+          sudo chown $USER:$GROUPS /workdir
+      - name: Initialization GIT environment
+        run: |
+          git config --global user.email "BuildBot2021@gmail.com"
+          git config --global user.name "BuildBot"
+### ------------------------------------------------------------------------------ ###
+      - name: Set .config and assign hardware Device Tag
+        id: setConfig
+        run: |
+          if [[ "${{ github.event.inputs.hardware }}" == "0" ]]; then
+                  echo "::set-output name=hardwareString::wrtmulti.config"
+                  echo "HARDWARE_DEVICE=wrtMulti" >> $GITHUB_ENV
+          fi
+          if [[ "${{ github.event.inputs.hardware }}" == "1" ]]; then
+                  echo "::set-output name=hardwareString::wrt3200acm.config"
+                  echo "HARDWARE_DEVICE=wrt3200acm" >> $GITHUB_ENV
+          fi
+          if [[ "${{ github.event.inputs.hardware }}" == "2" ]]; then
+                  echo "::set-output name=hardwareString::wrt32x.config"
+                  echo "HARDWARE_DEVICE=wrt32x" >> $GITHUB_ENV
+          fi
+          if [[ "${{ github.event.inputs.hardware }}" == "3" ]]; then
+                  echo "::set-output name=hardwareString::wrt1200ac.config"
+                  echo "HARDWARE_DEVICE=wrt1200ac" >> $GITHUB_ENV
+          fi
+          if [[ "${{ github.event.inputs.hardware }}" == "4" ]]; then
+                  echo "::set-output name=hardwareString::wrt1900acsV1V2.config"
+                  echo "HARDWARE_DEVICE=wrt1900acsV1V2" >> $GITHUB_ENV
+          fi
+          if [[ "${{ github.event.inputs.hardware }}" == "5" ]]; then
+                  echo "::set-output name=hardwareString::wrt1900acV1.config"
+                  echo "HARDWARE_DEVICE=wrt1900acV1" >> $GITHUB_ENV
+          fi
+          if [[ "${{ github.event.inputs.hardware }}" == "6" ]]; then
+                  echo "::set-output name=hardwareString::wrt1900acV2.config"
+                  echo "HARDWARE_DEVICE=wrt1900acV2" >> $GITHUB_ENV
+          fi
+### ------------------------------------------------------------------------------ ###
+      - name: Set SSH connection to Actions
+        id: setSSH
+        run: |
+                  echo "::set-output name=sshString::false"
+                  echo "::set-output name=ssh_ngrokString::false"
+                  echo "SSH=false" >> $GITHUB_ENV
+                  echo "SSH_NGROK=false" >> $GITHUB_ENV
+                  echo "SSH_AFTERBUILD=false" >> $GITHUB_ENV
+
+### ------------------------------------------------------------------------------ ###
+      - name: Set source and branch
+        id: setSource
+        run: |
+                  echo "::set-output name=sourceString::https://github.com/openwrt/openwrt.git"
+                  echo "::set-output name=branchString::master"
+
+### ------------------------------------------------------------------------------ ###
+      - name: Clone source code
+        working-directory: /workdir
+        run: >
+          df -hT $PWD
+
+          git clone ${{ steps.setSource.outputs.sourceString }} -b ${{
+          steps.setSource.outputs.branchString }} openwrt
+
+          ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+### ------------------------------------------------------------------------------ ###
+      - name: Before Build
+        if: env.RUN_BEFORE_BUILD == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$BEFORE_BUILD
+          /bin/bash ${GITHUB_WORKSPACE}/scripts/before_build.sh
+### ------------------------------------------------------------------------------ ###
+      - name: Current Commit Before Feeds/Patches
+        if: env.GITLOGA == 'true' && !cancelled()
+        run: |
+          cd openwrt
+          git log --pretty=oneline -n 1
+### ------------------------------------------------------------------------------ ###
+      - name: Load custom feeds
+        run: >
+          [ -e configs/$FEEDS_CONF ] && mv configs/$FEEDS_CONF
+          openwrt/feeds.conf.default
+
+          chmod +x scripts/$DIY_P1_SH
+
+          cd openwrt
+
+          $GITHUB_WORKSPACE/scripts/$DIY_P1_SH
+### ------------------------------------------------------------------------------ ###
+      - name: Load LUCI custom Themes
+        if: env.USE_CUST_THEMES == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/luci_themes.sh
+          cd openwrt
+          $GITHUB_WORKSPACE/scripts/luci_themes.sh
+### ------------------------------------------------------------------------------ ###
+      - name: Set LUCI Source
+        id: setLuci
+        run: |
+              cd openwrt
+              sed -i 's#/git.openwrt.org/project/luci.git#/git.openwrt.org/project/luci.git#g' feeds.conf.default
+              sed -i 's#/github.com/coolsnowwolf/luci#/git.openwrt.org/project/luci.git#g' feeds.conf.default
+
+### ------------------------------------------------------------------------------ ###
+      - name: Load DevOpenWRT-Router's Packages
+        if: env.USE_DEVOPENWRT == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/DevOpenWRT-Router.sh
+          cd openwrt
+          $GITHUB_WORKSPACE/scripts/DevOpenWRT-Router.sh
+### ------------------------------------------------------------------------------ ###
+      - name: Load coolsnowwolf's Lean Packages
+        if: env.USE_COOLSNOWWOLF == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/lean_packages.sh
+          cd openwrt
+          $GITHUB_WORKSPACE/scripts/lean_packages.sh
+### ------------------------------------------------------------------------------ ###
+      - name: Load Sirpdboy's Packages
+        if: env.USE_SIRPDBOY == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/sirpdboy-package.sh
+          cd openwrt
+          $GITHUB_WORKSPACE/scripts/sirpdboy-package.sh
+### ------------------------------------------------------------------------------ ###
+      - name: Update feeds Package
+        run: |
+          file=./scripts/feeds_update.txt
+          while read -r line; do
+          cd openwrt && ./scripts/feeds update $line
+          done < "$file"
+### ------------------------------------------------------------------------------ ###
+      - name: Install feeds Package
+        run: |
+          file=./scripts/feeds_install.txt
+          while read -r line; do
+          cd openwrt && ./scripts/feeds install $line
+          done < "$file"
+### ------------------------------------------------------------------------------ ###
+      - name: Uninstall feeds Package
+        run: |
+          file=./scripts/feeds_uninstall.txt
+          while read -r line; do
+          cd openwrt && ./scripts/feeds uninstall $line
+          done < "$file"
+### ------------------------------------------------------------------------------ ###
+      - name: Copy (files) Dir
+        if: env.USE_FILES == 'true' && !cancelled()
+        run: |
+          [ -e configs/files ] && mv configs/files openwrt/files
+### ------------------------------------------------------------------------------ ###
+      - name: Copy (.config)
+        run: >
+          [ -e configs/${{ steps.setConfig.outputs.hardwareString }} ] && mv
+          configs/${{ steps.setConfig.outputs.hardwareString }} openwrt/.config
+### ------------------------------------------------------------------------------ ###
+      - name: Run Custom OpenWRT Patches
+        if: env.USE_OPENWRT_PATCHES == 'true' && !cancelled()
+        run: |
+          mv configs/patches openwrt/patches
+          cd openwrt
+          git am patches/*.patch
+          rm -rf patches
+### ------------------------------------------------------------------------------ ###
+      - name: Run Custom LUCI Patches
+        if: env.USE_LUCI_PATCHES == 'true' && !cancelled()
+        run: |
+          mv configs/patches/luci openwrt/feeds/luci/patches
+          cd openwrt/feeds/luci
+          git am patches/*.patch
+          rm -rf patches
+### ------------------------------------------------------------------------------ ###
+      - name: Run Custom Packages Patches
+        if: env.USE_PACKAGES_PATCHES == 'true' && !cancelled()
+        run: |
+          mv configs/patches/packages openwrt/feeds/packages/patches
+          cd openwrt/feeds/packages
+          git am patches/*.patch
+          rm -rf patches
+### ------------------------------------------------------------------------------ ###
+      - name: Current Commit After Feeds/Patches
+        if: env.GITLOGB == 'true' && !cancelled()
+        run: |
+          cd openwrt
+          git log --pretty=oneline -n 1
+### ------------------------------------------------------------------------------ ###
+      - name: Smart chmod
+        run: >
+          MY_Filter=$(mktemp)
+
+          echo '/\.git' >  ${MY_Filter}
+
+          echo '/\.svn' >> ${MY_Filter}
+
+          find ./ -maxdepth 1 | grep -v '\./$' | grep -v '/\.git' | xargs -s1024
+          chmod -R u=rwX,og=rX
+
+          find ./ -type f | grep -v -f ${MY_Filter} | xargs -s1024 file | grep
+          'executable\|ELF' | cut -d ':' -f1 | xargs -s1024 chmod 755
+
+          rm -f ${MY_Filter}
+
+          unset MY_Filter
+### ------------------------------------------------------------------------------ ###
+      - name: Load custom configuration
+        if: env.USE_DIYP2 == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$DIY_P2_SH
+          cd openwrt
+          $GITHUB_WORKSPACE/scripts/$DIY_P2_SH
+
+### ------------------------------------------------------------------------------ ###
+      - name: Add ACL
+        if: env.ACL_LUCI == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/create_acl_for_luci.sh
+          cd openwrt
+          $GITHUB_WORKSPACE/scripts/create_acl_for_luci.sh -a
+### ------------------------------------------------------------------------------ ###
+      - name: Start SSH via tmate
+        uses: P3TERX/ssh2actions@main
+        if: >-
+          (env.SSH == 'true' && !cancelled() && env.SSH != 'false') ||
+          contains(github.event.action, 'ssh')
+      # Send connection info to Telegram (optional)
+      # You can find related documents here: https://core.telegram.org/bots
+        env:
+          TELEGRAM_BOT_TOKEN: '${{ secrets.TELEGRAM_BOT_TOKEN }}'
+          TELEGRAM_CHAT_ID: '${{ secrets.TELEGRAM_CHAT_ID }}'
+### ------------------------------------------------------------------------------ ###
+      - name: Start SSH via ngrok
+        uses: P3TERX/ssh2actions@main
+        if: >-
+          (env.SSH_NGROK == 'true' && !cancelled() && env.SSH_NGROK != 'false')
+          || contains(github.event.action, 'ssh')
+        with:
+          mode: ngrok
+      # After sign up on the https://ngrok.com
+      # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
+        env:
+          NGROK_TOKEN: '${{ secrets.NGROK_TOKEN }}'
+      # ngrok server region [us, eu, au, ap, sa, jp, in] (optional, default: us)
+      # You can find this server region here: https://ngrok.com/docs#global-locations
+          NGROK_REGION: us
+      # This password you will use when authorizing via SSH
+          SSH_PASSWORD: '${{ secrets.SSH_PASSWORD }}'
+      # Send connection info to Telegram (optional)
+      # You can find related documents here: https://core.telegram.org/bots
+          TELEGRAM_BOT_TOKEN: '${{ secrets.TELEGRAM_BOT_TOKEN }}'
+          TELEGRAM_CHAT_ID: '${{ secrets.TELEGRAM_CHAT_ID }}'
+### ------------------------------------------------------------------------------ ###
+      - name: Populating .config
+        id: config
+        run: |
+          cd openwrt
+          make defconfig
+### ------------------------------------------------------------------------------ ###
+      - name: Setup For Compiling
+        id: setup
+        run: |
+          echo -e "$(nproc) Threads to compile with."
+          echo -e "Creating (logs) Directory:"
+          cd openwrt
+          mkdir -p logs
+### ------------------------------------------------------------------------------ ###
+      - name: Make Download
+        id: makedownload
+        run: |
+          cd openwrt
+          make download -j50
+          find dl -size -1024c -exec ls -l {} \;
+          find dl -size -1024c -exec rm -f {} \;
+### ------------------------------------------------------------------------------ ###
+      - name: Building and installing GNU tar
+        id: GNUTAR
+        run: |
+          df -h
+          cd openwrt
+          let make_process=$(nproc)+2
+          make tools/tar/compile -j${make_process} V=s
+### ------------------------------------------------------------------------------ ###
+      - name: Building and installing tools
+        id: maketools
+        run: |
+          df -h
+          cd openwrt
+          let make_process=$(nproc)+2
+          make tools/install -j${make_process} V=s
+### ------------------------------------------------------------------------------ ###
+      - name: Building and installing toolchain
+        id: maketoolchain
+        run: |
+          df -h
+          cd openwrt
+          let make_process=$(nproc)+2
+          make toolchain/install -j${make_process} V=s
+### ------------------------------------------------------------------------------ ###
+      - name: Building kmods
+        id: makekmods
+        if: env.BUILD_KMODS == 'true' && !cancelled()
+        run: |
+          df -h
+          cd openwrt
+          let make_process=$(nproc)+2
+          make target/compile -j${make_process} V=s
+### ------------------------------------------------------------------------------ ###
+      - name: Building packages
+        id: makepackages
+        if: env.BUILD_PACKAGES == 'true' && !cancelled()
+        run: >
+          df -h
+
+          cd openwrt
+
+          let make_process=$(nproc)+2
+
+          make package/compile -j${make_process} || make package/compile
+          -j${make_process} V=s 2>&1 | tee logs/build.log | grep -i -E
+          "^make.*(error|[12345]...Entering directory)"
+### ------------------------------------------------------------------------------ ###
+      - name: Installing packages
+        id: installpackages
+        if: env.INSTALL_PACKAGES == 'true' && !cancelled()
+        run: >
+          df -h
+
+          cd openwrt
+
+          let make_process=$(nproc)+2
+
+          make package/install -j${make_process} || make package/install
+          -j${make_process} V=s 2>&1 | tee logs/build.log | grep -i -E
+          "^make.*(error|[12345]...Entering directory)"
+### ------------------------------------------------------------------------------ ###
+      - name: Kernel Version
+        id: kernelversion
+        if: env.KMODS == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$KERNEL_VERSION
+          /bin/bash ${GITHUB_WORKSPACE}/scripts/kernel_version.sh
+### ------------------------------------------------------------------------------ ###
+      - name: Indexing packages
+        id: indexingpackages
+        if: env.INDEX_PACKAGES == 'true' && !cancelled()
+        run: >
+          df -h
+
+          cd openwrt
+
+          let make_process=$(nproc)+2
+
+          make package/index -j${make_process} CONFIG_SIGNED_PACKAGES= || make
+          package/index -j${make_process} CONFIG_SIGNED_PACKAGES= V=s 2>&1 | tee
+          logs/build.log | grep -i -E "^make.*(error|[12345]...Entering
+          directory)"
+### ------------------------------------------------------------------------------ ###
+      - name: Compile the firmware (Debug)
+        id: compiledebug
+        if: env.DEBUG_COMPILE == 'true' && env.IGNORE_COMPILE == 'false'
+        run: >
+          cd openwrt
+
+          echo -e "$(nproc) thread compile"
+
+          make -j$(nproc) V=s 2>&1 | tee logs/build.log | grep -i -E
+          "^make.*(error|[12345]...Entering directory)"
+
+          echo "::set-output name=status::success"
+
+          grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r
+          's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+
+          [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >>
+          $GITHUB_ENV
+
+          echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+      - name: Compile the firmware (ignore Errors)
+        id: compileignore
+        if: env.IGNORE_COMPILE == 'true' && env.DEBUG_COMPILE == 'false'
+        run: >
+          cd openwrt
+
+          echo -e "$(nproc) thread compile"
+
+          IGNORE_ERRORS=1 make -j$(nproc) -i V=s 2>&1 | tee logs/build.log |
+          grep -i -E "^make.*(error|[12345]...Entering directory)"
+
+          echo "::set-output name=status::success"
+
+          grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r
+          's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+
+          [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >>
+          $GITHUB_ENV
+
+          echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+### ------------------------------------------------------------------------------ ###
+      - name: Compile the firmware
+        id: compile
+        continue-on-error: true
+        if: env.DEBUG_COMPILE == 'false' && env.IGNORE_COMPILE == 'false'
+        run: >
+          cd openwrt
+
+          echo -e "$(nproc) thread compile"
+
+          let Make_Process=$(nproc)+2
+
+          make -j${Make_Process} || make -j${Make_Process} V=s
+
+          echo $?
+
+          echo "::set-output name=status::success"
+
+          grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r
+          's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+
+          [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >>
+          $GITHUB_ENV
+
+          echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+### ----- ERROR CONTROL ----- ###
+      - name: If Error
+        uses: actions/upload-artifact@main
+        if: steps.compile.outcome == 'failure' && env.UPLOAD_BUILD_LOGS == 'true'
+        with:
+          name: 'OpenWrt_logs${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
+          path: openwrt/logs/
+### ------------------------------------------------------------------------------ ###
+### ----- SSH CONNECTION AFTER BUILD ----- ###
+      - name: SSH connection to Actions After Build
+        uses: DevOpenWRT-Router/ssh2actions@v1.0.0
+        if: >-
+          (env.SSH_AFTERBUILD == 'true' && !cancelled() && env.SSH_AFTERBUILD !=
+          'false') || contains(github.event.action, 'ssh')
+        env:
+          TELEGRAM_CHAT_ID: '${{ secrets.TELEGRAM_CHAT_ID }}'
+          TELEGRAM_BOT_TOKEN: '${{ secrets.TELEGRAM_BOT_TOKEN }}'
+### ------------------------------------------------------------------------------ ###
+      - name: After Build
+        if: env.RUN_AFTER_BUILD == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$AFTER_BUILD
+          /bin/bash ${GITHUB_WORKSPACE}/scripts/after_build.sh
+### ------------------------------------------------------------------------------ ###
+      - name: Check space usage
+        if: (!cancelled())
+        run: |
+          cd openwrt
+          echo "=============================================="
+          echo "Space usage:"
+          echo "=============================================="
+          df -hT
+          echo "=============================================="
+          du -h --max-depth=1 ./ --exclude=build_dir --exclude=bin
+          du -h --max-depth=1 ./build_dir
+          du -h --max-depth=1 ./bin
+          du -h --max-depth=10 ./bin
+          echo "=============================================="
+### ------------------------------------------------------------------------------ ###
+      - name: Prepare Packages/Kmods for Distribution
+        id: distribution
+        continue-on-error: true
+        if: env.RUN_GITHUB_PUSH == 'true' && (!cancelled())
+        env:
+          API_TOKEN_GITHUB: '${{ secrets.API_TOKEN_GITHUB }}'
+        run: |
+          chmod +x scripts/$GITHUB_PUSH
+          /bin/bash ${GITHUB_WORKSPACE}/scripts/github_push.sh
+### ----- ERROR CONTROL ----- ###
+      - name: If Error
+        if: steps.distribution.outcome == 'failure'
+        run: |
+              echo "[+] Prepare Packages/Kmods for Distribution Failed"
+### ------------------------------------------------------------------------------ ###
+      - name: Upload kmods
+        uses: actions/upload-artifact@main
+        if: >-
+          steps.compile.outputs.status == 'success' && env.UPLOAD_KMODS ==
+          'true'
+        with:
+          name: 'OpenWrt_kmods${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
+          path: 'openwrt/bin/targets/mvebu/cortexa9/kmods/${{ env.KMOD_DIR }}'
+### ------------------------------------------------------------------------------ ###
+      - name: Upload Packages
+        uses: actions/upload-artifact@main
+        if: >-
+          steps.compile.outputs.status == 'success' && env.UPLOAD_PACKAGES ==
+          'true'
+        with:
+          name: 'OpenWrt_bin_packages${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
+          path: openwrt/bin/packages/
+      - name: Upload bin directory
+        uses: actions/upload-artifact@main
+        if: >-
+          steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR ==
+          'true'
+        with:
+          name: 'OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
+          path: openwrt/bin
+### ------------------------------------------------------------------------------ ###
+      - name: Upload logs directory
+        uses: actions/upload-artifact@main
+        if: env.UPLOAD_BUILD_LOGS == 'true'
+        with:
+          name: 'OpenWrt_logs${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
+          path: openwrt/logs/
+      - name: Organize files
+        id: organize
+        if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+        run: |
+          cd openwrt/bin/targets/*/*
+          rm -rf packages
+          echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+          echo "::set-output name=status::success"
+### ------------------------------------------------------------------------------ ###
+      - name: Upload firmware directory
+        uses: actions/upload-artifact@main
+        if: steps.organize.outputs.status == 'success' && !cancelled()
+        with:
+          name: 'OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
+          path: '${{ env.FIRMWARE }}'
+      - name: tar.gz bin/packages
+        if: env.TARGZIP_PACKAGES == 'true' && !cancelled()
+        run: >
+          cd openwrt/bin/packages
+
+          tar -cvzf OpenWrt_bin_packages${{ env.DEVICE_NAME }}${{ env.FILE_DATE
+          }}.tar.gz ./*
+
+          mv OpenWrt_bin_packages${{ env.DEVICE_NAME }}${{ env.FILE_DATE
+          }}.tar.gz ${GITHUB_WORKSPACE}/openwrt/bin/targets/mvebu/cortexa9/
+### ------------------------------------------------------------------------------ ###
+      - name: Generate release tag
+        id: tag
+        if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+        run: "echo \"::set-output name=release_tag::$HARDWARE_DEVICE-$(date +\"%Y.%m.%d-%H%M\")\"\ntouch release.txt\necho \"::set-output name=status::success\"\n"
+      - name: Upload firmware to release
+        uses: softprops/action-gh-release@master
+        if: steps.tag.outputs.status == 'success' && !cancelled()
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        with:
+          tag_name: '${{ steps.tag.outputs.release_tag }}'
+          body_path: release.txt
+          files: '${{ env.FIRMWARE }}/*'
+### ------------------------------------------------------------------------------ ###
+      - name: Delete workflow runs
+        uses: GitRML/delete-workflow-runs@main
+        with:
+          retain_days: 1
+          keep_minimum_runs: 3
+      - name: Remove old Releases
+        uses: dev-drprasad/delete-older-releases@v0.2.0
+        if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+        with:
+          keep_latest: 10
+          delete_tags: true
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
