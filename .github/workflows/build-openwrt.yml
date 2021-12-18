@@ -10,7 +10,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: Build OpenWrt (Linksys Devices)
+name: Test Build (Short) (Linksys Devices)
 'on':
   repository_dispatch: null
   workflow_dispatch:
@@ -36,6 +36,8 @@ name: Build OpenWrt (Linksys Devices)
         required: true
         default: '0'
 env:
+  HARDWARE_ID: wrt3200acm
+  HARDWARE_DEVICE: wrt3200acm
   FEEDS_CONF: feeds.conf.default
   DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part2.sh
@@ -172,37 +174,7 @@ jobs:
           git config --global user.email "BuildBot2021@gmail.com"
           git config --global user.name "BuildBot"
 ### ------------------------------------------------------------------------------ ###
-      - name: Set .config and assign hardware Device Tag
-        id: setConfig
-        run: |
-          if [[ "${{ github.event.inputs.hardware }}" == "0" ]]; then
-                  echo "::set-output name=hardwareString::wrtmulti.config"
-                  echo "HARDWARE_DEVICE=wrtMulti" >> $GITHUB_ENV
-          fi
-          if [[ "${{ github.event.inputs.hardware }}" == "1" ]]; then
-                  echo "::set-output name=hardwareString::wrt3200acm.config"
-                  echo "HARDWARE_DEVICE=wrt3200acm" >> $GITHUB_ENV
-          fi
-          if [[ "${{ github.event.inputs.hardware }}" == "2" ]]; then
-                  echo "::set-output name=hardwareString::wrt32x.config"
-                  echo "HARDWARE_DEVICE=wrt32x" >> $GITHUB_ENV
-          fi
-          if [[ "${{ github.event.inputs.hardware }}" == "3" ]]; then
-                  echo "::set-output name=hardwareString::wrt1200ac.config"
-                  echo "HARDWARE_DEVICE=wrt1200ac" >> $GITHUB_ENV
-          fi
-          if [[ "${{ github.event.inputs.hardware }}" == "4" ]]; then
-                  echo "::set-output name=hardwareString::wrt1900acsV1V2.config"
-                  echo "HARDWARE_DEVICE=wrt1900acsV1V2" >> $GITHUB_ENV
-          fi
-          if [[ "${{ github.event.inputs.hardware }}" == "5" ]]; then
-                  echo "::set-output name=hardwareString::wrt1900acV1.config"
-                  echo "HARDWARE_DEVICE=wrt1900acV1" >> $GITHUB_ENV
-          fi
-          if [[ "${{ github.event.inputs.hardware }}" == "6" ]]; then
-                  echo "::set-output name=hardwareString::wrt1900acV2.config"
-                  echo "HARDWARE_DEVICE=wrt1900acV2" >> $GITHUB_ENV
-          fi
+
 ### ------------------------------------------------------------------------------ ###
       - name: Set SSH connection to Actions
         id: setSSH
@@ -365,8 +337,8 @@ jobs:
 ### ------------------------------------------------------------------------------ ###
       - name: Copy (.config)
         run: >
-          [ -e configs/${{ steps.setConfig.outputs.hardwareString }} ] && mv
-          configs/${{ steps.setConfig.outputs.hardwareString }} openwrt/.config
+          [ -e configs/${HARDWARE_DEVICE}.config ] && mv
+          configs/${HARDWARE_DEVICE}.config openwrt/.config
 ### ------------------------------------------------------------------------------ ###
       - name: Run Custom OpenWRT Patches
         if: env.USE_OPENWRT_PATCHES == 'true' && !cancelled()
