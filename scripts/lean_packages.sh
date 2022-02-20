@@ -46,7 +46,7 @@ rm -rf package/lean/luci-lib-docker
 rm -rf package/lean/luci-proto-bonding
 rm -rf package/lean/luci-theme-argon
 rm -rf package/lean/luci-theme-netgear
-
+rm -rf package/lean/mt # Some Error Keeps happening #
 
 echo "END of coolsnowwolf's lean packages"
 ### Needed for qBittorrent qt5
