@@ -13,18 +13,21 @@
 ################################################################################
 
 echo "Downloading sirpdboy's packages"
-
 i=0
 while read line
 do
-    array[ $i ]="$line"
+    packages[ $i ]="$line"
     (( i++ ))
 done < <(svn list https://github.com/sirpdboy/sirpdboy-package/trunk)
 
-for i in {1..56}
+## get length of $packages array
+len=${#packages[@]}
+
+## Use bash for loop
+for (( i=0; i<$len; i++ ))
 do
-  echo ${array[$i]}
-  svn co https://github.com/sirpdboy/sirpdboy-package/trunk/${array[$i]} package/sirpdboy/${array[$i]}
+  echo "${packages[$i]}"
+  svn co https://github.com/sirpdboy/sirpdboy-package/trunk/${packages[$i]} package/sirpdboy/${packages[$i]}
 done
 
 rm -rf  package/sirpdboy/adguardhome
@@ -55,27 +58,33 @@ rm -rf  package/sirpdboy/luci-theme-opentopd
 rm -rf  package/sirpdboy/netdata
 rm -rf  package/sirpdboy/speedtest-cli ## NEEDS FIXED
 
+echo "END of sirpdboy's packages"
 
 echo "From sirpdboy's BUILD packages"
 
 i=0
 while read line
 do
-    array[ $i ]="$line"
+    packages[ $i ]="$line"
     (( i++ ))
 done < <(svn list https://github.com/sirpdboy/build/trunk)
 
-for i in {1..25}
+## get length of $packages array
+len=${#packages[@]}
+
+## Use bash for loop
+for (( i=0; i<$len; i++ ))
 do
-  echo ${array[$i]}
-  svn co https://github.com/sirpdboy/build/trunk/${array[$i]} package/sirpdboy/${array[$i]}
+  echo "${packages[$i]}"
+  svn co https://github.com/sirpdboy/build/trunk/${packages[$i]} package/sirpdboy/${packages[$i]}
 done
 
 rm -rf  package/sirpdboy/autocore
 rm -rf  package/sirpdboy/automount
-rm -rf  package/sirpdboy/autosamba
-rm -rf  package/sirpdboy/default-settings
-rm -rf  package/sirpdboy/doc
+rm -rf  package/sirpdboy/autosamba-samba4
+rm -rf  package/sirpdboy/default-settings # using a dif
+rm -rf  package/sirpdboy/doc # not a package
+rm -rf  package/sirpdboy/gcc # not a package
 rm -rf  package/sirpdboy/ksmbd-tools
 rm -rf  package/sirpdboy/luci-app-ksmbd
 rm -rf  package/sirpdboy/luci-app-samba
@@ -84,7 +93,11 @@ rm -rf  package/sirpdboy/miniupnpd
 rm -rf  package/sirpdboy/mwan3
 rm -rf  package/sirpdboy/samba36
 rm -rf  package/sirpdboy/samba4
-rm -rf  package/sirpdboy/set
-rm -rf  package/sirpdboy/shortcut-fe
-echo "END of sirpdboy's packages"
+rm -rf  package/sirpdboy/my-autocore
+rm -rf  package/sirpdboy/mycore
+rm -rf  package/sirpdboy/pass
+rm -rf  package/sirpdboy/set # Not a package
+rm -rf  package/sirpdboy/socat
+
+echo "END of sirpdboy's Build packages"
 exit 0
