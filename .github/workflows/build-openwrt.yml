@@ -53,8 +53,7 @@ env:
   USE_LUCI_PATCHES: false
   USE_PACKAGES_PATCHES: false
   USE_DEVOPENWRT: true
-  USE_COOLSNOWWOLF: true
-  USE_SIRPDBOY: true
+  USE_FETCH_PACKAGES: true
   ### ------------------------------------------------------------------ ###
   ## Disabling any of these will still build said section,
   ## Just wont be debugable showing. Enabling them will add,
@@ -295,19 +294,12 @@ jobs:
           cd openwrt
           $GITHUB_WORKSPACE/scripts/DevOpenWRT-Router.sh
 ### ------------------------------------------------------------------------------ ###
-      - name: Load coolsnowwolf's Lean Packages
-        if: env.USE_COOLSNOWWOLF == 'true' && !cancelled()
+      - name: Load fetch_packages.sh
+        if: env.USE_FETCH_PACKAGES == 'true' && !cancelled()
         run: |
-          chmod +x scripts/lean_packages.sh
+          chmod +x scripts/fetch_packages.sh
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/lean_packages.sh
-### ------------------------------------------------------------------------------ ###
-      - name: Load Sirpdboy's Packages
-        if: env.USE_SIRPDBOY == 'true' && !cancelled()
-        run: |
-          chmod +x scripts/sirpdboy-package.sh
-          cd openwrt
-          $GITHUB_WORKSPACE/scripts/sirpdboy-package.sh
+          $GITHUB_WORKSPACE/scripts/fetch_packages.sh
 ### ------------------------------------------------------------------------------ ###
       - name: Update feeds Package
         run: |
