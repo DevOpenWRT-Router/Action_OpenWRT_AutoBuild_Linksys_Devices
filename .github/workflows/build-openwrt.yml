@@ -133,10 +133,8 @@ jobs:
           curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
           chmod a+rx ~/.bin/repo
           echo "::endgroup::"
-          echo "::group::Setup Build Env"
           sudo -E apt-get -qq install $(curl -fsSL bit.ly/depends-ubuntu-2004)
           wget -qO - https://bit.ly/build-env-on-ubuntu-bionic | sed 's/python-/python3-/g' | /bin/bash
-          echo "::endgroup::"
 
       - name: environment extra
         run: |
