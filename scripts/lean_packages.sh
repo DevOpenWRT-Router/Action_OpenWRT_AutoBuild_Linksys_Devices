@@ -17,14 +17,18 @@ echo "Downloading coolsnowwolf's lean packages"
 i=0
 while read line
 do
-    array[ $i ]="$line"
+    packages[ $i ]="$line"
     (( i++ ))
 done < <(svn list https://github.com/coolsnowwolf/lede/trunk/package/lean)
 
-for i in {1..125}
+## get length of $packages array
+len=${#packages[@]}
+
+## Use bash for loop
+for (( i=0; i<$len; i++ ))
 do
-  echo ${array[$i]}
-  svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/${array[$i]} package/lean/${array[$i]}
+  echo "${packages[$i]}"
+  svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/${packages[$i]} package/lean/${packages[$i]}
 done
 
 rm -rf package/lean/UnblockNeteaseMusic
