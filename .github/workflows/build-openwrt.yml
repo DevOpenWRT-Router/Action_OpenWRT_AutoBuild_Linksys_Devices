@@ -54,6 +54,7 @@ env:
   USE_PACKAGES_PATCHES: false
   USE_DEVOPENWRT: true
   USE_FETCH_PACKAGES: true
+  USE_CACHE: true
   ### ------------------------------------------------------------------ ###
   ## Disabling any of these will still build said section,
   ## Just wont be debugable showing. Enabling them will add,
@@ -422,6 +423,25 @@ jobs:
           echo -e "Creating (logs) Directory:"
           cd openwrt
           mkdir -p logs
+### ------------------------------------------------------------------------------ ###
+      - name: Restore cache
+        uses: actions/cache@v2
+        if: env.USE_CACHE == 'true' && !cancelled()
+        with:
+          path: |
+            ~/.ccache
+            openwrt/out
+          key: ${{runner.os}}-${{env.HARDWARE_DEVICE}}
+          restore-keys: |
+            ${{runner.os}}-${{env.HARDWARE_DEVICE}}
+      - name: Setup ccache
+        uses: alexjurkiewicz/setup-ccache@master
+        if: env.USE_CACHE == 'true' && !cancelled()
+        with:
+          max-size: 5G
+          extra-config: |
+            keep_comments_cpp = true
+
 ### ------------------------------------------------------------------------------ ###
       - name: Make Download
         id: makedownload
