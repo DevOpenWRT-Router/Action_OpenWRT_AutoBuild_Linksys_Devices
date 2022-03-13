@@ -205,22 +205,10 @@ jobs:
       - name: Set LUCI Source
         id: setLuci
         run: |
-          if [[ "${{ github.event.inputs.lucisource }}" == "0" ]]; then
               cd openwrt
               sed -i 's#/git.openwrt.org/project/luci.git#/git.openwrt.org/project/luci.git#g' feeds.conf.default
               sed -i 's#/github.com/coolsnowwolf/luci#/git.openwrt.org/project/luci.git#g' feeds.conf.default
-          fi
-          if [[ "${{ github.event.inputs.lucisource }}" == "1" ]]; then
-              echo "NOT IMPLANTED"
-          fi
-          if [[ "${{ github.event.inputs.lucisource }}" == "2" ]]; then
-              echo "NOT IMPLANTED"
-          fi
-          if [[ "${{ github.event.inputs.lucisource }}" == "3" ]]; then
-              cd openwrt
-              sed -i 's#/github.com/coolsnowwolf/luci#/github.com/coolsnowwolf/luci#g' feeds.conf.default
-              sed -i 's#/git.openwrt.org/project/luci.git#/github.com/coolsnowwolf/luci#g' feeds.conf.default
-          fi
+
 ### ------------------------------------------------------------------------------ ###
       - name: Load DevOpenWRT-Router's Packages
         if: env.USE_DEVOPENWRT == 'true' && !cancelled()
