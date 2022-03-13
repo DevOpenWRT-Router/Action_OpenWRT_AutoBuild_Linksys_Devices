@@ -36,8 +36,8 @@ name: Test Build (Short) (Linksys Devices)
         required: true
         default: '0'
 env:
-  HARDWARE_ID: wrt3200acm
-  HARDWARE_DEVICE: wrt3200acm
+  HARDWARE_ID: ${{ github.event.client_payload.message.HARDWARE_ID }}
+  HARDWARE_DEVICE: ${{ github.event.client_payload.message.HARDWARE_DEVICE }}
   FEEDS_CONF: feeds.conf.default
   DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part2.sh
