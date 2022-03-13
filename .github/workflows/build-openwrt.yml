@@ -193,22 +193,8 @@ jobs:
       - name: Set source and branch
         id: setSource
         run: |
-          if [[ "${{ github.event.inputs.source }}" == "0" ]]; then
                   echo "::set-output name=sourceString::https://github.com/openwrt/openwrt.git"
                   echo "::set-output name=branchString::master"
-          fi
-          if [[ "${{ github.event.inputs.source }}" == "1" ]]; then
-                  echo "::set-output name=sourceString::https://github.com/openwrt/openwrt.git"
-                  echo "::set-output name=branchString::openwrt-19.07"
-          fi
-          if [[ "${{ github.event.inputs.source }}" == "2" ]]; then
-                  echo "::set-output name=sourceString::https://github.com/openwrt/openwrt.git"
-                  echo "::set-output name=branchString::openwrt-21.02"
-          fi
-          if [[ "${{ github.event.inputs.source }}" == "3" ]]; then
-                  echo "::set-output name=sourceString::https://github.com/coolsnowwolf/lede.git"
-                  echo "::set-output name=branchString::master"
-          fi
 ### ------------------------------------------------------------------------------ ###
       - name: Clone source code
         working-directory: /workdir
