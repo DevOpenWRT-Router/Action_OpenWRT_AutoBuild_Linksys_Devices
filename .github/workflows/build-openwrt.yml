@@ -156,40 +156,6 @@ jobs:
           git config --global user.email "BuildBot2021@gmail.com"
           git config --global user.name "BuildBot"
 ### ------------------------------------------------------------------------------ ###
-
-### ------------------------------------------------------------------------------ ###
-      - name: Set SSH connection to Actions
-        id: setSSH
-        run: |
-          if [[ "${{ github.event.inputs.sshd }}" == "0" ]]; then
-                  echo "::set-output name=sshString::false"
-                  echo "::set-output name=ssh_ngrokString::false"
-                  echo "SSH=false" >> $GITHUB_ENV
-                  echo "SSH_NGROK=false" >> $GITHUB_ENV
-                  echo "SSH_AFTERBUILD=false" >> $GITHUB_ENV
-          fi
-          if [[ "${{ github.event.inputs.sshd }}" == "1" ]]; then
-                  echo "::set-output name=sshString::true"
-                  echo "::set-output name=ssh_ngrokString::false"
-                  echo "SSH=true" >> $GITHUB_ENV
-                  echo "SSH_NGROK=false" >> $GITHUB_ENV
-                  echo "SSH_AFTERBUILD=false" >> $GITHUB_ENV
-          fi
-          if [[ "${{ github.event.inputs.sshd }}" == "2" ]]; then
-                  echo "::set-output name=sshString::false"
-                  echo "::set-output name=ssh_ngrokString::true"
-                  echo "SSH=false" >> $GITHUB_ENV
-                  echo "SSH_NGROK=true" >> $GITHUB_ENV
-                  echo "SSH_AFTERBUILD=false" >> $GITHUB_ENV
-          fi
-          if [[ "${{ github.event.inputs.sshd }}" == "3" ]]; then
-                  echo "::set-output name=sshString::false"
-                  echo "::set-output name=ssh_ngrokString::false"
-                  echo "SSH=false" >> $GITHUB_ENV
-                  echo "SSH_NGROK=true" >> $GITHUB_ENV
-                  echo "SSH_AFTERBUILD=true" >> $GITHUB_ENV
-          fi
-### ------------------------------------------------------------------------------ ###
       - name: Set source and branch
         id: setSource
         run: |
@@ -363,38 +329,6 @@ jobs:
           chmod +x scripts/create_acl_for_luci.sh
           cd openwrt
           $GITHUB_WORKSPACE/scripts/create_acl_for_luci.sh -a
-### ------------------------------------------------------------------------------ ###
-      - name: Start SSH via tmate
-        uses: P3TERX/ssh2actions@main
-        if: >-
-          (env.SSH == 'true' && !cancelled() && env.SSH != 'false') ||
-          contains(github.event.action, 'ssh')
-      # Send connection info to Telegram (optional)
-      # You can find related documents here: https://core.telegram.org/bots
-        env:
-          TELEGRAM_BOT_TOKEN: '${{ secrets.TELEGRAM_BOT_TOKEN }}'
-          TELEGRAM_CHAT_ID: '${{ secrets.TELEGRAM_CHAT_ID }}'
-### ------------------------------------------------------------------------------ ###
-      - name: Start SSH via ngrok
-        uses: P3TERX/ssh2actions@main
-        if: >-
-          (env.SSH_NGROK == 'true' && !cancelled() && env.SSH_NGROK != 'false')
-          || contains(github.event.action, 'ssh')
-        with:
-          mode: ngrok
-      # After sign up on the https://ngrok.com
-      # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
-        env:
-          NGROK_TOKEN: '${{ secrets.NGROK_TOKEN }}'
-      # ngrok server region [us, eu, au, ap, sa, jp, in] (optional, default: us)
-      # You can find this server region here: https://ngrok.com/docs#global-locations
-          NGROK_REGION: us
-      # This password you will use when authorizing via SSH
-          SSH_PASSWORD: '${{ secrets.SSH_PASSWORD }}'
-      # Send connection info to Telegram (optional)
-      # You can find related documents here: https://core.telegram.org/bots
-          TELEGRAM_BOT_TOKEN: '${{ secrets.TELEGRAM_BOT_TOKEN }}'
-          TELEGRAM_CHAT_ID: '${{ secrets.TELEGRAM_CHAT_ID }}'
 ### ------------------------------------------------------------------------------ ###
       - name: Populating .config
         id: config
@@ -592,16 +526,6 @@ jobs:
         with:
           name: 'OpenWrt_logs${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
           path: openwrt/logs/
-### ------------------------------------------------------------------------------ ###
-### ----- SSH CONNECTION AFTER BUILD ----- ###
-      - name: SSH connection to Actions After Build
-        uses: DevOpenWRT-Router/ssh2actions@v1.0.0
-        if: >-
-          (env.SSH_AFTERBUILD == 'true' && !cancelled() && env.SSH_AFTERBUILD !=
-          'false') || contains(github.event.action, 'ssh')
-        env:
-          TELEGRAM_CHAT_ID: '${{ secrets.TELEGRAM_CHAT_ID }}'
-          TELEGRAM_BOT_TOKEN: '${{ secrets.TELEGRAM_BOT_TOKEN }}'
 ### ------------------------------------------------------------------------------ ###
       - name: After Build
         if: env.RUN_AFTER_BUILD == 'true' && !cancelled()
