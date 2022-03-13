@@ -14,27 +14,7 @@ name: OpenWRT AutoBuild (T) (Linksys Devices)
 'on':
   repository_dispatch: null
   workflow_dispatch:
-    inputs:
-      hardware:
-        description: >
-          '[0] ALL [1] WRT3200ACM [2] WRT32X [3] WRT1200AC [4] WRT1900ACS V1 V2 [5]
-          WRT1900AC V1 [6] WRT1900AC V2'
-        required: true
-        default: '1'
-      source:
-        description: '[0] Snapshot [1] openwrt-19.07 [2] openwrt-21.02 [3] lede'
-        required: true
-        default: '0'
-      lucisource:
-        description: |
-          'LUCI Feeds Location:'
-          '[0] Snapshot [1] openwrt-19.07 [2] openwrt-21.02 [3] lede'
-        required: true
-        default: '0'
-      sshd:
-        description: '[0] NONE [1] TMATE SSH, [2] NGROK SSH [3] SSH After Build'
-        required: true
-        default: '0'
+
 env:
   HARDWARE_ID: ${{ github.event.client_payload.message.HARDWARE_ID }}
   HARDWARE_DEVICE: ${{ github.event.client_payload.message.HARDWARE_DEVICE }}
