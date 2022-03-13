@@ -25,7 +25,7 @@ jobs:
         with:
           token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
           repo: Action_OpenWRT_AutoBuild_Linksys_Devices-TEST
-          owner: Eliminater74
+          owner: DevOpenWRT-Router
           event_type: repository_dispatch
           message: |
             {
