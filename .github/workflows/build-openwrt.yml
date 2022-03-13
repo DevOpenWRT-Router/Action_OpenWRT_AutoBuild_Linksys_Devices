@@ -10,7 +10,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: Test Build (Short) (Linksys Devices)
+name: OpenWRT AutoBuild (T) (Linksys Devices)
 'on':
   repository_dispatch: null
   workflow_dispatch:
