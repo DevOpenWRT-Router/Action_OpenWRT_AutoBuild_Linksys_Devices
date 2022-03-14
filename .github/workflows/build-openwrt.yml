@@ -175,12 +175,6 @@ jobs:
         run: >
           [ -e configs/$FEEDS_CONF ] && mv configs/$FEEDS_CONF
           openwrt/feeds.conf.default
-
-          chmod +x scripts/$DIY_P1_SH
-
-          cd openwrt
-
-          $GITHUB_WORKSPACE/scripts/$DIY_P1_SH
 ### ------------------------------------------------------------------------------ ###
       - name: Set LUCI Source
         id: setLuci
