@@ -193,13 +193,6 @@ jobs:
           cd openwrt
           $GITHUB_WORKSPACE/scripts/luci_themes.sh
 ### ------------------------------------------------------------------------------ ###
-      - name: Load DevOpenWRT-Router's Packages
-        if: env.USE_DEVOPENWRT == 'true' && !cancelled()
-        run: |
-          chmod +x scripts/DevOpenWRT-Router.sh
-          cd openwrt
-          $GITHUB_WORKSPACE/scripts/DevOpenWRT-Router.sh
-### ------------------------------------------------------------------------------ ###
       - name: Load fetch_packages.sh
         if: env.USE_FETCH_PACKAGES == 'true' && !cancelled()
         run: |
