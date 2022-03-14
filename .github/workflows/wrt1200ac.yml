@@ -9,7 +9,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: Build wrt3200acm
+name: Build wrt1200ac
 on:
   workflow_dispatch:
   schedule:
@@ -31,6 +31,6 @@ jobs:
           event_type: repository_dispatch
           message: |
             {
-              "HARDWARE_DEVICE": "wrt3200acm",
-              "HARDWARE_ID": "wrt3200acm"
+              "HARDWARE_DEVICE": "wrt1200ac",
+              "HARDWARE_ID": "wrt1200ac"
             }

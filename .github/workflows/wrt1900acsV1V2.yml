@@ -9,14 +9,14 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: Build wrt3200acm
+name: Build wrt1900acsV1V2
 on:
   workflow_dispatch:
   schedule:
         # * is a special character in YAML so you have to quote this string
         # * “At 12:00.”
   - cron:  '00 12 * * *'
-
+  
 jobs:
   trigger-nightly-builds:
     if: github.event != 'workflow_dispatch'
@@ -31,6 +31,6 @@ jobs:
           event_type: repository_dispatch
           message: |
             {
-              "HARDWARE_DEVICE": "wrt3200acm",
-              "HARDWARE_ID": "wrt3200acm"
+              "HARDWARE_DEVICE": "wrt1900acsV1V2",
+              "HARDWARE_ID": "wrt1900acsV1V2"
             }
