@@ -2,7 +2,7 @@
 #
 #   Copyright (C) 2006-2021
 #
-# Updated: 11/28/2021
+# Updated: 03/11/2022
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -36,12 +36,9 @@ echo "Make sure you have:"
 echo "-------------------"
 echo "                   "
 echo "scripts (Directory)"
-echo "       diy-part1.sh"
-echo "       diy-part2.sh"
+echo "       custom_configuration.sh"
 echo "       luci_themes.sh"
-echo "       DevOpenWRT-Router.sh"
-echo "       lean_packages.sh"
-echo "       sirpdboy-package.sh"
+echo "       fetch_packages.sh"
 echo "configs (Directory)"
 echo "       feeds.conf.default"
 echo "       wrt3200acm.config"
@@ -49,12 +46,7 @@ echo "       patches (Directory)"
 echo "                          "
 sleep 5
 ### ------------------------------------------------------------------------------- ###
-FILE=diy-part1.sh
-if [ ! -f "$FILE" ]; then
-    echo "$FILE does not exist."
-    exit
-fi
-FILE=diy-part2.sh
+FILE=custom_configuration.sh
 if [ ! -f "$FILE" ]; then
     echo "$FILE does not exist."
     exit
@@ -64,17 +56,7 @@ if [ ! -f "$FILE" ]; then
     echo "$FILE does not exist."
     exit
 fi
-FILE=DevOpenWRT-Router.sh
-if [ ! -f "$FILE" ]; then
-    echo "$FILE does not exist."
-    exit
-fi
-FILE=lean_packages.sh
-if [ ! -f "$FILE" ]; then
-    echo "$FILE does not exist."
-    exit
-fi
-FILE=sirpdboy-package.sh
+FILE=fetch_packages.sh
 if [ ! -f "$FILE" ]; then
     echo "$FILE does not exist."
     exit
@@ -96,20 +78,11 @@ if [ ! -d "$FILE" ]; then
 fi
 ### ------------------------------------------------------------------------------- ###
 
-echo "Running: diy-part1.sh"
-./diy-part1.sh
-
 echo "Cloning from: luci_themes.sh"
 ./luci_themes.sh
 
-echo "Cloning from: DevOpenWRT-Router.sh"
-./DevOpenWRT-Router.sh
-
-echo "Cloning from: lean_packages.sh"
-./lean_packages.sh
-
-echo "Cloning from: sirpdboy-package.sh"
-./sirpdboy-package.sh
+echo "Cloning from: fetch_packages.sh"
+./fetch_packages.sh
 
 echo "Running: update -a, install -a, uninstall bluld"
 ./scripts/feeds update -a
@@ -122,8 +95,8 @@ cp wrt3200acm.config .config
 echo "Applying Patches"
 git am patches/*.patch
 
-echo "Running: diy-part2.sh"
-./diy-part2.sh
+echo "Running: custom_configuration.sh"
+./custom_configuration.sh
 
 echo "Make Menuconfig"
 make menuconfig
