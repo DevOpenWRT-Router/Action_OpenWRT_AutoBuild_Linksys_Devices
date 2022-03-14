@@ -268,7 +268,31 @@ rm -rf  package/sirpdboy/set # Not a package
 rm -rf  package/sirpdboy/socat
 
 echo "END of sirpdboy's Build packages"
+### -------------------------------------------------------------------------------------------------------------- ###
+echo "Downloading helmiau's packages"
+i=0
+while read line
+do
+    packages[ $i ]="$line"
+    (( i++ ))
+done < <(svn list https://github.com/helmiau/helmiwrt-packages/trunk)
 
+## get length of $packages array
+len=${#packages[@]}
+
+## Use bash for loop
+for (( i=0; i<$len; i++ ))
+do
+  echo "${packages[$i]}"
+  svn co https://github.com/helmiau/helmiwrt-packages/trunk/${packages[$i]} package/helmiau/${packages[$i]}
+done
+
+rm -rf package/helmiau/badvpn
+rm -rf package/helmiau/build-ipk
+rm -rf package/helmiau/corkscrew
+rm -rf package/helmiau/preview
+
+echo "END of helmiau's Build packages"
 ### -------------------------------------------------------------------------------------------------------------- ###
 
 exit 0
