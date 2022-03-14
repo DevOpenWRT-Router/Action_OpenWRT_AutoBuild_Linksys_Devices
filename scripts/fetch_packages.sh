@@ -11,6 +11,11 @@
 # Updated By Eliminater74
 ################################################################################
 
+
+if [[ $TEST_PACKAGES == "true" ]]; then
+  echo "THIS WORKED: $TEST_PACKAGES"
+fi
+
 ### -------------------------------------------------------------------------------------------------------------- ###
 echo " Fetching All Personal Repo's"
 echo "Fetching From DevOpenWRT-Router:"
