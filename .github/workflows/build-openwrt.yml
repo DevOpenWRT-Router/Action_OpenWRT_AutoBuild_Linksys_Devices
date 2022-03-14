@@ -19,7 +19,7 @@ env:
   HARDWARE_ID: ${{ github.event.client_payload.message.HARDWARE_ID }}
   HARDWARE_DEVICE: ${{ github.event.client_payload.message.HARDWARE_DEVICE }}
   FEEDS_CONF: feeds.conf.default
-  DIY_P1_SH: diy-part1.sh
+  CUSTC_SH: custom_configuration.sh
   DIY_P2_SH: diy-part2.sh
   BEFORE_BUILD: before_build.sh
   AFTER_BUILD: after_build.sh
@@ -280,11 +280,12 @@ jobs:
           unset MY_Filter
 ### ------------------------------------------------------------------------------ ###
       - name: Load custom configuration
-        if: env.USE_DIYP2 == 'true' && !cancelled()
+        if: env.USE_CUSTC == 'true' && !cancelled()
         run: |
-          chmod +x scripts/$DIY_P2_SH
+          chmod +x scripts/$CUSTC_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$DIY_P2_SH
+          $GITHUB_WORKSPACE/scripts/$CUSTC_SH
+
 
 ### ------------------------------------------------------------------------------ ###
       - name: Add ACL
