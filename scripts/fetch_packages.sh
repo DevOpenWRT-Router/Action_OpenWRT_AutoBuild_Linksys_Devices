@@ -12,6 +12,119 @@
 ################################################################################
 
 ### -------------------------------------------------------------------------------------------------------------- ###
+echo " Fetching All Personal Repo's"
+echo "Fetching From DevOpenWRT-Router:"
+### luci-app-log
+git clone https://github.com/DevOpenWRT-Router/luci-app-log.git package/luci-app-log
+### luci-app-tn-logview
+git clone https://github.com/DevOpenWRT-Router/luci-app-tn-logview.git package/luci-app-tn-logview
+### syslog_fc
+git clone https://github.com/DevOpenWRT-Router/syslog_fc.git package/syslog_fc
+
+### luci-app-interfaces-statistics
+git clone https://github.com/DevOpenWRT-Router/luci-app-interfaces-statistics.git package/luci-app-interfaces-statistics
+### luci-app-cpu-status
+git clone https://github.com/DevOpenWRT-Router/luci-app-cpu-status.git package/luci-app-cpu-status
+### luci-app-temp-status
+git clone https://github.com/DevOpenWRT-Router/luci-app-temp-status.git package/luci-app-temp-status
+### luci-app-rebootschedule
+git clone https://github.com/DevOpenWRT-Router/luci-app-rebootschedule.git package/luci-app-rebootschedule
+### luci-app-timecontrol
+git clone https://github.com/DevOpenWRT-Router/luci-app-timecontrol.git package/luci-app-timecontrol
+### luci-app-cpulimit
+git clone https://github.com/DevOpenWRT-Router/luci-app-cpulimit.git package/luci-app-cpulimit
+### luci-app-mqos
+git clone https://github.com/DevOpenWRT-Router/luci-app-mqos.git package/luci-app-mqos
+### luci-app-disks-info
+git clone https://github.com/DevOpenWRT-Router/luci-app-disks-info.git package/luci-app-disks-info
+### NetSpeedTest
+git clone https://github.com/DevOpenWRT-Router/netspeedtest.git package/NetSpeedTest
+### luci-app-netdata A
+git clone https://github.com/DevOpenWRT-Router/luci-app-netdata-A.git package/luci-app-netdata
+### luci-app-netdata B
+## git clone https://github.com/DevOpenWRT-Router/luci-app-netdata-B.git package/luci-app-netdata
+### luci-app-observatory
+git clone https://github.com/DevOpenWRT-Router/luci-app-observatory.git package/luci-app-observatory
+### luci-app-rtorrent-js
+git clone https://github.com/DevOpenWRT-Router/luci-app-rtorrent-js.git package/luci-app-rtorrent-js
+### luci-app-autowms
+git clone https://github.com/DevOpenWRT-Router/luci-app-autowms.git package/luci-app-autowms
+### luci-default-settings
+git clone https://github.com/DevOpenWRT-Router/luci-default-settings.git package/luci-default-settings
+
+### luci-app-tn-ttyd DO NOT USE
+# git clone https://github.com/DevOpenWRT-Router/luci-app-tn-ttyd.git package/luci-app-tn-ttyd
+### luci-app-tn-shellinabox
+# git clone https://github.com/DevOpenWRT-Router/luci-app-tn-shellinabox.git package/luci-app-tn-shellinabox
+### luci-app-tn-watchdog
+# git clone https://github.com/DevOpenWRT-Router/luci-app-tn-watchdog.git package/luci-app-tn-watchdog
+### luci-app-tn-netports
+# git clone https://github.com/DevOpenWRT-Router/luci-app-tn-netports.git package/luci-app-tn-netports
+echo "END Fetching From DevOpenWRT-Router:"
+
+
+### Uncomment a feed source
+# sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
+
+echo "Fetching From unSorted Repo's:"
+### luci-app-filebrowser
+git clone https://github.com/xiaozhuai/luci-app-filebrowser.git package/luci-app-filebrowser
+### luci-app-eqos
+git clone https://github.com/MapesxGM/luci-app-eqos.git package/luci-app-eqos
+### luci-app-onliner
+git clone https://github.com/rufengsuixing/luci-app-onliner.git package/luci-app-onliner
+### luci-app-fileassistant
+git clone https://github.com/gztingting/luci-app-fileassistant.git package/luci-app-fileassistant
+### luci-app-shortcutmenu
+git clone https://github.com/doushang/luci-app-shortcutmenu.git package/luci-app-shortcutmenu
+### luci-app-rtorrent
+git clone https://github.com/wolandmaster/luci-app-rtorrent.git package/luci-app-rtorrent
+### luci-app-zospusher
+git clone https://github.com/zhengwenxiao/luci-app-zospusher.git package/luci-app-zospusher
+### helmiwrt-packages
+git clone https://github.com/helmiau/helmiwrt-packages.git package/helmiwrt-packages
+
+
+### luci-app-control-weburl
+git clone https://github.com/gdck/luci-app-control-weburl.git package/luci-app-control-weburl
+### luci-app-unlocker
+git clone https://gitlab.com/Nooblord/luci-app-unlocker.git package/luci-app-unlocker
+
+### luci-app-diskman
+## A Simple Disk Manager for LuCI, support disk partition and format, support raid / btrfs-raid / btrfs-snapshot
+mkdir -p package/luci-app-diskman
+wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/applications/luci-app-diskman/Makefile -O package/luci-app-diskman/Makefile
+mkdir -p package/parted
+wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Makefile -O package/parted/Makefile
+
+### luci-app-dnsfilter
+git clone https://github.com/garypang13/luci-app-dnsfilter.git package/luci-app-dnsfilter
+
+### luci-app-usbnet
+git clone https://github.com/a920025608/luci-app-usbnet.git package/luci-app-usbnet
+git clone https://github.com/a920025608/usbnet.git package/usbnet
+
+echo "END Fetching From unSorted Repo's:"
+echo "End of Fetching All Personal Repos"
+### -------------------------------------------------------------------------------------------------------------- ###
+
+### ------------------------------------------------------------------------------------------ ###
+### DISABLED ###
+### luci-app-telegrambot
+# git clone https://github.com/koshev-msk/luci-app-telegrambot.git package/luci-app-telegrambot
+### openwrt-telegram-bot
+# git clone https://github.com/koshev-msk/openwrt-telegram-bot.git package/openwrt-telegram-bot
+### luci-app-change-mac
+# git clone https://github.com/muink/luci-app-change-mac.git package/luci-app-change-mac
+### rgmac
+# git clone https://github.com/muink/rgmac.git package/rgmac
+
+
+
+
+
+
+### -------------------------------------------------------------------------------------------------------------- ###
 echo "Downloading coolsnowwolf's lean packages"
 
 i=0
