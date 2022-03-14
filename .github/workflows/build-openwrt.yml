@@ -320,9 +320,7 @@ jobs:
         uses: actions/cache@v2
         if: env.USE_CACHE == 'true' && !cancelled()
         with:
-          path: |
-            ~/.ccache
-            openwrt/out
+          path: openwrt/.ccache
           key: ${{runner.os}}-${{env.HARDWARE_DEVICE}}
           restore-keys: |
             ${{runner.os}}-${{env.HARDWARE_DEVICE}}
