@@ -40,7 +40,7 @@ git clone https://github.com/DevOpenWRT-Router/luci-app-disks-info.git package/l
 ### NetSpeedTest
 git clone https://github.com/DevOpenWRT-Router/netspeedtest.git package/NetSpeedTest
 ### luci-app-netdata A
-git clone https://github.com/DevOpenWRT-Router/luci-app-netdata-A.git package/luci-app-netdata
+# git clone https://github.com/DevOpenWRT-Router/luci-app-netdata-A.git package/luci-app-netdata
 ### luci-app-netdata B
 ## git clone https://github.com/DevOpenWRT-Router/luci-app-netdata-B.git package/luci-app-netdata
 ### luci-app-observatory
@@ -83,6 +83,8 @@ git clone https://github.com/wolandmaster/luci-app-rtorrent.git package/luci-app
 git clone https://github.com/zhengwenxiao/luci-app-zospusher.git package/luci-app-zospusher
 ### helmiwrt-packages
 git clone https://github.com/helmiau/helmiwrt-packages.git package/helmiwrt-packages
+
+git clone https://github.com/sirpdboy/luci-app-netdata.git package/luci-app-netdata
 
 
 ### luci-app-control-weburl
