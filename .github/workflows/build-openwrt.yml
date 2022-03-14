@@ -179,20 +179,19 @@ jobs:
 
           $GITHUB_WORKSPACE/scripts/$DIY_P1_SH
 ### ------------------------------------------------------------------------------ ###
-      - name: Load LUCI custom Themes
-        if: env.USE_CUST_THEMES == 'true' && !cancelled()
-        run: |
-          chmod +x scripts/luci_themes.sh
-          cd openwrt
-          $GITHUB_WORKSPACE/scripts/luci_themes.sh
-### ------------------------------------------------------------------------------ ###
       - name: Set LUCI Source
         id: setLuci
         run: |
               cd openwrt
               sed -i 's#/git.openwrt.org/project/luci.git#/git.openwrt.org/project/luci.git#g' feeds.conf.default
               sed -i 's#/github.com/coolsnowwolf/luci#/git.openwrt.org/project/luci.git#g' feeds.conf.default
-
+### ------------------------------------------------------------------------------ ###
+      - name: Load LUCI custom Themes
+        if: env.USE_CUST_THEMES == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/luci_themes.sh
+          cd openwrt
+          $GITHUB_WORKSPACE/scripts/luci_themes.sh
 ### ------------------------------------------------------------------------------ ###
       - name: Load DevOpenWRT-Router's Packages
         if: env.USE_DEVOPENWRT == 'true' && !cancelled()
