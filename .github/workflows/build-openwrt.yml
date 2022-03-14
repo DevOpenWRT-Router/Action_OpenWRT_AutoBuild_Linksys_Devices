@@ -23,14 +23,12 @@ env:
   HARDWARE_DEVICE: ${{ github.event.client_payload.message.HARDWARE_DEVICE }}
   FEEDS_CONF: feeds.conf.default
   CUSTC_SH: custom_configuration.sh
-  DIY_P2_SH: diy-part2.sh
   BEFORE_BUILD: before_build.sh
   AFTER_BUILD: after_build.sh
   KERNEL_VERSION: kernel_version.sh
   GITHUB_RUN: github_push.sh
   EXT_INIT_ENV: environment.sh
   USE_FILES: true
-  USE_DIYP2: true
   USE_CUST_THEMES: true
   USE_OPENWRT_PATCHES: true
   USE_LUCI_PATCHES: false
