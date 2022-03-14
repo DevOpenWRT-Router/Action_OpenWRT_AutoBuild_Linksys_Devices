@@ -99,6 +99,10 @@ jobs:
           [ -f /etc/issue ] && cat /etc/issue
           ulimit -a
 
+      - name: HARDWARE_DEVICE
+        run: |
+          echo "Device: $HARDWARE_DEVICE"
+
       - name: "Cleanup Environment"
         uses: rokibhasansagar/slimhub_actions@main
 
