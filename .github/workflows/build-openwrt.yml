@@ -285,8 +285,6 @@ jobs:
           chmod +x scripts/$CUSTC_SH
           cd openwrt
           $GITHUB_WORKSPACE/scripts/$CUSTC_SH
-
-
 ### ------------------------------------------------------------------------------ ###
       - name: Add ACL
         if: env.ACL_LUCI == 'true' && !cancelled()
