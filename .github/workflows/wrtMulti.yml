@@ -31,6 +31,6 @@ jobs:
           event_type: repository_dispatch
           message: |
             {
-              "HARDWARE_DEVICE": "wrtMulti",
-              "HARDWARE_ID": "wrtMulti"
+              "HARDWARE_DEVICE": "wrtmulti",
+              "HARDWARE_ID": "wrtmulti"
             }
