@@ -12,7 +12,7 @@
 
 name: OpenWRT AutoBuild (T) (Linksys Devices)
 'on':
-  repository_dispatch: null
+  repository_dispatch:
   workflow_dispatch:
 
 env:
