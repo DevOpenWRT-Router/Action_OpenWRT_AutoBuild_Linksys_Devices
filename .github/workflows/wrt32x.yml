@@ -1,0 +1,36 @@
+#
+# Copyright (c) 2020 - 2022
+#
+# Updated: 03/13/2022 Eliminater74
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
+# Description: Build OpenWrt using GitHub Actions
+#
+
+name: Build wrt32x
+on:
+  workflow_dispatch:
+  schedule:
+        # * is a special character in YAML so you have to quote this string
+        # * “At 12:00.”
+  - cron:  '00 12 * * *'
+
+jobs:
+  trigger-nightly-builds:
+    if: github.event != 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Emit repository_dispatch
+        uses: mvasigh/dispatch-action@main
+        with:
+          token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+          repo: Action_OpenWRT_AutoBuild_Linksys_Devices-TEST
+          owner: DevOpenWRT-Router
+          event_type: repository_dispatch
+          message: |
+            {
+              "HARDWARE_DEVICE": "wrt32x",
+              "HARDWARE_ID": "wrt32x"
+            }
