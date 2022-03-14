@@ -1,14 +1,17 @@
-#
-# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
-#
-# Updated: 09/06/2021 Eliminater74
-#
-# This is free software, licensed under the MIT License.
-# See /LICENSE for more information.
-#
-# https://github.com/P3TERX/Actions-OpenWrt
-# Description: Build OpenWrt using GitHub Actions
-#
+################################################################################
+# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>                          #
+#                                                                              #
+# Updated: 03/14/2022 Eliminater74                                             #
+#                                                                              #
+# This is free software, licensed under the MIT License.                       #
+# See /LICENSE for more information.                                           #
+#                                                                              #
+# https://github.com/P3TERX/Actions-OpenWrt                                    #
+# Description: Build OpenWrt using GitHub Actions                              #
+#                                                                              #
+################################################################################
+#  MAIN BUILD CONTROL SECTION:                                                 #
+################################################################################
 
 name: OpenWRT AutoBuild (T) (Linksys Devices)
 'on':
