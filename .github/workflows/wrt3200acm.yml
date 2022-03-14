@@ -13,7 +13,7 @@ name: Build wrt3200acm
 on:
   workflow_dispatch:
   schedule:
-  - cron: "0 0 * * SUN"
+  - cron:  '00 12 * * *'
 
 jobs:
   trigger-nightly-builds:
