@@ -34,18 +34,17 @@ echo "Checking architecture:"
 grep -sq CONFIG_TARGET_mvebu=y .config
 echo "property 'libc' set:"
 sed -ne '/^CONFIG_LIBC=/ { s!^CONFIG_LIBC="\(.*\)"!\1!; s!^musl$!!; s!.\+!-&!p }' .config
-
-
+### ---------------------------------------------------------------------------------- ###
+### CCACHE SETUP ###
+echo "Seeding .config (enable ccache):"
+printf 'CONFIG_CCACHE=y\n' >> .config
+echo "Setting ccache directory:"
+export CCACHE_DIR=openwrt/.ccache
+echo "Fix Sloppiness of ccache:"
+ccache --set-config=sloppiness=file_macro,locale,time_macros
 ### ---------------------------------------------------------------------------------- ###
 #echo "Seeding .config (enable Device: linksys_wrt3200acm):"
 #printf 'CONFIG_TARGET_mvebu_cortexa9_DEVICE_linksys_wrt3200acm=y\n' >> .config
-#echo "Seeding .config (enable ccache):"
-#printf 'CONFIG_CCACHE=y\n' >> .config
-### -----------------------------------[CCACHE HOLD]---------------------------------- ###
-#echo "Setting ccache directory:"
-#export CCACHE_DIR=openwrt/.ccache
-#echo "Fix Sloppiness of ccache:"
-#ccache --set-config=sloppiness=file_macro,locale,time_macros
 ### ---------------------------------------------------------------------------------- ###
 
 ### Modify default theme
