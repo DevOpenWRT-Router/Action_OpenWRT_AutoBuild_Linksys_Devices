@@ -32,6 +32,15 @@
 # Make your special changes then save as device needed:
 #
 ### ============================================= ###
+
+PERSONAL_PACKAGES="true"
+UNSORTED_PACKAGES="true"
+LEAN_PACKAGES="true"
+SIRPDBOY_PACKAGES="true"
+HELMIAU_PACKAGES="true"
+TEST_PACKAGES="true"
+
+
 echo "Make sure you have:"
 echo "-------------------"
 echo "                   "
