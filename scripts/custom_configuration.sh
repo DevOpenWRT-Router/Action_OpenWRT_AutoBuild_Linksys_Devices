@@ -13,6 +13,7 @@
 ###         [MAKE SURE YOU KNOW WHAT YOUR DOING BEFORE CHANGING ALL THIS]              ###
 ### ---------------------------------------------------------------------------------- ###
 
+if [[ $EXTERNAL_BUILD_USER_DOMAIN_SETUP == "true" ]]; then
 ### Add kernel build user
 [ -z $(grep "CONFIG_KERNEL_BUILD_USER=" .config) ] &&
     echo 'CONFIG_KERNEL_BUILD_USER="Eliminater74"' >>.config ||
@@ -22,8 +23,9 @@
 [ -z $(grep "CONFIG_KERNEL_BUILD_DOMAIN=" .config) ] &&
     echo 'CONFIG_KERNEL_BUILD_DOMAIN="PureFusion"' >>.config ||
     sed -i 's@\(CONFIG_KERNEL_BUILD_DOMAIN=\).*@\1$"PureFusion"@' .config
+fi
 
-
+if [[ $EXTERNAL_PRE-KERNEL_CONFIGURATION == "true" ]]; then
 echo "Seeding .config (enable Target: mvebu cortexa9):"
 printf 'CONFIG_TARGET_mvebu=y\nCONFIG_TARGET_mvebu_cortexa9=y\n' >> .config
 echo "Seeding .config (enable Signed Packages):"
@@ -34,14 +36,17 @@ echo "Checking architecture:"
 grep -sq CONFIG_TARGET_mvebu=y .config
 echo "property 'libc' set:"
 sed -ne '/^CONFIG_LIBC=/ { s!^CONFIG_LIBC="\(.*\)"!\1!; s!^musl$!!; s!.\+!-&!p }' .config
+fi
 ### ---------------------------------------------------------------------------------- ###
 ### CCACHE SETUP ###
+if [[ $EXTERNAL_CCACHE_SETUP == "true" ]]; then
 echo "Seeding .config (enable ccache):"
 printf 'CONFIG_CCACHE=y\n' >> .config
 echo "Setting ccache directory:"
 export CCACHE_DIR=openwrt/.ccache
 echo "Fix Sloppiness of ccache:"
 ccache --set-config=sloppiness=file_macro,locale,time_macros
+fi
 ### ---------------------------------------------------------------------------------- ###
 #echo "Seeding .config (enable Device: linksys_wrt3200acm):"
 #printf 'CONFIG_TARGET_mvebu_cortexa9_DEVICE_linksys_wrt3200acm=y\n' >> .config
@@ -51,9 +56,10 @@ ccache --set-config=sloppiness=file_macro,locale,time_macros
 ### Modify  luci-theme-opentomato  as the default theme, you can modify according to your,
 ### favorite into the other (do not select the default theme theme will automatically,
 ### have the effect of those changes to)
+if [[ $EXTERNAL_CHANGE_DEFAULT_LUCI_THEME == "true" ]]; then
 echo "Changing default luci-theme-bootstap to luci-theme-opentomato"
 sed -i 's/luci-theme-bootstrap/luci-theme-opentomato/g' feeds/luci/collections/luci/Makefile
-
+fi
 ##########################################################################################
 ### Modify default IP
 # sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate

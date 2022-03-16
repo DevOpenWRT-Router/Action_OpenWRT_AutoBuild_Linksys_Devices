@@ -38,6 +38,12 @@ env:
   USE_FETCH_PACKAGES: true
   USE_KERNEL_VERSION: true
   USE_CACHE: true
+  ## ----------------------------------------- ##
+  EXTERNAL_BUILD_USER_DOMAIN_SETUP: true
+  EXTERNAL_PRE-KERNEL_CONFIGURATION: true
+  EXTERNAL_CCACHE_SETUP: true
+  EXTERNAL_CHANGE_DEFAULT_LUCI_THEME: true
+  ## ------------------------------------------##
   ### ---------------------------------------------------------------------- ###
   PERSONAL_PACKAGES: true
   UNSORTED_PACKAGES: true
