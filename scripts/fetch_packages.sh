@@ -230,6 +230,7 @@ rm -rf  package/sirpdboy/luci-theme-opentomcat
 rm -rf  package/sirpdboy/luci-theme-opentopd
 rm -rf  package/sirpdboy/netdata
 rm -rf  package/sirpdboy/speedtest-cli ## NEEDS FIXED
+rm -rf  package/sirpdboy/smartdns ## NEEDS FIXED
 
 echo "END of sirpdboy's packages"
 
