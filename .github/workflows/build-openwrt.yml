@@ -36,6 +36,7 @@ env:
   USE_PACKAGES_PATCHES: false
   USE_DEVOPENWRT: true
   USE_FETCH_PACKAGES: true
+  USE_KERNEL_VERSION: true
   USE_CACHE: true
   ### ---------------------------------------------------------------------- ###
   PERSONAL_PACKAGES: true
@@ -370,6 +371,24 @@ jobs:
           let make_process=$(nproc)+2
           make target/compile -j${make_process} V=s
 ### ------------------------------------------------------------------------------ ###
+      - name: Kernel Version (Part 1)
+        id: kernelversionA
+        if: env.USE_KERNEL_VERSION == 'true' && !cancelled()
+        run: |
+          cd openwrt
+          find build_dir/ -name .vermagic -exec cat {} \; >VERMAGIC  # Find hash
+          find build_dir/ -name "linux-5.*.*" -type d >KERNELVERSION # find kernel version
+          kv=$(tail -n +2 KERNELVERSION | sed 's/.*x-//')
+          vm=$(head -n 1 VERMAGIC)                                # read kernel hash from file                                     # Get last 7 chars from kernel version
+          rm -rf VERMAGIC KERNELVERSION                              # remove both files, Not needed anymore
+          cd bin/targets/*/* || exit
+          echo "TARGET_DIR=$PWD" >>$GITHUB_ENV
+          TARGET_DIR=$PWD
+          KERNEL_VER=$kv"-"$vm                      # add together to complete
+          KMOD_DIR=$kv"-"$vm                        # add together to complete
+          echo "KERNEL_VER=$kv"-"$vm" >>$GITHUB_ENV # store in get actions
+          echo "KMOD_DIR=$kv"-"$vm" >>$GITHUB_ENV   # store in get actions
+### ------------------------------------------------------------------------------ ###
       - name: Building packages
         id: makepackages
         if: env.BUILD_PACKAGES == 'true' && !cancelled()
@@ -398,12 +417,20 @@ jobs:
           -j${make_process} V=s 2>&1 | tee logs/build.log | grep -i -E
           "^make.*(error|[12345]...Entering directory)"
 ### ------------------------------------------------------------------------------ ###
-      - name: Kernel Version
-        id: kernelversion
-        if: env.KMODS == 'true' && !cancelled()
+      - name: Kernel Version (Part 2)
+        id: kernelversionB
+        if: env.USE_KERNEL_VERSION == 'true' && !cancelled()
         run: |
-          chmod +x scripts/$KERNEL_VERSION
-          /bin/bash ${GITHUB_WORKSPACE}/scripts/kernel_version.sh
+          cd ${GITHUB_WORKSPACE}/openwrt
+          mkdir -p bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR
+          rsync '--include=/kmod-*.ipk' '--exclude=*' -va bin/targets/mvebu/cortexa9/packages/ bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR/
+          make -j32 package/index V=s CONFIG_SIGNED_PACKAGES= PACKAGE_SUBDIRS=bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR/
+          cd bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR || exit
+          tar -cvzf kmods_$KMOD_DIR.tar.gz ./*
+          mv kmods_$KMOD_DIR.tar.gz ${GITHUB_WORKSPACE}/openwrt/bin/targets/mvebu/cortexa9/
+          cd ${GITHUB_WORKSPACE}/openwrt
+#         rm -rf bin/targets/mvebu/cortexa9/kmods
+#         cd ${GITHUB_WORKSPACE}/openwrt
 ### ------------------------------------------------------------------------------ ###
       - name: Indexing packages
         id: indexingpackages
