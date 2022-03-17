@@ -38,6 +38,7 @@ env:
   USE_FETCH_PACKAGES: true
   USE_KERNEL_VERSION: true
   USE_CACHE: true
+  SSH_TMATE: true
   ## ----------------------------------------- ##
   EXTERNAL_BUILD_USER_DOMAIN_SETUP: true
   EXTERNAL_PRE-KERNEL_CONFIGURATION: true
@@ -334,7 +335,15 @@ jobs:
           max-size: 5G
           extra-config: |
             keep_comments_cpp = true
-
+### ------------------------------------------------------------------------------ ###
+      - name: Start SSH via tmate
+        uses: P3TERX/ssh2actions@main
+        if: env.SSH_TMATE == 'true' && !cancelled()
+        # Send connection info to Telegram (optional)
+        # You can find related documents here: https://core.telegram.org/bots
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 ### ------------------------------------------------------------------------------ ###
       - name: Make Download
         id: makedownload
