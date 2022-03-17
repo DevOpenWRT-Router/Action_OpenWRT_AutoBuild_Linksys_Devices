@@ -38,8 +38,10 @@ env:
   USE_FETCH_PACKAGES: true
   USE_KERNEL_VERSION: true
   USE_CACHE: true
-  SSH_TMATE: false
+  ## -----[SSH LOGIN] ----- ##
+  SSH_TMATE: true
   SSH_NGROK: false
+  ## ---------------------- ##
   ## ----------------------------------------- ##
   EXTERNAL_BUILD_USER_DOMAIN_SETUP: true
   EXTERNAL_PRE-KERNEL_CONFIGURATION: true
