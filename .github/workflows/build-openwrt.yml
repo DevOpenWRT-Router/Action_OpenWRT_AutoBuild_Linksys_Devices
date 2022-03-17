@@ -38,7 +38,8 @@ env:
   USE_FETCH_PACKAGES: true
   USE_KERNEL_VERSION: true
   USE_CACHE: true
-  SSH_TMATE: true
+  SSH_TMATE: false
+  SSH_NGROK: false
   ## ----------------------------------------- ##
   EXTERNAL_BUILD_USER_DOMAIN_SETUP: true
   EXTERNAL_PRE-KERNEL_CONFIGURATION: true
@@ -344,6 +345,28 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+### ------------------------------------------------------------------------------ ###
+      - name: Start SSH via ngrok
+        uses: P3TERX/ssh2actions@main
+        if: env.SSH_NGROK == 'true' && !cancelled()
+        with:
+          mode: ngrok
+        env:
+          # After sign up on the https://ngrok.com
+          # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
+         NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+
+         # ngrok server region [us, eu, au, ap, sa, jp, in] (optional, default: us)
+         # You can find this server region here: https://ngrok.com/docs#global-locations
+         NGROK_REGION: us
+
+         # This password you will use when authorizing via SSH
+         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+
+         # Send connection info to Telegram (optional)
+         # You can find related documents here: https://core.telegram.org/bots
+         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 ### ------------------------------------------------------------------------------ ###
       - name: Make Download
         id: makedownload
