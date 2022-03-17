@@ -39,7 +39,7 @@ env:
   USE_KERNEL_VERSION: true
   USE_CACHE: true
   ## -----[SSH LOGIN] ----- ##
-  SSH_TMATE: true
+  SSH_TMATE: false
   SSH_NGROK: false
   ## ---------------------- ##
   ## ----------------------------------------- ##
