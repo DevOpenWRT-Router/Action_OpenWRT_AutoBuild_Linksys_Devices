@@ -1,7 +1,7 @@
 #!/bin/bash
 #################################################################
-# (C) 2021 By Eliminater74 For OpenWRT
-# Updated: 20210818
+# (C) 2022 By Eliminater74 For OpenWRT
+# Updated: 03/18/2022
 #
 #
 #################################################################
@@ -27,15 +27,18 @@ echo "------------------------------------------------"
 echo "Kernel: $KERNEL_VER" # testing
 echo "DIR: $KMOD_DIR"
 echo "------------------------------------------------"
-cd ${GITHUB_WORKSPACE}/openwrt || exit
-mkdir -p bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR
-rsync '--include=/kmod-*.ipk' '--exclude=*' -va bin/targets/mvebu/cortexa9/packages/ bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR/
-make -j32 package/index V=s CONFIG_SIGNED_PACKAGES= PACKAGE_SUBDIRS=bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR/
-cd bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR || exit
-tar -cvzf kmods_$KMOD_DIR.tar.gz ./*
-mv kmods_$KMOD_DIR.tar.gz ${GITHUB_WORKSPACE}/openwrt/bin/targets/mvebu/cortexa9/
-cd ${GITHUB_WORKSPACE}/openwrt || exit
-# rm -rf bin/targets/mvebu/cortexa9/kmods
-# cd ${GITHUB_WORKSPACE}/openwrt
+
+#          echo 'src/gz purefusion_kmods https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/kmods/$KMOD_DIR' >> openwrt/package/system/opkg/files/customfeeds.conf
+
+#cd ${GITHUB_WORKSPACE}/openwrt || exit
+#mkdir -p bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR
+#rsync '--include=/kmod-*.ipk' '--exclude=*' -va bin/targets/mvebu/cortexa9/packages/ bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR/
+#make -j32 package/index V=s CONFIG_SIGNED_PACKAGES= PACKAGE_SUBDIRS=bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR/
+#cd bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR || exit
+#tar -cvzf kmods_$KMOD_DIR.tar.gz ./*
+#mv kmods_$KMOD_DIR.tar.gz ${GITHUB_WORKSPACE}/openwrt/bin/targets/mvebu/cortexa9/
+#cd ${GITHUB_WORKSPACE}/openwrt || exit
+## rm -rf bin/targets/mvebu/cortexa9/kmods
+## cd ${GITHUB_WORKSPACE}/openwrt
 
 exit 0
