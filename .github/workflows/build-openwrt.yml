@@ -416,9 +416,7 @@ jobs:
         if: env.USE_KERNEL_VERSION == 'true' && !cancelled())
         run: |
           chmod +x scripts/$KERNEL_VERSION
-          /bin/bash ${GITHUB_WORKSPACE}/scripts/kernel_version.sh
-### ------------------------------------------------------------------------------ ###
-#          echo 'src/gz purefusion_kmods https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/kmods/$KMOD_DIR' >> openwrt/package/system/opkg/files/customfeeds.conf
+          /bin/bash ${GITHUB_WORKSPACE}/scripts/kernel_version.sh TEST
 ### ------------------------------------------------------------------------------ ###
       - name: Building packages
         id: makepackages

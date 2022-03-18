@@ -28,6 +28,11 @@ echo "Kernel: $KERNEL_VER" # testing
 echo "DIR: $KMOD_DIR"
 echo "------------------------------------------------"
 
+if [ "$1" == "TEST" ]; then
+  echo "THIS WORKED LIKE IT SHOULD"
+fi
+
+
 #          echo 'src/gz purefusion_kmods https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/kmods/$KMOD_DIR' >> openwrt/package/system/opkg/files/customfeeds.conf
 
 #cd ${GITHUB_WORKSPACE}/openwrt || exit
