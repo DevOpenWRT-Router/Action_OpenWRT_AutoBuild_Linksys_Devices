@@ -15,7 +15,7 @@ jobs:
     - name: Delete Older Releases
       uses: dev-drprasad/delete-older-releases@master
       with:
-        keep_latest: 10
+        keep_latest: 3
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -54,3 +54,34 @@ jobs:
           save_period: 30
           save_min_runs_number: 1
           dry: false
+
+  Delete-Older-Releases:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Delete Older Releases
+        uses: dev-drprasad/delete-older-releases@v0.1.0
+        with:
+          keep_latest: 3
+          delete_tags: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  Remove-Old-Artifacts:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Remove old artifacts
+        uses: c-hive/gha-remove-artifacts@v1
+        with:
+          age: '1 day'
+          skip-recent: 5
+
+  Delete-Workflow-Runs-More:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          token: ${{ secrets.AUTH_PAT }}
+          repository: ${{ github.repository }}
+          retain_days: 1
+          keep_minimum_runs: 3
