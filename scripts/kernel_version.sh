@@ -28,12 +28,7 @@ echo "------------------------------------------------"
 echo "Kernel: $KERNEL_VER" # testing
 echo "DIR: $KMOD_DIR"
 echo "------------------------------------------------"
-ls
 }
-
-if [ "$1" == "TEST" ]; then
-  echo "THIS WORKED LIKE IT SHOULD"
-fi
 
 package_archive() {
 cd ${GITHUB_WORKSPACE}/openwrt || exit
@@ -47,11 +42,6 @@ cd ${GITHUB_WORKSPACE}/openwrt
 }
 #         rm -rf bin/targets/mvebu/cortexa9/kmods
 #         cd ${GITHUB_WORKSPACE}/openwrt
-
-
-#          echo 'src/gz purefusion_kmods https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/kmods/$KMOD_DIR' >> openwrt/package/system/opkg/files/customfeeds.conf
-
-
 
 $1
 exit 0
