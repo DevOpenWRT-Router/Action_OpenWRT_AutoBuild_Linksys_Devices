@@ -38,3 +38,14 @@ jobs:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
           retain_days: 0
+
+  Clean-up-previous-workflow-runs:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Delete previous workflow runs
+        uses: egmacke/action-cleanup-workflow-runs@master
+        with:
+          token: ${{ github.token }}
+          workflow: ${{ github.workflow }}
+          retain: 2
+          branch: ${{ github.branch }}
