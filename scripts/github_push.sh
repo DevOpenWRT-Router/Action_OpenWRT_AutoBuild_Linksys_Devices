@@ -124,6 +124,9 @@ fi
 
 ### ------------------------------------------------------------ ###
 
+echo "[+] Copying kmod file into $SOURCE_DIRECTORY_A"
+cp "${GITHUB_WORKSPACE}/openwrt/kmod" "$SOURCE_DIRECTORY_A"
+
 echo "[+] Copying contents of source repository folder $SOURCE_DIRECTORY_A to folder $TARGET_DIRECTORY_A in git repo $DESTINATION_REPOSITORY_NAME"
 cp -ra "$SOURCE_DIRECTORY_A"/. "$CLONE_DIR/$TARGET_DIRECTORY_A"
 
