@@ -10,23 +10,12 @@
 #
 # Updated By Eliminater74
 ################################################################################
-PERSONAL_PACKAGES="true"
-UNSORTED_PACKAGES="true"
-LEAN_PACKAGES="true"
-SIRPDBOY_PACKAGES="true"
-HELMIAU_PACKAGES="true"
-
-
-if [[ $TEST_PACKAGES == "true" ]]; then
-  echo "THIS WORKED: $TEST_PACKAGES"
-fi
 
 ### -------------------------------------------------------------------------------------------------------------- ###
-if [[ $PERSONAL_PACKAGES == "true" ]]; then
-  echo "THIS WORKED: $PERSONAL_PACKAGES"
-
+PERSONAL_PACKAGES() {
 echo " Fetching All Personal Repo's"
 echo "Fetching From DevOpenWRT-Router:"
+
 ### luci-app-log
 git clone https://github.com/DevOpenWRT-Router/luci-app-log.git package/luci-app-log
 ### luci-app-tn-logview
@@ -74,15 +63,12 @@ git clone https://github.com/DevOpenWRT-Router/luci-default-settings.git package
 ### luci-app-tn-netports
 # git clone https://github.com/DevOpenWRT-Router/luci-app-tn-netports.git package/luci-app-tn-netports
 echo "END Fetching From DevOpenWRT-Router:"
-fi
+}
 
 
-if [[ $UNSORTED_PACKAGES == "true" ]]; then
-  echo "THIS WORKED: $UNSORTED_PACKAGES"
-### Uncomment a feed source
-# sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
-
+UNSORTED_PACKAGES() {
 echo "Fetching From unSorted Repo's:"
+
 ### luci-app-filebrowser
 git clone https://github.com/xiaozhuai/luci-app-filebrowser.git package/luci-app-filebrowser
 ### luci-app-eqos
@@ -122,16 +108,14 @@ git clone https://github.com/a920025608/usbnet.git package/usbnet
 
 echo "END Fetching From unSorted Repo's:"
 echo "End of Fetching All Personal Repos"
-fi
+}
 
 
 
 
 
 ### -------------------------------------------------------------------------------------------------------------- ###
-if [[ $LEAN_PACKAGES == "true" ]]; then
-  echo "THIS WORKED: $LEAN_PACKAGES"
-
+LEAN_PACKAGES() {
 echo "Downloading coolsnowwolf's lean packages"
 
 i=0
@@ -182,13 +166,12 @@ echo "Add coolsnowwolf's edition of mwlwifi"
 rm -rf ./package/kernel/mwlwifi # Delete openWRT's version replace with sync lede
 svn co https://github.com/coolsnowwolf/lede/trunk/package/kernel/mwlwifi package/kernel/mwlwifi
 echo "END coolsnowwolf's edition of mwlwifi"
-fi
+}
 
 ### -------------------------------------------------------------------------------------------------------------- ###
-if [[ $SIRPDBOY_PACKAGES == "true" ]]; then
-  echo "THIS WORKED: $SIRPDBOY_PACKAGES"
-
+SIRPDBOY_PACKAGES() {
 echo "Downloading sirpdboy's packages"
+
 i=0
 while read line
 do
@@ -277,13 +260,12 @@ rm -rf  package/sirpdboy/set # Not a package
 rm -rf  package/sirpdboy/socat
 
 echo "END of sirpdboy's Build packages"
-fi
+}
 
 ### -------------------------------------------------------------------------------------------------------------- ###
-if [[ $HELMIAU_PACKAGES == "true" ]]; then
-  echo "THIS WORKED: $HELMIAU_PACKAGES"
-
+HELMIAU_PACKAGES() {
 echo "Downloading helmiau's packages"
+
 i=0
 while read line
 do
@@ -307,8 +289,15 @@ rm -rf package/helmiau/corkscrew
 rm -rf package/helmiau/preview
 
 echo "END of helmiau's Build packages"
-fi
+}
 
+
+
+PERSONAL_PACKAGES;
+UNSORTED_PACKAGES;
+LEAN_PACKAGES;
+SIRPDBOY_PACKAGES;
+HELMIAU_PACKAGES;
 ### -------------------------------------------------------------------------------------------------------------- ###
 
 exit 0
