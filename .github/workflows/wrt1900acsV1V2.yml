@@ -16,7 +16,7 @@ on:
         # * is a special character in YAML so you have to quote this string
         # * “At 12:00.”
   - cron:  '00 12 * * *'
-  
+
 jobs:
   trigger-nightly-builds:
     if: github.event != 'workflow_dispatch'
@@ -26,7 +26,7 @@ jobs:
         uses: mvasigh/dispatch-action@main
         with:
           token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
-          repo: Action_OpenWRT_AutoBuild_Linksys_Devices-TEST
+          repo: Action_OpenWRT_AutoBuild_Linksys_Devices
           owner: DevOpenWRT-Router
           event_type: repository_dispatch
           message: |
