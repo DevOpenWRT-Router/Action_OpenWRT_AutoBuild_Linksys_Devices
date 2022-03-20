@@ -110,5 +110,5 @@ echo "Running: custom_configuration.sh"
 echo "Make Menuconfig"
 make menuconfig
 
-echo"Finished: EXIT"
+echo "Finished: EXIT"
 exit 0
