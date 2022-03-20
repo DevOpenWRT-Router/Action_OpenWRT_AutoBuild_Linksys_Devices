@@ -10,6 +10,11 @@
 #
 # Updated By Eliminater74
 ################################################################################
+PERSONAL_PACKAGES="true"
+UNSORTED_PACKAGES="true"
+LEAN_PACKAGES="true"
+SIRPDBOY_PACKAGES="true"
+HELMIAU_PACKAGES="true"
 
 
 if [[ $TEST_PACKAGES == "true" ]]; then
