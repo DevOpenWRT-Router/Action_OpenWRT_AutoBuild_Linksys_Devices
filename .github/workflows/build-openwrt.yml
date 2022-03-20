@@ -16,7 +16,7 @@
 name: OpenWRT AutoBuild (T) (Linksys Devices)
 'on':
   repository_dispatch:
-  workflow_dispatch:
+#  workflow_dispatch:
 
 env:
   HARDWARE_ID: ${{ github.event.client_payload.message.HARDWARE_ID }}
