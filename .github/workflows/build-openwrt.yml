@@ -295,12 +295,29 @@ jobs:
 
           unset MY_Filter
 ### ------------------------------------------------------------------------------ ###
-      - name: Load custom configuration
-        if: env.USE_CUSTOM_CONFIGURATION == 'true' && !cancelled()
+      - name: Change BUILD_USER_DOMAIN
         run: |
           chmod +x scripts/$CUSTC_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$CUSTC_SH
+          $GITHUB_WORKSPACE/scripts/$CUSTC_SH BUILD_USER_DOMAIN
+### ------------------------------------------------------------------------------ ###
+      - name: PRE_DEFCONFIG_ADDONS
+        run: |
+          chmod +x scripts/$CUSTC_SH
+          cd openwrt
+          $GITHUB_WORKSPACE/scripts/$CUSTC_SH PRE_DEFCONFIG_ADDONS
+### ------------------------------------------------------------------------------ ###
+      - name: CCACHE_SETUP
+        run: |
+          chmod +x scripts/$CUSTC_SH
+          cd openwrt
+          $GITHUB_WORKSPACE/scripts/$CUSTC_SH CCACHE_SETUP
+### ------------------------------------------------------------------------------ ###
+      - name: DEFAULT_THEME_CHANGE
+        run: |
+          chmod +x scripts/$CUSTC_SH
+          cd openwrt
+          $GITHUB_WORKSPACE/scripts/$CUSTC_SH DEFAULT_THEME_CHANGE
 ### ------------------------------------------------------------------------------ ###
       - name: Add ACL
         if: env.ACL_LUCI == 'true' && !cancelled()
