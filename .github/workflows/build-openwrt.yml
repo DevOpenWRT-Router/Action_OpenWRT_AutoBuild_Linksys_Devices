@@ -433,8 +433,8 @@ jobs:
         id: kernelversionA
         if: env.USE_KERNEL_VERSION == 'true' && !cancelled()
         run: |
-          chmod +x scripts/$KERNEL_VERSION
-          /bin/bash ${GITHUB_WORKSPACE}/scripts/kernel_version.sh kernel_version
+          chmod +x scripts/$FUNCTIONS_SH
+          /bin/bash ${GITHUB_WORKSPACE}/scripts/$FUNCTIONS_SH kernel_version
 ### ------------------------------------------------------------------------------ ###
       - name: Building packages
         id: makepackages
@@ -468,8 +468,8 @@ jobs:
         id: kernelversionB
         if: env.USE_KERNEL_VERSION == 'true' && !cancelled()
         run: |
-          chmod +x scripts/$KERNEL_VERSION
-          /bin/bash ${GITHUB_WORKSPACE}/scripts/kernel_version.sh package_archive
+          chmod +x scripts/$FUNCTIONS_SH
+          /bin/bash ${GITHUB_WORKSPACE}/scripts/$FUNCTIONS_SH package_archive
 ### ------------------------------------------------------------------------------ ###
       - name: Indexing packages
         id: indexingpackages
