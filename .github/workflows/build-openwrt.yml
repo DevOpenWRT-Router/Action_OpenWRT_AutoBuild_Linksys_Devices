@@ -295,25 +295,25 @@ jobs:
 
           unset MY_Filter
 ### ------------------------------------------------------------------------------ ###
-      - name: Change BUILD_USER_DOMAIN
+      - name: Change Build user/Domain
         run: |
           chmod +x scripts/$CUSTC_SH
           cd openwrt
           $GITHUB_WORKSPACE/scripts/$CUSTC_SH BUILD_USER_DOMAIN
 ### ------------------------------------------------------------------------------ ###
-      - name: PRE_DEFCONFIG_ADDONS
+      - name: Pre Defconfig Addons
         run: |
           chmod +x scripts/$CUSTC_SH
           cd openwrt
           $GITHUB_WORKSPACE/scripts/$CUSTC_SH PRE_DEFCONFIG_ADDONS
 ### ------------------------------------------------------------------------------ ###
-      - name: CCACHE_SETUP
+      - name: Set defconfig to use ccache
         run: |
           chmod +x scripts/$CUSTC_SH
           cd openwrt
           $GITHUB_WORKSPACE/scripts/$CUSTC_SH CCACHE_SETUP
 ### ------------------------------------------------------------------------------ ###
-      - name: DEFAULT_THEME_CHANGE
+      - name: Change Default theme Settings
         run: |
           chmod +x scripts/$CUSTC_SH
           cd openwrt
