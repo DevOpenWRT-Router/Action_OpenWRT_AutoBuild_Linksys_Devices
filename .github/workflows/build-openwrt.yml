@@ -22,7 +22,8 @@ env:
   HARDWARE_ID: ${{ github.event.client_payload.message.HARDWARE_ID }}
   HARDWARE_DEVICE: ${{ github.event.client_payload.message.HARDWARE_DEVICE }}
   FEEDS_CONF: feeds.conf.default
-  CUSTC_SH: custom_configuration.sh
+  FUNCTIONS_SH: functions.sh
+  CREATE_ACL_SH: create_acl_for_luci.sh
   BEFORE_BUILD: before_build.sh
   AFTER_BUILD: after_build.sh
   KERNEL_VERSION: kernel_version.sh
@@ -297,34 +298,34 @@ jobs:
 ### ------------------------------------------------------------------------------ ###
       - name: Change Build user/Domain
         run: |
-          chmod +x scripts/$CUSTC_SH
+          chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$CUSTC_SH BUILD_USER_DOMAIN
+          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH BUILD_USER_DOMAIN
 ### ------------------------------------------------------------------------------ ###
       - name: Pre Defconfig Addons
         run: |
-          chmod +x scripts/$CUSTC_SH
+          chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$CUSTC_SH PRE_DEFCONFIG_ADDONS
+          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH PRE_DEFCONFIG_ADDONS
 ### ------------------------------------------------------------------------------ ###
       - name: Set defconfig to use ccache
         run: |
-          chmod +x scripts/$CUSTC_SH
+          chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$CUSTC_SH CCACHE_SETUP
+          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH CCACHE_SETUP
 ### ------------------------------------------------------------------------------ ###
       - name: Change Default theme Settings
         run: |
-          chmod +x scripts/$CUSTC_SH
+          chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$CUSTC_SH DEFAULT_THEME_CHANGE
+          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH DEFAULT_THEME_CHANGE
 ### ------------------------------------------------------------------------------ ###
       - name: Add ACL
         if: env.ACL_LUCI == 'true' && !cancelled()
         run: |
-          chmod +x scripts/create_acl_for_luci.sh
+          chmod +x scripts/$CREATE_ACL_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/create_acl_for_luci.sh -a
+          $GITHUB_WORKSPACE/scripts/$CREATE_ACL_SH -a
 ### ------------------------------------------------------------------------------ ###
       - name: Populating .config
         id: config
