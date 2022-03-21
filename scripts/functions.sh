@@ -118,5 +118,5 @@ sed -i 's/luci-theme-bootstrap/luci-theme-opentomato/g' feeds/luci/collections/l
 
 
 $1;
-echo "End of custom_configuration.sh"
+echo "End of Functions.sh"
 exit 0
