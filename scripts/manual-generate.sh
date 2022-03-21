@@ -37,7 +37,7 @@ echo "Make sure you have:"
 echo "-------------------"
 echo "                   "
 echo "scripts (Directory)"
-echo "       custom_configuration.sh"
+echo "       functions.sh"
 echo "       luci_themes.sh"
 echo "       fetch_packages.sh"
 echo "configs (Directory)"
@@ -47,7 +47,7 @@ echo "       patches (Directory)"
 echo "                          "
 sleep 5
 ### ------------------------------------------------------------------------------- ###
-FILE=custom_configuration.sh
+FILE=functions.sh
 if [ ! -f "$FILE" ]; then
     echo "$FILE does not exist."
     exit
@@ -96,8 +96,11 @@ cp wrt3200acm.config .config
 echo "Applying Patches"
 git am patches/*.patch
 
-echo "Running: custom_configuration.sh"
-./custom_configuration.sh
+echo "Running: functions.sh"
+./functions.sh BUILD_USER_DOMAIN
+./functions.sh PRE_DEFCONFIG_ADDONS
+./functions.sh CCACHE_SETUP
+./functions.sh DEFAULT_THEME_CHANGE
 
 echo "Make Menuconfig"
 make menuconfig
