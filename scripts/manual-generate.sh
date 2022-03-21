@@ -38,7 +38,6 @@ echo "-------------------"
 echo "                   "
 echo "scripts (Directory)"
 echo "       functions.sh"
-echo "       luci_themes.sh"
 echo "       fetch_packages.sh"
 echo "configs (Directory)"
 echo "       feeds.conf.default"
@@ -48,11 +47,6 @@ echo "                          "
 sleep 5
 ### ------------------------------------------------------------------------------- ###
 FILE=functions.sh
-if [ ! -f "$FILE" ]; then
-    echo "$FILE does not exist."
-    exit
-fi
-FILE=luci_themes.sh
 if [ ! -f "$FILE" ]; then
     echo "$FILE does not exist."
     exit
@@ -78,9 +72,6 @@ if [ ! -d "$FILE" ]; then
     exit
 fi
 ### ------------------------------------------------------------------------------- ###
-
-echo "Cloning from: luci_themes.sh"
-./luci_themes.sh
 
 echo "Cloning from: fetch_packages.sh"
 ./fetch_packages.sh
