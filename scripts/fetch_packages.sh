@@ -12,8 +12,9 @@
 ################################################################################
 
 ### -------------------------------------------------------------------------------------------------------------- ###
-PERSONAL_PACKAGES() {
 echo " Fetching All Personal Repo's"
+
+PERSONAL_PACKAGES() {
 echo "Fetching From DevOpenWRT-Router:"
 
 ### luci-app-log
@@ -68,28 +69,7 @@ echo "END Fetching From DevOpenWRT-Router:"
 UNSORTED_PACKAGES() {
 echo "Fetching From unSorted Repo's:"
 
-### luci-app-filebrowser
-git clone https://github.com/xiaozhuai/luci-app-filebrowser.git package/luci-app-filebrowser
-### luci-app-eqos
-git clone https://github.com/MapesxGM/luci-app-eqos.git package/luci-app-eqos
-### luci-app-onliner
-git clone https://github.com/rufengsuixing/luci-app-onliner.git package/luci-app-onliner
-### luci-app-fileassistant
-git clone https://github.com/gztingting/luci-app-fileassistant.git package/luci-app-fileassistant
-### luci-app-shortcutmenu
-git clone https://github.com/doushang/luci-app-shortcutmenu.git package/luci-app-shortcutmenu
-### luci-app-rtorrent
-git clone https://github.com/wolandmaster/luci-app-rtorrent.git package/luci-app-rtorrent
-### luci-app-zospusher
-git clone https://github.com/zhengwenxiao/luci-app-zospusher.git package/luci-app-zospusher
-
 git clone https://github.com/sirpdboy/luci-app-netdata.git package/luci-app-netdata
-
-
-### luci-app-control-weburl
-git clone https://github.com/gdck/luci-app-control-weburl.git package/luci-app-control-weburl
-### luci-app-unlocker
-git clone https://gitlab.com/Nooblord/luci-app-unlocker.git package/luci-app-unlocker
 
 ### luci-app-diskman
 ## A Simple Disk Manager for LuCI, support disk partition and format, support raid / btrfs-raid / btrfs-snapshot
@@ -98,16 +78,10 @@ wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/applicatio
 mkdir -p package/parted
 wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Makefile -O package/parted/Makefile
 
-### luci-app-dnsfilter
-git clone https://github.com/garypang13/luci-app-dnsfilter.git package/luci-app-dnsfilter
-
-### luci-app-usbnet
-git clone https://github.com/a920025608/luci-app-usbnet.git package/luci-app-usbnet
-git clone https://github.com/a920025608/usbnet.git package/usbnet
-
 echo "END Fetching From unSorted Repo's:"
-echo "End of Fetching All Personal Repos"
 }
+
+echo "End of Fetching All Personal Repos"
 
 KENZOK8_PACKAGES() {
 echo "Downloading Kenzok8's small-packages"
