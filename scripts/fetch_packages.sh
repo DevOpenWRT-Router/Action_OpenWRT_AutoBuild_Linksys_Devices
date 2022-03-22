@@ -49,6 +49,7 @@ KENZOK8_PACKAGES() {
 echo "Downloading Kenzok8's small-packages"
 
 i=0
+len=0
 while read line
 do
     packages[ $i ]="$line"
@@ -76,6 +77,7 @@ LEAN_PACKAGES() {
 echo "Downloading coolsnowwolf's lean packages"
 
 i=0
+len=0
 while read line
 do
     packages[ $i ]="$line"
@@ -130,6 +132,7 @@ SIRPDBOY_PACKAGES() {
 echo "Downloading sirpdboy's packages"
 
 i=0
+len=0
 while read line
 do
     packages[ $i ]="$line"
@@ -180,6 +183,7 @@ echo "END of sirpdboy's packages"
 echo "From sirpdboy's BUILD packages"
 
 i=0
+len=0
 while read line
 do
     packages[ $i ]="$line"
@@ -224,6 +228,7 @@ HELMIAU_PACKAGES() {
 echo "Downloading helmiau's packages"
 
 i=0
+len=0
 while read line
 do
     packages[ $i ]="$line"
