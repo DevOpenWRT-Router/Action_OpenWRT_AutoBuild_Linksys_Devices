@@ -50,6 +50,7 @@ echo "Downloading Kenzok8's small-packages"
 
 i=0
 len=0
+unset packages
 while read line
 do
     packages[ $i ]="$line"
@@ -78,6 +79,7 @@ echo "Downloading coolsnowwolf's lean packages"
 
 i=0
 len=0
+unset packages
 while read line
 do
     packages[ $i ]="$line"
@@ -133,6 +135,7 @@ echo "Downloading sirpdboy's packages"
 
 i=0
 len=0
+unset packages
 while read line
 do
     packages[ $i ]="$line"
@@ -184,6 +187,7 @@ echo "From sirpdboy's BUILD packages"
 
 i=0
 len=0
+unset packages
 while read line
 do
     packages[ $i ]="$line"
@@ -229,6 +233,7 @@ echo "Downloading helmiau's packages"
 
 i=0
 len=0
+unset packages
 while read line
 do
     packages[ $i ]="$line"
