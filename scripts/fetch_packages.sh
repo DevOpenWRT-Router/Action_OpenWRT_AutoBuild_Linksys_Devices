@@ -249,6 +249,7 @@ echo "END of helmiau's Build packages"
 }
 
 LUCI_THEMES() {
+  echo "Fetching LUCI-Themes"
   ### THEMES ###
   ### new argon theme
   # git clone -b master https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
@@ -280,7 +281,7 @@ LUCI_THEMES() {
   # git clone https://github.com/fszok/luci-theme-mcat.git package/luci-theme-mcat
   ### luci-theme-fate
   # git clone https://github.com/fatelpc/luci-theme-fate.git package/luci-theme-fate
-  ### ----------------------------------------------------------------------- ###
+  echo "Done Fetching LUCI-Themes"
 }
 
 ### -------------------------------------------------------------------------------------------------------------- ###
