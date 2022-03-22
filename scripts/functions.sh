@@ -54,7 +54,7 @@ ccache --set-config=sloppiness=file_macro,locale,time_macros
 ### have the effect of those changes to)
 DEFAULT_THEME_CHANGE() {
 echo "Changing default luci-theme-bootstap to luci-theme-opentomato"
-sed -i 's/luci-theme-bootstrap/luci-theme-opentomato/g' feeds/luci/collections/luci/Makefile
+# sed -i 's/luci-theme-bootstrap/luci-theme-opentomato/g' feeds/luci/collections/luci/Makefile
 }
 ##########################################################################################
 ### Modify default IP
