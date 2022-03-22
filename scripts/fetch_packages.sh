@@ -59,6 +59,7 @@ done < <(svn list https://github.com/kenzok8/small-package/trunk)
 
 ## get length of $packages array
 len=${#packages[@]}
+echo "$len Packages"
 
 ## Use bash for loop
 for (( i=0; i<$len; i++ ))
@@ -88,6 +89,7 @@ done < <(svn list https://github.com/coolsnowwolf/lede/trunk/package/lean)
 
 ## get length of $packages array
 len=${#packages[@]}
+echo "$len Packages"
 
 ## Use bash for loop
 for (( i=0; i<$len; i++ ))
@@ -144,6 +146,7 @@ done < <(svn list https://github.com/sirpdboy/sirpdboy-package/trunk)
 
 ## get length of $packages array
 len=${#packages[@]}
+echo "$len Packages"
 
 ## Use bash for loop
 for (( i=0; i<$len; i++ ))
@@ -196,6 +199,7 @@ done < <(svn list https://github.com/sirpdboy/build/trunk)
 
 ## get length of $packages array
 len=${#packages[@]}
+echo "$len Packages"
 
 ## Use bash for loop
 for (( i=0; i<$len; i++ ))
@@ -242,6 +246,7 @@ done < <(svn list https://github.com/helmiau/helmiwrt-packages/trunk)
 
 ## get length of $packages array
 len=${#packages[@]}
+echo "$len Packages"
 
 ## Use bash for loop
 for (( i=0; i<$len; i++ ))
