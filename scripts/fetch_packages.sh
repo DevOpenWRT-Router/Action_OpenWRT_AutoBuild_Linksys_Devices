@@ -110,6 +110,32 @@ echo "END Fetching From unSorted Repo's:"
 echo "End of Fetching All Personal Repos"
 }
 
+KENZOK8_PACKAGES() {
+echo "Downloading Kenzok8's small-packages"
+
+i=0
+while read line
+do
+    packages[ $i ]="$line"
+    (( i++ ))
+done < <(svn list https://github.com/kenzok8/small-package/trunk)
+
+## get length of $packages array
+len=${#packages[@]}
+
+## Use bash for loop
+for (( i=0; i<$len; i++ ))
+do
+  echo "${packages[$i]}"
+  svn co https://github.com/kenzok8/small-package/trunk/${packages[$i]} package/kenzok8/${packages[$i]}
+done
+
+rm -rf package/kenzok8/.github
+rm -rf package/kenzok8/main.sh
+rm -rf package/kenzok8/LICENSE
+rm -rf package/kenzok8/README.md
+
+}
 ### -------------------------------------------------------------------------------------------------------------- ###
 LEAN_PACKAGES() {
 echo "Downloading coolsnowwolf's lean packages"
@@ -327,6 +353,7 @@ LUCI_THEMES() {
 LUCI_THEMES;
 PERSONAL_PACKAGES;
 UNSORTED_PACKAGES;
+KENZOK8_PACKAGES;
 LEAN_PACKAGES;
 SIRPDBOY_PACKAGES;
 HELMIAU_PACKAGES;
