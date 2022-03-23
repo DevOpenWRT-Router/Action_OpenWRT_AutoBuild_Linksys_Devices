@@ -48,6 +48,19 @@ echo "Fix Sloppiness of ccache:"
 ccache --set-config=sloppiness=file_macro,locale,time_macros
 }
 
+CACHE_DIRECTORY_SETUP() {
+  if [ ! -d '../staging_dir' ]; then
+			mkdir ../staging_dir
+		fi
+		ln -s ../staging_dir .
+
+		if [ ! -d '../build_dir/host' ]; then
+			mkdir ../build_dir/host	-p
+			mkdir ./build_dir
+		fi
+		ln -s ../../build_dir/host build_dir/host
+}
+
 ### Modify default theme
 ### Modify  luci-theme-opentomato  as the default theme, you can modify according to your,
 ### favorite into the other (do not select the default theme theme will automatically,
@@ -118,13 +131,13 @@ echo "Changing default luci-theme-bootstap to luci-theme-opentomato"
 ### ------------------------------------------------------------------------------------------------------- ###
 
 kernel_version() {
-cd openwrt || exit
+cd openwrt || return
 find build_dir/ -name .vermagic -exec cat {} \; >VERMAGIC  # Find hash
 find build_dir/ -name "linux-5.*.*" -type d >KERNELVERSION # find kernel version
 kv=$(tail -n +2 KERNELVERSION | sed 's/.*x-//')
 vm=$(head -n 1 VERMAGIC)                                # read kernel hash from file                                     # Get last 7 chars from kernel version
 rm -rf VERMAGIC KERNELVERSION                              # remove both files, Not needed anymore
-cd bin/targets/*/* || exit
+cd bin/targets/*/* || return
 echo "TARGET_DIR=$PWD" >>$GITHUB_ENV
 TARGET_DIR=$PWD
 KERNEL_VER=$kv"-"$vm                      # add together to complete
@@ -140,14 +153,14 @@ cat kmod
 }
 
 package_archive() {
-cd ${GITHUB_WORKSPACE}/openwrt || exit
+cd ${GITHUB_WORKSPACE}/openwrt || return
 mkdir -p bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR
 rsync '--include=/kmod-*.ipk' '--exclude=*' -va bin/targets/mvebu/cortexa9/packages/ bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR/
 make -j32 package/index V=s CONFIG_SIGNED_PACKAGES= PACKAGE_SUBDIRS=bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR/
 cd bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR || exit
 tar -cvzf kmods_$KMOD_DIR.tar.gz ./*
 mv kmods_$KMOD_DIR.tar.gz ${GITHUB_WORKSPACE}/openwrt/bin/targets/mvebu/cortexa9/
-cd ${GITHUB_WORKSPACE}/openwrt
+cd ${GITHUB_WORKSPACE}/openwrt || return
 }
 ### ------------------------------------------------------------------------------------------------------- ###
 
