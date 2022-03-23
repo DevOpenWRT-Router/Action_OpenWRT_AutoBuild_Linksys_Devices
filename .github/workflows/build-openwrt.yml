@@ -337,11 +337,15 @@ jobs:
       - name: Restore cache
         uses: actions/cache@v2
         if: env.USE_CACHE == 'true' && !cancelled()
+        env:
+          cache-name: cache-linksys
         with:
-          path: openwrt/.ccache
-          key: ${{runner.os}}-${{env.HARDWARE_DEVICE}}
+          path: |
+            staging_dir
+            build_dir/host
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{env.HARDWARE_DEVICE}}
           restore-keys: |
-            ${{runner.os}}-${{env.HARDWARE_DEVICE}}
+            ${{ runner.os }}-build-${{ env.cache-name }}-${{env.HARDWARE_DEVICE}}
       - name: Setup ccache
         uses: alexjurkiewicz/setup-ccache@master
         if: env.USE_CACHE == 'true' && !cancelled()
