@@ -31,7 +31,10 @@ echo "END Fetching From DevOpenWRT-Router:"
 UNSORTED_PACKAGES() {
 echo "Fetching From unSorted Repo's:"
 
+## Sirpdboy's luci-app-netdata
 git clone https://github.com/sirpdboy/luci-app-netdata.git package/luci-app-netdata
+## Sirpdboy's myautocore enhanced version preview information only for OPENWRT
+svn co https://github.com/sirpdboy/myautocore/trunk/myautocore package/sirpdboy/myautocore
 
 ### luci-app-diskman
 ## A Simple Disk Manager for LuCI, support disk partition and format, support raid / btrfs-raid / btrfs-snapshot
