@@ -334,13 +334,18 @@ jobs:
           cd openwrt
           mkdir -p logs
 ### ------------------------------------------------------------------------------ ###
-      - name: Cache
+      - name: Cache (Setup)
         uses: klever1988/cachewrtbuild@main
         with:
           ccache: 'true'
           toolchain: 'true'
           clean: ${{ contains(github.event.action, 'nocache') }}
           prefix: ${{ github.workspace }}/openwrt
+### ------------------------------------------------------------------------------ ###
+      - name: Cache (ccache list)
+        id: ccache
+        run: |
+          ccache -s
 ### ------------------------------------------------------------------------------ ###
       - name: Start SSH via tmate
         uses: P3TERX/ssh2actions@main
