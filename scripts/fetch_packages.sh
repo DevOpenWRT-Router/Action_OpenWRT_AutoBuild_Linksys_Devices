@@ -98,6 +98,7 @@ do
   svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/${packages[$i]} package/lean/${packages[$i]}
 done
 
+rm -rf package/lean/myautocore
 rm -rf package/lean/UnblockNeteaseMusic
 rm -rf package/lean/UnblockNeteaseMusicGo
 rm -rf package/lean/automount
@@ -208,7 +209,7 @@ do
   svn co https://github.com/sirpdboy/build/trunk/${packages[$i]} package/sirpdboy/${packages[$i]}
 done
 
-rm -rf  package/sirpdboy/autocore
+#rm -rf  package/sirpdboy/autocore
 rm -rf  package/sirpdboy/automount
 rm -rf  package/sirpdboy/autosamba-samba4
 rm -rf  package/sirpdboy/default-settings # using a dif
