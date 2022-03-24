@@ -334,26 +334,6 @@ jobs:
           cd openwrt
           mkdir -p logs
 ### ------------------------------------------------------------------------------ ###
-      - name: Restore cache
-        uses: actions/cache@v2
-        if: env.USE_CACHE == 'true' && !cancelled()
-        env:
-          cache-name: cache-linksys
-        with:
-          path: |
-            staging_dir
-            build_dir/host
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{env.HARDWARE_DEVICE}}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{env.HARDWARE_DEVICE}}
-      - name: Setup ccache
-        uses: alexjurkiewicz/setup-ccache@master
-        if: env.USE_CACHE == 'true' && !cancelled()
-        with:
-          max-size: 5G
-          extra-config: |
-            keep_comments_cpp = true
-### ------------------------------------------------------------------------------ ###
       - name: Cache
         uses: klever1988/cachewrtbuild@main
         with:
