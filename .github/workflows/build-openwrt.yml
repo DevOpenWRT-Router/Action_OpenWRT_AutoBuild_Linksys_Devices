@@ -338,6 +338,7 @@ jobs:
         uses: klever1988/cachewrtbuild@main
         with:
           ccache: 'true'
+          toolchain: 'true'
           clean: ${{ contains(github.event.action, 'nocache') }}
           prefix: ${{ github.workspace }}/openwrt
 ### ------------------------------------------------------------------------------ ###
