@@ -360,6 +360,13 @@ jobs:
           extra-config: |
             keep_comments_cpp = true
 ### ------------------------------------------------------------------------------ ###
+      - name: Cache
+        uses: klever1988/cachewrtbuild@main
+        with:
+          ccache: 'true'
+          clean: ${{ contains(github.event.action, 'nocache') }}
+          prefix: ${{ github.workspace }}/openwrt
+### ------------------------------------------------------------------------------ ###
       - name: Start SSH via tmate
         uses: P3TERX/ssh2actions@main
         if: env.SSH_TMATE == 'true' && !cancelled()
