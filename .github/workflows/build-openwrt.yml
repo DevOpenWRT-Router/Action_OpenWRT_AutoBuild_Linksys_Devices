@@ -313,12 +313,6 @@ jobs:
           cd openwrt
           $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH DEFAULT_THEME_CHANGE
 ### ------------------------------------------------------------------------------ ###
-      - name: Set Up Directorys That Will Be Cached
-        run: |
-          chmod +x scripts/$FUNCTIONS_SH
-          cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH CACHE_DIRECTORY_SETUP
-### ------------------------------------------------------------------------------ ###
       - name: Add ACL
         if: env.ACL_LUCI == 'true' && !cancelled()
         run: |
