@@ -26,12 +26,12 @@ COMMIT_MESSAGE="Updated: $D"
 TARGET_DIRECTORY_A="packages"
 TARGET_DIRECTORY_B="kmods/$KMOD_DIR"
 
-if [ -z "$DESTINATION_REPOSITORY_USERNAME" ]
+if [ "$DESTINATION_REPOSITORY_USERNAME" = "" ]
 then
   DESTINATION_REPOSITORY_USERNAME="$DESTINATION_GITHUB_USERNAME"
 fi
 
-if [ -z "$USER_NAME" ]
+if [ "$USER_NAME" = "" ]
 then
   USER_NAME="$DESTINATION_GITHUB_USERNAME"
 fi
@@ -125,7 +125,7 @@ fi
 ### ------------------------------------------------------------ ###
 
 echo "[+] Copying kmod file into $SOURCE_DIRECTORY_A"
-cp "${GITHUB_WORKSPACE}/openwrt/kmod" "$SOURCE_DIRECTORY_A"
+cp "$GITHUB_WORKSPACE/openwrt/kmod" "$SOURCE_DIRECTORY_A"
 
 echo "[+] Copying contents of source repository folder $SOURCE_DIRECTORY_A to folder $TARGET_DIRECTORY_A in git repo $DESTINATION_REPOSITORY_NAME"
 cp -ra "$SOURCE_DIRECTORY_A"/. "$CLONE_DIR/$TARGET_DIRECTORY_A"

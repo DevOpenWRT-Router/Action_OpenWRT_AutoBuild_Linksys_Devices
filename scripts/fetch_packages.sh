@@ -68,7 +68,7 @@ echo "$len Packages"
 for (( i=0; i<$len; i++ ))
 do
   echo "${packages[$i]}"
-  svn co https://github.com/kenzok8/small-package/trunk/${packages[$i]} package/kenzok8/${packages[$i]}
+  svn co https://github.com/kenzok8/small-package/trunk/"${packages[$i]}" package/kenzok8/"${packages[$i]}"
 done
 
 rm -rf package/kenzok8/default-settings # using a dif
@@ -99,7 +99,7 @@ echo "$len Packages"
 for (( i=0; i<$len; i++ ))
 do
   echo "${packages[$i]}"
-  svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/${packages[$i]} package/lean/${packages[$i]}
+  svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/"${packages[$i]}" package/lean/"${packages[$i]}"
 done
 
 rm -rf package/lean/myautocore
@@ -157,7 +157,7 @@ echo "$len Packages"
 for (( i=0; i<$len; i++ ))
 do
   echo "${packages[$i]}"
-  svn co https://github.com/sirpdboy/sirpdboy-package/trunk/${packages[$i]} package/sirpdboy/${packages[$i]}
+  svn co https://github.com/sirpdboy/sirpdboy-package/trunk/"${packages[$i]}" package/sirpdboy/"${packages[$i]}"
 done
 
 rm -rf package/sirpdboy/adguardhome
@@ -210,7 +210,7 @@ echo "$len Packages"
 for (( i=0; i<$len; i++ ))
 do
   echo "${packages[$i]}"
-  svn co https://github.com/sirpdboy/build/trunk/${packages[$i]} package/sirpdboy/${packages[$i]}
+  svn co https://github.com/sirpdboy/build/trunk/"${packages[$i]}" package/sirpdboy/"${packages[$i]}"
 done
 
 #rm -rf  package/sirpdboy/autocore
@@ -257,7 +257,7 @@ echo "$len Packages"
 for (( i=0; i<$len; i++ ))
 do
   echo "${packages[$i]}"
-  svn co https://github.com/helmiau/helmiwrt-packages/trunk/${packages[$i]} package/helmiau/${packages[$i]}
+  svn co https://github.com/helmiau/helmiwrt-packages/trunk/"${packages[$i]}" package/helmiau/"${packages[$i]}"
 done
 
 rm -rf package/helmiau/badvpn
