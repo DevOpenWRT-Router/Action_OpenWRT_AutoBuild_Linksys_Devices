@@ -345,6 +345,7 @@ jobs:
       - name: Cache (ccache list)
         id: ccache
         run: |
+          ccache -d ${{ github.workspace }}/openwrt/.ccache
           ccache -s
       ### ------------------------------------------------------------------------------ ###
       - name: Start SSH via tmate
