@@ -33,8 +33,6 @@ env:
   USE_CUST_THEMES: true
   USE_CUSTOM_CONFIGURATION: true
   USE_OPENWRT_PATCHES: true
-  USE_LUCI_PATCHES: false
-  USE_PACKAGES_PATCHES: false
   USE_DEVOPENWRT: true
   USE_FETCH_PACKAGES: true
   USE_KERNEL_VERSION: true
@@ -246,22 +244,6 @@ jobs:
         run: |
           mv configs/patches openwrt/patches
           cd openwrt
-          git am patches/*.patch
-          rm -rf patches
-      ### ------------------------------------------------------------------------------ ###
-      - name: Run Custom LUCI Patches
-        if: env.USE_LUCI_PATCHES == 'true' && !cancelled()
-        run: |
-          mv configs/patches/luci openwrt/feeds/luci/patches
-          cd openwrt/feeds/luci
-          git am patches/*.patch
-          rm -rf patches
-      ### ------------------------------------------------------------------------------ ###
-      - name: Run Custom Packages Patches
-        if: env.USE_PACKAGES_PATCHES == 'true' && !cancelled()
-        run: |
-          mv configs/patches/packages openwrt/feeds/packages/patches
-          cd openwrt/feeds/packages
           git am patches/*.patch
           rm -rf patches
       ### ------------------------------------------------------------------------------ ###
