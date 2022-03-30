@@ -72,6 +72,10 @@ do
 done
 
 rm -rf package/kenzok8/default-settings # using a dif
+rm -rf package/kenzok8/v2ray-core
+rm -rf package/kenzok8/v2ray-geodata
+rm -rf package/kenzok8/v2ray-plugin
+rm -rf package/kenzok8/v2raya
 rm -rf package/kenzok8/.github
 rm -rf package/kenzok8/main.sh
 rm -rf package/kenzok8/LICENSE
