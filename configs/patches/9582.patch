@@ -1,4 +1,4 @@
-From 20597f8da82680b0c0f95f34cef7f40706029ea8 Mon Sep 17 00:00:00 2001
+From 7c86085d8a8cb7672d002b33ed47b2adfee196bc Mon Sep 17 00:00:00 2001
 From: Ansuel Smith <ansuelsmth@gmail.com>
 Date: Wed, 30 Mar 2022 16:14:03 +0200
 Subject: [PATCH 1/7] generic: 5.15: fix aardvak pci pending patch
@@ -142,7 +142,7 @@ index dfcd84f47542..b681dc67551c 100644
   	chained_irq_exit(chip, desc);
   }
 
-From 75f678d68d349c19d36c34e7439f74c8d359941a Mon Sep 17 00:00:00 2001
+From 45f8ac80f20b06824b0da169a35299bc5dbdff07 Mon Sep 17 00:00:00 2001
 From: Rui Salvaterra <rsalvaterra@gmail.com>
 Date: Mon, 4 Apr 2022 15:47:03 +0100
 Subject: [PATCH 2/7] mvebu: copy 5.10 patches to 5.15
@@ -5593,7 +5593,7 @@ index 000000000000..150a65498cd3
 + 	reinit_completion(&mcu->reply->received);
 + 	mcu->reply->size = 0;
 
-From 33215c4974aee9522e3c546e8d05e8e53b7e352b Mon Sep 17 00:00:00 2001
+From eea9ef4fda8560985edc3b4de5b2b457f36949e3 Mon Sep 17 00:00:00 2001
 From: Rui Salvaterra <rsalvaterra@gmail.com>
 Date: Mon, 4 Apr 2022 15:49:30 +0100
 Subject: [PATCH 3/7] =?UTF-8?q?mvebu:=20remove=20all=20=E2=89=A4=205.15-ta?=
@@ -6362,7 +6362,7 @@ index 36d4942f8b65..000000000000
 - 
 - static const struct ethtool_ops mvneta_eth_tool_ops = {
 
-From 57393bf463c273c50d12f465b59affc52d8f9b62 Mon Sep 17 00:00:00 2001
+From e81e3eccc4d1458db8151703a2ca4230256fb861 Mon Sep 17 00:00:00 2001
 From: Rui Salvaterra <rsalvaterra@gmail.com>
 Date: Mon, 4 Apr 2022 16:03:48 +0100
 Subject: [PATCH 4/7] mvebu: refresh 5.15 patches
@@ -6829,7 +6829,7 @@ index 577a9b40def5..14b928d33299 100644
   F:	net/mac802154/
   
 
-From 35e1bc034204169e557fdb5909ed75e9cb59080c Mon Sep 17 00:00:00 2001
+From 4cee6e369c50b8d477dd6fe006088c714e1d58f0 Mon Sep 17 00:00:00 2001
 From: Rui Salvaterra <rsalvaterra@gmail.com>
 Date: Mon, 4 Apr 2022 15:54:26 +0100
 Subject: [PATCH 5/7] mvebu: copy 5.10 kconfigs to 5.15
@@ -7483,7 +7483,7 @@ index 000000000000..b737c44d4298
 +CONFIG_PHY_MVEBU_A38X_COMPHY=y
 +CONFIG_RTC_DRV_MV=y
 
-From e2db7694e741e107434c13877be9730deb96a7c6 Mon Sep 17 00:00:00 2001
+From cb2ac8b743dc269df0de965e9295b18e54528ef3 Mon Sep 17 00:00:00 2001
 From: Rui Salvaterra <rsalvaterra@gmail.com>
 Date: Mon, 4 Apr 2022 15:58:47 +0100
 Subject: [PATCH 6/7] mvebu: update the kconfigs for 5.15
@@ -7835,7 +7835,7 @@ index 8d1ec7a28342..250c8962a0c7 100644
  CONFIG_UNMAP_KERNEL_AT_EL0=y
  CONFIG_VMAP_STACK=y
 
-From 0a40133fbab82c0952ce42ddfe022eeb1aafc54e Mon Sep 17 00:00:00 2001
+From 07a71217aedb76d65e95c3c40afc2f2a53ae93ff Mon Sep 17 00:00:00 2001
 From: Rui Salvaterra <rsalvaterra@gmail.com>
 Date: Mon, 4 Apr 2022 16:06:16 +0100
 Subject: [PATCH 7/7] mvebu: add Linux 5.15 as testing kernel
