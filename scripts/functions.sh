@@ -130,6 +130,14 @@ echo "Changing default luci-theme-bootstap to luci-theme-opentomato"
 # ./scripts/feeds install -a -p node
 ### ------------------------------------------------------------------------------------------------------- ###
 
+GETDEVICE() {
+  grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+
+  [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
+
+  echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+}
+
 kernel_version() {
 cd openwrt || return
 find build_dir/ -name .vermagic -exec cat {} \; >VERMAGIC  # Find hash
