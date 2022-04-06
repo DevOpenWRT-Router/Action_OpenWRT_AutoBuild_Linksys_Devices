@@ -46,6 +46,7 @@ echo "Setting ccache directory:"
 export CCACHE_DIR=openwrt/.ccache
 echo "Fix Sloppiness of ccache:"
 ccache --set-config=sloppiness=file_macro,locale,time_macros
+ccache -sv
 }
 
 CACHE_DIRECTORY_SETUP() {
