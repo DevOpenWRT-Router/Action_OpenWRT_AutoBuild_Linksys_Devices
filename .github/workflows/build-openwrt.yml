@@ -512,7 +512,7 @@ jobs:
 ### --------------------------- ###
       - name: If Error
         uses: actions/upload-artifact@main
-        if: steps.compile.outcome == 'failure' |
+        if: steps.compile.outcome == 'failure'
             && env.UPLOAD_BUILD_LOGS == 'true'
         with:
           name: 'OpenWrt_logs${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
