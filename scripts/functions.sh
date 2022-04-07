@@ -135,7 +135,7 @@ GETDEVICE() {
 if [ $HARDWARE_DEVICE != "wrtmulti" ]; then
   grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
   [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
-else echo "wrtmulti" > DEVICE_NAME
+else echo "linksys_wrtmulti" > DEVICE_NAME
      [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
 fi
   echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
