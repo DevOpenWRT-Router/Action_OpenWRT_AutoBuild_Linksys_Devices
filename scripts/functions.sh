@@ -7,11 +7,53 @@
 #
 #
 # Updated By Eliminater74 03/20/2022
-################################################################################
-# RAN JUST BEFORE BUILD: #
+##########################################################################################
 ### ---------------------------------------------------------------------------------- ###
 ###         [MAKE SURE YOU KNOW WHAT YOUR DOING BEFORE CHANGING ALL THIS]              ###
 ### ---------------------------------------------------------------------------------- ###
+##########################################################################################
+
+### Modify default theme
+### Modify  luci-theme-opentomato  as the default theme, you can modify according to your,
+### favorite into the other (do not select the default theme theme will automatically,
+### have the effect of those changes to)
+DEFAULT_THEME_CHANGE() {
+echo "Changing default luci-theme-bootstap to luci-theme-opentomato"
+sed -i 's/luci-theme-bootstrap/luci-theme-opentomato/g' feeds/luci/collections/luci/Makefile
+}
+
+###  Modify the default login IP address OpenWrt
+MODIFY_DEFAULT_IP() {
+sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
+}
+
+### Modify default PassWord
+MODIFY_DEFAULT_PASSWORD() {
+sed -i 's/root::0:0:99999:7:::/root:$1$ScQIGKsX$q0qEf\/tAQ2wpTR6zIUIjo.:0:0:99999:7:::/g' package/base-files/files/etc/shadow
+}
+
+### Modify hostname
+MODIFY_DEFAULT_HOSTNAME() {
+sed -i 's/OpenWrt/Newifi-D2/g' package/base-files/files/bin/config_generate
+}
+
+###  version replace
+MODIFY_DEFAULT_VERSION() {
+sed -i 's/-SNAPSHOT/.5/g' include/version.mk
+}
+
+###  Modify the kernel version
+MODIFY_DEFAULT_KERNEL_VERSION() {
+sed -i 's/KERNEL_PATCHVER:=5.10/KERNEL_PATCHVER:=5.4/g' target/linux/mvebu/Makefile
+sed -i 's/KERNEL_TESTING_PATCHVER:=5.10/KERNEL_TESTING_PATCHVER:=5.4/g' target/linux/mvebu/Makefile
+}
+
+### Change the time zone
+CHANGE_TIMEZONE() {
+sed -i "s/'UTC'/'CST-8'\n        set system.@system[-1].zonename='America/New York'/g" package/base-files/files/bin/config_generate
+}
+
+### ------------------------------------------------------------------------------------------------------- ###
 
 BUILD_USER_DOMAIN() {
 ### Add kernel build user
@@ -62,74 +104,6 @@ CACHE_DIRECTORY_SETUP() {
 		ln -s ../../build_dir/host build_dir/host
 }
 
-### Modify default theme
-### Modify  luci-theme-opentomato  as the default theme, you can modify according to your,
-### favorite into the other (do not select the default theme theme will automatically,
-### have the effect of those changes to)
-DEFAULT_THEME_CHANGE() {
-echo "Changing default luci-theme-bootstap to luci-theme-opentomato"
-# sed -i 's/luci-theme-bootstrap/luci-theme-opentomato/g' feeds/luci/collections/luci/Makefile
-}
-##########################################################################################
-### Modify default IP
-# sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
-
-### Modify default IP
-# sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
-
-###  Modify the default login IP address OpenWrt
-# sed -i 's/192.168.1.1/192.168.50.4/g' package/base-files/files/bin/config_generate
-
-### Modify default IP
-# sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
-### Modify default IP Modify default IP
-# sed -i 's/192.168.1.1/192.168.50.1/g' package/base-files/files/bin/config_generate
-### Modify default PassWord
-# sed -i 's/root::0:0:99999:7:::/root:$1$ScQIGKsX$q0qEf\/tAQ2wpTR6zIUIjo.:0:0:99999:7:::/g' package/base-files/files/etc/shadow
-
-### Modify hostname
-# sed -i 's/OpenWrt/Newifi-D2/g' package/base-files/files/bin/config_generate
-
-###  Modify the host name, the OpenWrt-123 modifications you like on the line (not pure digital or use Chinese)
-# sed -i '/uci commit system/i\uci set system.@system[0].hostname='OpenWrt-123'' package/lean/default-settings/files/zzz-default-settings
-
-### Modify the version number
-# sed -i "s/OpenWrt /PureFusion build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" package/lean/default-settings/files/zzz-default-settings
-
-###  The version number is displayed in its own name (281.67716 million  Build  $ (TZ = UTC-8  DATE  "+% Y.% m.% D")  @  These are the increase of)
-# sed -i "s/OpenWrt /Compiled By Liukai On $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" package/lean/default-settings/files/zzz-default-settings
-
-###  version replace
-# sed -i 's/-SNAPSHOT/.5/g' include/version.mk
-
-### Set the  password to be empty (you do not need a password to log in when installing the firmware, and then modify the password you want)
-# sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz-default-settings
-
-### Replace https-dns-proxy.init file to resolve DNS forwarding after adding passwall compiled firmware with LEDE source 127.0.0.1 # 5053 and 12.0.0.1 # 5054 problem
-# curl -fsSL  https://raw.githubusercontent.com/Lienol/openwrt-packages/dev-19.07/net/https-dns-proxy/files/https-dns-proxy.init > feeds/packages/net/https-dns-proxy/files/https-dns-proxy.init
-
-###  Modify the kernel version
-# sed -i 's/KERNEL_PATCHVER:=5.10/KERNEL_PATCHVER:=5.4/g' target/linux/mvebu/Makefile
-# sed -i 's/KERNEL_TESTING_PATCHVER:=5.10/KERNEL_TESTING_PATCHVER:=5.4/g' target/linux/mvebu/Makefile
-
-### Delete the default password
-# sed -i "/CYXluq4wUazHjmCDBCqXF/d" package/lean/default-settings/files/zzz-default-settings
-
-### Change the time zone
-# sed -i "s/'UTC'/'CST-8'\n        set system.@system[-1].zonename='Asia\/Shanghai'/g" package/base-files/files/bin/config_generate
-
-# echo "192.168.1.1 wty.lan" >> package/base-files/files/etc/hosts
-# rm ./package/feeds/packages/node
-# rm ./package/feeds/packages/node-*
-# sudo rm -rf ./package/lean/luci-app-wrtbwmon
-# sudo rm -rf ./package/libs/libnetfilter-queue/*
-# wget -P ./package/libs/libnetfilter-queue/ https://raw.githubusercontent.com/openwrt/packages/master/libs/libnetfilter-queue/Makefile
-# pushd po2lmo
-# make && sudo make install
-# popd
-# ./scripts/feeds install libpcap
-# ./scripts/feeds install -a -p node
-### ------------------------------------------------------------------------------------------------------- ###
 
 GETDEVICE() {
 if [ $HARDWARE_DEVICE != "wrtmulti" ]; then
