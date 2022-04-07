@@ -85,7 +85,7 @@ CCACHE_SETUP() {
 echo "Seeding .config (enable ccache):"
 printf 'CONFIG_CCACHE=y\n' >> .config
 echo "Setting ccache directory:"
-export CCACHE_DIR=openwrt/.ccache
+export CCACHE_DIR="$GITHUB_WORKSPACE"/openwrt/.ccache
 echo "Fix Sloppiness of ccache:"
 ccache --set-config=sloppiness=file_macro,locale,time_macros
 ccache -sv
@@ -103,7 +103,6 @@ CACHE_DIRECTORY_SETUP() {
 		fi
 		ln -s ../../build_dir/host build_dir/host
 }
-
 
 GETDEVICE() {
 if [ $HARDWARE_DEVICE != "wrtmulti" ]; then
@@ -124,7 +123,7 @@ vm=$(head -n 1 VERMAGIC)                                # read kernel hash from 
 rm -rf VERMAGIC KERNELVERSION                              # remove both files, Not needed anymore
 cd bin/targets/*/* || return
 echo "TARGET_DIR=$PWD" >>"$GITHUB_ENV"
-TARGET_DIR=$PWD
+# TARGET_DIR=$PWD
 KERNEL_VER=$kv"-"$vm                      # add together to complete
 KMOD_DIR=$kv"-"$vm                        # add together to complete
 echo "KERNEL_VER=$kv"-"$vm" >>"$GITHUB_ENV" # store in get actions
