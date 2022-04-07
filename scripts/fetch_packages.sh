@@ -71,7 +71,7 @@ do
   svn co https://github.com/kenzok8/small-package/trunk/"${packages[$i]}" package/kenzok8/"${packages[$i]}"
 done
 
-rm -rf package/kenzok8/default-settings # using a dif
+rm -rf package/kenzok8/my-default-settings # using a dif
 rm -rf package/kenzok8/v2ray-core
 rm -rf package/kenzok8/v2ray-geodata
 rm -rf package/kenzok8/v2ray-plugin
