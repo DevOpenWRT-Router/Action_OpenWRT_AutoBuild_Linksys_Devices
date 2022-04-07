@@ -23,6 +23,8 @@ git clone https://github.com/DevOpenWRT-Router/luci-app-log.git package/luci-app
 git clone https://github.com/DevOpenWRT-Router/luci-app-mqos.git package/luci-app-mqos
 ### luci-default-settings
 git clone https://github.com/DevOpenWRT-Router/luci-default-settings.git package/luci-default-settings
+### my-default-settings (LUCI)
+git clone https://github.com/DevOpenWRT-Router/my-default-settings.git package/my-default-settings
 
 echo "END Fetching From DevOpenWRT-Router:"
 }
