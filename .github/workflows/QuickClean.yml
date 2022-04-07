@@ -2,7 +2,7 @@ name: Quick Clean
 
 on:
   workflow_dispatch:
-  #schedule:
+  # schedule:
   #  - cron: 1 8 * * 1
   # watch:
   #   types: started
@@ -12,21 +12,21 @@ jobs:
   Cleanup-Old-Releases:
     runs-on: ubuntu-20.04
     steps:
-    - name: Delete Older Releases
-      uses: dev-drprasad/delete-older-releases@master
-      with:
-        keep_latest: 1
+      - name: Delete Older Releases
+        uses: dev-drprasad/delete-older-releases@master
+        with:
+          keep_latest: 1
         delete_tags: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   Cleanup-Old-Artifacts:
     runs-on: ubuntu-20.04
     steps:
-    - name: Cleanup Old Action Artifacts
-      uses: kolpav/purge-artifacts-action@master
-      with:
-        token: ${{ github.token }}
+      - name: Cleanup Old Action Artifacts
+        uses: kolpav/purge-artifacts-action@master
+        with:
+          token: ${{ github.token }}
         expire-in: 0
 
   Cleanup-Workflow-Logs:

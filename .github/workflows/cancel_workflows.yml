@@ -2,7 +2,7 @@ name: Cancel Workflows
 
 on:
   workflow_dispatch:
-  #schedule:
+  # schedule:
   #  - cron: 1 8 * * 1
   # watch:
   #   types: started
