@@ -33,34 +33,20 @@
 #
 ### ============================================= ###
 
-PERSONAL_PACKAGES="true"
-UNSORTED_PACKAGES="true"
-LEAN_PACKAGES="true"
-SIRPDBOY_PACKAGES="true"
-HELMIAU_PACKAGES="true"
-TEST_PACKAGES="true"
-
-
 echo "Make sure you have:"
 echo "-------------------"
 echo "                   "
 echo "scripts (Directory)"
-echo "       custom_configuration.sh"
-echo "       luci_themes.sh"
+echo "       functions.sh"
 echo "       fetch_packages.sh"
 echo "configs (Directory)"
 echo "       feeds.conf.default"
-echo "       wrt3200acm.config"
+echo "       wrtmulti.config"
 echo "       patches (Directory)"
 echo "                          "
 sleep 5
 ### ------------------------------------------------------------------------------- ###
-FILE=custom_configuration.sh
-if [ ! -f "$FILE" ]; then
-    echo "$FILE does not exist."
-    exit
-fi
-FILE=luci_themes.sh
+FILE=functions.sh
 if [ ! -f "$FILE" ]; then
     echo "$FILE does not exist."
     exit
@@ -75,7 +61,7 @@ if [ ! -f "$FILE" ]; then
     echo "$FILE does not exist."
     exit
 fi
-FILE=wrt3200acm.config
+FILE=wrtmulti.config
 if [ ! -f "$FILE" ]; then
     echo "$FILE does not exist. Or Dif device Chosen, Change Name here:"
     exit
@@ -87,9 +73,6 @@ if [ ! -d "$FILE" ]; then
 fi
 ### ------------------------------------------------------------------------------- ###
 
-echo "Cloning from: luci_themes.sh"
-./luci_themes.sh
-
 echo "Cloning from: fetch_packages.sh"
 ./fetch_packages.sh
 
@@ -98,14 +81,17 @@ echo "Running: update -a, install -a, uninstall bluld"
 ./scripts/feeds install -a
 ./scripts/feeds uninstall bluld
 
-echo "copy wrt3200acm.config .config"
-cp wrt3200acm.config .config
+echo "copy wrtmulti.config .config"
+cp wrtmulti.config .config
 
 echo "Applying Patches"
 git am patches/*.patch
 
-echo "Running: custom_configuration.sh"
-./custom_configuration.sh
+echo "Running: functions.sh"
+./functions.sh BUILD_USER_DOMAIN
+./functions.sh PRE_DEFCONFIG_ADDONS
+./functions.sh CCACHE_SETUP
+./functions.sh DEFAULT_THEME_CHANGE
 
 echo "Make Menuconfig"
 make menuconfig

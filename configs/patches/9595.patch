@@ -1,0 +1,153 @@
+From 8186f4e5aa7b6e707787747a9026db3d96207b09 Mon Sep 17 00:00:00 2001
+From: Robert Marko <robert.marko@sartura.hr>
+Date: Wed, 30 Mar 2022 20:23:19 +0200
+Subject: [PATCH] mwlwifi: fix 5.15 kernel support
+
+Fix compilation and usage under kernel 5.15 for the mwlwifi driver.
+
+For detailed description of changes, check individual patches.
+
+Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+---
+ package/kernel/mwlwifi/Makefile               |  2 +-
+ ...lwifi-remove-MODULE_SUPPORTED_DEVICE.patch | 32 +++++++++++++++
+ ...003-mwlwifi-replace-get-set_fs-calls.patch | 39 +++++++++++++++++++
+ ...CIe-DT-node-null-pointer-dereference.patch | 31 +++++++++++++++
+ 4 files changed, 103 insertions(+), 1 deletion(-)
+ create mode 100644 package/kernel/mwlwifi/patches/002-mwlwifi-remove-MODULE_SUPPORTED_DEVICE.patch
+ create mode 100644 package/kernel/mwlwifi/patches/003-mwlwifi-replace-get-set_fs-calls.patch
+ create mode 100644 package/kernel/mwlwifi/patches/004-mwlwifi-fix-PCIe-DT-node-null-pointer-dereference.patch
+
+diff --git a/package/kernel/mwlwifi/Makefile b/package/kernel/mwlwifi/Makefile
+index eb986dca03c2..bd2c7cfc4ae3 100644
+--- a/package/kernel/mwlwifi/Makefile
++++ b/package/kernel/mwlwifi/Makefile
+@@ -8,7 +8,7 @@
+ include $(TOPDIR)/rules.mk
+ 
+ PKG_NAME:=mwlwifi
+-PKG_RELEASE=2
++PKG_RELEASE=3
+ 
+ PKG_LICENSE:=ISC
+ PKG_LICENSE_FILES:=
+diff --git a/package/kernel/mwlwifi/patches/002-mwlwifi-remove-MODULE_SUPPORTED_DEVICE.patch b/package/kernel/mwlwifi/patches/002-mwlwifi-remove-MODULE_SUPPORTED_DEVICE.patch
+new file mode 100644
+index 000000000000..23b4ef7541b1
+--- /dev/null
++++ b/package/kernel/mwlwifi/patches/002-mwlwifi-remove-MODULE_SUPPORTED_DEVICE.patch
+@@ -0,0 +1,32 @@
++From 392f8e9d798acff3079e753dd881e272f6150d74 Mon Sep 17 00:00:00 2001
++From: Robert Marko <robert.marko@sartura.hr>
++Date: Wed, 30 Mar 2022 19:32:38 +0200
++Subject: [PATCH] mwlwifi: remove MODULE_SUPPORTED_DEVICE
++
++Kernel 5.12 finally removed all MODULE_SUPPORTED_DEVICE references and
++support for it as it was never actually implemented and was safe to
++drop it completely.
++
++So, do the same in order to compile in 5.12 and newer.
++
++Signed-off-by: Robert Marko <robert.marko@sartura.hr>
++---
++ hif/pcie/pcie.c | 2 --
++ 1 file changed, 2 deletions(-)
++
++--- a/hif/pcie/pcie.c
+++++ b/hif/pcie/pcie.c
++@@ -31,7 +31,6 @@
++ #include "hif/pcie/rx_ndp.h"
++ 
++ #define PCIE_DRV_DESC "Marvell Mac80211 Wireless PCIE Network Driver"
++-#define PCIE_DEV_NAME "Marvell 802.11ac PCIE Adapter"
++ 
++ #define MAX_WAIT_FW_COMPLETE_ITERATIONS 10000
++ #define CHECK_BA_TRAFFIC_TIME           300 /* msec */
++@@ -1641,5 +1640,4 @@ MODULE_DESCRIPTION(PCIE_DRV_DESC);
++ MODULE_VERSION(PCIE_DRV_VERSION);
++ MODULE_AUTHOR("Marvell Semiconductor, Inc.");
++ MODULE_LICENSE("GPL v2");
++-MODULE_SUPPORTED_DEVICE(PCIE_DEV_NAME);
++ MODULE_DEVICE_TABLE(pci, pcie_id_tbl);
+diff --git a/package/kernel/mwlwifi/patches/003-mwlwifi-replace-get-set_fs-calls.patch b/package/kernel/mwlwifi/patches/003-mwlwifi-replace-get-set_fs-calls.patch
+new file mode 100644
+index 000000000000..725a41c9acc5
+--- /dev/null
++++ b/package/kernel/mwlwifi/patches/003-mwlwifi-replace-get-set_fs-calls.patch
+@@ -0,0 +1,39 @@
++From 16e51cb83f9fa1717383c9d67f5531df7348347c Mon Sep 17 00:00:00 2001
++From: Robert Marko <robert.marko@sartura.hr>
++Date: Wed, 30 Mar 2022 19:51:56 +0200
++Subject: [PATCH] mwlwifi: replace get/set_fs() calls
++
++Since kernel 5.9 the get/set_fs() call implementation have started to get
++dropped from individual architectures, ARM64 one got dropped in 5.11.
++
++Replace the get/set_fs() calls with force_uaccess_begin/end() to allow
++compiling on newer kernels.
++There is no need to add kernel version checks as the replacement functions
++are available since kernel 5.9.
++
++Signed-off-by: Robert Marko <robert.marko@sartura.hr>
++---
++ hif/pcie/pcie.c | 5 ++---
++ 1 file changed, 2 insertions(+), 3 deletions(-)
++
++--- a/hif/pcie/pcie.c
+++++ b/hif/pcie/pcie.c
++@@ -1293,8 +1293,7 @@ static void pcie_bf_mimo_ctrl_decode(str
++ 	char *buf = &str_buf[0];
++ 	mm_segment_t oldfs;
++ 
++-	oldfs = get_fs();
++-	set_fs(KERNEL_DS);
+++	oldfs = force_uaccess_begin();
++ 
++ 	buf += sprintf(buf, "\nMAC: %pM\n", bf_mimo_ctrl->rec_mac);
++ 	buf += sprintf(buf, "SU_0_MU_1: %d\n", bf_mimo_ctrl->type);
++@@ -1314,7 +1313,7 @@ static void pcie_bf_mimo_ctrl_decode(str
++ 			  filename, (unsigned int)fp_data);
++ 	}
++ 
++-	set_fs(oldfs);
+++	force_uaccess_end(oldfs);
++ }
++ 
++ static void pcie_process_account(struct ieee80211_hw *hw)
+diff --git a/package/kernel/mwlwifi/patches/004-mwlwifi-fix-PCIe-DT-node-null-pointer-dereference.patch b/package/kernel/mwlwifi/patches/004-mwlwifi-fix-PCIe-DT-node-null-pointer-dereference.patch
+new file mode 100644
+index 000000000000..9b9e49b66ab3
+--- /dev/null
++++ b/package/kernel/mwlwifi/patches/004-mwlwifi-fix-PCIe-DT-node-null-pointer-dereference.patch
+@@ -0,0 +1,31 @@
++From 8e809b241695252e397bf0d7fc5f36e115c38831 Mon Sep 17 00:00:00 2001
++From: Robert Marko <robert.marko@sartura.hr>
++Date: Fri, 5 Mar 2021 11:47:59 +0100
++Subject: [PATCH] mwlwifi: fix PCIe DT node null pointer dereference
++
++pci_bus_to_OF_node() used to get the PCI bus DT node
++returns node if found or NULL if none is found.
++
++Since the return of pci_bus_to_OF_node() is not checked in
++the DT node name print it will cause a null pointer
++dereference and crash the kernel.
++
++So first check whether the node is not NULL and then print.
++
++Signed-off-by: Robert Marko <robert.marko@sartura.hr>
++---
++ hif/pcie/pcie.c | 3 ++-
++ 1 file changed, 2 insertions(+), 1 deletion(-)
++
++--- a/hif/pcie/pcie.c
+++++ b/hif/pcie/pcie.c
++@@ -570,7 +570,8 @@ static struct device_node *pcie_get_devi
++ 	struct device_node *dev_node;
++ 
++ 	dev_node = pci_bus_to_OF_node(pcie_priv->pdev->bus);
++-	wiphy_info(priv->hw->wiphy, "device node: %s\n", dev_node->full_name);
+++	if (dev_node)
+++		wiphy_info(priv->hw->wiphy, "device node: %s\n", dev_node->full_name);
++ 
++ 	return dev_node;
++ }

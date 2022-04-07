@@ -12,22 +12,22 @@ jobs:
   Cleanup-Old-Releases:
     runs-on: ubuntu-20.04
     steps:
-    - name: Delete Older Releases
-      uses: dev-drprasad/delete-older-releases@master
-      with:
-        keep_latest: 3
-        delete_tags: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Delete Older Releases
+        uses: dev-drprasad/delete-older-releases@master
+        with:
+          keep_latest: 1
+          delete_tags: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   Cleanup-Old-Artifacts:
     runs-on: ubuntu-20.04
     steps:
-    - name: Cleanup Old Action Artifacts
-      uses: kolpav/purge-artifacts-action@master
-      with:
-        token: ${{ github.token }}
-        expire-in: 7d
+      - name: Cleanup Old Action Artifacts
+        uses: kolpav/purge-artifacts-action@master
+        with:
+          token: ${{ github.token }}
+          expire-in: 7d
 
   Cleanup-Workflow-Logs:
     runs-on: ubuntu-20.04
@@ -61,7 +61,7 @@ jobs:
       - name: Delete Older Releases
         uses: dev-drprasad/delete-older-releases@v0.1.0
         with:
-          keep_latest: 3
+          keep_latest: 1
           delete_tags: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
