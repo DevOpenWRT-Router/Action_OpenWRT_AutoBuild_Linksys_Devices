@@ -16,8 +16,8 @@ jobs:
         uses: dev-drprasad/delete-older-releases@master
         with:
           keep_latest: 1
-        delete_tags: true
-        env:
+          delete_tags: true
+          env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   Cleanup-Old-Artifacts:
@@ -27,7 +27,7 @@ jobs:
         uses: kolpav/purge-artifacts-action@master
         with:
           token: ${{ github.token }}
-        expire-in: 0
+          expire-in: 0
 
   Cleanup-Workflow-Logs:
     runs-on: ubuntu-20.04

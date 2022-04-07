@@ -16,9 +16,9 @@ jobs:
         uses: dev-drprasad/delete-older-releases@master
         with:
           keep_latest: 1
-        delete_tags: true
+          delete_tags: true
         env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   Cleanup-Old-Artifacts:
     runs-on: ubuntu-20.04
