@@ -62,6 +62,7 @@ env:
   RUN_BEFORE_BUILD: true
   RUN_AFTER_BUILD: false
   RUN_GITHUB_PUSH: true
+  DEFAULT_THEME_CHANGE: false
 ### --------------------------- ###
   UPLOAD_BUILD_LOGS: true
   UPLOAD_KMODS: true
@@ -291,6 +292,7 @@ jobs:
           $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH CCACHE_SETUP
 ### ----------------------------------------------------------------- ###
       - name: Change Default theme Settings
+        if: env.DEFAULT_THEME_CHANGE == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
