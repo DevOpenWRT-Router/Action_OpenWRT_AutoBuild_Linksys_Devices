@@ -41,7 +41,7 @@ echo "       functions.sh"
 echo "       fetch_packages.sh"
 echo "configs (Directory)"
 echo "       feeds.conf.default"
-echo "       wrt3200acm.config"
+echo "       wrtmulti.config"
 echo "       patches (Directory)"
 echo "                          "
 sleep 5
@@ -61,7 +61,7 @@ if [ ! -f "$FILE" ]; then
     echo "$FILE does not exist."
     exit
 fi
-FILE=wrt3200acm.config
+FILE=wrtmulti.config
 if [ ! -f "$FILE" ]; then
     echo "$FILE does not exist. Or Dif device Chosen, Change Name here:"
     exit
@@ -81,8 +81,8 @@ echo "Running: update -a, install -a, uninstall bluld"
 ./scripts/feeds install -a
 ./scripts/feeds uninstall bluld
 
-echo "copy wrt3200acm.config .config"
-cp wrt3200acm.config .config
+echo "copy wrtmulti.config .config"
+cp wrtmulti.config .config
 
 echo "Applying Patches"
 git am patches/*.patch
