@@ -12,7 +12,7 @@
 name: Build wrt1200ac
 on:
   workflow_dispatch:
-  schedule:
+#  schedule:
         # * is a special character in YAML so you have to quote this string
         # * “At 12:00.”
 #    - cron: '00 12 * * *'
