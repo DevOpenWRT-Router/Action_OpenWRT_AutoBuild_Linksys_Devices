@@ -28,6 +28,7 @@ env:
   KERNEL_VERSION: kernel_version.sh
   GITHUB_RUN: github_push.sh
   EXT_INIT_ENV: environment.sh
+  DEVICE_NAME: ''
 ### --------------------------- ###
   USE_FILES: true
   USE_CUST_THEMES: true
