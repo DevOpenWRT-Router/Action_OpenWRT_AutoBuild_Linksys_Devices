@@ -29,7 +29,7 @@ sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_genera
 
 ### Modify default PassWord
 MODIFY_DEFAULT_PASSWORD() {
-sed -i 's/root::0:0:99999:7:::/root:$1$ScQIGKsX$q0qEf\/tAQ2wpTR6zIUIjo.:0:0:99999:7:::/g' package/base-files/files/etc/shadow
+sed -i "s/root::0:0:99999:7:::/root:$1$ScQIGKsX$q0qEf\/tAQ2wpTR6zIUIjo.:0:0:99999:7:::/g" package/base-files/files/etc/shadow
 }
 
 ### Modify hostname
@@ -105,13 +105,13 @@ CACHE_DIRECTORY_SETUP() {
 }
 
 GETDEVICE() {
-if [ $HARDWARE_DEVICE != "wrtmulti" ]; then
+if [ "$HARDWARE_DEVICE" != "wrtmulti" ]; then
   grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
-  [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
+  [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> "$GITHUB_ENV"
 else echo "linksys_wrtmulti" > DEVICE_NAME
-     [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
+     [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> "$GITHUB_ENV"
 fi
-  echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+  echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> "$GITHUB_ENV"
 }
 
 kernel_version() {
