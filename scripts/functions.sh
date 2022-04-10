@@ -105,8 +105,8 @@ CACHE_DIRECTORY_SETUP() {
 }
 
 APPLY_PATCHES(){
-  mv configs/patches openwrt/patches
-  cd openwrt || exit
+  mv "$GITHUB_WORKSPACE"/configs/patches "$GITHUB_WORKSPACE"/openwrt/patches
+  cd "$GITHUB_WORKSPACE"/openwrt || exit
   git am patches/*.patch
   if [ $? = 0 ] ; then
     echo "[*] 'git am patches/*.patch' Ran successfully."
