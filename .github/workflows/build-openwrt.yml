@@ -243,12 +243,13 @@ jobs:
           configs/${HARDWARE_DEVICE}.config openwrt/.config
 ### ----------------------------------------------------------------- ###
       - name: Run Custom OpenWRT Patches
+        id: patches
+        continue-on-error: true
         if: env.USE_OPENWRT_PATCHES == 'true' && !cancelled()
         run: |
-          mv configs/patches openwrt/patches
+          chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
-          git am patches/*.patch
-          rm -rf patches
+          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH APPLY_PATCHES
 ### ----------------------------------------------------------------- ###
       - name: Current Commit After Feeds/Patches
         if: env.GITLOGB == 'true' && !cancelled()

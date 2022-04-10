@@ -104,6 +104,19 @@ CACHE_DIRECTORY_SETUP() {
 		ln -s ../../build_dir/host build_dir/host
 }
 
+APPLY_PATCHES(){
+  mv configs/patches openwrt/patches
+  cd openwrt || exit
+  git am patches/*.patch
+  if [ $? = 0 ] ; then
+    echo "[*] 'git am patches/*.patch' Ran successfully."
+  else
+    echo "[*] 'git am patches/*.patch' FAILED."
+  fi
+  rm -rf patches
+
+}
+
 GETDEVICE() {
 if [ "$HARDWARE_DEVICE" != "wrtmulti" ]; then
   grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
