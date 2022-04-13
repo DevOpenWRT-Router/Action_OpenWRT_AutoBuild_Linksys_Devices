@@ -15,7 +15,7 @@ jobs:
       - name: Delete Older Releases
         uses: dev-drprasad/delete-older-releases@master
         with:
-          keep_latest: 1
+          keep_latest: 3
           delete_tags: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -27,44 +27,7 @@ jobs:
         uses: kolpav/purge-artifacts-action@master
         with:
           token: ${{ github.token }}
-          expire-in: 7d
-
-  Cleanup-Workflow-Logs:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Cleanup Workflow Logs
-        uses: Mattraks/delete-workflow-runs@main
-        with:
-          token: ${{ github.token }}
-          repository: ${{ github.repository }}
-          retain_days: 5
-
-  Delete-Workflow-Runs:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Delete workflow runs
-        uses: dmvict/clean-workflow-runs@v1.0.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-#          repo: user/repo
-#          branch: master
-          run_conclusions: |
-                  failure
-                  timed_out
-          save_period: 30
-          save_min_runs_number: 1
-          dry: false
-
-  Delete-Older-Releases:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Delete Older Releases
-        uses: dev-drprasad/delete-older-releases@v0.1.0
-        with:
-          keep_latest: 1
-          delete_tags: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          expire-in: 5d
 
   Remove-Old-Artifacts:
     runs-on: ubuntu-20.04
@@ -76,13 +39,27 @@ jobs:
           age: '1 day'
           skip-recent: 5
 
-  Delete-Workflow-Runs-More:
+  Cleanup-Workflow-Logs:
     runs-on: ubuntu-20.04
     steps:
       - name: Delete workflow runs
-        uses: Mattraks/delete-workflow-runs@main
+        uses: Mattraks/delete-workflow-runs@v2
         with:
-          token: ${{ secrets.AUTH_PAT }}
+          token: ${{ github.token }}
           repository: ${{ github.repository }}
-          retain_days: 1
-          keep_minimum_runs: 3
+          retain_days: 3
+          keep_minimum_runs: 6
+
+  Delete-Workflow-Runs:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Delete workflow runs
+        uses: dmvict/clean-workflow-runs@v1.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          run_conclusions: |
+                  failure
+                  timed_out
+          save_period: 5
+          save_min_runs_number: 1
+          dry: false
