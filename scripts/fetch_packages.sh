@@ -29,6 +29,12 @@ git clone https://github.com/DevOpenWRT-Router/my-default-settings.git package/m
 echo "END Fetching From DevOpenWRT-Router:"
 }
 
+UNSORTED_GIT_PACKAGES(){
+  ### package/luci-app-cpu-status
+  git clone https://github.com/gSpotx2f/luci-app-cpu-status.git package/luci-app-cpu-status
+  rm -rf package/package/luci-app-cpu-status/po
+}
+
 
 UNSORTED_PACKAGES() {
 echo "Fetching From unSorted Repo's:"
@@ -44,6 +50,7 @@ mkdir -p package/luci-app-diskman
 wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/applications/luci-app-diskman/Makefile -O package/luci-app-diskman/Makefile
 mkdir -p package/parted
 wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Makefile -O package/parted/Makefile
+
 
 echo "END Fetching From unSorted Repo's:"
 }
@@ -314,6 +321,7 @@ LUCI_THEMES() {
 
 LUCI_THEMES;
 PERSONAL_PACKAGES;
+UNSORTED_GIT_PACKAGES;
 UNSORTED_PACKAGES;
 KENZOK8_PACKAGES;
 LEAN_PACKAGES;
