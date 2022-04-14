@@ -42,6 +42,9 @@ UNSORTED_GIT_PACKAGES(){
   ### luci-app-internet-detector
   git clone https://github.com/gSpotx2f/luci-app-internet-detector.git package/luci-app-internet-detector
   rm -rf package/luci-app-internet-detector/po
+  ### luci-app-log
+  git clone https://github.com/gSpotx2f/luci-app-log.git package/luci-app-log
+  rm -rf package/luci-app-log/po
 }
 
 
