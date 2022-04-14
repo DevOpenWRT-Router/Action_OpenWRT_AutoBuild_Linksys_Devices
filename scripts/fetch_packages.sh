@@ -36,6 +36,9 @@ UNSORTED_GIT_PACKAGES(){
   ### luci-app-cpu-perf
   git clone https://github.com/gSpotx2f/luci-app-cpu-perf.git package/luci-app-cpu-perf
   rm -rf package/luci-app-cpu-perf/po
+  ### luci-app-interfaces-statistics
+  git clone https://github.com/gSpotx2f/luci-app-interfaces-statistics.git package/luci-app-interfaces-statistics
+  rm -rf package/luci-app-interfaces-statistics/po
 }
 
 
