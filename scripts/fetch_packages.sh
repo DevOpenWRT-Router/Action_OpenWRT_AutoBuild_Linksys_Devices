@@ -39,6 +39,9 @@ UNSORTED_GIT_PACKAGES(){
   ### luci-app-interfaces-statistics
   git clone https://github.com/gSpotx2f/luci-app-interfaces-statistics.git package/luci-app-interfaces-statistics
   rm -rf package/luci-app-interfaces-statistics/po
+  ### luci-app-internet-detector
+  git clone https://github.com/gSpotx2f/luci-app-internet-detector.git package/luci-app-internet-detector
+  rm -rf package/luci-app-internet-detector/po
 }
 
 
