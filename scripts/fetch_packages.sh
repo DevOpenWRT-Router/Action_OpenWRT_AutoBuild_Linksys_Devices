@@ -30,26 +30,32 @@ echo "END Fetching From DevOpenWRT-Router:"
 UNSORTED_GIT_PACKAGES(){
   echo "Fetching UN-Sorted GIT Packages:"
   ### package/luci-app-cpu-status
-  git clone https://github.com/gSpotx2f/luci-app-cpu-status.git package/luci-app-cpu-status
-  rm -rf package/package/luci-app-cpu-status/po
+  git clone https://github.com/gSpotx2f/luci-app-cpu-status.git package/gSpotx2f/luci-app-cpu-status
+  rm -rf package/gSpotx2f/luci-app-cpu-status/po
+
   ### luci-app-cpu-perf
-  git clone https://github.com/gSpotx2f/luci-app-cpu-perf.git package/luci-app-cpu-perf
-  rm -rf package/luci-app-cpu-perf/po
+  git clone https://github.com/gSpotx2f/luci-app-cpu-perf.git package/gSpotx2f/luci-app-cpu-perf
+  rm -rf package/gSpotx2f/luci-app-cpu-perf/po
+
   ### luci-app-interfaces-statistics
-  git clone https://github.com/gSpotx2f/luci-app-interfaces-statistics.git package/luci-app-interfaces-statistics
-  rm -rf package/luci-app-interfaces-statistics/po
+  git clone https://github.com/gSpotx2f/luci-app-interfaces-statistics.git package/gSpotx2f/luci-app-interfaces-statistics
+  rm -rf package/gSpotx2f/luci-app-interfaces-statistics/po
+
   ### luci-app-internet-detector
-  git clone https://github.com/gSpotx2f/luci-app-internet-detector.git package/luci-app-internet-detector
-  rm -rf package/luci-app-internet-detector/po
+  git clone https://github.com/gSpotx2f/luci-app-internet-detector.git package/gSpotx2f/luci-app-internet-detector
+  rm -rf package/gSpotx2f/luci-app-internet-detector/po
+
   ### luci-app-log
-  git clone https://github.com/gSpotx2f/luci-app-log.git package/luci-app-log
-  rm -rf package/luci-app-log/po
+  git clone https://github.com/gSpotx2f/luci-app-log.git package/gSpotx2f/luci-app-log
+  rm -rf package/gSpotx2f/luci-app-log/po
+
   ### luci-app-temp-status
-  git clone https://github.com/gSpotx2f/luci-app-temp-status.git package/luci-app-temp-status
-  rm -rf package/luci-app-temp-status/po
+  git clone https://github.com/gSpotx2f/luci-app-temp-status.git package/gSpotx2f/luci-app-temp-status
+  rm -rf package/gSpotx2f/luci-app-temp-status/po
+  
   ### luci-app-disks-info
-  git clone https://github.com/gSpotx2f/luci-app-disks-info.git package/luci-app-disks-info
-  rm -rf package/luci-app-disks-info/po
+  git clone https://github.com/gSpotx2f/luci-app-disks-info.git package/gSpotx2f/luci-app-disks-info
+  rm -rf package/gSpotx2f/luci-app-disks-info/po
 }
 
 
