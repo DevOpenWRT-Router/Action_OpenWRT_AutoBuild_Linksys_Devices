@@ -28,6 +28,7 @@ echo "END Fetching From DevOpenWRT-Router:"
 }
 
 UNSORTED_GIT_PACKAGES(){
+  echo "Fetching UN-Sorted GIT Packages:"
   ### package/luci-app-cpu-status
   git clone https://github.com/gSpotx2f/luci-app-cpu-status.git package/luci-app-cpu-status
   rm -rf package/package/luci-app-cpu-status/po
