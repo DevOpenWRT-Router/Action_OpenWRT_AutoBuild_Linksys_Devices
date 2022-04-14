@@ -119,6 +119,35 @@ rm -rf package/kenzok8/README.md
 
 }
 ### -------------------------------------------------------------------------------------------------------------- ###
+SHIDAHUILANG_PACKAGES() {
+echo "Downloading shidahuilang's small-packages"
+
+i=0
+len=0
+unset packages
+while read -r line
+do
+    packages[ $i ]="$line"
+    (( i++ ))
+done < <(svn list https://github.com/shidahuilang/openwrt-package/trunk)
+
+## get length of $packages array
+len=${#packages[@]}
+echo "$len Packages"
+
+## Use bash for loop
+for (( i=0; i<len; i++ ))
+do
+  echo "${packages[$i]}"
+  svn co https://github.com/shidahuilang/openwrt-package/trunk/"${packages[$i]}" package/shidahuilang/"${packages[$i]}"
+done
+
+rm -rf package/shidahuilang/README.md
+rm -rf package/shidahuilang/update.txt
+rm -rf package/shidahuilang/LICENSE
+
+}
+### -------------------------------------------------------------------------------------------------------------- ###
 LEAN_PACKAGES() {
 echo "Downloading coolsnowwolf's lean packages"
 
@@ -351,6 +380,7 @@ PERSONAL_PACKAGES;
 UNSORTED_GIT_PACKAGES;
 UNSORTED_PACKAGES;
 KENZOK8_PACKAGES;
+# SHIDAHUILANG_PACKAGES; # Not Ready to try yet
 LEAN_PACKAGES;
 SIRPDBOY_PACKAGES;
 HELMIAU_PACKAGES;
