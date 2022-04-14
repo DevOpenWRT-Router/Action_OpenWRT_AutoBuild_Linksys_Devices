@@ -56,6 +56,10 @@ UNSORTED_GIT_PACKAGES(){
   ### luci-app-disks-info
   git clone https://github.com/gSpotx2f/luci-app-disks-info.git package/gSpotx2f/luci-app-disks-info
   rm -rf package/gSpotx2f/luci-app-disks-info/po
+
+  ### luci-app-access
+  git clone https://github.com/resmh/luci-app-access.git package/luci-app-access
+  rm -rf package/luci-app-access/po
 }
 
 
