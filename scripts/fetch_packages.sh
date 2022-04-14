@@ -17,8 +17,6 @@ echo " Fetching All Personal Repo's"
 PERSONAL_PACKAGES() {
 echo "Fetching From DevOpenWRT-Router:"
 
-### luci-app-log
-git clone https://github.com/DevOpenWRT-Router/luci-app-log.git package/luci-app-log
 ### luci-app-mqos
 git clone https://github.com/DevOpenWRT-Router/luci-app-mqos.git package/luci-app-mqos
 ### luci-default-settings
