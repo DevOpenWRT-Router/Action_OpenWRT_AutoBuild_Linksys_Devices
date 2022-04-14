@@ -33,6 +33,9 @@ UNSORTED_GIT_PACKAGES(){
   ### package/luci-app-cpu-status
   git clone https://github.com/gSpotx2f/luci-app-cpu-status.git package/luci-app-cpu-status
   rm -rf package/package/luci-app-cpu-status/po
+  ### luci-app-cpu-perf
+  git clone https://github.com/gSpotx2f/luci-app-cpu-perf.git package/luci-app-cpu-perf
+  rm -rf package/luci-app-cpu-perf/po
 }
 
 
