@@ -44,6 +44,9 @@ UNSORTED_GIT_PACKAGES(){
   ### luci-app-log
   git clone https://github.com/gSpotx2f/luci-app-log.git package/luci-app-log
   rm -rf package/luci-app-log/po
+  ### luci-app-temp-status
+  git clone https://github.com/gSpotx2f/luci-app-temp-status.git package/luci-app-temp-status
+  rm -rf package/luci-app-temp-status/po
 }
 
 
