@@ -64,6 +64,7 @@ env:
   RUN_AFTER_BUILD: false
   RUN_GITHUB_PUSH: true
   DEFAULT_THEME_CHANGE: false
+  CHANGE_DEFAULT_BANNER: false
 ### --------------------------- ###
   UPLOAD_BUILD_LOGS: true
   UPLOAD_KMODS: true
@@ -179,6 +180,13 @@ jobs:
         run: |
           chmod +x scripts/$BEFORE_BUILD
           /bin/bash ${GITHUB_WORKSPACE}/scripts/before_build.sh
+### ----------------------------------------------------------------- ###
+      - name: Change Default Banner
+        if: env.CHANGE_DEFAULT_BANNER == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          cd openwrt
+          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH CHANGE_DEFAULT_BANNER
 ### ----------------------------------------------------------------- ###
       - name: Current Commit Before Feeds/Patches
         if: env.GITLOGA == 'true' && !cancelled()

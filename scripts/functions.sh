@@ -104,7 +104,7 @@ CACHE_DIRECTORY_SETUP() {
 		ln -s ../../build_dir/host build_dir/host
 }
 
-APPLY_PATCHES(){
+APPLY_PATCHES() {
   mv "$GITHUB_WORKSPACE"/configs/patches "$GITHUB_WORKSPACE"/openwrt/patches
   cd "$GITHUB_WORKSPACE"/openwrt || exit
   git am patches/*.patch
@@ -115,6 +115,14 @@ APPLY_PATCHES(){
   fi
   rm -rf patches
 
+}
+
+CHANGE_DEFAULT_BANNER() {
+  if [ -f "$GITHUB_WORKSPACE/openwrt/package/base_files/files/etc/banner" ];
+  then 
+  rm -rf "$GITHUB_WORKSPACE"/openwrt/package/base_files/files/etc/banner
+  cp configs/DATA/banner "$GITHUB_WORKSPACE"/openwrt/package/base_files/files/etc/
+  fi
 }
 
 GETDEVICE() {
