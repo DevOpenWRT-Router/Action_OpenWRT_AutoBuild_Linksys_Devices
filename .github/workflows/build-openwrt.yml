@@ -30,7 +30,7 @@ env:
   EXT_INIT_ENV: environment.sh
   DEVICE_NAME: ''
 ### --------------------------- ###
-  BOOTSTRAP: true
+  BOOTSTRAP_START: true
   USE_FILES: true
   USE_CUST_THEMES: true
   USE_CUSTOM_CONFIGURATION: true
@@ -177,11 +177,11 @@ jobs:
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 ### ----------------------------------------------------------------- ###
       - name: Run BootStrap (Error Handler)
-        if: env.BOOTSTRAP == 'true' && !cancelled()
+        if: env.BOOTSTRAP_START == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH BOOTSTRAP
+          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH BOOTSTRAP_START
 ### ----------------------------------------------------------------- ###
       - name: Before Build
         if: env.RUN_BEFORE_BUILD == 'true' && !cancelled()

@@ -13,9 +13,8 @@
 ### ---------------------------------------------------------------------------------- ###
 ##########################################################################################
 ## BOOTSTRAP ##
-BOOTSTRAP() {
-source "$( cd "${BASH_SOURCE[0]%/*}" && pwd )"$GITHUB_WORKSPACE"/scripts/lib/oo-bootstrap.sh"
-## MAIN ##
+BOOTSTRAP_START() {
+source "$GITHUB_WORKSPACE/scripts/lib/oo-bootstrap.sh"
 import util/log util/exception util/tryCatch util/namedParameters util/class
 }
 
