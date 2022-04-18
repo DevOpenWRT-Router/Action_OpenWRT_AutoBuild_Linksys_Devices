@@ -13,9 +13,11 @@
 ### ---------------------------------------------------------------------------------- ###
 ##########################################################################################
 ## BOOTSTRAP ##
+BOOTSTRAP() {
 source "$( cd "${BASH_SOURCE[0]%/*}" && pwd )"$GITHUB_WORKSPACE"/scripts/lib/oo-bootstrap.sh"
 ## MAIN ##
 import util/log util/exception util/tryCatch util/namedParameters util/class
+}
 
 ### Modify default theme
 ### Modify  luci-theme-opentomato  as the default theme, you can modify according to your,
