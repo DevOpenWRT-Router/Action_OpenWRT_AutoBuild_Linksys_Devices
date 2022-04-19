@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck source=/dev/null
 #
 # Copyright (c) 2021 - 2022 By Eliminater74
 #
