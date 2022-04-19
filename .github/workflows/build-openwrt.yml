@@ -176,6 +176,18 @@ jobs:
 
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 ### ----------------------------------------------------------------- ###
+      - name: Check Main space usage
+        if: (!cancelled())
+        run: |
+          cd $GITHUB_WORKSPACE
+          echo "=============================================="
+          echo "Main Space usage:"
+          echo "=============================================="
+          df -hT
+          echo "=============================================="
+          du -h --max-depth=2 ./
+          echo "=============================================="
+### ----------------------------------------------------------------- ###
       - name: Run BootStrap (Error Handler)
         if: env.BOOTSTRAP_START == 'true' && !cancelled()
         run: |
