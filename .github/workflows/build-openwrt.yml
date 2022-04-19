@@ -192,8 +192,7 @@ jobs:
         if: env.BOOTSTRAP_START == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
-          cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH BOOTSTRAP_START
+          scripts/$FUNCTIONS_SH BOOTSTRAP_START
 ### ----------------------------------------------------------------- ###
       - name: Before Build
         if: env.RUN_BEFORE_BUILD == 'true' && !cancelled()

@@ -15,7 +15,7 @@
 ##########################################################################################
 ## BOOTSTRAP ##
 BOOTSTRAP_START() {
-source "$GITHUB_WORKSPACE"/scripts/lib/oo-bootstrap.sh
+source scripts/lib/oo-bootstrap.sh
 import util/log util/exception util/tryCatch util/namedParameters util/class
 }
 
