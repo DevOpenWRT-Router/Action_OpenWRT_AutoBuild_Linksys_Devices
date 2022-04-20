@@ -28,7 +28,9 @@ env:
   KERNEL_VERSION: kernel_version.sh
   GITHUB_RUN: github_push.sh
   EXT_INIT_ENV: environment.sh
+  DEVICE_NAME: ''
 ### --------------------------- ###
+  BOOTSTRAP_START: true
   USE_FILES: true
   USE_CUST_THEMES: true
   USE_CUSTOM_CONFIGURATION: true
@@ -63,6 +65,7 @@ env:
   RUN_AFTER_BUILD: false
   RUN_GITHUB_PUSH: true
   DEFAULT_THEME_CHANGE: false
+  CHANGE_DEFAULT_BANNER: false
 ### --------------------------- ###
   UPLOAD_BUILD_LOGS: true
   UPLOAD_KMODS: true
@@ -173,11 +176,36 @@ jobs:
 
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 ### ----------------------------------------------------------------- ###
+      - name: Check Main space usage
+        if: (!cancelled())
+        run: |
+          cd $GITHUB_WORKSPACE
+          echo "=============================================="
+          echo "Main Space usage:"
+          echo "=============================================="
+          df -hT
+          echo "=============================================="
+          du -h --max-depth=2 ./
+          echo "=============================================="
+### ----------------------------------------------------------------- ###
+      - name: Run BootStrap (Error Handler)
+        if: env.BOOTSTRAP_START == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          scripts/$FUNCTIONS_SH BOOTSTRAP_START
+### ----------------------------------------------------------------- ###
       - name: Before Build
         if: env.RUN_BEFORE_BUILD == 'true' && !cancelled()
         run: |
           chmod +x scripts/$BEFORE_BUILD
           /bin/bash ${GITHUB_WORKSPACE}/scripts/before_build.sh
+### ----------------------------------------------------------------- ###
+      - name: Change Default Banner
+        if: env.CHANGE_DEFAULT_BANNER == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          cd openwrt
+          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH CHANGE_DEFAULT_BANNER
 ### ----------------------------------------------------------------- ###
       - name: Current Commit Before Feeds/Patches
         if: env.GITLOGA == 'true' && !cancelled()
@@ -242,12 +270,13 @@ jobs:
           configs/${HARDWARE_DEVICE}.config openwrt/.config
 ### ----------------------------------------------------------------- ###
       - name: Run Custom OpenWRT Patches
+        id: patches
+        continue-on-error: true
         if: env.USE_OPENWRT_PATCHES == 'true' && !cancelled()
         run: |
-          mv configs/patches openwrt/patches
+          chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
-          git am patches/*.patch
-          rm -rf patches
+          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH APPLY_PATCHES
 ### ----------------------------------------------------------------- ###
       - name: Current Commit After Feeds/Patches
         if: env.GITLOGB == 'true' && !cancelled()

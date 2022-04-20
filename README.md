@@ -1,15 +1,21 @@
+# OpenWRT
+
 ![OpenWRT](images/2021/06/logo.png)
 
-# GitHub Action Script Custom Modded By Eliminater74
+## GitHub Action Script Custom Modded By Eliminater74
+
 ## Original from [P3TERX](https://github.com/P3TERX/Actions-OpenWrt)
-### Created to make building OpenWRT easier using github actions.
+
+### Created to make building OpenWRT easier using github actions
 
 ![LinksysWRT3200ACM](images/2021/06/linksys-wrt3200acm.jpg)
 
-## Notes:
+## Notes
+
 - Patches directory are taken from: [Divested-WRT: UNOFFICIAL OpenWrt builds](https://divested.dev/unofficial-openwrt-builds/mvebu-linksys/patches/)
 - mwlwifi is taken from: [Lean's Openwrt source code repository](https://github.com/coolsnowwolf/lede/tree/master/package/kernel/mwlwifi)
 - modifications to action script By Eliminater74
+
 _______________________________________________________________________
 [Join Us on Discord][0b9719c2]
 
@@ -33,6 +39,7 @@ _______________________________________________________________________
 4. [wrt1900acs V1 V2][2f3448bf]
 5. [wrt1900ac V1][6f3faf69]
 6. [wrt1900ac V2][e6d46545]
+
 _______________________________________________________________________
 
   [307783dd]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases?q=wrtMulti&expanded=true "wrt All-In-One"
@@ -49,12 +56,15 @@ _______________________________________________________________________
   [a6e54f9f]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases/latest "Latest Release"
   [48fb9c00]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases "Older Releases"
 
-### Latest Release Downloads:
+### Latest Release Downloads
+
 ![GitHub Downloads](https://img.shields.io/github/downloads/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/latest/total?style=for-the-badge)
 
-### Total Downloads:
+### Total Downloads
+
 ![GitHub Downloads](https://img.shields.io/github/downloads/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/total?style=for-the-badge)
-# Actions-OpenWrt
+
+## Actions-OpenWrt
 
 [![Visits Badge](https://badges.pufler.dev/visits/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices)](https://badges.pufler.dev)
 _______________________________________________________________________
@@ -65,12 +75,11 @@ _______________________________________________________________________
 [![Build OpenWrt (Linksys Devices)](https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/actions/workflows/build-openwrt.yml/badge.svg)](https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/actions/workflows/build-openwrt.yml)
 _______________________________________________________________________
 
+## Repo Updated
 
-### Repo Updated:
 [![Updated Badge](https://badges.pufler.dev/updated/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices)](https://badges.pufler.dev)
 
 ![Your Repository’s Stats](https://github-readme-stats.vercel.app/api?username=Eliminater74&show_icons=true)
-
 
 _______________________________________________________________________
 

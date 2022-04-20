@@ -29,11 +29,11 @@ function check_if_acl_exist(){
 }
 
 function check_config_files(){
-	[ "$(ls "$1"/root/etc/config/* 2>/dev/null | wc -l)" -ne "1" ] && return 0 || return 1
+	[ "$(find "$1"/root/etc/config/* 2>/dev/null | wc -l)" -ne "1" ] && return 0 || return 1
 }
 
 function get_config_name(){
-	ls "$1"/root/etc/config/* 2>/dev/null | awk -F '/' '{print $NF}'
+	find "$1"/root/etc/config/* 2>/dev/null | awk -F '/' '{print $NF}'
 }
 
 function create_acl_file(){

@@ -17,14 +17,49 @@ echo " Fetching All Personal Repo's"
 PERSONAL_PACKAGES() {
 echo "Fetching From DevOpenWRT-Router:"
 
-### luci-app-log
-git clone https://github.com/DevOpenWRT-Router/luci-app-log.git package/luci-app-log
 ### luci-app-mqos
 git clone https://github.com/DevOpenWRT-Router/luci-app-mqos.git package/luci-app-mqos
 ### luci-default-settings
 git clone https://github.com/DevOpenWRT-Router/luci-default-settings.git package/luci-default-settings
+### my-default-settings (LUCI)
+git clone https://github.com/DevOpenWRT-Router/my-default-settings.git package/my-default-settings
 
 echo "END Fetching From DevOpenWRT-Router:"
+}
+
+UNSORTED_GIT_PACKAGES(){
+  echo "Fetching UN-Sorted GIT Packages:"
+  ### package/luci-app-cpu-status
+  git clone https://github.com/gSpotx2f/luci-app-cpu-status.git package/gSpotx2f/luci-app-cpu-status
+  rm -rf package/gSpotx2f/luci-app-cpu-status/po
+
+  ### luci-app-cpu-perf
+  git clone https://github.com/gSpotx2f/luci-app-cpu-perf.git package/gSpotx2f/luci-app-cpu-perf
+  rm -rf package/gSpotx2f/luci-app-cpu-perf/po
+
+  ### luci-app-interfaces-statistics
+  git clone https://github.com/gSpotx2f/luci-app-interfaces-statistics.git package/gSpotx2f/luci-app-interfaces-statistics
+  rm -rf package/gSpotx2f/luci-app-interfaces-statistics/po
+
+  ### luci-app-internet-detector
+  git clone https://github.com/gSpotx2f/luci-app-internet-detector.git package/gSpotx2f/luci-app-internet-detector
+  rm -rf package/gSpotx2f/luci-app-internet-detector/po
+
+  ### luci-app-log
+  git clone https://github.com/gSpotx2f/luci-app-log.git package/gSpotx2f/luci-app-log
+  rm -rf package/gSpotx2f/luci-app-log/po
+
+  ### luci-app-temp-status
+  git clone https://github.com/gSpotx2f/luci-app-temp-status.git package/gSpotx2f/luci-app-temp-status
+  rm -rf package/gSpotx2f/luci-app-temp-status/po
+  
+  ### luci-app-disks-info
+  git clone https://github.com/gSpotx2f/luci-app-disks-info.git package/gSpotx2f/luci-app-disks-info
+  rm -rf package/gSpotx2f/luci-app-disks-info/po
+
+  ### luci-app-access
+  git clone https://github.com/resmh/luci-app-access.git package/luci-app-access
+  rm -rf package/luci-app-access/po
 }
 
 
@@ -43,6 +78,7 @@ wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/applicatio
 mkdir -p package/parted
 wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Makefile -O package/parted/Makefile
 
+
 echo "END Fetching From unSorted Repo's:"
 }
 
@@ -54,7 +90,7 @@ echo "Downloading Kenzok8's small-packages"
 i=0
 len=0
 unset packages
-while read line
+while read -r line
 do
     packages[ $i ]="$line"
     (( i++ ))
@@ -65,7 +101,7 @@ len=${#packages[@]}
 echo "$len Packages"
 
 ## Use bash for loop
-for (( i=0; i<$len; i++ ))
+for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
   svn co https://github.com/kenzok8/small-package/trunk/"${packages[$i]}" package/kenzok8/"${packages[$i]}"
@@ -83,13 +119,42 @@ rm -rf package/kenzok8/README.md
 
 }
 ### -------------------------------------------------------------------------------------------------------------- ###
+SHIDAHUILANG_PACKAGES() {
+echo "Downloading shidahuilang's small-packages"
+
+i=0
+len=0
+unset packages
+while read -r line
+do
+    packages[ $i ]="$line"
+    (( i++ ))
+done < <(svn list https://github.com/shidahuilang/openwrt-package/trunk)
+
+## get length of $packages array
+len=${#packages[@]}
+echo "$len Packages"
+
+## Use bash for loop
+for (( i=0; i<len; i++ ))
+do
+  echo "${packages[$i]}"
+  svn co https://github.com/shidahuilang/openwrt-package/trunk/"${packages[$i]}" package/shidahuilang/"${packages[$i]}"
+done
+
+rm -rf package/shidahuilang/README.md
+rm -rf package/shidahuilang/update.txt
+rm -rf package/shidahuilang/LICENSE
+
+}
+### -------------------------------------------------------------------------------------------------------------- ###
 LEAN_PACKAGES() {
 echo "Downloading coolsnowwolf's lean packages"
 
 i=0
 len=0
 unset packages
-while read line
+while read -r line
 do
     packages[ $i ]="$line"
     (( i++ ))
@@ -100,7 +165,7 @@ len=${#packages[@]}
 echo "$len Packages"
 
 ## Use bash for loop
-for (( i=0; i<$len; i++ ))
+for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
   svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/"${packages[$i]}" package/lean/"${packages[$i]}"
@@ -147,7 +212,7 @@ echo "Downloading sirpdboy's packages"
 i=0
 len=0
 unset packages
-while read line
+while read -r line
 do
     packages[ $i ]="$line"
     (( i++ ))
@@ -158,7 +223,7 @@ len=${#packages[@]}
 echo "$len Packages"
 
 ## Use bash for loop
-for (( i=0; i<$len; i++ ))
+for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
   svn co https://github.com/sirpdboy/sirpdboy-package/trunk/"${packages[$i]}" package/sirpdboy/"${packages[$i]}"
@@ -200,7 +265,7 @@ echo "From sirpdboy's BUILD packages"
 i=0
 len=0
 unset packages
-while read line
+while read  -r line
 do
     packages[ $i ]="$line"
     (( i++ ))
@@ -211,7 +276,7 @@ len=${#packages[@]}
 echo "$len Packages"
 
 ## Use bash for loop
-for (( i=0; i<$len; i++ ))
+for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
   svn co https://github.com/sirpdboy/build/trunk/"${packages[$i]}" package/sirpdboy/"${packages[$i]}"
@@ -247,7 +312,7 @@ echo "Downloading helmiau's packages"
 i=0
 len=0
 unset packages
-while read line
+while read -r line
 do
     packages[ $i ]="$line"
     (( i++ ))
@@ -258,7 +323,7 @@ len=${#packages[@]}
 echo "$len Packages"
 
 ## Use bash for loop
-for (( i=0; i<$len; i++ ))
+for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
   svn co https://github.com/helmiau/helmiwrt-packages/trunk/"${packages[$i]}" package/helmiau/"${packages[$i]}"
@@ -312,8 +377,10 @@ LUCI_THEMES() {
 
 LUCI_THEMES;
 PERSONAL_PACKAGES;
+UNSORTED_GIT_PACKAGES;
 UNSORTED_PACKAGES;
 KENZOK8_PACKAGES;
+# SHIDAHUILANG_PACKAGES; # Not Ready to try yet
 LEAN_PACKAGES;
 SIRPDBOY_PACKAGES;
 HELMIAU_PACKAGES;

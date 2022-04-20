@@ -15,4 +15,5 @@ jobs:
       - name: Cancel build runs
         uses: styfle/cancel-workflow-action@main
         with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
           workflow_id: ${{ github.event.workflow.id }}
