@@ -29,33 +29,7 @@ echo "END Fetching From DevOpenWRT-Router:"
 
 UNSORTED_GIT_PACKAGES(){
   echo "Fetching UN-Sorted GIT Packages:"
-  ### package/luci-app-cpu-status
-  git clone https://github.com/gSpotx2f/luci-app-cpu-status.git package/gSpotx2f/luci-app-cpu-status
-  rm -rf package/gSpotx2f/luci-app-cpu-status/po
-
-  ### luci-app-cpu-perf
-  git clone https://github.com/gSpotx2f/luci-app-cpu-perf.git package/gSpotx2f/luci-app-cpu-perf
-  rm -rf package/gSpotx2f/luci-app-cpu-perf/po
-
-  ### luci-app-interfaces-statistics
-  git clone https://github.com/gSpotx2f/luci-app-interfaces-statistics.git package/gSpotx2f/luci-app-interfaces-statistics
-  rm -rf package/gSpotx2f/luci-app-interfaces-statistics/po
-
-  ### luci-app-internet-detector
-  git clone https://github.com/gSpotx2f/luci-app-internet-detector.git package/gSpotx2f/luci-app-internet-detector
-  rm -rf package/gSpotx2f/luci-app-internet-detector/po
-
-  ### luci-app-log
-  git clone https://github.com/gSpotx2f/luci-app-log.git package/gSpotx2f/luci-app-log
-  rm -rf package/gSpotx2f/luci-app-log/po
-
-  ### luci-app-temp-status
-  git clone https://github.com/gSpotx2f/luci-app-temp-status.git package/gSpotx2f/luci-app-temp-status
-  rm -rf package/gSpotx2f/luci-app-temp-status/po
   
-  ### luci-app-disks-info
-  git clone https://github.com/gSpotx2f/luci-app-disks-info.git package/gSpotx2f/luci-app-disks-info
-  rm -rf package/gSpotx2f/luci-app-disks-info/po
 
   ### luci-app-access
   git clone https://github.com/resmh/luci-app-access.git package/luci-app-access
@@ -91,6 +65,38 @@ echo "END Fetching From unSorted Repo's:"
 }
 
 echo "End of Fetching All Personal Repos"
+
+GSPOTX2F_PACKAGES() {
+  ### package/luci-app-cpu-status
+  git clone https://github.com/gSpotx2f/luci-app-cpu-status.git package/gSpotx2f/luci-app-cpu-status
+  rm -rf package/gSpotx2f/luci-app-cpu-status/po
+
+  ### luci-app-cpu-perf
+  git clone https://github.com/gSpotx2f/luci-app-cpu-perf.git package/gSpotx2f/luci-app-cpu-perf
+  rm -rf package/gSpotx2f/luci-app-cpu-perf/po
+
+  ### luci-app-interfaces-statistics
+  git clone https://github.com/gSpotx2f/luci-app-interfaces-statistics.git package/gSpotx2f/luci-app-interfaces-statistics
+  rm -rf package/gSpotx2f/luci-app-interfaces-statistics/po
+
+  ### luci-app-internet-detector
+  git clone https://github.com/gSpotx2f/luci-app-internet-detector.git package/gSpotx2f/luci-app-internet-detector
+  rm -rf package/gSpotx2f/luci-app-internet-detector/po
+
+  ### luci-app-log
+  git clone https://github.com/gSpotx2f/luci-app-log.git package/gSpotx2f/luci-app-log
+  rm -rf package/gSpotx2f/luci-app-log/po
+
+  ### luci-app-temp-status
+  git clone https://github.com/gSpotx2f/luci-app-temp-status.git package/gSpotx2f/luci-app-temp-status
+  rm -rf package/gSpotx2f/luci-app-temp-status/po
+  
+  ### luci-app-disks-info
+  git clone https://github.com/gSpotx2f/luci-app-disks-info.git package/gSpotx2f/luci-app-disks-info
+  rm -rf package/gSpotx2f/luci-app-disks-info/po
+
+  echo "END Fetching From gSpotx2f's Repos:"
+}
 
 KENZOK8_PACKAGES() {
 echo "Downloading Kenzok8's small-packages"
@@ -389,6 +395,7 @@ LUCI_THEMES;
 PERSONAL_PACKAGES;
 UNSORTED_GIT_PACKAGES;
 UNSORTED_PACKAGES;
+GSPOTX2F_PACKAGES;
 KENZOK8_PACKAGES;
 # SHIDAHUILANG_PACKAGES; # Not Ready to try yet
 LEAN_PACKAGES;
