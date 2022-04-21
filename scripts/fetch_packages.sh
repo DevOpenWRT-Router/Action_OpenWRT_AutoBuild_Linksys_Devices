@@ -30,11 +30,9 @@ echo "END Fetching From DevOpenWRT-Router:"
 UNSORTED_GIT_PACKAGES(){
   echo "Fetching UN-Sorted GIT Packages:"
   
-
   ### luci-app-access
   git clone https://github.com/resmh/luci-app-access.git package/luci-app-access
   rm -rf package/luci-app-access/po
-
 
   ### autocore-arm-x86
   #git clone https://github.com/MatJeheyy/autocore-arm-x86.git package/MatJeheyy/autocore
@@ -45,18 +43,12 @@ UNSORTED_GIT_PACKAGES(){
 UNSORTED_PACKAGES() {
 echo "Fetching From unSorted Repo's:"
 
-## Sirpdboy's luci-app-netdata
-git clone https://github.com/sirpdboy/luci-app-netdata.git package/luci-app-netdata
-## Sirpdboy's myautocore enhanced version preview information only for OPENWRT
-svn co https://github.com/sirpdboy/myautocore/trunk/myautocore package/sirpdboy/myautocore
-
 ### luci-app-diskman
 ## A Simple Disk Manager for LuCI, support disk partition and format, support raid / btrfs-raid / btrfs-snapshot
 mkdir -p package/luci-app-diskman
 wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/applications/luci-app-diskman/Makefile -O package/luci-app-diskman/Makefile
 mkdir -p package/parted
 wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Makefile -O package/parted/Makefile
-
 
 echo "END Fetching From unSorted Repo's:"
 }
@@ -243,6 +235,11 @@ echo "END coolsnowwolf's edition of mwlwifi"
 ### -------------------------------------------------------------------------------------------------------------- ###
 SIRPDBOY_PACKAGES() {
 echo "Downloading sirpdboy's packages"
+
+## Sirpdboy's luci-app-netdata
+git clone https://github.com/sirpdboy/luci-app-netdata.git package/luci-app-netdata
+## Sirpdboy's myautocore enhanced version preview information only for OPENWRT
+svn co https://github.com/sirpdboy/myautocore/trunk/myautocore package/sirpdboy/myautocore
 
 i=0
 len=0
