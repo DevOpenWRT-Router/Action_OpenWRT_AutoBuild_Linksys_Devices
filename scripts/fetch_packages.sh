@@ -62,8 +62,12 @@ UNSORTED_GIT_PACKAGES(){
   rm -rf package/luci-app-access/po
 
   ### autocore-arm
-  git clone https://github.com/sbwml/autocore-arm.git package/autocore-arm
-  rm -rf package/autocore-arm/po
+  git clone https://github.com/sbwml/autocore-arm.git package/sbwml/autocore-arm
+  rm -rf package/sbwml/autocore-arm/po
+
+  ### autocore-arm-x86
+  #git clone https://github.com/MatJeheyy/autocore-arm-x86.git package/MatJeheyy/autocore
+  #rm -rf package//MatJeheyy/autocore/po
 }
 
 
