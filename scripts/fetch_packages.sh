@@ -60,6 +60,10 @@ UNSORTED_GIT_PACKAGES(){
   ### luci-app-access
   git clone https://github.com/resmh/luci-app-access.git package/luci-app-access
   rm -rf package/luci-app-access/po
+
+  ### autocore-arm
+  git clone https://github.com/sbwml/autocore-arm.git package/autocore-arm
+  rm -rf package/autocore-arm/po
 }
 
 
@@ -108,6 +112,7 @@ do
 done
 
 rm -rf package/kenzok8/my-default-settings # using a dif
+rm -rf package/kenzok8/my-autocore # Using the one above in unsorted
 rm -rf package/kenzok8/v2ray-core
 rm -rf package/kenzok8/v2ray-geodata
 rm -rf package/kenzok8/v2ray-plugin
@@ -171,7 +176,7 @@ do
   svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/"${packages[$i]}" package/lean/"${packages[$i]}"
 done
 
-rm -rf package/lean/myautocore
+rm -rf package/lean/autocore
 rm -rf package/lean/UnblockNeteaseMusic
 rm -rf package/lean/UnblockNeteaseMusicGo
 rm -rf package/lean/automount
@@ -297,6 +302,7 @@ rm -rf package/sirpdboy/mwan3
 rm -rf package/sirpdboy/samba36
 rm -rf package/sirpdboy/samba4
 rm -rf package/sirpdboy/my-autocore
+rm -rf package/sirpdboy/autocore
 rm -rf package/sirpdboy/mycore
 rm -rf package/sirpdboy/pass
 rm -rf package/sirpdboy/set # Not a package
