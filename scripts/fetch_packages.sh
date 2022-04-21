@@ -370,6 +370,35 @@ rm -rf package/helmiau/preview
 echo "END of helmiau's Build packages"
 }
 
+### -------------------------------------------------------------------------------------------------------------- ###
+NUEXINI_PACKAGES() {
+echo "Downloading NueXini's packages"
+
+i=0
+len=0
+unset packages
+while read -r line
+do
+    packages[ $i ]="$line"
+    (( i++ ))
+done < <(svn list https://github.com/NueXini/NueXini_Packages/trunk)
+
+## get length of $packages array
+len=${#packages[@]}
+echo "$len Packages"
+
+## Use bash for loop
+for (( i=0; i<len; i++ ))
+do
+  echo "${packages[$i]}"
+  svn co https://github.com/NueXini/NueXini_Packages/trunk/"${packages[$i]}" package/NueXini/"${packages[$i]}"
+done
+
+rm -rf package/NueXini/autocore
+
+echo "END of NueXini's Build packages"
+}
+
 LUCI_THEMES() {
   echo "Fetching LUCI-Themes"
   ### THEMES ###
@@ -419,6 +448,7 @@ KENZOK8_PACKAGES;
 LEAN_PACKAGES;
 SIRPDBOY_PACKAGES;
 HELMIAU_PACKAGES;
+NUEXINI_PACKAGES;
 ### -------------------------------------------------------------------------------------------------------------- ###
 
 exit 0
