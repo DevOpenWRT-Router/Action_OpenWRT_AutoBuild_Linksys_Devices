@@ -38,6 +38,12 @@ UNSORTED_GIT_PACKAGES(){
   git clone https://github.com/p1ay8y3ar/luci-app-webguide.git packages/p1ay8y3ar/luci-app-webguide
   rm -rf packages/p1ay8y3ar/luci-app-webguide/lights-app-webguide/po
 
+  ### openwrt-apps
+  git clone https://github.com/jjm2473/openwrt-apps.git packages/jjm2473/openwrt-apps
+  rm -rf packages/jjm2473/openwrt-apps/luci-app-ota/po
+  rm -rf packages/jjm2473/openwrt-apps/luci-app-homebox/po
+  rm -rf packages/jjm2473/openwrt-apps/luci-app-cpufreq # <-- We dont need this again
+
   ### autocore-arm-x86
   #git clone https://github.com/MatJeheyy/autocore-arm-x86.git package/MatJeheyy/autocore
   #rm -rf package//MatJeheyy/autocore/po
