@@ -158,290 +158,106 @@ while read -r line1 && read -r line2; do
 done < "$file"
 }
 
-### -------------------------------------------------------------------------------------------------------------- ###
-SHIDAHUILANG_PACKAGES() {
-echo "Downloading shidahuilang's small-packages"
 
-i=0
-len=0
-unset packages
-unset url
-unset placement
-url="https://github.com/shidahuilang/openwrt-package/trunk"
-placement="package/shidahuilang"
+DELETE_PACKAGES(){
+  echo "Deleting Un-Needed/Wanted Packages"
+  rm -rf package/kenzok8/my-default-settings # using a dif
+  rm -rf package/kenzok8/my-autocore # Using the one above in unsorted
+  rm -rf package/kenzok8/mosdns # Build Errors
+  rm -rf package/kenzok8/v2ray-core
+  rm -rf package/kenzok8/v2ray-geodata
+  rm -rf package/kenzok8/v2ray-plugin
+  rm -rf package/kenzok8/v2raya
+  rm -rf package/kenzok8/.github
+  rm -rf package/kenzok8/main.sh
+  rm -rf package/kenzok8/LICENSE
+  rm -rf package/kenzok8/README.md
 
-while read -r line
-do
-    packages[ $i ]="$line"
-    (( i++ ))
-done < <(svn list $url)
+  rm -rf package/shidahuilang/README.md
+  rm -rf package/shidahuilang/update.txt
+  rm -rf package/shidahuilang/LICENS
 
-## get length of $packages array
-len=${#packages[@]}
-echo "$len Packages"
+  rm -rf package/lean/autocore
+  rm -rf package/lean/UnblockNeteaseMusic
+  rm -rf package/lean/UnblockNeteaseMusicGo
+  rm -rf package/lean/automount
+  rm -rf package/lean/autosamba
+  rm -rf package/lean/csstidy
+  rm -rf package/lean/default-settings
+  rm -rf package/lean/frp
+  rm -rf package/lean/luci-app-dnsfilter
+  rm -rf package/lean/luci-app-frpc
+  rm -rf package/lean/luci-app-frps
+  rm -rf package/lean/luci-app-netdata
+  rm -rf package/lean/luci-app-nft-qos
+  rm -rf package/lean/luci-app-samba4
+  rm -rf package/lean/luci-app-ttyd
+  rm -rf package/lean/luci-app-unblockmusic
+  rm -rf package/lean/luci-lib-docker
+  rm -rf package/lean/luci-proto-bonding
+  rm -rf package/lean/luci-theme-argon
+  rm -rf package/lean/luci-theme-netgear
+  rm -rf package/lean/mt # Some Error Keeps happening #
 
-## Use bash for loop
-for (( i=0; i<len; i++ ))
-do
-  echo "${packages[$i]}"
-  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-done
+  rm -rf package/sirpdboy/adguardhome
+  rm -rf package/sirpdboy/doc
+  rm -rf package/sirpdboy/luci-app-access-control ## NEEDS FIXED
+  rm -rf package/sirpdboy/luci-app-baidupcs-web
+  rm -rf package/sirpdboy/luci-app-chinadns-ng
+  rm -rf package/sirpdboy/luci-app-cpulimit
+  rm -rf package/sirpdboy/luci-app-dockerman
+  rm -rf package/sirpdboy/luci-app-easymesh
+  rm -rf package/sirpdboy/luci-app-netdata
+  rm -rf package/sirpdboy/luci-app-netspeedtest
+  rm -rf package/sirpdboy/luci-app-onliner
+  rm -rf package/sirpdboy/luci-app-ramfree
+  rm -rf package/sirpdboy/luci-app-rebootschedule
+  rm -rf package/sirpdboy/luci-app-smartdns
+  rm -rf package/sirpdboy/luci-app-socat
+  rm -rf package/sirpdboy/luci-app-timecontrol
+  rm -rf package/sirpdboy/luci-app-wrtbwmon
+  rm -rf package/sirpdboy/luci-theme-argon_new
+  rm -rf package/sirpdboy/luci-theme-atmaterial
+  rm -rf package/sirpdboy/luci-theme-btmod
+  rm -rf package/sirpdboy/luci-theme-edge
+  rm -rf package/sirpdboy/luci-theme-ifit
+  rm -rf package/sirpdboy/luci-theme-opentomato
+  rm -rf package/sirpdboy/luci-theme-opentomcat
+  rm -rf package/sirpdboy/luci-theme-opentopd
+  rm -rf package/sirpdboy/netdata
+  rm -rf package/sirpdboy/speedtest-cli ## NEEDS FIXED
+  rm -rf package/sirpdboy/smartdns ## NEEDS FIXED
+  #rm -rf  package/sirpdboy/autocore
+  rm -rf package/sirpdboy/automount
+  rm -rf package/sirpdboy/autosamba-samba4
+  rm -rf package/sirpdboy/default-settings # using a dif
+  rm -rf package/sirpdboy/doc # not a package
+  rm -rf package/sirpdboy/gcc # not a package
+  rm -rf package/sirpdboy/ksmbd-tools
+  rm -rf package/sirpdboy/luci-app-ksmbd
+  rm -rf package/sirpdboy/luci-app-samba
+  rm -rf package/sirpdboy/luci-app-samba4
+  rm -rf package/sirpdboy/miniupnpd
+  rm -rf package/sirpdboy/mwan3
+  rm -rf package/sirpdboy/samba36
+  rm -rf package/sirpdboy/samba4
+  rm -rf package/sirpdboy/my-autocore
+  rm -rf package/sirpdboy/autocore
+  rm -rf package/sirpdboy/mycore
+  rm -rf package/sirpdboy/pass
+  rm -rf package/sirpdboy/set # Not a package
+  rm -rf package/sirpdboy/socat
 
-rm -rf package/shidahuilang/README.md
-rm -rf package/shidahuilang/update.txt
-rm -rf package/shidahuilang/LICENSE
+  rm -rf package/helmiau/badvpn
+  rm -rf package/helmiau/build-ipk
+  rm -rf package/helmiau/corkscrew
+  rm -rf package/helmiau/preview
+  
+  rm -rf package/NueXini/autocore
+  rm -rf package/NueXini/mosdns
 
 }
 ### -------------------------------------------------------------------------------------------------------------- ###
-LEAN_PACKAGES() {
-echo "Downloading coolsnowwolf's lean packages"
-
-i=0
-len=0
-unset packages
-unset url
-unset placement
-url="https://github.com/coolsnowwolf/lede/trunk/package/lean"
-placement="package/lean"
-
-while read -r line
-do
-    packages[ $i ]="$line"
-    (( i++ ))
-done < <(svn list $url)
-
-## get length of $packages array
-len=${#packages[@]}
-echo "$len Packages"
-
-## Use bash for loop
-for (( i=0; i<len; i++ ))
-do
-  echo "${packages[$i]}"
-  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-done
-
-rm -rf package/lean/autocore
-rm -rf package/lean/UnblockNeteaseMusic
-rm -rf package/lean/UnblockNeteaseMusicGo
-rm -rf package/lean/automount
-rm -rf package/lean/autosamba
-rm -rf package/lean/csstidy
-rm -rf package/lean/default-settings
-rm -rf package/lean/frp
-rm -rf package/lean/luci-app-dnsfilter
-rm -rf package/lean/luci-app-frpc
-rm -rf package/lean/luci-app-frps
-rm -rf package/lean/luci-app-netdata
-rm -rf package/lean/luci-app-nft-qos
-rm -rf package/lean/luci-app-samba4
-rm -rf package/lean/luci-app-ttyd
-rm -rf package/lean/luci-app-unblockmusic
-rm -rf package/lean/luci-lib-docker
-rm -rf package/lean/luci-proto-bonding
-rm -rf package/lean/luci-theme-argon
-rm -rf package/lean/luci-theme-netgear
-rm -rf package/lean/mt # Some Error Keeps happening #
-
-echo "END of coolsnowwolf's lean packages"
-### Needed for qBittorrent qt5
-echo "Add coolsnowwolf's libdouble-conversion"
-svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/libdouble-conversion package/libs/libdouble-conversion
-echo "END coolsnowwolf's libdouble-conversion"
-### Use lede's edition of mwlwifi
-echo "Add coolsnowwolf's edition of mwlwifi"
-rm -rf ./package/kernel/mwlwifi # Delete openWRT's version replace with sync lede
-svn co https://github.com/coolsnowwolf/lede/trunk/package/kernel/mwlwifi package/kernel/mwlwifi
-echo "END coolsnowwolf's edition of mwlwifi"
-}
-
-### -------------------------------------------------------------------------------------------------------------- ###
-SIRPDBOY_PACKAGES() {
-echo "Downloading sirpdboy's packages"
-
-## Sirpdboy's luci-app-netdata
-git clone https://github.com/sirpdboy/luci-app-netdata.git package/luci-app-netdata
-## Sirpdboy's myautocore enhanced version preview information only for OPENWRT
-svn co https://github.com/sirpdboy/myautocore/trunk/myautocore package/sirpdboy/myautocore
-
-i=0
-len=0
-unset packages
-unset url
-unset placement
-url="https://github.com/sirpdboy/sirpdboy-package/trunk"
-placement="package/sirpdboy"
-
-while read -r line
-do
-    packages[ $i ]="$line"
-    (( i++ ))
-done < <(svn list $url)
-
-## get length of $packages array
-len=${#packages[@]}
-echo "$len Packages"
-
-## Use bash for loop
-for (( i=0; i<len; i++ ))
-do
-  echo "${packages[$i]}"
-  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-done
-
-rm -rf package/sirpdboy/adguardhome
-rm -rf package/sirpdboy/doc
-rm -rf package/sirpdboy/luci-app-access-control ## NEEDS FIXED
-rm -rf package/sirpdboy/luci-app-baidupcs-web
-rm -rf package/sirpdboy/luci-app-chinadns-ng
-rm -rf package/sirpdboy/luci-app-cpulimit
-rm -rf package/sirpdboy/luci-app-dockerman
-rm -rf package/sirpdboy/luci-app-easymesh
-rm -rf package/sirpdboy/luci-app-netdata
-rm -rf package/sirpdboy/luci-app-netspeedtest
-rm -rf package/sirpdboy/luci-app-onliner
-rm -rf package/sirpdboy/luci-app-ramfree
-rm -rf package/sirpdboy/luci-app-rebootschedule
-rm -rf package/sirpdboy/luci-app-smartdns
-rm -rf package/sirpdboy/luci-app-socat
-rm -rf package/sirpdboy/luci-app-timecontrol
-rm -rf package/sirpdboy/luci-app-wrtbwmon
-rm -rf package/sirpdboy/luci-theme-argon_new
-rm -rf package/sirpdboy/luci-theme-atmaterial
-rm -rf package/sirpdboy/luci-theme-btmod
-rm -rf package/sirpdboy/luci-theme-edge
-rm -rf package/sirpdboy/luci-theme-ifit
-rm -rf package/sirpdboy/luci-theme-opentomato
-rm -rf package/sirpdboy/luci-theme-opentomcat
-rm -rf package/sirpdboy/luci-theme-opentopd
-rm -rf package/sirpdboy/netdata
-rm -rf package/sirpdboy/speedtest-cli ## NEEDS FIXED
-rm -rf package/sirpdboy/smartdns ## NEEDS FIXED
-
-echo "END of sirpdboy's packages"
-
-echo "From sirpdboy's BUILD packages"
-
-i=0
-len=0
-unset packages
-unset url
-unset placement
-url="https://github.com/sirpdboy/build/trunk"
-placement="package/sirpdboy"
-
-while read -r line
-do
-    packages[ $i ]="$line"
-    (( i++ ))
-done < <(svn list $url)
-
-## get length of $packages array
-len=${#packages[@]}
-echo "$len Packages"
-
-## Use bash for loop
-for (( i=0; i<len; i++ ))
-do
-  echo "${packages[$i]}"
-  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-done
-
-#rm -rf  package/sirpdboy/autocore
-rm -rf package/sirpdboy/automount
-rm -rf package/sirpdboy/autosamba-samba4
-rm -rf package/sirpdboy/default-settings # using a dif
-rm -rf package/sirpdboy/doc # not a package
-rm -rf package/sirpdboy/gcc # not a package
-rm -rf package/sirpdboy/ksmbd-tools
-rm -rf package/sirpdboy/luci-app-ksmbd
-rm -rf package/sirpdboy/luci-app-samba
-rm -rf package/sirpdboy/luci-app-samba4
-rm -rf package/sirpdboy/miniupnpd
-rm -rf package/sirpdboy/mwan3
-rm -rf package/sirpdboy/samba36
-rm -rf package/sirpdboy/samba4
-rm -rf package/sirpdboy/my-autocore
-rm -rf package/sirpdboy/autocore
-rm -rf package/sirpdboy/mycore
-rm -rf package/sirpdboy/pass
-rm -rf package/sirpdboy/set # Not a package
-rm -rf package/sirpdboy/socat
-
-echo "END of sirpdboy's Build packages"
-}
-
-### -------------------------------------------------------------------------------------------------------------- ###
-HELMIAU_PACKAGES() {
-echo "Downloading helmiau's packages"
-
-i=0
-len=0
-unset packages
-unset url
-unset placement
-url="https://github.com/helmiau/helmiwrt-packages/trunk"
-placement="package/helmiau"
-
-while read -r line
-do
-    packages[ $i ]="$line"
-    (( i++ ))
-done < <(svn list $url)
-
-## get length of $packages array
-len=${#packages[@]}
-echo "$len Packages"
-
-## Use bash for loop
-for (( i=0; i<len; i++ ))
-do
-  echo "${packages[$i]}"
-  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-done
-
-rm -rf package/helmiau/badvpn
-rm -rf package/helmiau/build-ipk
-rm -rf package/helmiau/corkscrew
-rm -rf package/helmiau/preview
-
-echo "END of helmiau's Build packages"
-}
-
-### -------------------------------------------------------------------------------------------------------------- ###
-NUEXINI_PACKAGES() {
-echo "Downloading NueXini's packages"
-
-i=0
-len=0
-unset packages
-unset url
-unset placement
-url="https://github.com/NueXini/NueXini_Packages/trunk"
-placement="package/NueXini"
-
-while read -r line
-do
-    packages[ $i ]="$line"
-    (( i++ ))
-done < <(svn list $url)
-
-## get length of $packages array
-len=${#packages[@]}
-echo "$len Packages"
-
-## Use bash for loop
-for (( i=0; i<len; i++ ))
-do
-  echo "${packages[$i]}"
-  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-done
-
-rm -rf package/NueXini/autocore
-rm -rf package/NueXini/mosdns
-
-echo "END of NueXini's Build packages"
-}
 
 LUCI_THEMES() {
   echo "Fetching LUCI-Themes"
@@ -481,6 +297,7 @@ LUCI_THEMES() {
 
 ### -------------------------------------------------------------------------------------------------------------- ###
 DOWNLOAD_PACKAGES;
+DELETE_PACKAGES;
 ### -------------------------------------------------------------------------------------------------------------- ###
 
 exit 0
