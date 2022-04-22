@@ -34,6 +34,10 @@ UNSORTED_GIT_PACKAGES(){
   git clone https://github.com/resmh/luci-app-access.git package/luci-app-access
   rm -rf package/luci-app-access/po
 
+  ### luci-app-webguide
+  git clone https://github.com/p1ay8y3ar/luci-app-webguide.git packages/p1ay8y3ar/luci-app-webguide
+  rm -rf packages/p1ay8y3ar/luci-app-webguide/lights-app-webguide/po
+
   ### autocore-arm-x86
   #git clone https://github.com/MatJeheyy/autocore-arm-x86.git package/MatJeheyy/autocore
   #rm -rf package//MatJeheyy/autocore/po
