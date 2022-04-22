@@ -120,47 +120,44 @@ GSPOTX2F_PACKAGES() {
   echo "END Fetching From gSpotx2f's Repos:"
 }
 
-KENZOK8_PACKAGES() {
-echo "Downloading Kenzok8's small-packages"
 
-i=0
-len=0
-unset packages
-unset url
-unset placement
-url="https://github.com/kenzok8/small-package/trunk"
-placement="package/kenzok8"
 
-while read -r line
-do
-    packages[ $i ]="$line"
-    (( i++ ))
-done < <(svn list $url)
+DOWNLOAD_PACKAGES() {
+echo "Downloading Packages"
 
-## get length of $packages array
-len=${#packages[@]}
-echo "$len Packages"
+file=./repo_urls.txt
+while read -r line1 && read -r line2; do
 
-## Use bash for loop
-for (( i=0; i<len; i++ ))
-do
+  i=0
+  len=0
+  unset packages
+  unset url
+  unset placement
+  url="$line1"
+  placement="$line2"
+
+  while read -r line
+  do
+      packages[ $i ]="$line"
+      (( i++ ))
+  done < <(svn list "$url")
+
+  ## get length of $packages array
+  len=${#packages[@]}
+  echo "$len Packages"
+
+  ## Use bash for loop
+  for (( i=0; i<len; i++ ))
+  do
   echo "${packages[$i]}"
-  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-done
+  svn co $url/"${packages[$i]}" "$placement"/"${packages[$i]}"
+  rm -rf "$placement"/"${packages[$i]}".svn
+  rm -rf "$placement"/"${packages[$i]}"/po
+  done
 
-rm -rf package/kenzok8/my-default-settings # using a dif
-rm -rf package/kenzok8/my-autocore # Using the one above in unsorted
-rm -rf package/kenzok8/mosdns # Build Errors
-rm -rf package/kenzok8/v2ray-core
-rm -rf package/kenzok8/v2ray-geodata
-rm -rf package/kenzok8/v2ray-plugin
-rm -rf package/kenzok8/v2raya
-rm -rf package/kenzok8/.github
-rm -rf package/kenzok8/main.sh
-rm -rf package/kenzok8/LICENSE
-rm -rf package/kenzok8/README.md
-
+done < "$file"
 }
+
 ### -------------------------------------------------------------------------------------------------------------- ###
 SHIDAHUILANG_PACKAGES() {
 echo "Downloading shidahuilang's small-packages"
@@ -483,19 +480,7 @@ LUCI_THEMES() {
 }
 
 ### -------------------------------------------------------------------------------------------------------------- ###
-
-LUCI_THEMES;
-PERSONAL_PACKAGES;
-UNSORTED_GIT_PACKAGES;
-UNSORTED_PACKAGES;
-SBWM1_PACKAGES;
-GSPOTX2F_PACKAGES;
-KENZOK8_PACKAGES;
-# SHIDAHUILANG_PACKAGES; # Not Ready to try yet
-LEAN_PACKAGES;
-SIRPDBOY_PACKAGES;
-HELMIAU_PACKAGES;
-NUEXINI_PACKAGES;
+DOWNLOAD_PACKAGES;
 ### -------------------------------------------------------------------------------------------------------------- ###
 
 exit 0
