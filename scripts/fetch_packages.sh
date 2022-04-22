@@ -431,6 +431,7 @@ do
 done
 
 rm -rf package/NueXini/autocore
+rm -rf package/NueXini/mosdns
 
 echo "END of NueXini's Build packages"
 }
