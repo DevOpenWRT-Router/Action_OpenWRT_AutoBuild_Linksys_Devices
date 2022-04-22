@@ -116,11 +116,16 @@ echo "Downloading Kenzok8's small-packages"
 i=0
 len=0
 unset packages
+unset url
+unset placement
+url="https://github.com/kenzok8/small-package/trunk"
+placement="package/kenzok8"
+
 while read -r line
 do
     packages[ $i ]="$line"
     (( i++ ))
-done < <(svn list https://github.com/kenzok8/small-package/trunk)
+done < <(svn list $url)
 
 ## get length of $packages array
 len=${#packages[@]}
@@ -130,7 +135,7 @@ echo "$len Packages"
 for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
-  svn co https://github.com/kenzok8/small-package/trunk/"${packages[$i]}" package/kenzok8/"${packages[$i]}"
+  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
 done
 
 rm -rf package/kenzok8/my-default-settings # using a dif
@@ -153,11 +158,16 @@ echo "Downloading shidahuilang's small-packages"
 i=0
 len=0
 unset packages
+unset url
+unset placement
+url="https://github.com/shidahuilang/openwrt-package/trunk"
+placement="package/shidahuilang"
+
 while read -r line
 do
     packages[ $i ]="$line"
     (( i++ ))
-done < <(svn list https://github.com/shidahuilang/openwrt-package/trunk)
+done < <(svn list $url)
 
 ## get length of $packages array
 len=${#packages[@]}
@@ -167,7 +177,7 @@ echo "$len Packages"
 for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
-  svn co https://github.com/shidahuilang/openwrt-package/trunk/"${packages[$i]}" package/shidahuilang/"${packages[$i]}"
+  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
 done
 
 rm -rf package/shidahuilang/README.md
@@ -182,11 +192,16 @@ echo "Downloading coolsnowwolf's lean packages"
 i=0
 len=0
 unset packages
+unset url
+unset placement
+url="https://github.com/coolsnowwolf/lede/trunk/package/lean"
+placement="package/lean"
+
 while read -r line
 do
     packages[ $i ]="$line"
     (( i++ ))
-done < <(svn list https://github.com/coolsnowwolf/lede/trunk/package/lean)
+done < <(svn list $url)
 
 ## get length of $packages array
 len=${#packages[@]}
@@ -196,7 +211,7 @@ echo "$len Packages"
 for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
-  svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/"${packages[$i]}" package/lean/"${packages[$i]}"
+  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
 done
 
 rm -rf package/lean/autocore
@@ -245,11 +260,16 @@ svn co https://github.com/sirpdboy/myautocore/trunk/myautocore package/sirpdboy/
 i=0
 len=0
 unset packages
+unset url
+unset placement
+url="https://github.com/sirpdboy/sirpdboy-package/trunk"
+placement="package/sirpdboy"
+
 while read -r line
 do
     packages[ $i ]="$line"
     (( i++ ))
-done < <(svn list https://github.com/sirpdboy/sirpdboy-package/trunk)
+done < <(svn list $url)
 
 ## get length of $packages array
 len=${#packages[@]}
@@ -259,7 +279,7 @@ echo "$len Packages"
 for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
-  svn co https://github.com/sirpdboy/sirpdboy-package/trunk/"${packages[$i]}" package/sirpdboy/"${packages[$i]}"
+  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
 done
 
 rm -rf package/sirpdboy/adguardhome
@@ -298,11 +318,16 @@ echo "From sirpdboy's BUILD packages"
 i=0
 len=0
 unset packages
-while read  -r line
+unset url
+unset placement
+url="https://github.com/sirpdboy/build/trunk"
+placement="package/sirpdboy"
+
+while read -r line
 do
     packages[ $i ]="$line"
     (( i++ ))
-done < <(svn list https://github.com/sirpdboy/build/trunk)
+done < <(svn list $url)
 
 ## get length of $packages array
 len=${#packages[@]}
@@ -312,7 +337,7 @@ echo "$len Packages"
 for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
-  svn co https://github.com/sirpdboy/build/trunk/"${packages[$i]}" package/sirpdboy/"${packages[$i]}"
+  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
 done
 
 #rm -rf  package/sirpdboy/autocore
@@ -346,11 +371,16 @@ echo "Downloading helmiau's packages"
 i=0
 len=0
 unset packages
+unset url
+unset placement
+url="https://github.com/helmiau/helmiwrt-packages/trunk"
+placement="package/helmiau"
+
 while read -r line
 do
     packages[ $i ]="$line"
     (( i++ ))
-done < <(svn list https://github.com/helmiau/helmiwrt-packages/trunk)
+done < <(svn list $url)
 
 ## get length of $packages array
 len=${#packages[@]}
@@ -360,7 +390,7 @@ echo "$len Packages"
 for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
-  svn co https://github.com/helmiau/helmiwrt-packages/trunk/"${packages[$i]}" package/helmiau/"${packages[$i]}"
+  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
 done
 
 rm -rf package/helmiau/badvpn
@@ -378,11 +408,16 @@ echo "Downloading NueXini's packages"
 i=0
 len=0
 unset packages
+unset url
+unset placement
+url="https://github.com/NueXini/NueXini_Packages/trunk"
+placement="package/NueXini"
+
 while read -r line
 do
     packages[ $i ]="$line"
     (( i++ ))
-done < <(svn list https://github.com/NueXini/NueXini_Packages/trunk)
+done < <(svn list $url)
 
 ## get length of $packages array
 len=${#packages[@]}
@@ -392,10 +427,7 @@ echo "$len Packages"
 for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
-  svn co https://github.com/NueXini/NueXini_Packages/trunk/"${packages[$i]}" package/NueXini/"${packages[$i]}"
-  if [[ ${packages[$i]} == luci-app-* ]] ; then
-  rm -rf package/NueXini/"${packages[$i]}"/po
-  fi
+  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
 done
 
 rm -rf package/NueXini/autocore
