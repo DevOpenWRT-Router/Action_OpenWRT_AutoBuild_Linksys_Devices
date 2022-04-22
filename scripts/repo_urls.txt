@@ -1,7 +1,5 @@
 https://github.com/kenzok8/small-package/trunk
 package/kenzok8
-https://github.com/shidahuilang/openwrt-package/trunk
-package/shidahuilang
 https://github.com/coolsnowwolf/lede/trunk/package/lean
 package/lean
 https://github.com/sirpdboy/sirpdboy-package/trunk
