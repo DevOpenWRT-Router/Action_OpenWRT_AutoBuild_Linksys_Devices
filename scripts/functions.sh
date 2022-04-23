@@ -141,6 +141,16 @@ fi
   echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> "$GITHUB_ENV"
 }
 
+DELETE_UNWANTED(){
+  echo "Removing all found po2lmo from Package Makefiles"
+  find  -iname "Makefile" -exec  sed -i '/po2lmo/d' {} \;
+  echo "Removing all Directorys containing po"
+  find . -name "po" | xargs rm -rf;
+  echo "Removing all Directorys containing .svn"
+  find . -name ".svn" | xargs rm -rf;
+
+}
+
 DELETE_DUPLICATES() {
   echo "Running rmlint:"
   rmlint --types "dd" "$GITHUB_WORKSPACE"/openwrt/package
