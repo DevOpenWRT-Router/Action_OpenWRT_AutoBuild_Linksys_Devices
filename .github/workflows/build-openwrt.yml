@@ -22,7 +22,7 @@ env:
   HARDWARE_DEVICE: '${{ github.event.client_payload.message.HARDWARE_DEVICE }}'
   FEEDS_CONF: feeds.conf.default
   FUNCTIONS_SH: functions.sh
-  FETCHPACKAGES_SH: fetch_packages-test.sh
+  FETCHPACKAGES_SH: fetch_packages.sh
   CREATE_ACL_SH: create_acl_for_luci.sh
   BEFORE_BUILD: before_build.sh
   AFTER_BUILD: after_build.sh
