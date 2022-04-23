@@ -125,7 +125,7 @@ GSPOTX2F_PACKAGES() {
 DOWNLOAD_PACKAGES() {
 echo "Downloading Packages"
 
-file=./repo_urls.txt
+file=repo_urls.txt
 while read -r line1 && read -r line2; do
 
   i=0
