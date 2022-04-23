@@ -161,6 +161,8 @@ done < "$file"
 
 DELETE_PACKAGES(){
   echo "Deleting Un-Needed/Wanted Packages"
+
+  ### --- (kenzok8) --- ###
   rm -rf package/kenzok8/my-default-settings # using a dif
   rm -rf package/kenzok8/my-autocore # Using the one above in unsorted
   rm -rf package/kenzok8/mosdns # Build Errors
@@ -173,10 +175,12 @@ DELETE_PACKAGES(){
   rm -rf package/kenzok8/LICENSE
   rm -rf package/kenzok8/README.md
 
+  ### --- (shidahuilang) --- ###
   rm -rf package/shidahuilang/README.md
   rm -rf package/shidahuilang/update.txt
   rm -rf package/shidahuilang/LICENS
 
+  ### --- (lean) --- ###
   rm -rf package/lean/autocore
   rm -rf package/lean/UnblockNeteaseMusic
   rm -rf package/lean/UnblockNeteaseMusicGo
@@ -199,6 +203,7 @@ DELETE_PACKAGES(){
   rm -rf package/lean/luci-theme-netgear
   rm -rf package/lean/mt # Some Error Keeps happening #
 
+  ### --- (sirpdboy) --- ###
   rm -rf package/sirpdboy/adguardhome
   rm -rf package/sirpdboy/doc
   rm -rf package/sirpdboy/luci-app-access-control ## NEEDS FIXED
@@ -248,11 +253,13 @@ DELETE_PACKAGES(){
   rm -rf package/sirpdboy/set # Not a package
   rm -rf package/sirpdboy/socat
 
+  ### --- (helmiau) --- ###
   rm -rf package/helmiau/badvpn
   rm -rf package/helmiau/build-ipk
   rm -rf package/helmiau/corkscrew
   rm -rf package/helmiau/preview
-  
+
+  ### --- (NueXini) --- ###
   rm -rf package/NueXini/autocore
   rm -rf package/NueXini/mosdns
 
@@ -296,6 +303,12 @@ LUCI_THEMES() {
 }
 
 ### -------------------------------------------------------------------------------------------------------------- ###
+#LUCI_THEMES;
+PERSONAL_PACKAGES;
+UNSORTED_GIT_PACKAGES;
+UNSORTED_PACKAGES;
+SBWM1_PACKAGES;
+GSPOTX2F_PACKAGES;
 DOWNLOAD_PACKAGES;
 DELETE_PACKAGES;
 ### -------------------------------------------------------------------------------------------------------------- ###
