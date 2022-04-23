@@ -125,22 +125,47 @@ GSPOTX2F_PACKAGES() {
 DOWNLOAD_PACKAGES() {
 echo "Downloading Packages"
 
-file=repo_urls.txt
-while read -r line1 && read -r line2; do
+# Declare two string arrays
+arrREPO=(
+  "https://github.com/kenzok8/small-package/trunk"
+  "https://github.com/coolsnowwolf/lede/trunk/package/lean"
+  "https://github.com/sirpdboy/sirpdboy-package/trunk"
+  "https://github.com/sirpdboy/build/trunk"
+  "https://github.com/helmiau/helmiwrt-packages/trunk"
+  "https://github.com/NueXini/NueXini_Packages/trunk"
+  )
+
+arrPLACEMENT=(
+  "package/kenzok8"
+  "package/lean"
+  "package/sirpdboy"
+  "package/sirpdboy"
+  "package/helmiau"
+  "package/NueXini"
+)
+
+## Use bash for loop
+#for (( i=0; i<len; i++ ))
+for i in "${!arrREPO[@]}" "${!arrPLACEMENT[@]}"
+do
+  lineURL="${arrREPO[$i]}"
+  linePLACEMENT="${arrPLACEMENT[$i]}"
 
   i=0
   len=0
   unset packages
   unset url
   unset placement
-  url="$line1"
-  placement="$line2"
+  url="$lineURL"
+  placement="$linePLACEMENT"
 
   while read -r line
   do
       packages[ $i ]="$line"
       if [[ ${line} != *"/" ]];then
       echo "$line Doesnt Contain /"; continue
+      elif [[ ${line} == "doc" ]];then
+      echo "$line Contains doc"
       fi
       (( i++ ))
   done < <(svn list "$url")
@@ -159,7 +184,7 @@ while read -r line1 && read -r line2; do
   rm -rf "$placement"/"${packages[$i]}"/po
   done
 
-done < "$file"
+done
 }
 
 
@@ -317,13 +342,13 @@ LUCI_THEMES() {
 }
 
 ### -------------------------------------------------------------------------------------------------------------- ###
-LUCI_THEMES;
-PERSONAL_PACKAGES;
-UNSORTED_GIT_PACKAGES;
-UNSORTED_PACKAGES;
-SBWM1_PACKAGES;
-GSPOTX2F_PACKAGES;
-DOWNLOAD_PACKAGES;
+#LUCI_THEMES;
+#PERSONAL_PACKAGES;
+#UNSORTED_GIT_PACKAGES;
+#UNSORTED_PACKAGES;
+#SBWM1_PACKAGES;
+#GSPOTX2F_PACKAGES;
+#DOWNLOAD_PACKAGES;
 DELETE_PACKAGES;
 ### -------------------------------------------------------------------------------------------------------------- ###
 
