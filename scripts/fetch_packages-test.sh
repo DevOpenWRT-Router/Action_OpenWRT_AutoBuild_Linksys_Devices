@@ -139,6 +139,7 @@ while read -r line1 && read -r line2; do
   while read -r line
   do
       packages[ $i ]="$line"
+      echo "$line"
       (( i++ ))
   done < <(svn list "$url")
 
@@ -150,7 +151,8 @@ while read -r line1 && read -r line2; do
   for (( i=0; i<len; i++ ))
   do
   echo "${packages[$i]}"
-  svn co $url/"${packages[$i]}" "$placement"/"${packages[$i]}"
+
+  svn co "$url"/"${packages[$i]}" "$placement"/"${packages[$i]}"
   rm -rf "$placement"/"${packages[$i]}".svn
   rm -rf "$placement"/"${packages[$i]}"/po
   done
@@ -264,6 +266,7 @@ DELETE_PACKAGES(){
   rm -rf package/NueXini/mosdns
 
 }
+
 ### -------------------------------------------------------------------------------------------------------------- ###
 
 LUCI_THEMES() {
@@ -304,11 +307,11 @@ LUCI_THEMES() {
 
 ### -------------------------------------------------------------------------------------------------------------- ###
 #LUCI_THEMES;
-PERSONAL_PACKAGES;
-UNSORTED_GIT_PACKAGES;
-UNSORTED_PACKAGES;
-SBWM1_PACKAGES;
-GSPOTX2F_PACKAGES;
+#PERSONAL_PACKAGES;
+#UNSORTED_GIT_PACKAGES;
+#UNSORTED_PACKAGES;
+#SBWM1_PACKAGES;
+#GSPOTX2F_PACKAGES;
 DOWNLOAD_PACKAGES;
 DELETE_PACKAGES;
 ### -------------------------------------------------------------------------------------------------------------- ###
