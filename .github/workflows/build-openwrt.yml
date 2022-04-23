@@ -239,14 +239,6 @@ jobs:
           cd openwrt
           $GITHUB_WORKSPACE/scripts/$FETCHPACKAGES_SH
 ### ----------------------------------------------------------------- ###
-      - name: Delete Unwanted Files and or Directorys (Makefile)
-        id: DELETE_UNWANTED
-        continue-on-error: true
-        run: |
-          chmod +x scripts/$FUNCTIONS_SH
-          cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH DELETE_UNWANTED
-### ----------------------------------------------------------------- ###
       - name: Update feeds Package
         run: |
           file=./scripts/feeds_update.txt
