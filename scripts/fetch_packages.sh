@@ -151,8 +151,7 @@ for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
   svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-  rm -rf "$placement"/"${packages[$i]}".svn
-  rm -rf "$placement"/"${packages[$i]}"/po
+  
 done
 
 rm -rf package/kenzok8/my-default-settings # using a dif
@@ -168,47 +167,6 @@ rm -rf package/kenzok8/.github
 rm -rf package/kenzok8/main.sh
 rm -rf package/kenzok8/LICENSE
 rm -rf package/kenzok8/README.md
-
-}
-### -------------------------------------------------------------------------------------------------------------- ###
-SHIDAHUILANG_PACKAGES() {
-echo "Downloading shidahuilang's small-packages"
-
-i=0
-len=0
-unset packages
-unset url
-unset placement
-url="https://github.com/shidahuilang/openwrt-package/trunk"
-placement="package/shidahuilang"
-
-while read -r line
-do
-    packages[ $i ]="$line"
-    if [[ ${line} != *"/" ]];then
-      echo "$line Doesnt Contain /"; continue
-      elif [[ ${line} == "doc" ]];then
-      echo "$line Contains doc"
-      fi
-    (( i++ ))
-done < <(svn list $url)
-
-## get length of $packages array
-len=${#packages[@]}
-echo "$len Packages"
-
-## Use bash for loop
-for (( i=0; i<len; i++ ))
-do
-  echo "${packages[$i]}"
-  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-  rm -rf "$placement"/"${packages[$i]}".svn
-  rm -rf "$placement"/"${packages[$i]}"/po
-done
-
-rm -rf package/shidahuilang/README.md
-rm -rf package/shidahuilang/update.txt
-rm -rf package/shidahuilang/LICENSE
 
 }
 ### -------------------------------------------------------------------------------------------------------------- ###
@@ -243,8 +201,7 @@ for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
   svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-  rm -rf "$placement"/"${packages[$i]}".svn
-  rm -rf "$placement"/"${packages[$i]}"/po
+  
 done
 
 rm -rf package/lean/autocore
@@ -318,8 +275,7 @@ for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
   svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-  rm -rf "$placement"/"${packages[$i]}".svn
-  rm -rf "$placement"/"${packages[$i]}"/po
+  
 done
 
 rm -rf package/sirpdboy/adguardhome
@@ -383,8 +339,7 @@ for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
   svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-  rm -rf "$placement"/"${packages[$i]}".svn
-  rm -rf "$placement"/"${packages[$i]}"/po
+  
 done
 
 #rm -rf  package/sirpdboy/autocore
@@ -443,8 +398,7 @@ for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
   svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-  rm -rf "$placement"/"${packages[$i]}".svn
-  rm -rf "$placement"/"${packages[$i]}"/po
+  
 done
 
 rm -rf package/helmiau/badvpn
@@ -487,8 +441,7 @@ for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
   svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-  rm -rf "$placement"/"${packages[$i]}".svn
-  rm -rf "$placement"/"${packages[$i]}"/po
+  
 done
 
 rm -rf package/NueXini/autocore
@@ -543,7 +496,6 @@ UNSORTED_PACKAGES;
 SBWM1_PACKAGES;
 GSPOTX2F_PACKAGES;
 KENZOK8_PACKAGES;
-# SHIDAHUILANG_PACKAGES; # Not Ready to try yet
 LEAN_PACKAGES;
 SIRPDBOY_PACKAGES;
 HELMIAU_PACKAGES;
