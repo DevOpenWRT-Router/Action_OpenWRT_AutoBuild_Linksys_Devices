@@ -141,6 +141,13 @@ fi
   echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> "$GITHUB_ENV"
 }
 
+DELETE_DUPLICATES() {
+  echo "Running rmlint:"
+  rmlint --types "dd" "$GITHUB_WORKSPACE"/openwrt/package
+  rmlint.sh -c -q
+  rm -rf rmlint.json
+}
+
 kernel_version() {
 cd openwrt || return
 find build_dir/ -name .vermagic -exec cat {} \; >VERMAGIC  # Find hash
