@@ -139,7 +139,9 @@ while read -r line1 && read -r line2; do
   while read -r line
   do
       packages[ $i ]="$line"
-      echo "$line"
+      if [[ ${line} != *"/" ]];then
+      echo "$line Doesnt Contain /"; continue
+      fi
       (( i++ ))
   done < <(svn list "$url")
 
@@ -163,11 +165,14 @@ done < "$file"
 
 DELETE_PACKAGES(){
   echo "Deleting Un-Needed/Wanted Packages"
+  sleep 5
 
   ### --- (kenzok8) --- ###
+  echo "Deleting kenzok8 Packages"
   rm -rf package/kenzok8/my-default-settings # using a dif
   rm -rf package/kenzok8/my-autocore # Using the one above in unsorted
-  rm -rf package/kenzok8/mosdns # Build Errors
+  rm -rf package/kenzok8/luci-app-mosdns # Build Errors
+  rm -rf package/kenzok8/mosdns #Build Errors
   rm -rf package/kenzok8/v2ray-core
   rm -rf package/kenzok8/v2ray-geodata
   rm -rf package/kenzok8/v2ray-plugin
@@ -178,11 +183,13 @@ DELETE_PACKAGES(){
   rm -rf package/kenzok8/README.md
 
   ### --- (shidahuilang) --- ###
+  echo "Deleting shidahuilang Packages"
   rm -rf package/shidahuilang/README.md
   rm -rf package/shidahuilang/update.txt
   rm -rf package/shidahuilang/LICENS
 
   ### --- (lean) --- ###
+  echo "Deleting leanPackages"
   rm -rf package/lean/autocore
   rm -rf package/lean/UnblockNeteaseMusic
   rm -rf package/lean/UnblockNeteaseMusicGo
@@ -206,6 +213,7 @@ DELETE_PACKAGES(){
   rm -rf package/lean/mt # Some Error Keeps happening #
 
   ### --- (sirpdboy) --- ###
+  echo "Deleting sirpdboy Packages"
   rm -rf package/sirpdboy/adguardhome
   rm -rf package/sirpdboy/doc
   rm -rf package/sirpdboy/luci-app-access-control ## NEEDS FIXED
@@ -256,13 +264,16 @@ DELETE_PACKAGES(){
   rm -rf package/sirpdboy/socat
 
   ### --- (helmiau) --- ###
+  echo "Deleting helmiau Packages"
   rm -rf package/helmiau/badvpn
   rm -rf package/helmiau/build-ipk
   rm -rf package/helmiau/corkscrew
   rm -rf package/helmiau/preview
 
   ### --- (NueXini) --- ###
+  echo "Deleting NueXini Packages"
   rm -rf package/NueXini/autocore
+  rm -rf package/NueXini/luci-app-mosdns
   rm -rf package/NueXini/mosdns
 
 }
@@ -306,12 +317,12 @@ LUCI_THEMES() {
 }
 
 ### -------------------------------------------------------------------------------------------------------------- ###
-#LUCI_THEMES;
-#PERSONAL_PACKAGES;
-#UNSORTED_GIT_PACKAGES;
-#UNSORTED_PACKAGES;
-#SBWM1_PACKAGES;
-#GSPOTX2F_PACKAGES;
+LUCI_THEMES;
+PERSONAL_PACKAGES;
+UNSORTED_GIT_PACKAGES;
+UNSORTED_PACKAGES;
+SBWM1_PACKAGES;
+GSPOTX2F_PACKAGES;
 DOWNLOAD_PACKAGES;
 DELETE_PACKAGES;
 ### -------------------------------------------------------------------------------------------------------------- ###
