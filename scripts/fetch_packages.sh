@@ -134,6 +134,11 @@ placement="package/kenzok8"
 while read -r line
 do
     packages[ $i ]="$line"
+    if [[ ${line} != *"/" ]];then
+      echo "$line Doesnt Contain /"; continue
+      elif [[ ${line} == "doc" ]];then
+      echo "$line Contains doc"
+      fi
     (( i++ ))
 done < <(svn list $url)
 
@@ -146,11 +151,14 @@ for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
   svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
+  rm -rf "$placement"/"${packages[$i]}".svn
+  rm -rf "$placement"/"${packages[$i]}"/po
 done
 
 rm -rf package/kenzok8/my-default-settings # using a dif
 rm -rf package/kenzok8/my-autocore # Using the one above in unsorted
 rm -rf package/kenzok8/mosdns # Build Errors
+rm -rf package/kenzok8/luci-app-mosdns
 rm -rf package/kenzok8/v2ray-core
 rm -rf package/kenzok8/v2ray-geodata
 rm -rf package/kenzok8/v2ray-plugin
@@ -176,6 +184,11 @@ placement="package/shidahuilang"
 while read -r line
 do
     packages[ $i ]="$line"
+    if [[ ${line} != *"/" ]];then
+      echo "$line Doesnt Contain /"; continue
+      elif [[ ${line} == "doc" ]];then
+      echo "$line Contains doc"
+      fi
     (( i++ ))
 done < <(svn list $url)
 
@@ -188,6 +201,8 @@ for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
   svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
+  rm -rf "$placement"/"${packages[$i]}".svn
+  rm -rf "$placement"/"${packages[$i]}"/po
 done
 
 rm -rf package/shidahuilang/README.md
@@ -210,6 +225,11 @@ placement="package/lean"
 while read -r line
 do
     packages[ $i ]="$line"
+    if [[ ${line} != *"/" ]];then
+      echo "$line Doesnt Contain /"; continue
+      elif [[ ${line} == "doc" ]];then
+      echo "$line Contains doc"
+      fi
     (( i++ ))
 done < <(svn list $url)
 
@@ -222,6 +242,8 @@ for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
   svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
+  rm -rf "$placement"/"${packages[$i]}".svn
+  rm -rf "$placement"/"${packages[$i]}"/po
 done
 
 rm -rf package/lean/autocore
@@ -278,6 +300,11 @@ placement="package/sirpdboy"
 while read -r line
 do
     packages[ $i ]="$line"
+    if [[ ${line} != *"/" ]];then
+      echo "$line Doesnt Contain /"; continue
+      elif [[ ${line} == "doc" ]];then
+      echo "$line Contains doc"
+      fi
     (( i++ ))
 done < <(svn list $url)
 
@@ -290,6 +317,8 @@ for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
   svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
+  rm -rf "$placement"/"${packages[$i]}".svn
+  rm -rf "$placement"/"${packages[$i]}"/po
 done
 
 rm -rf package/sirpdboy/adguardhome
@@ -336,6 +365,11 @@ placement="package/sirpdboy"
 while read -r line
 do
     packages[ $i ]="$line"
+    if [[ ${line} != *"/" ]];then
+      echo "$line Doesnt Contain /"; continue
+      elif [[ ${line} == "doc" ]];then
+      echo "$line Contains doc"
+      fi
     (( i++ ))
 done < <(svn list $url)
 
@@ -348,6 +382,8 @@ for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
   svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
+  rm -rf "$placement"/"${packages[$i]}".svn
+  rm -rf "$placement"/"${packages[$i]}"/po
 done
 
 #rm -rf  package/sirpdboy/autocore
@@ -389,6 +425,11 @@ placement="package/helmiau"
 while read -r line
 do
     packages[ $i ]="$line"
+    if [[ ${line} != *"/" ]];then
+      echo "$line Doesnt Contain /"; continue
+      elif [[ ${line} == "doc" ]];then
+      echo "$line Contains doc"
+      fi
     (( i++ ))
 done < <(svn list $url)
 
@@ -401,6 +442,8 @@ for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
   svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
+  rm -rf "$placement"/"${packages[$i]}".svn
+  rm -rf "$placement"/"${packages[$i]}"/po
 done
 
 rm -rf package/helmiau/badvpn
@@ -426,6 +469,11 @@ placement="package/NueXini"
 while read -r line
 do
     packages[ $i ]="$line"
+    if [[ ${line} != *"/" ]];then
+      echo "$line Doesnt Contain /"; continue
+      elif [[ ${line} == "doc" ]];then
+      echo "$line Contains doc"
+      fi
     (( i++ ))
 done < <(svn list $url)
 
@@ -438,10 +486,13 @@ for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
   svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
+  rm -rf "$placement"/"${packages[$i]}".svn
+  rm -rf "$placement"/"${packages[$i]}"/po
 done
 
 rm -rf package/NueXini/autocore
 rm -rf package/NueXini/mosdns
+rm -rf package/NueXini/luci-app-mosdns
 
 echo "END of NueXini's Build packages"
 }
