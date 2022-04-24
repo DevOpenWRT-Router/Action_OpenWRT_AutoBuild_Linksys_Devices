@@ -241,21 +241,21 @@ jobs:
 ### ----------------------------------------------------------------- ###
       - name: Update feeds Package
         run: |
-          file=./scripts/feeds_update.txt
+          file=./scripts/data/feeds_update.txt
           while read -r line; do
           cd openwrt && ./scripts/feeds update $line
           done < "$file"
 ### ----------------------------------------------------------------- ###
       - name: Install feeds Package
         run: |
-          file=./scripts/feeds_install.txt
+          file=./scripts/data/feeds_install.txt
           while read -r line; do
           cd openwrt && ./scripts/feeds install $line
           done < "$file"
 ### ----------------------------------------------------------------- ###
       - name: Uninstall feeds Package
         run: |
-          file=./scripts/feeds_uninstall.txt
+          file=./scripts/data/feeds_uninstall.txt
           while read -r line; do
           cd openwrt && ./scripts/feeds uninstall $line
           done < "$file"
