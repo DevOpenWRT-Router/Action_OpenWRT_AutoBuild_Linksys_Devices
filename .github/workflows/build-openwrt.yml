@@ -239,6 +239,19 @@ jobs:
           cd openwrt
           $GITHUB_WORKSPACE/scripts/$FETCHPACKAGES_SH
 ### ----------------------------------------------------------------- ###
+      - name: Look inside package Directory
+        if: (!cancelled())
+        run: |
+          cd $GITHUB_WORKSPACE/openwrt
+          echo "=============================================="
+          echo "Main Space usage:"
+          echo "=============================================="
+          df -hT
+          echo "=============================================="
+          du -h --max-depth=3 ./package
+          echo "=============================================="
+### ----------------------------------------------------------------- ###
+
       - name: Update feeds Package
         run: |
           file=./scripts/data/feeds_update.txt
