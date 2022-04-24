@@ -18,11 +18,13 @@ PERSONAL_PACKAGES() {
 echo "Fetching From DevOpenWRT-Router:"
 
 ### luci-app-mqos
-git clone https://github.com/DevOpenWRT-Router/luci-app-mqos.git package/luci-app-mqos
+git clone https://github.com/DevOpenWRT-Router/luci-app-mqos.git package/PureFusionWRT/luci-app-mqos
 ### luci-default-settings
-git clone https://github.com/DevOpenWRT-Router/luci-default-settings.git package/luci-default-settings
+git clone https://github.com/DevOpenWRT-Router/luci-default-settings.git package/PureFusionWRT/luci-default-settings
 ### my-default-settings (LUCI)
-git clone https://github.com/DevOpenWRT-Router/my-default-settings.git package/my-default-settings
+git clone https://github.com/DevOpenWRT-Router/my-default-settings.git package/PureFusionWRT/my-default-settings
+### luci-app-ota
+git clone https://github.com/DevOpenWRT-Router/luci-app-ota.git package/PureFusionWRT/luci-app-ota
 
 echo "END Fetching From DevOpenWRT-Router:"
 }
@@ -32,17 +34,9 @@ UNSORTED_GIT_PACKAGES(){
   
   ### luci-app-access
   git clone https://github.com/resmh/luci-app-access.git package/luci-app-access
-  rm -rf package/luci-app-access/po
 
   ### luci-app-webguide
   git clone https://github.com/p1ay8y3ar/luci-app-webguide.git package/p1ay8y3ar/luci-app-webguide
-  rm -rf package/p1ay8y3ar/luci-app-webguide/lights-app-webguide/po
-
-  ### openwrt-apps
-  git clone https://github.com/jjm2473/openwrt-apps.git package/jjm2473/openwrt-apps
-  rm -rf package/jjm2473/openwrt-apps/luci-app-ota/po
-  rm -rf package/jjm2473/openwrt-apps/luci-app-homebox/po
-  rm -rf package/jjm2473/openwrt-apps/luci-app-cpufreq # <-- We dont need this again
 
   ### autocore-arm-x86
   #git clone https://github.com/MatJeheyy/autocore-arm-x86.git package/MatJeheyy/autocore
