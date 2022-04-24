@@ -32,16 +32,12 @@ UNSORTED_GIT_PACKAGES(){
   
   ### luci-app-access
   git clone https://github.com/resmh/luci-app-access.git package/luci-app-access
-  rm -rf package/luci-app-access/po
 
   ### luci-app-webguide
   git clone https://github.com/p1ay8y3ar/luci-app-webguide.git packages/p1ay8y3ar/luci-app-webguide
-  rm -rf packages/p1ay8y3ar/luci-app-webguide/lights-app-webguide/po
 
   ### openwrt-apps
   git clone https://github.com/jjm2473/openwrt-apps.git packages/jjm2473/openwrt-apps
-  rm -rf packages/jjm2473/openwrt-apps/luci-app-ota/po
-  rm -rf packages/jjm2473/openwrt-apps/luci-app-homebox/po
   rm -rf packages/jjm2473/openwrt-apps/luci-app-cpufreq # <-- We dont need this again
 
   ### autocore-arm-x86
@@ -67,23 +63,17 @@ echo "End of Fetching All Personal Repos"
 
 SBWM1_PACKAGES() {
   ### autocore-arm
-  git clone https://github.com/sbwml/autocore-arm.git package/sbwml/autocore-arm
-  rm -rf package/sbwml/autocore-arm/po
+  git clone https://github.com/sbwml/autocore-arm.git package/sbwml/autocore-armpo
   ### openwrt-qBittorrent-Enhanced-Edition
-  git clone https://github.com/sbwml/openwrt-qBittorrent-Enhanced-Edition.git package/sbwml/openwrt-qBittorrent-Enhanced-Edition
-  rm -rf package/sbwml/openwrt-qBittorrent-Enhanced-Edition/luci-app-qbittorrent/po
+  git clone https://github.com/sbwml/openwrt-qBittorrent-Enhanced-Edition.git package/sbwml/openwrt-qBittorrent-Enhanced-Editiono
   ### openwrt-qBittorrent
   git clone https://github.com/sbwml/openwrt-qBittorrent.git package/sbwml/openwrt-qBittorrent
-  rm -rf package/sbwml/openwrt-qBittorrent/luci-app-qbittorrent/po
   ### openwrt-filebrowser
-  git clone https://github.com/sbwml/openwrt-filebrowser.git package/sbwml/openwrt-filebrowser
-  rm -rf package/sbwml/openwrt-filebrowser/luci-app-filebrowser/po
+  git clone https://github.com/sbwml/openwrt-filebrowser.git package/sbwml/openwrt-filebrowsero
   ### OpenAppFilter
   git clone https://github.com/sbwml/OpenAppFilter.git package/sbwml/OpenAppFilter
-  rm -rf package/sbwml/OpenAppFilter/luci-app-oaf/po
   ### openwrt-alist
   git clone https://github.com/sbwml/openwrt-alist.git package/sbwml/openwrt-alist
-  rm -rf package/sbwml/openwrt-alist/luci-app-alist/po
 
   echo "END Fetching From sbwml's Repos:"
 }
