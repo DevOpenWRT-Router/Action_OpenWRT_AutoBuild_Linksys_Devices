@@ -214,7 +214,7 @@ jobs:
           cd openwrt
           git log --pretty=oneline -n 1
 ### ----------------------------------------------------------------- ###
-      - name: Load custom feeds
+      - name: run (feeds.conf.default) feeds
         run: >
           [ -e configs/$FEEDS_CONF ] && mv configs/$FEEDS_CONF
           openwrt/feeds.conf.default
