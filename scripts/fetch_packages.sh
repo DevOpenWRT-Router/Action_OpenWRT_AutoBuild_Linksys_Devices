@@ -298,7 +298,7 @@ echo "END of helmiau's Build packages"
 NUEXINI_PACKAGES() {
 echo "Downloading NueXini's packages"
 
-get clone https://github.com/NueXini/NueXini_Packages.git package/NueXini
+git clone https://github.com/NueXini/NueXini_Packages.git package/NueXini
 
 rm -rf package/NueXini/autocore
 rm -rf package/NueXini/mosdns
