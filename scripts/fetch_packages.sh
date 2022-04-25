@@ -114,6 +114,11 @@ GSPOTX2F_PACKAGES() {
   echo "END Fetching From gSpotx2f's Repos:"
 }
 
+LINKEASE_PACKAGES() {
+  ### istore-packages
+  git clone https://github.com/linkease/istore-packages.git packages/linkease/istore-packages
+}
+
 KENZOK8_PACKAGES() {
 echo "Downloading Kenzok8's small-packages"
 
@@ -506,6 +511,7 @@ UNSORTED_GIT_PACKAGES;
 UNSORTED_PACKAGES;
 SBWM1_PACKAGES;
 GSPOTX2F_PACKAGES;
+LINKEASE_PACKAGES;
 KENZOK8_PACKAGES;
 LEAN_PACKAGES;
 SIRPDBOY_PACKAGES;
