@@ -215,11 +215,11 @@ SIRPDBOY_PACKAGES() {
 echo "Downloading sirpdboy's packages"
 
 ## Sirpdboy's luci-app-netdata
-git clone https://github.com/sirpdboy/luci-app-netdata.git package/luci-app-netdata
+git clone https://github.com/sirpdboy/luci-app-netdata.git package/sirpdboy/luci-app-netdata
 ## Sirpdboy's myautocore enhanced version preview information only for OPENWRT
 svn co https://github.com/sirpdboy/myautocore/trunk/myautocore package/sirpdboy/myautocore
 
-git clone https://github.com/sirpdboy/sirpdboy-package.git package/sirpdboy
+git clone https://github.com/sirpdboy/sirpdboy-package.git package/sirpdboy_A
 
 rm -rf package/sirpdboy/adguardhome
 rm -rf package/sirpdboy/doc
@@ -254,7 +254,7 @@ echo "END of sirpdboy's packages"
 
 echo "From sirpdboy's BUILD packages"
 
-git clone https://github.com/sirpdboy/build.git package/sirpdboy
+git clone https://github.com/sirpdboy/build.git package/sirpdboy_B
 
 #rm -rf  package/sirpdboy/autocore
 rm -rf package/sirpdboy/automount
