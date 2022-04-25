@@ -128,6 +128,8 @@ rm -rf package/kenzok8/my-default-settings # using a dif
 rm -rf package/kenzok8/my-autocore # Using the one above in unsorted
 rm -rf package/kenzok8/mosdns # Build Errors
 rm -rf package/kenzok8/luci-app-mosdns
+rm -rf package/kenzok8/luci-app-smartdns
+rm -rf package/kenzok8/smartdns
 #rm -rf package/kenzok8/luci-app-netspeedtest
 rm -rf package/kenzok8/v2ray-core
 rm -rf package/kenzok8/v2ray-geodata
