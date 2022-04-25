@@ -122,36 +122,7 @@ LINKEASE_PACKAGES() {
 KENZOK8_PACKAGES() {
 echo "Downloading Kenzok8's small-packages"
 
-i=0
-len=0
-unset packages
-unset url
-unset placement
-url="https://github.com/kenzok8/small-package/trunk"
-placement="package/kenzok8"
-
-while read -r line
-do
-    packages[ $i ]="$line"
-    if [[ ${line} != *"/" ]];then
-      echo "$line Doesnt Contain /"; continue
-      elif [[ ${line} == "doc" ]];then
-      echo "$line Contains doc"
-      fi
-    (( i++ ))
-done < <(svn list $url)
-
-## get length of $packages array
-len=${#packages[@]}
-echo "$len Packages"
-
-## Use bash for loop
-for (( i=0; i<len; i++ ))
-do
-  echo "${packages[$i]}"
-  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-  
-done
+git clone https://github.com/kenzok8/small-package.git package/kenzok8
 
 rm -rf package/kenzok8/my-default-settings # using a dif
 rm -rf package/kenzok8/my-autocore # Using the one above in unsorted
@@ -246,36 +217,7 @@ git clone https://github.com/sirpdboy/luci-app-netdata.git package/luci-app-netd
 ## Sirpdboy's myautocore enhanced version preview information only for OPENWRT
 svn co https://github.com/sirpdboy/myautocore/trunk/myautocore package/sirpdboy/myautocore
 
-i=0
-len=0
-unset packages
-unset url
-unset placement
-url="https://github.com/sirpdboy/sirpdboy-package/trunk"
-placement="package/sirpdboy"
-
-while read -r line
-do
-    packages[ $i ]="$line"
-    if [[ ${line} != *"/" ]];then
-      echo "$line Doesnt Contain /"; continue
-      elif [[ ${line} == "doc" ]];then
-      echo "$line Contains doc"
-      fi
-    (( i++ ))
-done < <(svn list $url)
-
-## get length of $packages array
-len=${#packages[@]}
-echo "$len Packages"
-
-## Use bash for loop
-for (( i=0; i<len; i++ ))
-do
-  echo "${packages[$i]}"
-  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-  
-done
+git clone https://github.com/sirpdboy/sirpdboy-package.git package/sirpdboy
 
 rm -rf package/sirpdboy/adguardhome
 rm -rf package/sirpdboy/doc
@@ -310,36 +252,7 @@ echo "END of sirpdboy's packages"
 
 echo "From sirpdboy's BUILD packages"
 
-i=0
-len=0
-unset packages
-unset url
-unset placement
-url="https://github.com/sirpdboy/build/trunk"
-placement="package/sirpdboy"
-
-while read -r line
-do
-    packages[ $i ]="$line"
-    if [[ ${line} != *"/" ]];then
-      echo "$line Doesnt Contain /"; continue
-      elif [[ ${line} == "doc" ]];then
-      echo "$line Contains doc"
-      fi
-    (( i++ ))
-done < <(svn list $url)
-
-## get length of $packages array
-len=${#packages[@]}
-echo "$len Packages"
-
-## Use bash for loop
-for (( i=0; i<len; i++ ))
-do
-  echo "${packages[$i]}"
-  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-  
-done
+git clone https://github.com/sirpdboy/build.git package/sirpdboy
 
 #rm -rf  package/sirpdboy/autocore
 rm -rf package/sirpdboy/automount
@@ -369,36 +282,7 @@ echo "END of sirpdboy's Build packages"
 HELMIAU_PACKAGES() {
 echo "Downloading helmiau's packages"
 
-i=0
-len=0
-unset packages
-unset url
-unset placement
-url="https://github.com/helmiau/helmiwrt-packages/trunk"
-placement="package/helmiau"
-
-while read -r line
-do
-    packages[ $i ]="$line"
-    if [[ ${line} != *"/" ]];then
-      echo "$line Doesnt Contain /"; continue
-      elif [[ ${line} == "doc" ]];then
-      echo "$line Contains doc"
-      fi
-    (( i++ ))
-done < <(svn list $url)
-
-## get length of $packages array
-len=${#packages[@]}
-echo "$len Packages"
-
-## Use bash for loop
-for (( i=0; i<len; i++ ))
-do
-  echo "${packages[$i]}"
-  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-  
-done
+git clone https://github.com/helmiau/helmiwrt-packages.git package/helmiau
 
 rm -rf package/helmiau/badvpn
 rm -rf package/helmiau/build-ipk
@@ -412,36 +296,7 @@ echo "END of helmiau's Build packages"
 NUEXINI_PACKAGES() {
 echo "Downloading NueXini's packages"
 
-i=0
-len=0
-unset packages
-unset url
-unset placement
-url="https://github.com/NueXini/NueXini_Packages/trunk"
-placement="package/NueXini"
-
-while read -r line
-do
-    packages[ $i ]="$line"
-    if [[ ${line} != *"/" ]];then
-      echo "$line Doesnt Contain /"; continue
-      elif [[ ${line} == "doc" ]];then
-      echo "$line Contains doc"
-      fi
-    (( i++ ))
-done < <(svn list $url)
-
-## get length of $packages array
-len=${#packages[@]}
-echo "$len Packages"
-
-## Use bash for loop
-for (( i=0; i<len; i++ ))
-do
-  echo "${packages[$i]}"
-  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
-  
-done
+get clone https://github.com/NueXini/NueXini_Packages.git package/NueXini
 
 rm -rf package/NueXini/autocore
 rm -rf package/NueXini/mosdns
