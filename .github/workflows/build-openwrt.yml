@@ -273,16 +273,6 @@ jobs:
           cd openwrt && ./scripts/feeds uninstall $line
           done < "$file"
 ### ----------------------------------------------------------------- ###
-      - name: Copy (files) Dir
-        if: env.USE_FILES == 'true' && !cancelled()
-        run: |
-          [ -e configs/files ] && mv configs/files openwrt/files
-### ----------------------------------------------------------------- ###
-      - name: Copy (.config)
-        run: >
-          [ -e configs/${HARDWARE_DEVICE}.config ] && mv
-          configs/${HARDWARE_DEVICE}.config openwrt/.config
-### ----------------------------------------------------------------- ###
       - name: Run Custom OpenWRT Patches
         id: patches
         continue-on-error: true
@@ -297,6 +287,16 @@ jobs:
         run: |
           cd openwrt
           git log --pretty=oneline -n 1
+### ----------------------------------------------------------------- ###
+      - name: Copy (files) Dir
+        if: env.USE_FILES == 'true' && !cancelled()
+        run: |
+          [ -e configs/files ] && mv configs/files openwrt/files
+### ----------------------------------------------------------------- ###
+      - name: Copy (.config)
+        run: >
+          [ -e configs/${HARDWARE_DEVICE}.config ] && mv
+          configs/${HARDWARE_DEVICE}.config openwrt/.config
 ### ----------------------------------------------------------------- ###
       - name: Smart chmod
         run: >
