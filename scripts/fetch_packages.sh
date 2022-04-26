@@ -62,22 +62,16 @@ echo "End of Fetching All Personal Repos"
 SBWM1_PACKAGES() {
   ### autocore-arm
   git clone https://github.com/sbwml/autocore-arm.git package/sbwml/autocore-arm
-  rm -rf package/sbwml/autocore-arm/po
   ### openwrt-qBittorrent-Enhanced-Edition
   git clone https://github.com/sbwml/openwrt-qBittorrent-Enhanced-Edition.git package/sbwml/openwrt-qBittorrent-Enhanced-Edition
-  rm -rf package/sbwml/openwrt-qBittorrent-Enhanced-Edition/luci-app-qbittorrent/po
   ### openwrt-qBittorrent
   git clone https://github.com/sbwml/openwrt-qBittorrent.git package/sbwml/openwrt-qBittorrent
-  rm -rf package/sbwml/openwrt-qBittorrent/luci-app-qbittorrent/po
   ### openwrt-filebrowser
   git clone https://github.com/sbwml/openwrt-filebrowser.git package/sbwml/openwrt-filebrowser
-  rm -rf package/sbwml/openwrt-filebrowser/luci-app-filebrowser/po
   ### OpenAppFilter
   git clone https://github.com/sbwml/OpenAppFilter.git package/sbwml/OpenAppFilter
-  rm -rf package/sbwml/OpenAppFilter/luci-app-oaf/po
   ### openwrt-alist
   git clone https://github.com/sbwml/openwrt-alist.git package/sbwml/openwrt-alist
-  rm -rf package/sbwml/openwrt-alist/luci-app-alist/po
 
   echo "END Fetching From sbwml's Repos:"
 }
