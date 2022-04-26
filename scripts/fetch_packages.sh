@@ -221,34 +221,34 @@ svn co https://github.com/sirpdboy/myautocore/trunk/myautocore package/sirpdboy/
 
 git clone https://github.com/sirpdboy/sirpdboy-package.git package/sirpdboy_A
 
-rm -rf package/sirpdboy/adguardhome
-rm -rf package/sirpdboy/doc
-rm -rf package/sirpdboy/luci-app-access-control ## NEEDS FIXED
-rm -rf package/sirpdboy/luci-app-baidupcs-web
-rm -rf package/sirpdboy/luci-app-chinadns-ng
-rm -rf package/sirpdboy/luci-app-cpulimit
-rm -rf package/sirpdboy/luci-app-dockerman
-rm -rf package/sirpdboy/luci-app-easymesh
-rm -rf package/sirpdboy/luci-app-netdata
-rm -rf package/sirpdboy/luci-app-netspeedtest
-rm -rf package/sirpdboy/luci-app-onliner
-rm -rf package/sirpdboy/luci-app-ramfree
-rm -rf package/sirpdboy/luci-app-rebootschedule
-rm -rf package/sirpdboy/luci-app-smartdns
-rm -rf package/sirpdboy/luci-app-socat
-rm -rf package/sirpdboy/luci-app-timecontrol
-rm -rf package/sirpdboy/luci-app-wrtbwmon
-rm -rf package/sirpdboy/luci-theme-argon_new
-rm -rf package/sirpdboy/luci-theme-atmaterial
-rm -rf package/sirpdboy/luci-theme-btmod
-rm -rf package/sirpdboy/luci-theme-edge
-rm -rf package/sirpdboy/luci-theme-ifit
-rm -rf package/sirpdboy/luci-theme-opentomato
-rm -rf package/sirpdboy/luci-theme-opentomcat
-rm -rf package/sirpdboy/luci-theme-opentopd
-rm -rf package/sirpdboy/netdata
-rm -rf package/sirpdboy/speedtest-cli ## NEEDS FIXED
-rm -rf package/sirpdboy/smartdns ## NEEDS FIXED
+rm -rf package/sirpdboy_A/adguardhome
+rm -rf package/sirpdboy_A/doc
+rm -rf package/sirpdboy_A/luci-app-access-control ## NEEDS FIXED
+rm -rf package/sirpdboy_A/luci-app-baidupcs-web
+rm -rf package/sirpdboy_A/luci-app-chinadns-ng
+rm -rf package/sirpdboy_A/luci-app-cpulimit
+rm -rf package/sirpdboy_A/luci-app-dockerman
+rm -rf package/sirpdboy_A/luci-app-easymesh
+rm -rf package/sirpdboy_A/luci-app-netdata
+rm -rf package/sirpdboy_A/luci-app-netspeedtest
+rm -rf package/sirpdboy_A/luci-app-onliner
+rm -rf package/sirpdboy_A/luci-app-ramfree
+rm -rf package/sirpdboy_A/luci-app-rebootschedule
+rm -rf package/sirpdboy_A/luci-app-smartdns
+rm -rf package/sirpdboy_A/luci-app-socat
+rm -rf package/sirpdboy_A/luci-app-timecontrol
+rm -rf package/sirpdboy_A/luci-app-wrtbwmon
+rm -rf package/sirpdboy_A/luci-theme-argon_new
+rm -rf package/sirpdboy_A/luci-theme-atmaterial
+rm -rf package/sirpdboy_A/luci-theme-btmod
+rm -rf package/sirpdboy_A/luci-theme-edge
+rm -rf package/sirpdboy_A/luci-theme-ifit
+rm -rf package/sirpdboy_A/luci-theme-opentomato
+rm -rf package/sirpdboy_A/luci-theme-opentomcat
+rm -rf package/sirpdboy_A/luci-theme-opentopd
+rm -rf package/sirpdboy_A/netdata
+rm -rf package/sirpdboy_A/speedtest-cli ## NEEDS FIXED
+rm -rf package/sirpdboy_A/smartdns ## NEEDS FIXED
 
 echo "END of sirpdboy's packages"
 
@@ -256,26 +256,26 @@ echo "From sirpdboy's BUILD packages"
 
 git clone https://github.com/sirpdboy/build.git package/sirpdboy_B
 
-#rm -rf  package/sirpdboy/autocore
-rm -rf package/sirpdboy/automount
-rm -rf package/sirpdboy/autosamba-samba4
-rm -rf package/sirpdboy/default-settings # using a dif
-rm -rf package/sirpdboy/doc # not a package
-rm -rf package/sirpdboy/gcc # not a package
-rm -rf package/sirpdboy/ksmbd-tools
-rm -rf package/sirpdboy/luci-app-ksmbd
-rm -rf package/sirpdboy/luci-app-samba
-rm -rf package/sirpdboy/luci-app-samba4
-rm -rf package/sirpdboy/miniupnpd
-rm -rf package/sirpdboy/mwan3
-rm -rf package/sirpdboy/samba36
-rm -rf package/sirpdboy/samba4
-rm -rf package/sirpdboy/my-autocore
-rm -rf package/sirpdboy/autocore
-rm -rf package/sirpdboy/mycore
-rm -rf package/sirpdboy/pass
-rm -rf package/sirpdboy/set # Not a package
-rm -rf package/sirpdboy/socat
+#rm -rf  package/sirpdboy_B/autocore
+rm -rf package/sirpdboy_B/automount
+rm -rf package/sirpdboy_B/autosamba-samba4
+rm -rf package/sirpdboy_B/default-settings # using a dif
+rm -rf package/sirpdboy_B/doc # not a package
+rm -rf package/sirpdboy_B/gcc # not a package
+rm -rf package/sirpdboy_B/ksmbd-tools
+rm -rf package/sirpdboy_B/luci-app-ksmbd
+rm -rf package/sirpdboy_B/luci-app-samba
+rm -rf package/sirpdboy_B/luci-app-samba4
+rm -rf package/sirpdboy_B/miniupnpd
+rm -rf package/sirpdboy_B/mwan3
+rm -rf package/sirpdboy_B/samba36
+rm -rf package/sirpdboy_B/samba4
+rm -rf package/sirpdboy_B/my-autocore
+rm -rf package/sirpdboy_B/autocore
+rm -rf package/sirpdboy_B/mycore
+rm -rf package/sirpdboy_B/pass
+rm -rf package/sirpdboy_B/set # Not a package
+rm -rf package/sirpdboy_B/socat
 
 echo "END of sirpdboy's Build packages"
 }
