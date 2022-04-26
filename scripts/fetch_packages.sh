@@ -116,7 +116,7 @@ GSPOTX2F_PACKAGES() {
 
 LINKEASE_PACKAGES() {
   ### istore-packages
-  git clone https://github.com/linkease/istore-packages.git packages/linkease/istore-packages
+  git clone https://github.com/linkease/istore-packages.git package/linkease/istore-packages
 }
 
 KENZOK8_PACKAGES() {
