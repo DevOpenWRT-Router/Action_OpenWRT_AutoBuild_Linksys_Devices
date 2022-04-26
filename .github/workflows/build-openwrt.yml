@@ -40,6 +40,7 @@ env:
   USE_FETCH_PACKAGES: true
   USE_KERNEL_VERSION: true
   USE_CACHE: true
+  USE_SMART_CHMOD: true
   SSH_TMATE: false
   SSH_NGROK: false
   EXTERNAL_BUILD_USER_DOMAIN_SETUP: true
@@ -298,23 +299,13 @@ jobs:
           [ -e configs/${HARDWARE_DEVICE}.config ] && mv
           configs/${HARDWARE_DEVICE}.config openwrt/.config
 ### ----------------------------------------------------------------- ###
-      - name: Smart chmod
-        run: >
-          MY_Filter=$(mktemp)
+      - name: Smart Chmod
+        if: env.USE_SMART_CHMOD == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          cd openwrt
+          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH SMART_CHMOD
 
-          echo '/\.git' >  ${MY_Filter}
-
-          echo '/\.svn' >> ${MY_Filter}
-
-          find ./ -maxdepth 1 | grep -v '\./$' | grep -v '/\.git' | xargs -s1024
-          chmod -R u=rwX,og=rX
-
-          find ./ -type f | grep -v -f ${MY_Filter} | xargs -s1024 file | grep
-          'executable\|ELF' | cut -d ':' -f1 | xargs -s1024 chmod 755
-
-          rm -f ${MY_Filter}
-
-          unset MY_Filter
 ### ----------------------------------------------------------------- ###
       - name: Change Build user/Domain
         run: |

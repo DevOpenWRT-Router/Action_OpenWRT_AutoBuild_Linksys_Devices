@@ -110,6 +110,16 @@ CACHE_DIRECTORY_SETUP() {
 		ln -s ../../build_dir/host build_dir/host
 }
 
+SMART_CHMOD() {
+  MY_Filter=$(mktemp)
+  echo '/\.git' >  ${MY_Filter}
+  echo '/\.svn' >> ${MY_Filter}
+  find ./ -maxdepth 1 | grep -v '\./$' | grep -v '/\.git' | xargs -s1024 chmod -R u=rwX,og=rX
+  find ./ -type f | grep -v -f ${MY_Filter} | xargs -s1024 file | grep 'executable\|ELF' | cut -d ':' -f1 | xargs -s1024 chmod 755
+  rm -f ${MY_Filter}
+  unset MY_Filter
+}
+
 APPLY_PATCHES() {
   mv "$GITHUB_WORKSPACE"/configs/patches "$GITHUB_WORKSPACE"/openwrt/patches
   cd "$GITHUB_WORKSPACE"/openwrt || exit
