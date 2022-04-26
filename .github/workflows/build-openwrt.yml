@@ -22,6 +22,7 @@ env:
   HARDWARE_DEVICE: '${{ github.event.client_payload.message.HARDWARE_DEVICE }}'
   FEEDS_CONF: feeds.conf.default
   FUNCTIONS_SH: functions.sh
+  FETCHPACKAGES_SH: fetch_packages.sh
   CREATE_ACL_SH: create_acl_for_luci.sh
   BEFORE_BUILD: before_build.sh
   AFTER_BUILD: after_build.sh
@@ -213,7 +214,7 @@ jobs:
           cd openwrt
           git log --pretty=oneline -n 1
 ### ----------------------------------------------------------------- ###
-      - name: Load custom feeds
+      - name: run (feeds.conf.default) feeds
         run: >
           [ -e configs/$FEEDS_CONF ] && mv configs/$FEEDS_CONF
           openwrt/feeds.conf.default
@@ -234,27 +235,40 @@ jobs:
       - name: Load fetch_packages.sh
         if: env.USE_FETCH_PACKAGES == 'true' && !cancelled()
         run: |
-          chmod +x scripts/fetch_packages.sh
+          chmod +x scripts/$FETCHPACKAGES_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/fetch_packages.sh
+          $GITHUB_WORKSPACE/scripts/$FETCHPACKAGES_SH
 ### ----------------------------------------------------------------- ###
+      - name: Look inside package Directory
+        if: (!cancelled())
+        run: |
+          cd $GITHUB_WORKSPACE/openwrt
+          echo "=============================================="
+          echo "Main Space usage:"
+          echo "=============================================="
+          df -hT
+          echo "=============================================="
+          du -h --max-depth=3 ./package
+          echo "=============================================="
+### ----------------------------------------------------------------- ###
+
       - name: Update feeds Package
         run: |
-          file=./scripts/feeds_update.txt
+          file=./scripts/data/feeds_update.txt
           while read -r line; do
           cd openwrt && ./scripts/feeds update $line
           done < "$file"
 ### ----------------------------------------------------------------- ###
       - name: Install feeds Package
         run: |
-          file=./scripts/feeds_install.txt
+          file=./scripts/data/feeds_install.txt
           while read -r line; do
           cd openwrt && ./scripts/feeds install $line
           done < "$file"
 ### ----------------------------------------------------------------- ###
       - name: Uninstall feeds Package
         run: |
-          file=./scripts/feeds_uninstall.txt
+          file=./scripts/data/feeds_uninstall.txt
           while read -r line; do
           cd openwrt && ./scripts/feeds uninstall $line
           done < "$file"

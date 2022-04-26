@@ -1,0 +1,12 @@
+https://github.com/kenzok8/small-package/trunk
+package/kenzok8
+https://github.com/coolsnowwolf/lede/trunk/package/lean
+package/lean
+https://github.com/sirpdboy/sirpdboy-package/trunk
+package/sirpdboy
+https://github.com/sirpdboy/build/trunk
+package/sirpdboy
+https://github.com/helmiau/helmiwrt-packages/trunk
+package/helmiau
+https://github.com/NueXini/NueXini_Packages/trunk
+package/NueXini
