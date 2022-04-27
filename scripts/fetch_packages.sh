@@ -362,7 +362,7 @@ DELETE_UNWANTED(){
 
 DELETE_DUPLICATES() {
   echo "Running rmlint:"
-  rmlint --types "dd" "$GITHUB_WORKSPACE"/openwrt/package
+  rmlint --types "dd" --paranoid "$GITHUB_WORKSPACE"/openwrt/package
   rmlint.sh -c -q
   rm -rf rmlint.json
 }
