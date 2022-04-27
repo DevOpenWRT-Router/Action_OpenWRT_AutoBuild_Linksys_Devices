@@ -142,6 +142,12 @@ SUNDAQIANG_PACKAGES() {
 
   git clone https://github.com/sundaqiang/openwrt-packages.git package/sundaqiang
 }
+
+O-BUG_PACKAGES() {
+  echo "Downloading o-bug's packages"
+
+  git clone https://github.com/o-bug/openwrt-packages.git package/o-bug
+}
 ### -------------------------------------------------------------------------------------------------------------- ###
 LEAN_PACKAGES() {
 echo "Downloading coolsnowwolf's lean packages"
