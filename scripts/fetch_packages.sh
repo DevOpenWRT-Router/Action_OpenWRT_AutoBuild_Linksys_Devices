@@ -358,7 +358,7 @@ DELETE_UNWANTED(){
   echo "Removing all Directorys containing .svn"
   find . -name ".svn" | xargs rm -rf;
   echo "Removing all Directorys containing .git"
-  find . -name ".git" | xargs rm -rf;
+  find ./package -name ".git" | xargs rm -rf;
 
 
 }
