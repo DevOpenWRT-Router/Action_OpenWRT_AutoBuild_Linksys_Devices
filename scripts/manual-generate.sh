@@ -76,6 +76,12 @@ fi
 echo "Cloning from: fetch_packages.sh"
 ./fetch_packages.sh
 
+echo "Delete Not needed or wanted in Packages"
+./functions.sh DELETE_UNWANTED
+
+echo "Delete Duplicate packages"
+./functions.sh DELETE_DUPLICATES
+
 echo "Running: update -a, install -a, uninstall bluld"
 ./scripts/feeds update -a
 ./scripts/feeds install -a

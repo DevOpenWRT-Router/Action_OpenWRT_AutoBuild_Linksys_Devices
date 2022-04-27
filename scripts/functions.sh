@@ -149,6 +149,24 @@ CHANGE_DEFAULT_BANNER() {
   fi
 }
 
+DELETE_UNWANTED(){
+  echo "Removing all found po2lmo from Package Makefiles"
+  find  -iname "Makefile" -exec  sed -i '/po2lmo/d' {} \;
+  echo "Removing all Directorys containing po"
+  find . -name "po" | xargs rm -rf;
+  echo "Removing all Directorys containing .svn"
+  find . -name ".svn" | xargs rm -rf;
+  echo "Removing all Directorys containing .git"
+  find ./package -name ".git" | xargs rm -rf;
+}
+
+DELETE_DUPLICATES() {
+  echo "Running rmlint:"
+  rmlint --types "dd" --paranoid --honour-dir-layout --merge-directories --max-depth=4 "$GITHUB_WORKSPACE"/openwrt/package
+  "$GITHUB_WORKSPACE"/scripts/rmlint.sh -c -q -d || ./rmlint.sh -c -q -d
+  rm -rf rmlint.json
+}
+
 GETDEVICE() {
 if [ "$HARDWARE_DEVICE" != "wrtmulti" ]; then
   grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME

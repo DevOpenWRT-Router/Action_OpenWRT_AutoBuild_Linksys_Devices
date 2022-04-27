@@ -241,6 +241,22 @@ jobs:
           cd openwrt
           $GITHUB_WORKSPACE/scripts/$FETCHPACKAGES_SH
 ### ----------------------------------------------------------------- ###
+      - name: Delete UnWanted in (package)
+        id: unwanted
+        continue-on-error: true
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          cd openwrt
+          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH DELETE_UNWANTED
+### ----------------------------------------------------------------- ###
+      - name: Delete Duplicate Packages (RMLINT)
+        id: PackagesRMLINT
+        continue-on-error: true
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          cd openwrt
+          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH DELETE_DUPLICATES
+### ----------------------------------------------------------------- ###
       - name: Look inside package Directory
         if: (!cancelled())
         run: |
