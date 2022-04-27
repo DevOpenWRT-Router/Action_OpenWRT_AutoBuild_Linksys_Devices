@@ -120,6 +120,7 @@ git clone https://github.com/kenzok8/small-package.git package/kenzok8
 
 rm -rf package/kenzok8/my-default-settings # using a dif
 rm -rf package/kenzok8/my-autocore # Using the one above in unsorted
+rm -rf package/kenzok8/luci-app-easyupdate
 rm -rf package/kenzok8/mosdns # Build Errors
 rm -rf package/kenzok8/luci-app-mosdns
 rm -rf package/kenzok8/luci-app-smartdns
@@ -134,6 +135,12 @@ rm -rf package/kenzok8/main.sh
 rm -rf package/kenzok8/LICENSE
 rm -rf package/kenzok8/README.md
 
+}
+
+SUNDAQIANG_PACKAGES() {
+  echo "Downloading sundaqiang's packages"
+
+  git clone https://github.com/sundaqiang/openwrt-packages.git package/sundaqiang
 }
 ### -------------------------------------------------------------------------------------------------------------- ###
 LEAN_PACKAGES() {
