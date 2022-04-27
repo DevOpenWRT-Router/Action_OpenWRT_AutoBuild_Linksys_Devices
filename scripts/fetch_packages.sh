@@ -387,6 +387,7 @@ HELMIAU_PACKAGES;
 NUEXINI_PACKAGES;
 O-BUG_PACKAGES;
 DELETE_UNWANTED;
+DELETE_DUPLICATES;
 ### -------------------------------------------------------------------------------------------------------------- ###
 
 exit 0
