@@ -382,6 +382,7 @@ LEAN_PACKAGES;
 SIRPDBOY_PACKAGES;
 HELMIAU_PACKAGES;
 NUEXINI_PACKAGES;
+O-BUG_PACKAGES;
 DELETE_UNWANTED;
 ### -------------------------------------------------------------------------------------------------------------- ###
 
