@@ -162,7 +162,7 @@ DELETE_UNWANTED(){
 
 DELETE_DUPLICATES() {
   echo "Running rmlint:"
-  rmlint --types "dd" --paranoid --honour-dir-layout --merge-directories --max-depth=4 "$GITHUB_WORKSPACE"/openwrt/package
+  rmlint --types "dd" --paranoid --honour-dir-layout --merge-directories --max-depth=4 "$GITHUB_WORKSPACE"/openwrt/package || rmlint --types "dd" --paranoid --honour-dir-layout --merge-directories --max-depth=4 package
   "$GITHUB_WORKSPACE"/scripts/rmlint.sh -c -q -d || ./rmlint.sh -c -q -d
   rm -rf rmlint.json
 }
