@@ -112,11 +112,11 @@ CACHE_DIRECTORY_SETUP() {
 
 SMART_CHMOD() {
   MY_Filter=$(mktemp)
-  echo '/\.git' >  ${MY_Filter}
-  echo '/\.svn' >> ${MY_Filter}
+  echo '/\.git' >  "${MY_Filter}"
+  echo '/\.svn' >> "${MY_Filter}"
   find ./ -maxdepth 1 | grep -v '\./$' | grep -v '/\.git' | xargs -s1024 chmod -R u=rwX,og=rX
-  find ./ -type f | grep -v -f ${MY_Filter} | xargs -s1024 file | grep 'executable\|ELF' | cut -d ':' -f1 | xargs -s1024 chmod 755
-  rm -f ${MY_Filter}
+  find ./ -type f | grep -v -f "${MY_Filter}" | xargs -s1024 file | grep 'executable\|ELF' | cut -d ':' -f1 | xargs -s1024 chmod 755
+  rm -f "${MY_Filter}"
   unset MY_Filter
 }
 
@@ -131,6 +131,14 @@ APPLY_PATCHES() {
   fi
   rm -rf patches
 
+}
+
+APPLY_PR_PATCHES() {
+  file=./scripts/data/PR_patches.txt
+  while read -r line; do
+  cd "$GITHUB_WORKSPACE"/openwrt && wget https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/"$line".patch
+  git am "$line"
+  done < "$file"
 }
 
 CHANGE_DEFAULT_BANNER() {
