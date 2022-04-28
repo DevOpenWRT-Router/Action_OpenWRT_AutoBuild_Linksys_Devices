@@ -147,6 +147,8 @@ O-BUG_PACKAGES() {
   echo "Downloading o-bug's packages"
 
   git clone https://github.com/o-bug/openwrt-packages.git package/o-bug
+
+  rm -rf package/o-bug/luci-base
 }
 ### -------------------------------------------------------------------------------------------------------------- ###
 LEAN_PACKAGES() {
@@ -348,26 +350,6 @@ LUCI_THEMES() {
   ### luci-theme-fate
   # git clone https://github.com/fatelpc/luci-theme-fate.git package/luci-theme-fate
   echo "Done Fetching LUCI-Themes"
-}
-
-DELETE_UNWANTED(){
-  echo "Removing all found po2lmo from Package Makefiles"
-  find  -iname "Makefile" -exec  sed -i '/po2lmo/d' {} \;
-  echo "Removing all Directorys containing po"
-  find . -name "po" | xargs rm -rf;
-  echo "Removing all Directorys containing .svn"
-  find . -name ".svn" | xargs rm -rf;
-  echo "Removing all Directorys containing .git"
-  find ./package -name ".git" | xargs rm -rf;
-
-
-}
-
-DELETE_DUPLICATES() {
-  echo "Running rmlint:"
-  rmlint --types "dd" --paranoid --honour-dir-layout --merge-directories --max-depth=4 "$GITHUB_WORKSPACE"/openwrt/package
-  "$GITHUB_WORKSPACE"/scripts/rmlint.sh -c -q -d
-  rm -rf rmlint.json
 }
 
 ### -------------------------------------------------------------------------------------------------------------- ###
