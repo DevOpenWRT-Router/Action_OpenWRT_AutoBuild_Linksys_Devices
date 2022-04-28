@@ -13,6 +13,9 @@
 ###         [MAKE SURE YOU KNOW WHAT YOUR DOING BEFORE CHANGING ALL THIS]              ###
 ### ---------------------------------------------------------------------------------- ###
 ##########################################################################################
+echo "Loading Functions into Memory.."
+
+
 ## BOOTSTRAP ##
 BOOTSTRAP_START() {
 source scripts/lib/oo-bootstrap.sh
@@ -239,5 +242,5 @@ cd "$GITHUB_WORKSPACE"/openwrt || return
 ### ------------------------------------------------------------------------------------------------------- ###
 
 "$1";
-echo "End of Functions.sh"
+echo "Functions are now loaded into Memory."
 #exit 0 # <-- We dont want to exit fom souce command
