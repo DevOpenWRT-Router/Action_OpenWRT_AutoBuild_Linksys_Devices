@@ -69,6 +69,8 @@ env:
   RUN_GITHUB_PUSH: true
   DEFAULT_THEME_CHANGE: false
   CHANGE_DEFAULT_BANNER: false
+  DELETE_UNWANTED: true
+  DELETE_DUPLICATES: true
 ### --------------------------- ###
   UPLOAD_BUILD_LOGS: true
   UPLOAD_KMODS: true
@@ -246,6 +248,7 @@ jobs:
       - name: Delete UnWanted in (package)
         id: unwanted
         continue-on-error: true
+        if: env.DELETE_UNWANTED == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
@@ -254,6 +257,7 @@ jobs:
       - name: Delete Duplicate Packages (RMLINT)
         id: PackagesRMLINT
         continue-on-error: true
+        if: env.DELETE_DUPLICATES == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
