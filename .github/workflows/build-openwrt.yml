@@ -140,6 +140,8 @@ jobs:
 
           sudo -E apt-get -qq install $(curl -fsSL bit.ly/depends-ubuntu-2004)
 
+          sudo -E apt-get -qq install -y rmlint
+
           wget -qO - https://bit.ly/build-env-on-ubuntu-bionic | sed
           's/python-/python3-/g' | /bin/bash
 ### ----------------------------------------------------------------- ###
