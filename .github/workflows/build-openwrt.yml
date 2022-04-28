@@ -31,6 +31,7 @@ env:
   EXT_INIT_ENV: environment.sh
   DEVICE_NAME: ''
 ### --------------------------- ###
+  LOAD_FUNCTIONS: true
   BOOTSTRAP_START: true
   USE_FILES: true
   USE_CUST_THEMES: true
@@ -194,6 +195,12 @@ jobs:
           echo "=============================================="
           du -h --max-depth=2 ./
           echo "=============================================="
+### ----------------------------------------------------------------- ###
+      - name: Load Functions into Settings
+        if: env.LOAD_FUNCTIONS == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
 ### ----------------------------------------------------------------- ###
       - name: Run BootStrap (Error Handler)
         if: env.BOOTSTRAP_START == 'true' && !cancelled()

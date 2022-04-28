@@ -240,4 +240,4 @@ cd "$GITHUB_WORKSPACE"/openwrt || return
 
 "$1";
 echo "End of Functions.sh"
-exit 0
+#exit 0 # <-- We dont want to exit fom souce command
