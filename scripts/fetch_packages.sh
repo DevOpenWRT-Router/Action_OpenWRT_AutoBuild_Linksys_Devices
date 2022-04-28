@@ -149,6 +149,7 @@ O-BUG_PACKAGES() {
   git clone https://github.com/o-bug/openwrt-packages.git package/o-bug
 
   rm -rf package/o-bug/luci-base
+  rm -rf package/o-bug/netdata
 }
 ### -------------------------------------------------------------------------------------------------------------- ###
 LEAN_PACKAGES() {
