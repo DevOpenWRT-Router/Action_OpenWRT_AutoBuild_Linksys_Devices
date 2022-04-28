@@ -64,7 +64,7 @@ sed -i "s/'UTC'/'CST-8'\n        set system.@system[-1].zonename='America/New Yo
 function git_sparse_clone() (
           branch="$1" rurl="$2" localdir="$3" && shift 3
           git clone -b $branch --depth 1 --filter=blob:none --sparse $rurl $localdir
-          cd $localdir
+          cd $localdir || exit
           git sparse-checkout init --cone
           git sparse-checkout set $@
           mv -n $@ ../
@@ -79,6 +79,12 @@ function git_clone() (
   function mvdir() {
         mv -n `find $1/* -maxdepth 0 -type d` ./
         rm -rf $1
+        }
+
+function latest() {
+          (curl -gs -H 'Content-Type: application/json' \
+             -H "Authorization: Bearer ${{ secrets.REPO_TOKEN }}" \
+             -X POST -d '{ "query": "query {repository(owner: \"'"$1"'\", name: \"'"$2"'\"){refs(refPrefix:\"refs/tags/\",last:1,orderBy:{field:TAG_COMMIT_DATE,direction:ASC}){edges{node{name target{commitUrl}}}}defaultBranchRef{target{...on Commit {oid}}}}}"}' https://api.github.com/graphql)
         }
 ### ------------------------------------------------------------------------------------------------------- ###
 
