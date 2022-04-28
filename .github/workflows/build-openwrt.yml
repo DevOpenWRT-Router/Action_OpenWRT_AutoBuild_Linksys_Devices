@@ -156,6 +156,15 @@ jobs:
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
 ### ----------------------------------------------------------------- ###
+      - name: Setup System Functions and Settings
+        run: |
+          shopt -s extglob
+          git rm -r --cache * >/dev/null 2>&1 &
+          rm -rf `find ./* -maxdepth 0 -type d ! -name "diy"` >/dev/null 2>&1
+          chmod +x scripts/$FUNCTIONS_SH
+          cd openwrt
+          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH
+### ----------------------------------------------------------------- ###
       - name: Set variables
         run: |
           echo "::set-output name=date::$(date +%F)"
