@@ -70,7 +70,7 @@ env:
   DEFAULT_THEME_CHANGE: false
   CHANGE_DEFAULT_BANNER: false
   DELETE_UNWANTED: true
-  DELETE_DUPLICATES: true
+  DELETE_DUPLICATES: false
 ### --------------------------- ###
   UPLOAD_BUILD_LOGS: true
   UPLOAD_KMODS: true
