@@ -171,8 +171,8 @@ jobs:
         id: var
       - name: Initialization GIT environment
         run: |
-          git config --global user.email "BuildBot2021@gmail.com"
-          git config --global user.name "BuildBot"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
 ### ----------------------------------------------------------------- ###
       - name: Set source and branch
         id: setSource
