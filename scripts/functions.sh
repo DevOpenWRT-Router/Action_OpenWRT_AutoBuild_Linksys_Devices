@@ -90,6 +90,11 @@ function latest() {
              -X POST -d '{ "query": "query {repository(owner: \"'"$1"'\", name: \"'"$2"'\"){refs(refPrefix:\"refs/tags/\",last:1,orderBy:{field:TAG_COMMIT_DATE,direction:ASC}){edges{node{name target{commitUrl}}}}defaultBranchRef{target{...on Commit {oid}}}}}"}' https://api.github.com/graphql)
         }
 ### ------------------------------------------------------------------------------------------------------- ###
+SET_LUCI_SOURCE() {
+    echo "Setting LUCI souce to feed from."
+    sed -i 's#/git.openwrt.org/project/luci.git#/git.openwrt.org/project/luci.git#g' feeds.conf.default
+    sed -i 's#/github.com/coolsnowwolf/luci#/git.openwrt.org/project/luci.git#g' feeds.conf.default
+}
 
 BUILD_USER_DOMAIN() {
 ### Add kernel build user

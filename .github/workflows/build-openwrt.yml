@@ -236,16 +236,11 @@ jobs:
 ### ----------------------------------------------------------------- ###
       - name: Set LUCI Source
         id: setLuci
-        run: >
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           cd openwrt
-
-          sed -i
-          's#/git.openwrt.org/project/luci.git#/git.openwrt.org/project/luci.git#g'
-          feeds.conf.default
-
-          sed -i
-          's#/github.com/coolsnowwolf/luci#/git.openwrt.org/project/luci.git#g'
-          feeds.conf.default
+          SET_LUCI_SOURCE
 ### ----------------------------------------------------------------- ###
       - name: Load fetch_packages.sh
         if: env.USE_FETCH_PACKAGES == 'true' && !cancelled()
