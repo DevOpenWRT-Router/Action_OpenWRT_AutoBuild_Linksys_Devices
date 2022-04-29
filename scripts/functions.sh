@@ -231,7 +231,7 @@ echo "Kernel: $KERNEL_VER" # testing
 echo "DIR: $KMOD_DIR"
 echo "------------------------------------------------"
 echo "$KMOD_DIR" >> "$GITHUB_WORKSPACE"/openwrt/kmod
-cat kmod
+cat "$GITHUB_WORKSPACE"/openwrt/kmod
 }
 
 package_archive() {
