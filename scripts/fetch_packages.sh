@@ -370,16 +370,14 @@ UNSORTED_GIT_PACKAGES;
 UNSORTED_PACKAGES;
 SBWM1_PACKAGES;
 GSPOTX2F_PACKAGES;
-LINKEASE_PACKAGES;
+#LINKEASE_PACKAGES;
 KENZOK8_PACKAGES;
-SUNDAQIANG_PACKAGES;
+#SUNDAQIANG_PACKAGES;
 LEAN_PACKAGES;
 SIRPDBOY_PACKAGES;
-HELMIAU_PACKAGES;
-NUEXINI_PACKAGES;
+#HELMIAU_PACKAGES;
+#NUEXINI_PACKAGES;
 # O-BUG_PACKAGES; # <-- Turn this off for now, Seems to be alot of issues when building, Check FILES:
-DELETE_UNWANTED;
-DELETE_DUPLICATES;
 ### -------------------------------------------------------------------------------------------------------------- ###
 
 exit 0
