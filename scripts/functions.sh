@@ -66,22 +66,22 @@ sed -i "s/'UTC'/'CST-8'\n        set system.@system[-1].zonename='America/New Yo
 ### Some usefull command build tools ###
 function git_sparse_clone() (
           branch="$1" rurl="$2" localdir="$3" && shift 3
-          git clone -b $branch --depth 1 --filter=blob:none --sparse $rurl $localdir
-          cd $localdir || exit
+          git clone -b "$branch" --depth 1 --filter=blob:none --sparse "$rurl" "$localdir"
+          cd "$localdir" || exit
           git sparse-checkout init --cone
           git sparse-checkout set $@
           mv -n $@ ../
           cd ..
-          rm -rf $localdir
+          rm -rf "$localdir"
         )
 
 function git_clone() (
-          git clone --depth 1 $1 $2 || true
+          git clone --depth 1 "$1" "$2" || true
         )
 
-  function mvdir() {
-        mv -n `find $1/* -maxdepth 0 -type d` ./
-        rm -rf $1
+function mvdir() {
+          mv -n $(find $1/* -maxdepth 0 -type d) ./
+          rm -rf "$1"
         }
 
 function latest() {
