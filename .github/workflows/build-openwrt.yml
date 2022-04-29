@@ -32,7 +32,7 @@ env:
   DEVICE_NAME: ''
 ### --------------------------- ###
   LOAD_FUNCTIONS: true
-  BOOTSTRAP_START: true
+  BOOTSTRAP_START: false
   USE_FILES: true
   USE_CUST_THEMES: true
   USE_CUSTOM_CONFIGURATION: true
