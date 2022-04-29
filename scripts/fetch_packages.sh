@@ -128,6 +128,7 @@ rm -rf package/kenzok8/luci-app-mosdns
 rm -rf package/kenzok8/luci-app-smartdns
 rm -rf package/kenzok8/smartdns
 #rm -rf package/kenzok8/luci-app-netspeedtest
+rm -rf package/kenzok8/msmtp # Been said wont build: missing dependencies SSL
 rm -rf package/kenzok8/v2ray-core
 rm -rf package/kenzok8/v2ray-geodata
 rm -rf package/kenzok8/v2ray-plugin
