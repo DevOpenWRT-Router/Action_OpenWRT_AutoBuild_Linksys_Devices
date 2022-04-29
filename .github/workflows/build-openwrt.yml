@@ -200,7 +200,7 @@ jobs:
         if: env.LOAD_FUNCTIONS == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
-          source scripts/$FUNCTIONS_SH NULL
+          source scripts/$FUNCTIONS_SH
 ### ----------------------------------------------------------------- ###
       - name: Run BootStrap (Error Handler)
         if: env.BOOTSTRAP_START == 'true' && !cancelled()

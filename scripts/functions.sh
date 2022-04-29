@@ -241,6 +241,6 @@ cd "$GITHUB_WORKSPACE"/openwrt || return
 }
 ### ------------------------------------------------------------------------------------------------------- ###
 
-"$1";
+#"$1";
 echo "Functions are now loaded into Memory."
 #exit 0 # <-- We dont want to exit fom souce command
