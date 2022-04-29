@@ -206,7 +206,7 @@ jobs:
         if: env.BOOTSTRAP_START == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
-          scripts/$FUNCTIONS_SH BOOTSTRAP_START
+          BOOTSTRAP_START
 ### ----------------------------------------------------------------- ###
       - name: Before Build
         if: env.RUN_BEFORE_BUILD == 'true' && !cancelled()
@@ -259,7 +259,7 @@ jobs:
         run: |
           chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH DELETE_UNWANTED
+          DELETE_UNWANTED
 ### ----------------------------------------------------------------- ###
       - name: Delete Duplicate Packages (RMLINT)
         id: PackagesRMLINT
@@ -268,7 +268,7 @@ jobs:
         run: |
           chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH DELETE_DUPLICATES
+          DELETE_DUPLICATES
 ### ----------------------------------------------------------------- ###
       - name: Look inside package Directory
         if: (!cancelled())
@@ -311,7 +311,7 @@ jobs:
         run: |
           chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH APPLY_PATCHES
+          APPLY_PATCHES
 ### ----------------------------------------------------------------- ###
       - name: Pull Request OpenWRT Patches
         id: PRpatches
@@ -320,7 +320,7 @@ jobs:
         run: |
           chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH APPLY_PR_PATCHES
+          APPLY_PR_PATCHES
 ### ----------------------------------------------------------------- ###
       - name: Current Commit After Feeds/Patches
         if: env.GITLOGB == 'true' && !cancelled()
@@ -343,33 +343,33 @@ jobs:
         run: |
           chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH SMART_CHMOD
+          SMART_CHMOD
 
 ### ----------------------------------------------------------------- ###
       - name: Change Build user/Domain
         run: |
           chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH BUILD_USER_DOMAIN
+          BUILD_USER_DOMAIN
 ### ----------------------------------------------------------------- ###
       - name: Pre Defconfig Addons
         run: |
           chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH PRE_DEFCONFIG_ADDONS
+          PRE_DEFCONFIG_ADDONS
 ### ----------------------------------------------------------------- ###
       - name: Set defconfig to use ccache
         run: |
           chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH CCACHE_SETUP
+          CCACHE_SETUP
 ### ----------------------------------------------------------------- ###
       - name: Change Default theme Settings
         if: env.DEFAULT_THEME_CHANGE == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH DEFAULT_THEME_CHANGE
+          DEFAULT_THEME_CHANGE
 ### ----------------------------------------------------------------- ###
       - name: Add ACL
         if: env.ACL_LUCI == 'true' && !cancelled()
@@ -470,7 +470,7 @@ jobs:
         if: env.USE_KERNEL_VERSION == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
-          /bin/bash ${GITHUB_WORKSPACE}/scripts/$FUNCTIONS_SH kernel_version
+          kernel_version
 ### ----------------------------------------------------------------- ###
       - name: Building packages
         id: makepackages
@@ -505,7 +505,7 @@ jobs:
         if: env.USE_KERNEL_VERSION == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
-          /bin/bash ${GITHUB_WORKSPACE}/scripts/$FUNCTIONS_SH package_archive
+          package_archive
 ### ----------------------------------------------------------------- ###
       - name: Indexing packages
         id: indexingpackages
@@ -583,7 +583,7 @@ jobs:
 
           chmod +x scripts/$FUNCTIONS_SH
 
-          /bin/bash ${GITHUB_WORKSPACE}/scripts/$FUNCTIONS_SH GETDEVICE
+          GETDEVICE
 ### --------------------------- ###
       - name: If Error
         uses: actions/upload-artifact@main
