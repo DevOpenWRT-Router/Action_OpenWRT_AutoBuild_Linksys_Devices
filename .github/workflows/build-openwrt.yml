@@ -206,6 +206,7 @@ jobs:
         if: env.BOOTSTRAP_START == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           BOOTSTRAP_START
 ### ----------------------------------------------------------------- ###
       - name: Before Build
@@ -218,8 +219,9 @@ jobs:
         if: env.CHANGE_DEFAULT_BANNER == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH CHANGE_DEFAULT_BANNER
+          CHANGE_DEFAULT_BANNER
 ### ----------------------------------------------------------------- ###
       - name: Current Commit Before Feeds/Patches
         if: env.GITLOGA == 'true' && !cancelled()
@@ -258,6 +260,7 @@ jobs:
         if: env.DELETE_UNWANTED == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           cd openwrt
           DELETE_UNWANTED
 ### ----------------------------------------------------------------- ###
@@ -267,6 +270,7 @@ jobs:
         if: env.DELETE_DUPLICATES == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           cd openwrt
           DELETE_DUPLICATES
 ### ----------------------------------------------------------------- ###
@@ -310,6 +314,7 @@ jobs:
         if: env.USE_OPENWRT_PATCHES == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           cd openwrt
           APPLY_PATCHES
 ### ----------------------------------------------------------------- ###
@@ -319,6 +324,7 @@ jobs:
         if: env.USE_PR_OPENWRT_PATCHES == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           cd openwrt
           APPLY_PR_PATCHES
 ### ----------------------------------------------------------------- ###
@@ -342,6 +348,7 @@ jobs:
         if: env.USE_SMART_CHMOD == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           cd openwrt
           SMART_CHMOD
 
@@ -349,18 +356,21 @@ jobs:
       - name: Change Build user/Domain
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           cd openwrt
           BUILD_USER_DOMAIN
 ### ----------------------------------------------------------------- ###
       - name: Pre Defconfig Addons
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           cd openwrt
           PRE_DEFCONFIG_ADDONS
 ### ----------------------------------------------------------------- ###
       - name: Set defconfig to use ccache
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           cd openwrt
           CCACHE_SETUP
 ### ----------------------------------------------------------------- ###
@@ -368,6 +378,7 @@ jobs:
         if: env.DEFAULT_THEME_CHANGE == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           cd openwrt
           DEFAULT_THEME_CHANGE
 ### ----------------------------------------------------------------- ###
@@ -470,6 +481,7 @@ jobs:
         if: env.USE_KERNEL_VERSION == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           kernel_version
 ### ----------------------------------------------------------------- ###
       - name: Building packages
@@ -505,6 +517,7 @@ jobs:
         if: env.USE_KERNEL_VERSION == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           package_archive
 ### ----------------------------------------------------------------- ###
       - name: Indexing packages
@@ -582,6 +595,8 @@ jobs:
           echo "::set-output name=status::success"
 
           chmod +x scripts/$FUNCTIONS_SH
+
+          source scripts/$FUNCTIONS_SH
 
           GETDEVICE
 ### --------------------------- ###
