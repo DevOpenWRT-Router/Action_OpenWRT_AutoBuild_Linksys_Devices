@@ -111,6 +111,8 @@ GSPOTX2F_PACKAGES() {
 LINKEASE_PACKAGES() {
   ### istore-packages
   git clone https://github.com/linkease/istore-packages.git package/linkease/istore-packages
+
+  rm -rf package/linkease/istore-packages/luci-app-kodexplorer
 }
 
 KENZOK8_PACKAGES() {
@@ -300,6 +302,12 @@ rm -rf package/helmiau/badvpn
 rm -rf package/helmiau/build-ipk
 rm -rf package/helmiau/corkscrew
 rm -rf package/helmiau/preview
+rm -rf package/helmiau/luci-app-freevpnsite
+rm -rf package/helmiau/luci-app-libernet
+rm -rf package/helmiau/luci-app-mikhmon
+rm -rf package/helmiau/luci-app-netmon
+rm -rf package/helmiau/luci-app-tinyfm
+rm -rf package/helmiau/luci-app-wegare
 
 echo "END of helmiau's Build packages"
 }
