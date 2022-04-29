@@ -124,7 +124,7 @@ echo "Setting ccache directory:"
 export CCACHE_DIR="$GITHUB_WORKSPACE"/openwrt/.ccache
 echo "Fix Sloppiness of ccache:"
 ccache --set-config=sloppiness=file_macro,locale,time_macros
-ccache -sv
+ccache -s
 }
 
 CACHE_DIRECTORY_SETUP() {
