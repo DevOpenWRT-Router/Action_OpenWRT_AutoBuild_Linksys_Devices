@@ -244,6 +244,7 @@ git clone https://github.com/sirpdboy/sirpdboy-package.git package/sirpdboy_A
 
 rm -rf package/sirpdboy_A/adguardhome
 rm -rf package/sirpdboy_A/doc
+rm -rf package/sirpdboy_A/luci-app-autotimeset
 rm -rf package/sirpdboy_A/luci-app-access-control ## NEEDS FIXED
 rm -rf package/sirpdboy_A/luci-app-baidupcs-web
 rm -rf package/sirpdboy_A/luci-app-chinadns-ng
