@@ -186,11 +186,11 @@ CHANGE_DEFAULT_BANNER() {
 
 DELETE_UNWANTED(){
   echo "Removing all found po2lmo from Package Makefiles"
-  find  -iname "Makefile" -exec  sed -i '/po2lmo/d' {} \;
+  find ./package -iname "Makefile" -exec  sed -i '/po2lmo/d' {} \;
   echo "Removing all Directorys containing po"
-  find . -name "po" | xargs rm -rf;
+  find ./package -name "po" | xargs rm -rf;
   echo "Removing all Directorys containing .svn"
-  find . -name ".svn" | xargs rm -rf;
+  find ./package -name ".svn" | xargs rm -rf;
   echo "Removing all Directorys containing .git"
   find ./package -name ".git" | xargs rm -rf;
 }
