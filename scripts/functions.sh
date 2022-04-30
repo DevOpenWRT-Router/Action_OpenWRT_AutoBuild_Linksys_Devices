@@ -212,7 +212,7 @@ DELETE_DUPLICATES() {
   find . -name "rmlint.json" | xargs rm -rf
 }
 
-GETDEVICE() {
+get_deviceID() {
 if [ "$HARDWARE_DEVICE" != "wrtmulti" ]; then
   grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
   [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> "$GITHUB_ENV"

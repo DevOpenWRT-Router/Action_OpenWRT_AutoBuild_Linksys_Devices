@@ -571,9 +571,6 @@ jobs:
           make -j${Make_Process} || make -j${Make_Process} V=s
           echo $?
           echo "::set-output name=status::success"
-          chmod +x scripts/$FUNCTIONS_SH
-          source scripts/$FUNCTIONS_SH
-          GETDEVICE
 ### --------------------------- ###
       - name: If Error
         uses: actions/upload-artifact@main
@@ -582,6 +579,13 @@ jobs:
         with:
           name: 'OpenWrt_logs${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
           path: openwrt/logs/
+### ----------------------------------------------------------------- ###
+      - name: Get Device ID Name (HARDWARE ID)
+        id: GET_DEVICEID
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          get_deviceID
 ### ----------------------------------------------------------------- ###
       - name: After Build
         if: env.RUN_AFTER_BUILD == 'true' && !cancelled()
