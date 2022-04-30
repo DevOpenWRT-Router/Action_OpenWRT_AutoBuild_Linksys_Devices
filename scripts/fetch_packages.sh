@@ -146,7 +146,11 @@ rm -rf package/kenzok8/.github
 rm -rf package/kenzok8/main.sh
 rm -rf package/kenzok8/LICENSE
 rm -rf package/kenzok8/README.md
-
+rm -rf package/kenzok8/luci-app-bypass
+rm -rf package/kenzok8/luci-app-passwall
+rm -rf package/kenzok8/luci-app-passwall2
+rm -rf package/kenzok8/luci-app-ssr-plus
+rm -rf package/kenzok8/baidupcs-web
 }
 
 SUNDAQIANG_PACKAGES() {
