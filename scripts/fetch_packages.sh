@@ -129,6 +129,14 @@ rm -rf package/kenzok8/luci-app-smartdns
 rm -rf package/kenzok8/smartdns
 #rm -rf package/kenzok8/luci-app-netspeedtest
 rm -rf package/kenzok8/msmtp # Been said wont build: missing dependencies SSL
+rm -rf package/kenzok8/luci-app-autotimeset
+rm -rf package/kenzok8/luci-app-dnscrypt-proxy2
+rm -rf package/kenzok8/luci-app-macvlan
+rm -rf package/kenzok8/luci-app-mentohust
+rm -rf package/kenzok8/luci-app-minieap
+rm -rf package/kenzok8/luci-app-openvpn-server
+rm -rf package/kenzok8/luci-app-tencentddns
+rm -rf package/kenzok8/luci-app-udp2raw
 rm -rf package/kenzok8/v2ray-core
 rm -rf package/kenzok8/v2ray-geodata
 rm -rf package/kenzok8/v2ray-plugin
