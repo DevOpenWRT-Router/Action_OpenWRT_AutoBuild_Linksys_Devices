@@ -254,23 +254,23 @@ jobs:
 
       - name: Update feeds Package
         run: |
-          file=./scripts/data/feeds_update.txt
+          file=$GITHUB_WORKSPACE/scripts/data/feeds_update.txt
           while read -r line; do
-          cd openwrt && ./scripts/feeds update $line
+          cd $GITHUB_WORKSPACE/openwrt && ./scripts/feeds update $line
           done < "$file"
 ### ----------------------------------------------------------------- ###
       - name: Install feeds Package
         run: |
-          file=./scripts/data/feeds_install.txt
+          file=$GITHUB_WORKSPACE/scripts/data/feeds_install.txt
           while read -r line; do
-          cd openwrt && ./scripts/feeds install $line
+          cd $GITHUB_WORKSPACE/openwrt && ./scripts/feeds install $line
           done < "$file"
 ### ----------------------------------------------------------------- ###
       - name: Uninstall feeds Package
         run: |
-          file=./scripts/data/feeds_uninstall.txt
+          file=$GITHUB_WORKSPACE/scripts/data/feeds_uninstall.txt
           while read -r line; do
-          cd openwrt && ./scripts/feeds uninstall $line
+          cd $GITHUB_WORKSPACE/openwrt && ./scripts/feeds uninstall $line
           done < "$file"
 ### ----------------------------------------------------------------- ###
       - name: Copy (files) Dir
