@@ -533,66 +533,46 @@ jobs:
       - name: Compile the firmware (Debug)
         id: compiledebug
         if: env.DEBUG_COMPILE == 'true' && env.IGNORE_COMPILE == 'false'
-        run: >
+        run: |
           cd openwrt
-
           echo -e "$(nproc) thread compile"
-
           make -j$(nproc) V=s 2>&1 | tee logs/build.log | grep -i -E
           "^make.*(error|[12345]...Entering directory)"
-
           echo "::set-output name=status::success"
-
           grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r
           's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
-
           [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >>
           $GITHUB_ENV
-
           echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 ### ----------------------------------------------------------------- ###
       - name: Compile the firmware (ignore Errors)
         id: compileignore
         if: env.IGNORE_COMPILE == 'true' && env.DEBUG_COMPILE == 'false'
-        run: >
+        run: |
           cd openwrt
-
           echo -e "$(nproc) thread compile"
-
           IGNORE_ERRORS=1 make -j$(nproc) -i V=s 2>&1 | tee logs/build.log |
           grep -i -E "^make.*(error|[12345]...Entering directory)"
-
           echo "::set-output name=status::success"
-
           grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r
           's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
-
           [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >>
           $GITHUB_ENV
-
           echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 ### ----------------------------------------------------------------- ###
       - name: Compile the firmware
         id: compile
         continue-on-error: true
         if: env.DEBUG_COMPILE == 'false' && env.IGNORE_COMPILE == 'false'
-        run: >
+        run: |
           cd openwrt
-
           echo -e "$(nproc) thread compile"
-
           let Make_Process=$(nproc)+2
-
           make -j${Make_Process} || make -j${Make_Process} V=s
-
           echo $?
-
           echo "::set-output name=status::success"
-
           chmod +x scripts/$FUNCTIONS_SH
-
           source scripts/$FUNCTIONS_SH
-
           GETDEVICE
 ### --------------------------- ###
       - name: If Error
