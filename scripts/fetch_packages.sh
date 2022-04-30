@@ -137,6 +137,7 @@ rm -rf package/kenzok8/luci-app-minieap
 rm -rf package/kenzok8/luci-app-openvpn-server
 rm -rf package/kenzok8/luci-app-tencentddns
 rm -rf package/kenzok8/luci-app-udp2raw
+rm -rf package/kenzok8/luci-app-diskman
 rm -rf package/kenzok8/v2ray-core
 rm -rf package/kenzok8/v2ray-geodata
 rm -rf package/kenzok8/v2ray-plugin
