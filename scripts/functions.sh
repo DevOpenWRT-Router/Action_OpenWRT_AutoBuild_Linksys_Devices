@@ -184,16 +184,26 @@ CHANGE_DEFAULT_BANNER() {
   fi
 }
 
-DELETE_UNWANTED(){
+REMOVE_PO2LMO() {
   echo "Removing all found po2lmo from Package Makefiles"
   find ./package -iname "Makefile" -exec  sed -i '/po2lmo/d' {} \;
+}
+
+REMOVE_PO() {
   echo "Removing all Directorys containing po"
   find ./package -name "po" | xargs rm -rf;
+}
+
+REMOVE_SVN() {
   echo "Removing all Directorys containing .svn"
   find ./package -name ".svn" | xargs rm -rf;
+}
+
+REMOVE_GIT() {
   echo "Removing all Directorys containing .git"
   find ./package -name ".git" | xargs rm -rf;
 }
+
 
 DELETE_DUPLICATES() {
   echo "Running rmlint:"
