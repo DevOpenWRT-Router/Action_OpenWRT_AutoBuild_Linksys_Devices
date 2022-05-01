@@ -90,6 +90,18 @@ function latest() {
              -X POST -d '{ "query": "query {repository(owner: \"'"$1"'\", name: \"'"$2"'\"){refs(refPrefix:\"refs/tags/\",last:1,orderBy:{field:TAG_COMMIT_DATE,direction:ASC}){edges{node{name target{commitUrl}}}}defaultBranchRef{target{...on Commit {oid}}}}}"}' https://api.github.com/graphql)
         }
 ### ------------------------------------------------------------------------------------------------------- ###
+CLONE_OPENWRT_SOURCE() {
+    echo "Cloning Source/Branch"
+
+    df -hT "$PWD"
+
+    URL=https://github.com/openwrt/openwrt.git
+    BRANCH=master
+    git_clone "$URL" "$BRANCH" openwrt
+    ln -sf /workdir/openwrt "$GITHUB_WORKSPACE"/openwrt
+    return
+}
+
 SET_LUCI_SOURCE() {
     echo "Setting LUCI souce to feed from."
     sed -i 's#/git.openwrt.org/project/luci.git#/git.openwrt.org/project/luci.git#g' feeds.conf.default
