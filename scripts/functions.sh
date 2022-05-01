@@ -15,7 +15,7 @@
 ##########################################################################################
 echo "Loading Functions into Memory.."
 
-
+### My lame ass attempt to setup error catching
 ## BOOTSTRAP ##
 BOOTSTRAP_START() {
 source scripts/lib/oo-bootstrap.sh
@@ -108,6 +108,7 @@ BUILD_USER_DOMAIN() {
     sed -i 's@\(CONFIG_KERNEL_BUILD_DOMAIN=\).*@\1$"PureFusion"@' .config
 }
 
+### This is NEEDED to setup all pre-configs before building
 PRE_DEFCONFIG_ADDONS() {
 echo "Seeding .config (enable Target: mvebu cortexa9):"
 printf 'CONFIG_TARGET_mvebu=y\nCONFIG_TARGET_mvebu_cortexa9=y\n' >> .config
@@ -121,6 +122,7 @@ echo "property 'libc' set:"
 sed -ne '/^CONFIG_LIBC=/ { s!^CONFIG_LIBC="\(.*\)"!\1!; s!^musl$!!; s!.\+!-&!p }' .config
 }
 
+### This will setup ccache support
 ### CCACHE SETUP ###
 CCACHE_SETUP() {
 echo "Seeding .config (enable ccache):"
@@ -132,6 +134,7 @@ ccache --set-config=sloppiness=file_macro,locale,time_macros
 ccache -s
 }
 
+### Not even sure why I still have this here, I dont really use it
 CACHE_DIRECTORY_SETUP() {
   if [ ! -d '../staging_dir' ]; then
 			mkdir ../staging_dir
@@ -145,6 +148,7 @@ CACHE_DIRECTORY_SETUP() {
 		ln -s ../../build_dir/host build_dir/host
 }
 
+### This is a quick way to apply correct chmod to all files and directorys needed
 SMART_CHMOD() {
   MY_Filter=$(mktemp)
   echo '/\.git' >  "${MY_Filter}"
@@ -155,6 +159,7 @@ SMART_CHMOD() {
   unset MY_Filter
 }
 
+### Apply all patches that are in 'patch' directory
 APPLY_PATCHES() {
   mv "$GITHUB_WORKSPACE"/configs/patches "$GITHUB_WORKSPACE"/openwrt/patches
   cd "$GITHUB_WORKSPACE"/openwrt || exit
@@ -168,6 +173,7 @@ APPLY_PATCHES() {
 
 }
 
+### When finished, this will auto download Pull Request Patches from openwrt and apply them
 APPLY_PR_PATCHES() {
   file=./scripts/data/PR_patches.txt
   while read -r line; do
@@ -184,27 +190,31 @@ CHANGE_DEFAULT_BANNER() {
   fi
 }
 
+### Dont use this Fuction Wildly, Will cause many building Issues
 REMOVE_PO2LMO() {
   echo "Removing all found po2lmo from Package Makefiles"
   find ./package -iname "Makefile" -exec  sed -i '/po2lmo/d' {} \;
 }
 
+### Be careful when using this one, Can resort to build Failing
 REMOVE_PO() {
   echo "Removing all Directorys containing po"
   find ./package -name "po" | xargs rm -rf;
 }
 
+### This should 100% safe to use
 REMOVE_SVN() {
   echo "Removing all Directorys containing .svn"
   find ./package -name ".svn" | xargs rm -rf;
 }
 
+### Make sure you only run this in package Directory, else all could fail
 REMOVE_GIT() {
   echo "Removing all Directorys containing .git"
   find ./package -name ".git" | xargs rm -rf;
 }
 
-
+### Still testing this out, Not sure if it benifits or causes issues
 DELETE_DUPLICATES() {
   echo "Running rmlint:"
   rmlint --types "dd" --paranoid --honour-dir-layout --merge-directories --max-depth=3 "$GITHUB_WORKSPACE"/openwrt/package || rmlint --types "dd" --paranoid --honour-dir-layout --merge-directories --max-depth=4 package
@@ -212,6 +222,7 @@ DELETE_DUPLICATES() {
   find . -name "rmlint.json" | xargs rm -rf
 }
 
+### This is used for file and archive naming reasons, Plus checks for wrtmulti config used
 get_deviceID() {
 if [ "$HARDWARE_DEVICE" != "wrtmulti" ]; then
   grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
@@ -222,6 +233,7 @@ fi
   echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> "$GITHUB_ENV"
 }
 
+### This is needed for creation of kmods directory
 kernel_version() {
 cd openwrt || return
 find build_dir/ -name .vermagic -exec cat {} \; >VERMAGIC  # Find hash
@@ -244,6 +256,7 @@ echo "$KMOD_DIR" >> "$GITHUB_WORKSPACE"/openwrt/kmod
 cat "$GITHUB_WORKSPACE"/openwrt/kmod
 }
 
+### This is really 2nd part of above kernel version
 package_archive() {
 cd "$GITHUB_WORKSPACE"/openwrt || return
 mkdir -p bin/targets/mvebu/cortexa9/kmods/"$KMOD_DIR"
