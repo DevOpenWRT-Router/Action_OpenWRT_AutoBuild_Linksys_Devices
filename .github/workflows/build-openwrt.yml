@@ -20,6 +20,8 @@ env:
 ### --------------------------- ###
   HARDWARE_ID: '${{ github.event.client_payload.message.HARDWARE_ID }}'
   HARDWARE_DEVICE: '${{ github.event.client_payload.message.HARDWARE_DEVICE }}'
+  CLONE_URL: https://github.com/openwrt/openwrt.git
+  CLONE_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   FUNCTIONS_SH: functions.sh
   FETCHPACKAGES_SH: fetch_packages.sh
@@ -165,22 +167,13 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
 ### ----------------------------------------------------------------- ###
-      - name: Set source and branch
-        id: setSource
-        run: >
-          echo "::set-output
-          name=sourceString::https://github.com/openwrt/openwrt.git"
-
-          echo "::set-output name=branchString::master"
-### ----------------------------------------------------------------- ###
-      - name: Clone source code
+      - name: Clone OpenWRT source code
         working-directory: /workdir
-        run: >
+        run: |
           df -hT $PWD
-
-          git clone ${{ steps.setSource.outputs.sourceString }} -b ${{
-          steps.setSource.outputs.branchString }} openwrt
-
+          URL=$CLONE_URL
+          BRANCH=$CLONE_BRANCH
+          git clone "$URL" -b "$BRANCH" openwrt
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 ### ----------------------------------------------------------------- ###
       - name: Check Main space usage
