@@ -229,7 +229,7 @@ REMOVE_GIT() {
 ### Still testing this out, Not sure if it benifits or causes issues
 DELETE_DUPLICATES() {
   echo "Running rmlint:"
-  rmlint --types "dd" --paranoid --honour-dir-layout --merge-directories --max-depth=3 "$GITHUB_WORKSPACE"/openwrt/package || rmlint --types "dd" --paranoid --honour-dir-layout --merge-directories --max-depth=4 package
+  rmlint --types "dd" --paranoid --honour-dir-layout --merge-directories --max-depth=2 "$GITHUB_WORKSPACE"/openwrt/package || rmlint --types "dd" --paranoid --honour-dir-layout --merge-directories --max-depth=4 package
   find . -name "rmlint.sh" | xargs rmlint.sh -c -q -d || ./rmlint.sh -c -q -d
   find . -name "rmlint.json" | xargs rm -rf
 }
