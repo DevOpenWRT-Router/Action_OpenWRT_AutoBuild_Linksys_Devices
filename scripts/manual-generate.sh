@@ -82,10 +82,10 @@ echo "------------------------------"
 source ./functions.sh
 
 echo "Delete Not needed or wanted in Packages"
-DELETE_UNWANTED
+#DELETE_UNWANTED
 
 echo "Delete Duplicate packages"
-DELETE_DUPLICATES
+#DELETE_DUPLICATES
 
 echo "Running: update -a, install -a, uninstall bluld"
 ./scripts/feeds update -a
