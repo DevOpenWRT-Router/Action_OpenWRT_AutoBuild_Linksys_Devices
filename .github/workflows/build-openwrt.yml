@@ -33,6 +33,7 @@ env:
   EXT_INIT_ENV: environment.sh
   DEVICE_NAME: ''
 ### --------------------------- ###
+  INSTALL_LLVM: true
   LOAD_FUNCTIONS: true
   BOOTSTRAP_START: false
   USE_FILES: true
@@ -158,6 +159,11 @@ jobs:
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
 ### ----------------------------------------------------------------- ###
+      - name: Install LLVM
+        if: env.INSTALL_LLVM == 'true' && !cancelled()
+        run: |
+          bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+### ----------------------------------------------------------------- ###        
       - name: Set variables
         run: |
           echo "::set-output name=date::$(date +%F)"
