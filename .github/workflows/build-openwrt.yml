@@ -33,7 +33,7 @@ env:
   EXT_INIT_ENV: environment.sh
   DEVICE_NAME: ''
 ### --------------------------- ###
-  INSTALL_LLVM: true
+  INSTALL_LLVM: false
   LOAD_FUNCTIONS: true
   BOOTSTRAP_START: false
   USE_FILES: true
