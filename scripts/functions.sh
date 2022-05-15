@@ -190,7 +190,13 @@ APPLY_PR_PATCHES() {
   file="$GITHUB_WORKSPACE"/scripts/data/PR_patches.txt
   while read -r line; do
   cd "$GITHUB_WORKSPACE"/openwrt && wget https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/"$line".patch
-  git am "$line"
+  echo "Applying $line.patch"
+  git am "$line".patch
+  if [ $? = 0 ] ; then
+    echo "[*] 'git am $line.patch' Ran successfully."
+  else
+    echo "[*] 'git am $line.patch' FAILED."
+  fi
   done < "$file"
 }
 
