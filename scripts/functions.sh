@@ -187,6 +187,7 @@ APPLY_PATCHES() {
 
 ### When finished, this will auto download Pull Request Patches from openwrt and apply them
 APPLY_PR_PATCHES() {
+  echo "This is WORKING Here:"
   file="$GITHUB_WORKSPACE"/scripts/data/PR_patches.txt
   while read -r line; do
   cd "$GITHUB_WORKSPACE"/openwrt && wget https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/"$line".patch
