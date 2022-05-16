@@ -72,6 +72,8 @@ if [ ! -d "$FILE" ]; then
     exit
 fi
 ### ------------------------------------------------------------------------------- ###
+GITHUB_WORKSPACE=$PWD
+
 
 echo "Cloning from: fetch_packages.sh"
 ./fetch_packages.sh
