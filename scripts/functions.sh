@@ -201,6 +201,16 @@ APPLY_PR_PATCHES() {
   done < "$file"
 }
 
+RESET_COMMIT() {
+  echo "Reseting HEAD to $1, T:$0, T1:$1, T2:$2"
+  git reset --hard "$1"
+  if [ $? = 0 ] ; then
+    echo "[*] 'git reset --hard $1 Ran successfully."
+  else
+    echo "[*] git reset --hard $1 FAILED."
+  fi
+}
+
 CHANGE_DEFAULT_BANNER() {
   if [ -f "$GITHUB_WORKSPACE/openwrt/package/base_files/files/etc/banner" ];
   then 

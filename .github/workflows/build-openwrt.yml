@@ -33,6 +33,7 @@ env:
   EXT_INIT_ENV: environment.sh
   DEVICE_NAME: ''
 ### --------------------------- ###
+  RESET_OPENWRT_COMMIT: true
   INSTALL_LLVM: false
   LOAD_FUNCTIONS: true
   BOOTSTRAP_START: false
@@ -220,6 +221,14 @@ jobs:
           source scripts/$FUNCTIONS_SH
           cd openwrt
           CHANGE_DEFAULT_BANNER
+### ----------------------------------------------------------------- ###
+      - name: Reset Commit History To
+        if: env.RESET_OPENWRT_COMMIT == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          cd openwrt
+          RESET_COMMIT "efd9463dcfe27681879d18e5fd9a32351447aa25"
 ### ----------------------------------------------------------------- ###
       - name: Current Commit Before Feeds/Patches
         if: env.GITLOGA == 'true' && !cancelled()
