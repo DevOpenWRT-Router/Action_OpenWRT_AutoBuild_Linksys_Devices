@@ -33,7 +33,7 @@ env:
   EXT_INIT_ENV: environment.sh
   DEVICE_NAME: ''
 ### --------------------------- ###
-  RESET_OPENWRT_COMMIT: true
+  RESET_OPENWRT_COMMIT: false
   INSTALL_LLVM: false
   LOAD_FUNCTIONS: true
   BOOTSTRAP_START: false
