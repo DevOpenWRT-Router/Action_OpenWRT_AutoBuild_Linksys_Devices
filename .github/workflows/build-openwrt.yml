@@ -228,7 +228,7 @@ jobs:
           chmod +x scripts/$FUNCTIONS_SH
           source scripts/$FUNCTIONS_SH
           cd openwrt
-          RESET_COMMIT "efd9463dcfe27681879d18e5fd9a32351447aa25"
+          RESET_COMMIT "771ea6f2e3868b208b5261ae676160d5ef6544e8"
 ### ----------------------------------------------------------------- ###
       - name: Current Commit Before Feeds/Patches
         if: env.GITLOGA == 'true' && !cancelled()
