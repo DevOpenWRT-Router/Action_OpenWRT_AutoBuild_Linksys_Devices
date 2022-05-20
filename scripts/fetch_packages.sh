@@ -163,6 +163,8 @@ rm -rf package/kenzok8/luci-app-passwall
 rm -rf package/kenzok8/luci-app-passwall2
 rm -rf package/kenzok8/luci-app-ssr-plus
 rm -rf package/kenzok8/baidupcs-web
+rm -rf package/kenzok8/filebrowser # builds node/host Causing issues right now
+rm -rf package/kenzok8/luci-app-filebrowser # part 2 of filebrowser
 }
 
 SUNDAQIANG_PACKAGES() {
