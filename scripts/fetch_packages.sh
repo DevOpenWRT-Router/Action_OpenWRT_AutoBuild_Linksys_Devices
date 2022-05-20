@@ -130,7 +130,7 @@ KENZOK8_PACKAGES() {
 echo "Downloading Kenzok8's small-packages"
 
 git clone https://github.com/kenzok8/small-package.git package/kenzok8
-cd package/kenzok8 && git reset --hard 4e1fa6a8cf6e96163e5c9d0df690a31d2080de7e && cd ../..
+# cd package/kenzok8 && git reset --hard 4e1fa6a8cf6e96163e5c9d0df690a31d2080de7e && cd ../..
 
 rm -rf package/kenzok8/my-default-settings # using a dif
 rm -rf package/kenzok8/my-autocore # Using the one above in unsorted
