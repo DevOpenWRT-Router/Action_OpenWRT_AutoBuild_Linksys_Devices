@@ -212,7 +212,7 @@ echo "$len Packages"
 for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
-  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
+  svn export $url/"${packages[$i]}" $placement/"${packages[$i]}"
   
 done
 
@@ -241,7 +241,7 @@ rm -rf package/lean/mt # Some Error Keeps happening #
 echo "END of coolsnowwolf's lean packages"
 ### Needed for qBittorrent qt5
 echo "Add coolsnowwolf's libdouble-conversion"
-svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/libdouble-conversion package/libs/libdouble-conversion
+svn export https://github.com/coolsnowwolf/lede/trunk/package/libs/libdouble-conversion package/libs/libdouble-conversion
 echo "END coolsnowwolf's libdouble-conversion"
 ### Use lede's edition of mwlwifi
 #echo "Add coolsnowwolf's edition of mwlwifi"
@@ -257,7 +257,7 @@ echo "Downloading sirpdboy's packages"
 ## Sirpdboy's luci-app-netdata
 git clone https://github.com/sirpdboy/luci-app-netdata.git package/sirpdboy/luci-app-netdata
 ## Sirpdboy's myautocore enhanced version preview information only for OPENWRT
-svn co https://github.com/sirpdboy/myautocore/trunk/myautocore package/sirpdboy/myautocore
+svn export https://github.com/sirpdboy/myautocore/trunk/myautocore package/sirpdboy/myautocore
 
 git clone https://github.com/sirpdboy/sirpdboy-package.git package/sirpdboy_A
 
