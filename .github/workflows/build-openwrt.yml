@@ -37,6 +37,7 @@ env:
   INSTALL_LLVM: false
   LOAD_FUNCTIONS: true
   BOOTSTRAP_START: false
+  PRINT_FAILLOGS: true
   USE_FILES: true
   USE_CUST_THEMES: true
   USE_CUSTOM_CONFIGURATION: true
@@ -620,6 +621,14 @@ jobs:
         run: |
           echo "[+] Prepare Packages/Kmods for Distribution Failed"
 ### ----------------------------------------------------------------- ###
+      - name: Print faillogs
+        working-directory: /workdir/openwrt
+        if: env.PRINT_FAILLOGS == 'true' && (!cancelled())
+        run: |
+          [ ! -e "./logs/error.txt" ] || cat "./logs/error.txt"
+          [ ! -e "./logs/package/error.txt" ] || cat "./logs/package/error.txt"
+### ----------------------------------------------------------------- ###
+
       - name: Upload kmods
         uses: actions/upload-artifact@main
         if: >-
