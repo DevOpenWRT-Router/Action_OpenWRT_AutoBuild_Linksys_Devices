@@ -13,6 +13,9 @@
 ###         [MAKE SURE YOU KNOW WHAT YOUR DOING BEFORE CHANGING ALL THIS]              ###
 ### ---------------------------------------------------------------------------------- ###
 ##########################################################################################
+echo "Loading Functions into Memory.."
+
+### My lame ass attempt to setup error catching
 ## BOOTSTRAP ##
 BOOTSTRAP_START() {
 source scripts/lib/oo-bootstrap.sh
@@ -60,6 +63,50 @@ sed -i "s/'UTC'/'CST-8'\n        set system.@system[-1].zonename='America/New Yo
 }
 
 ### ------------------------------------------------------------------------------------------------------- ###
+### Some usefull command build tools ###
+function git_sparse_clone() (
+          branch="$1" rurl="$2" localdir="$3" && shift 3
+          git clone -b "$branch" --depth 1 --filter=blob:none --sparse "$rurl" "$localdir"
+          cd "$localdir" || exit
+          git sparse-checkout init --cone
+          git sparse-checkout set $@
+          mv -n $@ ../
+          cd ..
+          rm -rf "$localdir"
+        )
+
+function git_clone() (
+          git clone --depth 1 "$1" "$2" || true
+        )
+
+function mvdir() {
+          mv -n $(find $1/* -maxdepth 0 -type d) ./
+          rm -rf "$1"
+        }
+
+function latest() {
+          (curl -gs -H 'Content-Type: application/json' \
+             -H "Authorization: Bearer ${{ secrets.REPO_TOKEN }}" \
+             -X POST -d '{ "query": "query {repository(owner: \"'"$1"'\", name: \"'"$2"'\"){refs(refPrefix:\"refs/tags/\",last:1,orderBy:{field:TAG_COMMIT_DATE,direction:ASC}){edges{node{name target{commitUrl}}}}defaultBranchRef{target{...on Commit {oid}}}}}"}' https://api.github.com/graphql)
+        }
+### ------------------------------------------------------------------------------------------------------- ###
+CLONE_OPENWRT_SOURCE() {
+    echo "Cloning Source/Branch"
+
+    df -hT "$PWD"
+
+    URL=https://github.com/openwrt/openwrt.git
+    BRANCH=master
+    git_clone "$URL" "$BRANCH" openwrt
+    ln -sf /workdir/openwrt "$GITHUB_WORKSPACE"/openwrt
+    return
+}
+
+SET_LUCI_SOURCE() {
+    echo "Setting LUCI souce to feed from."
+    sed -i 's#/git.openwrt.org/project/luci.git#/git.openwrt.org/project/luci.git#g' feeds.conf.default
+    sed -i 's#/github.com/coolsnowwolf/luci#/git.openwrt.org/project/luci.git#g' feeds.conf.default
+}
 
 BUILD_USER_DOMAIN() {
 ### Add kernel build user
@@ -73,6 +120,7 @@ BUILD_USER_DOMAIN() {
     sed -i 's@\(CONFIG_KERNEL_BUILD_DOMAIN=\).*@\1$"PureFusion"@' .config
 }
 
+### This is NEEDED to setup all pre-configs before building
 PRE_DEFCONFIG_ADDONS() {
 echo "Seeding .config (enable Target: mvebu cortexa9):"
 printf 'CONFIG_TARGET_mvebu=y\nCONFIG_TARGET_mvebu_cortexa9=y\n' >> .config
@@ -86,6 +134,7 @@ echo "property 'libc' set:"
 sed -ne '/^CONFIG_LIBC=/ { s!^CONFIG_LIBC="\(.*\)"!\1!; s!^musl$!!; s!.\+!-&!p }' .config
 }
 
+### This will setup ccache support
 ### CCACHE SETUP ###
 CCACHE_SETUP() {
 echo "Seeding .config (enable ccache):"
@@ -94,9 +143,10 @@ echo "Setting ccache directory:"
 export CCACHE_DIR="$GITHUB_WORKSPACE"/openwrt/.ccache
 echo "Fix Sloppiness of ccache:"
 ccache --set-config=sloppiness=file_macro,locale,time_macros
-ccache -sv
+ccache -s
 }
 
+### Not even sure why I still have this here, I dont really use it
 CACHE_DIRECTORY_SETUP() {
   if [ ! -d '../staging_dir' ]; then
 			mkdir ../staging_dir
@@ -110,6 +160,18 @@ CACHE_DIRECTORY_SETUP() {
 		ln -s ../../build_dir/host build_dir/host
 }
 
+### This is a quick way to apply correct chmod to all files and directorys needed
+SMART_CHMOD() {
+  MY_Filter=$(mktemp)
+  echo '/\.git' >  "${MY_Filter}"
+  echo '/\.svn' >> "${MY_Filter}"
+  find ./ -maxdepth 1 | grep -v '\./$' | grep -v '/\.git' | xargs -s1024 chmod -R u=rwX,og=rX
+  find ./ -type f | grep -v -f "${MY_Filter}" | xargs -s1024 file | grep 'executable\|ELF' | cut -d ':' -f1 | xargs -s1024 chmod 755
+  rm -f "${MY_Filter}"
+  unset MY_Filter
+}
+
+### Apply all patches that are in 'patch' directory
 APPLY_PATCHES() {
   mv "$GITHUB_WORKSPACE"/configs/patches "$GITHUB_WORKSPACE"/openwrt/patches
   cd "$GITHUB_WORKSPACE"/openwrt || exit
@@ -123,6 +185,32 @@ APPLY_PATCHES() {
 
 }
 
+### When finished, this will auto download Pull Request Patches from openwrt and apply them
+APPLY_PR_PATCHES() {
+  echo "This is WORKING Here:"
+  file="$GITHUB_WORKSPACE"/scripts/data/PR_patches.txt
+  while read -r line; do
+  cd "$GITHUB_WORKSPACE"/openwrt && wget https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/"$line".patch
+  echo "Applying $line.patch"
+  git am "$line".patch
+  if [ $? = 0 ] ; then
+    echo "[*] 'git am $line.patch' Ran successfully."
+  else
+    echo "[*] 'git am $line.patch' FAILED."
+  fi
+  done < "$file"
+}
+
+RESET_COMMIT() {
+  echo "Reseting HEAD to $1, T:$0, T1:$1, T2:$2"
+  git reset --hard "$1"
+  if [ $? = 0 ] ; then
+    echo "[*] 'git reset --hard $1 Ran successfully."
+  else
+    echo "[*] git reset --hard $1 FAILED."
+  fi
+}
+
 CHANGE_DEFAULT_BANNER() {
   if [ -f "$GITHUB_WORKSPACE/openwrt/package/base_files/files/etc/banner" ];
   then 
@@ -131,7 +219,40 @@ CHANGE_DEFAULT_BANNER() {
   fi
 }
 
-GETDEVICE() {
+### Dont use this Fuction Wildly, Will cause many building Issues
+REMOVE_PO2LMO() {
+  echo "Removing all found po2lmo from Package Makefiles"
+  find ./package -iname "Makefile" -exec  sed -i '/po2lmo/d' {} \;
+}
+
+### Be careful when using this one, Can resort to build Failing
+REMOVE_PO() {
+  echo "Removing all Directorys containing po"
+  find ./package -name "po" | xargs rm -rf;
+}
+
+### This should 100% safe to use
+REMOVE_SVN() {
+  echo "Removing all Directorys containing .svn"
+  find ./package -name ".svn" | xargs rm -rf;
+}
+
+### Make sure you only run this in package Directory, else all could fail
+REMOVE_GIT() {
+  echo "Removing all Directorys containing .git"
+  find ./package -name ".git" | xargs rm -rf;
+}
+
+### Still testing this out, Not sure if it benifits or causes issues
+DELETE_DUPLICATES() {
+  echo "Running rmlint:"
+  rmlint --types "dd" --paranoid --honour-dir-layout --merge-directories --max-depth=2 "$GITHUB_WORKSPACE"/openwrt/package || rmlint --types "dd" --paranoid --honour-dir-layout --merge-directories --max-depth=4 package
+  find . -name "rmlint.sh" | xargs rmlint.sh -c -q -d || ./rmlint.sh -c -q -d
+  find . -name "rmlint.json" | xargs rm -rf
+}
+
+### This is used for file and archive naming reasons, Plus checks for wrtmulti config used
+get_deviceID() {
 if [ "$HARDWARE_DEVICE" != "wrtmulti" ]; then
   grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
   [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> "$GITHUB_ENV"
@@ -141,6 +262,7 @@ fi
   echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> "$GITHUB_ENV"
 }
 
+### This is needed for creation of kmods directory
 kernel_version() {
 cd openwrt || return
 find build_dir/ -name .vermagic -exec cat {} \; >VERMAGIC  # Find hash
@@ -160,9 +282,10 @@ echo "Kernel: $KERNEL_VER" # testing
 echo "DIR: $KMOD_DIR"
 echo "------------------------------------------------"
 echo "$KMOD_DIR" >> "$GITHUB_WORKSPACE"/openwrt/kmod
-cat kmod
+cat "$GITHUB_WORKSPACE"/openwrt/kmod
 }
 
+### This is really 2nd part of above kernel version
 package_archive() {
 cd "$GITHUB_WORKSPACE"/openwrt || return
 mkdir -p bin/targets/mvebu/cortexa9/kmods/"$KMOD_DIR"
@@ -175,6 +298,6 @@ cd "$GITHUB_WORKSPACE"/openwrt || return
 }
 ### ------------------------------------------------------------------------------------------------------- ###
 
-"$1";
-echo "End of Functions.sh"
-exit 0
+#"$1";
+echo "Functions are now loaded into Memory."
+#exit 0 # <-- We dont want to exit fom souce command

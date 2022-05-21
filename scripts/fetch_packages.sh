@@ -62,16 +62,27 @@ echo "End of Fetching All Personal Repos"
 SBWM1_PACKAGES() {
   ### autocore-arm
   git clone https://github.com/sbwml/autocore-arm.git package/sbwml/autocore-arm
+  rm -rf package/sbwml/autocore-arm/po
+
   ### openwrt-qBittorrent-Enhanced-Edition
   git clone https://github.com/sbwml/openwrt-qBittorrent-Enhanced-Edition.git package/sbwml/openwrt-qBittorrent-Enhanced-Edition
+  rm -rf package/sbwml/package/sbwml/openwrt-qBittorrent-Enhanced-Edition/po
+
   ### openwrt-qBittorrent
   git clone https://github.com/sbwml/openwrt-qBittorrent.git package/sbwml/openwrt-qBittorrent
+  rm -rf package/sbwml/package/sbwml/openwrt-qBittorrent/po
+
   ### openwrt-filebrowser
   git clone https://github.com/sbwml/openwrt-filebrowser.git package/sbwml/openwrt-filebrowser
+  rm -rf package/sbwml/package/sbwml/openwrt-filebrowser/po
+
   ### OpenAppFilter
   git clone https://github.com/sbwml/OpenAppFilter.git package/sbwml/OpenAppFilter
+  rm -rf package/sbwml/package/sbwml/OpenAppFilter/po
+
   ### openwrt-alist
   git clone https://github.com/sbwml/openwrt-alist.git package/sbwml/openwrt-alist
+  rm -rf package/sbwml/package/sbwml/openwrt-alist/po
 
   echo "END Fetching From sbwml's Repos:"
 }
@@ -110,16 +121,23 @@ GSPOTX2F_PACKAGES() {
 
 LINKEASE_PACKAGES() {
   ### istore-packages
-  git clone https://github.com/linkease/istore-packages.git package/linkease/istore-packages
+  #git clone https://github.com/linkease/istore-packages.git package/linkease/istore-packages
+  ### iStore Package URL: https://github.com/orgs/linkease/repositories?type=source
+  svn export https://github.com/linkease/istore/trunk/luci/luci-app-store package/linkease/luci-app-store
+  svn export https://github.com/linkease/istore-ui/trunk/app-store-ui package/linkease/app-store-ui
+
+  rm -rf package/linkease/istore-packages/luci-app-kodexplorer
 }
 
 KENZOK8_PACKAGES() {
 echo "Downloading Kenzok8's small-packages"
 
 git clone https://github.com/kenzok8/small-package.git package/kenzok8
+# cd package/kenzok8 && git reset --hard 4e1fa6a8cf6e96163e5c9d0df690a31d2080de7e && cd ../..
 
 rm -rf package/kenzok8/my-default-settings # using a dif
 rm -rf package/kenzok8/my-autocore # Using the one above in unsorted
+rm -rf package/kenzok8/luci-app-easyupdate
 rm -rf package/kenzok8/mosdns # Build Errors
 rm -rf package/kenzok8/luci-app-mosdns
 rm -rf package/kenzok8/luci-app-smartdns
@@ -134,6 +152,9 @@ rm -rf package/kenzok8/luci-app-minieap
 rm -rf package/kenzok8/luci-app-openvpn-server
 rm -rf package/kenzok8/luci-app-tencentddns
 rm -rf package/kenzok8/luci-app-udp2raw
+rm -rf package/kenzok8/luci-app-diskman
+rm -rf package/kenzok8/luci-app-store # We now get from source
+rm -rf package/kenzok8/app-store-ui # same as above
 rm -rf package/kenzok8/v2ray-core
 rm -rf package/kenzok8/v2ray-geodata
 rm -rf package/kenzok8/v2ray-plugin
@@ -142,7 +163,28 @@ rm -rf package/kenzok8/.github
 rm -rf package/kenzok8/main.sh
 rm -rf package/kenzok8/LICENSE
 rm -rf package/kenzok8/README.md
+rm -rf package/kenzok8/luci-app-bypass
+rm -rf package/kenzok8/luci-app-passwall
+rm -rf package/kenzok8/luci-app-passwall2
+rm -rf package/kenzok8/luci-app-ssr-plus
+rm -rf package/kenzok8/baidupcs-web
+rm -rf package/kenzok8/filebrowser # builds node/host Causing issues right now
+rm -rf package/kenzok8/luci-app-filebrowser # part 2 of filebrowser
+}
 
+SUNDAQIANG_PACKAGES() {
+  echo "Downloading sundaqiang's packages"
+
+  git clone https://github.com/sundaqiang/openwrt-packages.git package/sundaqiang
+}
+
+O-BUG_PACKAGES() {
+  echo "Downloading o-bug's packages"
+
+  git clone https://github.com/o-bug/openwrt-packages.git package/o-bug
+
+  rm -rf package/o-bug/luci-base
+  rm -rf package/o-bug/netdata
 }
 ### -------------------------------------------------------------------------------------------------------------- ###
 LEAN_PACKAGES() {
@@ -175,7 +217,7 @@ echo "$len Packages"
 for (( i=0; i<len; i++ ))
 do
   echo "${packages[$i]}"
-  svn co $url/"${packages[$i]}" $placement/"${packages[$i]}"
+  svn export $url/"${packages[$i]}" $placement/"${packages[$i]}"
   
 done
 
@@ -204,13 +246,13 @@ rm -rf package/lean/mt # Some Error Keeps happening #
 echo "END of coolsnowwolf's lean packages"
 ### Needed for qBittorrent qt5
 echo "Add coolsnowwolf's libdouble-conversion"
-svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/libdouble-conversion package/libs/libdouble-conversion
+svn export https://github.com/coolsnowwolf/lede/trunk/package/libs/libdouble-conversion package/libs/libdouble-conversion
 echo "END coolsnowwolf's libdouble-conversion"
 ### Use lede's edition of mwlwifi
-echo "Add coolsnowwolf's edition of mwlwifi"
-rm -rf ./package/kernel/mwlwifi # Delete openWRT's version replace with sync lede
-svn co https://github.com/coolsnowwolf/lede/trunk/package/kernel/mwlwifi package/kernel/mwlwifi
-echo "END coolsnowwolf's edition of mwlwifi"
+#echo "Add coolsnowwolf's edition of mwlwifi"
+#rm -rf ./package/kernel/mwlwifi # Delete openWRT's version replace with sync lede
+#svn co https://github.com/coolsnowwolf/lede/trunk/package/kernel/mwlwifi package/kernel/mwlwifi
+#echo "END coolsnowwolf's edition of mwlwifi"
 }
 
 ### -------------------------------------------------------------------------------------------------------------- ###
@@ -220,12 +262,13 @@ echo "Downloading sirpdboy's packages"
 ## Sirpdboy's luci-app-netdata
 git clone https://github.com/sirpdboy/luci-app-netdata.git package/sirpdboy/luci-app-netdata
 ## Sirpdboy's myautocore enhanced version preview information only for OPENWRT
-svn co https://github.com/sirpdboy/myautocore/trunk/myautocore package/sirpdboy/myautocore
+svn export https://github.com/sirpdboy/myautocore/trunk/myautocore package/sirpdboy/myautocore
 
 git clone https://github.com/sirpdboy/sirpdboy-package.git package/sirpdboy_A
 
 rm -rf package/sirpdboy_A/adguardhome
 rm -rf package/sirpdboy_A/doc
+rm -rf package/sirpdboy_A/luci-app-autotimeset
 rm -rf package/sirpdboy_A/luci-app-access-control ## NEEDS FIXED
 rm -rf package/sirpdboy_A/luci-app-baidupcs-web
 rm -rf package/sirpdboy_A/luci-app-chinadns-ng
@@ -293,6 +336,12 @@ rm -rf package/helmiau/badvpn
 rm -rf package/helmiau/build-ipk
 rm -rf package/helmiau/corkscrew
 rm -rf package/helmiau/preview
+rm -rf package/helmiau/luci-app-freevpnsite
+rm -rf package/helmiau/luci-app-libernet
+rm -rf package/helmiau/luci-app-mikhmon
+rm -rf package/helmiau/luci-app-netmon
+rm -rf package/helmiau/luci-app-tinyfm
+rm -rf package/helmiau/luci-app-wegare
 
 echo "END of helmiau's Build packages"
 }
@@ -346,23 +395,6 @@ LUCI_THEMES() {
   echo "Done Fetching LUCI-Themes"
 }
 
-DELETE_UNWANTED(){
-  echo "Removing all found po2lmo from Package Makefiles"
-  find  -iname "Makefile" -exec  sed -i '/po2lmo/d' {} \;
-  echo "Removing all Directorys containing po"
-  find . -name "po" | xargs rm -rf;
-  echo "Removing all Directorys containing .svn"
-  find . -name ".svn" | xargs rm -rf;
-
-}
-
-DELETE_DUPLICATES() {
-  echo "Running rmlint:"
-  rmlint --types "dd" "$GITHUB_WORKSPACE"/openwrt/package
-  rmlint.sh -c -q
-  rm -rf rmlint.json
-}
-
 ### -------------------------------------------------------------------------------------------------------------- ###
 
 LUCI_THEMES;
@@ -373,11 +405,12 @@ SBWM1_PACKAGES;
 GSPOTX2F_PACKAGES;
 LINKEASE_PACKAGES;
 KENZOK8_PACKAGES;
+#SUNDAQIANG_PACKAGES;
 LEAN_PACKAGES;
 SIRPDBOY_PACKAGES;
-HELMIAU_PACKAGES;
-NUEXINI_PACKAGES;
-#DELETE_UNWANTED;
+#HELMIAU_PACKAGES;
+#NUEXINI_PACKAGES;
+# O-BUG_PACKAGES; # <-- Turn this off for now, Seems to be alot of issues when building, Check FILES:
 ### -------------------------------------------------------------------------------------------------------------- ###
 
 exit 0

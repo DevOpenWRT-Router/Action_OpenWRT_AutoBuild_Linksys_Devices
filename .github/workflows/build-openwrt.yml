@@ -20,6 +20,8 @@ env:
 ### --------------------------- ###
   HARDWARE_ID: '${{ github.event.client_payload.message.HARDWARE_ID }}'
   HARDWARE_DEVICE: '${{ github.event.client_payload.message.HARDWARE_DEVICE }}'
+  CLONE_URL: https://github.com/openwrt/openwrt.git
+  CLONE_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   FUNCTIONS_SH: functions.sh
   FETCHPACKAGES_SH: fetch_packages.sh
@@ -31,15 +33,20 @@ env:
   EXT_INIT_ENV: environment.sh
   DEVICE_NAME: ''
 ### --------------------------- ###
-  BOOTSTRAP_START: true
+  RESET_OPENWRT_COMMIT: false
+  INSTALL_LLVM: false
+  LOAD_FUNCTIONS: true
+  BOOTSTRAP_START: false
   USE_FILES: true
   USE_CUST_THEMES: true
   USE_CUSTOM_CONFIGURATION: true
   USE_OPENWRT_PATCHES: true
+  USE_PR_OPENWRT_PATCHES: true
   USE_DEVOPENWRT: true
   USE_FETCH_PACKAGES: true
   USE_KERNEL_VERSION: true
   USE_CACHE: true
+  USE_SMART_CHMOD: true
   SSH_TMATE: false
   SSH_NGROK: false
   EXTERNAL_BUILD_USER_DOMAIN_SETUP: true
@@ -67,6 +74,7 @@ env:
   RUN_GITHUB_PUSH: true
   DEFAULT_THEME_CHANGE: false
   CHANGE_DEFAULT_BANNER: false
+  DELETE_DUPLICATES: false
 ### --------------------------- ###
   UPLOAD_BUILD_LOGS: true
   UPLOAD_KMODS: true
@@ -138,6 +146,8 @@ jobs:
 
           sudo -E apt-get -qq install $(curl -fsSL bit.ly/depends-ubuntu-2004)
 
+          sudo -E apt-get -qq install -y rmlint lsb-release wget software-properties-common
+
           wget -qO - https://bit.ly/build-env-on-ubuntu-bionic | sed
           's/python-/python3-/g' | /bin/bash
 ### ----------------------------------------------------------------- ###
@@ -150,31 +160,27 @@ jobs:
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
 ### ----------------------------------------------------------------- ###
+      - name: Install LLVM
+        if: env.INSTALL_LLVM == 'true' && !cancelled()
+        run: |
+          sudo -E bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+### ----------------------------------------------------------------- ###        
       - name: Set variables
         run: |
           echo "::set-output name=date::$(date +%F)"
         id: var
       - name: Initialization GIT environment
         run: |
-          git config --global user.email "BuildBot2021@gmail.com"
-          git config --global user.name "BuildBot"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
 ### ----------------------------------------------------------------- ###
-      - name: Set source and branch
-        id: setSource
-        run: >
-          echo "::set-output
-          name=sourceString::https://github.com/openwrt/openwrt.git"
-
-          echo "::set-output name=branchString::master"
-### ----------------------------------------------------------------- ###
-      - name: Clone source code
+      - name: Clone OpenWRT source code
         working-directory: /workdir
-        run: >
+        run: |
           df -hT $PWD
-
-          git clone ${{ steps.setSource.outputs.sourceString }} -b ${{
-          steps.setSource.outputs.branchString }} openwrt
-
+          URL=$CLONE_URL
+          BRANCH=$CLONE_BRANCH
+          git clone "$URL" -b "$BRANCH" openwrt
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 ### ----------------------------------------------------------------- ###
       - name: Check Main space usage
@@ -189,11 +195,18 @@ jobs:
           du -h --max-depth=2 ./
           echo "=============================================="
 ### ----------------------------------------------------------------- ###
+      - name: Load Functions into Settings
+        if: env.LOAD_FUNCTIONS == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+### ----------------------------------------------------------------- ###
       - name: Run BootStrap (Error Handler)
         if: env.BOOTSTRAP_START == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
-          scripts/$FUNCTIONS_SH BOOTSTRAP_START
+          source scripts/$FUNCTIONS_SH
+          BOOTSTRAP_START
 ### ----------------------------------------------------------------- ###
       - name: Before Build
         if: env.RUN_BEFORE_BUILD == 'true' && !cancelled()
@@ -205,8 +218,17 @@ jobs:
         if: env.CHANGE_DEFAULT_BANNER == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH CHANGE_DEFAULT_BANNER
+          CHANGE_DEFAULT_BANNER
+### ----------------------------------------------------------------- ###
+      - name: Reset Commit History To
+        if: env.RESET_OPENWRT_COMMIT == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          cd openwrt
+          RESET_COMMIT "771ea6f2e3868b208b5261ae676160d5ef6544e8"
 ### ----------------------------------------------------------------- ###
       - name: Current Commit Before Feeds/Patches
         if: env.GITLOGA == 'true' && !cancelled()
@@ -221,16 +243,11 @@ jobs:
 ### ----------------------------------------------------------------- ###
       - name: Set LUCI Source
         id: setLuci
-        run: >
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           cd openwrt
-
-          sed -i
-          's#/git.openwrt.org/project/luci.git#/git.openwrt.org/project/luci.git#g'
-          feeds.conf.default
-
-          sed -i
-          's#/github.com/coolsnowwolf/luci#/git.openwrt.org/project/luci.git#g'
-          feeds.conf.default
+          SET_LUCI_SOURCE
 ### ----------------------------------------------------------------- ###
       - name: Load fetch_packages.sh
         if: env.USE_FETCH_PACKAGES == 'true' && !cancelled()
@@ -238,6 +255,16 @@ jobs:
           chmod +x scripts/$FETCHPACKAGES_SH
           cd openwrt
           $GITHUB_WORKSPACE/scripts/$FETCHPACKAGES_SH
+### ----------------------------------------------------------------- ###
+      - name: Delete Duplicate Packages (RMLINT)
+        id: PackagesRMLINT
+        continue-on-error: true
+        if: env.DELETE_DUPLICATES == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          cd openwrt
+          DELETE_DUPLICATES
 ### ----------------------------------------------------------------- ###
       - name: Look inside package Directory
         if: (!cancelled())
@@ -273,6 +300,32 @@ jobs:
           cd $GITHUB_WORKSPACE/openwrt && ./scripts/feeds uninstall $line
           done < "$file"
 ### ----------------------------------------------------------------- ###
+      - name: Run Custom OpenWRT Patches
+        id: patches
+        continue-on-error: true
+        if: env.USE_OPENWRT_PATCHES == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          cd openwrt
+          APPLY_PATCHES
+### ----------------------------------------------------------------- ###
+      - name: Pull Request OpenWRT Patches
+        id: PRpatches
+        continue-on-error: true
+        if: env.USE_PR_OPENWRT_PATCHES == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          cd openwrt
+          APPLY_PR_PATCHES
+### ----------------------------------------------------------------- ###
+      - name: Current Commit After Feeds/Patches
+        if: env.GITLOGB == 'true' && !cancelled()
+        run: |
+          cd openwrt
+          git log --pretty=oneline -n 1
+### ----------------------------------------------------------------- ###
       - name: Copy (files) Dir
         if: env.USE_FILES == 'true' && !cancelled()
         run: |
@@ -283,63 +336,43 @@ jobs:
           [ -e configs/${HARDWARE_DEVICE}.config ] && mv
           configs/${HARDWARE_DEVICE}.config openwrt/.config
 ### ----------------------------------------------------------------- ###
-      - name: Run Custom OpenWRT Patches
-        id: patches
-        continue-on-error: true
-        if: env.USE_OPENWRT_PATCHES == 'true' && !cancelled()
+      - name: Smart Chmod
+        if: env.USE_SMART_CHMOD == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH APPLY_PATCHES
-### ----------------------------------------------------------------- ###
-      - name: Current Commit After Feeds/Patches
-        if: env.GITLOGB == 'true' && !cancelled()
-        run: |
-          cd openwrt
-          git log --pretty=oneline -n 1
-### ----------------------------------------------------------------- ###
-      - name: Smart chmod
-        run: >
-          MY_Filter=$(mktemp)
+          SMART_CHMOD
 
-          echo '/\.git' >  ${MY_Filter}
-
-          echo '/\.svn' >> ${MY_Filter}
-
-          find ./ -maxdepth 1 | grep -v '\./$' | grep -v '/\.git' | xargs -s1024
-          chmod -R u=rwX,og=rX
-
-          find ./ -type f | grep -v -f ${MY_Filter} | xargs -s1024 file | grep
-          'executable\|ELF' | cut -d ':' -f1 | xargs -s1024 chmod 755
-
-          rm -f ${MY_Filter}
-
-          unset MY_Filter
 ### ----------------------------------------------------------------- ###
       - name: Change Build user/Domain
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH BUILD_USER_DOMAIN
+          BUILD_USER_DOMAIN
 ### ----------------------------------------------------------------- ###
       - name: Pre Defconfig Addons
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH PRE_DEFCONFIG_ADDONS
+          PRE_DEFCONFIG_ADDONS
 ### ----------------------------------------------------------------- ###
       - name: Set defconfig to use ccache
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH CCACHE_SETUP
+          CCACHE_SETUP
 ### ----------------------------------------------------------------- ###
       - name: Change Default theme Settings
         if: env.DEFAULT_THEME_CHANGE == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
           cd openwrt
-          $GITHUB_WORKSPACE/scripts/$FUNCTIONS_SH DEFAULT_THEME_CHANGE
+          DEFAULT_THEME_CHANGE
 ### ----------------------------------------------------------------- ###
       - name: Add ACL
         if: env.ACL_LUCI == 'true' && !cancelled()
@@ -440,7 +473,8 @@ jobs:
         if: env.USE_KERNEL_VERSION == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
-          /bin/bash ${GITHUB_WORKSPACE}/scripts/$FUNCTIONS_SH kernel_version
+          source scripts/$FUNCTIONS_SH
+          kernel_version
 ### ----------------------------------------------------------------- ###
       - name: Building packages
         id: makepackages
@@ -475,7 +509,8 @@ jobs:
         if: env.USE_KERNEL_VERSION == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
-          /bin/bash ${GITHUB_WORKSPACE}/scripts/$FUNCTIONS_SH package_archive
+          source scripts/$FUNCTIONS_SH
+          package_archive
 ### ----------------------------------------------------------------- ###
       - name: Indexing packages
         id: indexingpackages
@@ -495,65 +530,44 @@ jobs:
       - name: Compile the firmware (Debug)
         id: compiledebug
         if: env.DEBUG_COMPILE == 'true' && env.IGNORE_COMPILE == 'false'
-        run: >
+        run: |
           cd openwrt
-
           echo -e "$(nproc) thread compile"
-
           make -j$(nproc) V=s 2>&1 | tee logs/build.log | grep -i -E
           "^make.*(error|[12345]...Entering directory)"
-
           echo "::set-output name=status::success"
-
           grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r
           's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
-
           [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >>
           $GITHUB_ENV
-
           echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 ### ----------------------------------------------------------------- ###
       - name: Compile the firmware (ignore Errors)
         id: compileignore
         if: env.IGNORE_COMPILE == 'true' && env.DEBUG_COMPILE == 'false'
-        run: >
+        run: |
           cd openwrt
-
           echo -e "$(nproc) thread compile"
-
           IGNORE_ERRORS=1 make -j$(nproc) -i V=s 2>&1 | tee logs/build.log |
           grep -i -E "^make.*(error|[12345]...Entering directory)"
-
           echo "::set-output name=status::success"
-
           grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r
           's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
-
           [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >>
           $GITHUB_ENV
-
           echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 ### ----------------------------------------------------------------- ###
       - name: Compile the firmware
         id: compile
         continue-on-error: true
         if: env.DEBUG_COMPILE == 'false' && env.IGNORE_COMPILE == 'false'
-        run: >
+        run: |
           cd openwrt
-
           echo -e "$(nproc) thread compile"
-
           let Make_Process=$(nproc)+2
-
           make -j${Make_Process} || make -j${Make_Process} V=s
-
           echo $?
-
           echo "::set-output name=status::success"
-
-          chmod +x scripts/$FUNCTIONS_SH
-
-          /bin/bash ${GITHUB_WORKSPACE}/scripts/$FUNCTIONS_SH GETDEVICE
 ### --------------------------- ###
       - name: If Error
         uses: actions/upload-artifact@main
@@ -562,6 +576,13 @@ jobs:
         with:
           name: 'OpenWrt_logs${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
           path: openwrt/logs/
+### ----------------------------------------------------------------- ###
+      - name: Get Device ID Name (HARDWARE ID)
+        id: GET_DEVICEID
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          get_deviceID
 ### ----------------------------------------------------------------- ###
       - name: After Build
         if: env.RUN_AFTER_BUILD == 'true' && !cancelled()
