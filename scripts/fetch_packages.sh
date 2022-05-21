@@ -38,6 +38,9 @@ UNSORTED_GIT_PACKAGES(){
   ### luci-app-webguide
   git clone https://github.com/p1ay8y3ar/luci-app-webguide.git package/p1ay8y3ar/luci-app-webguide
 
+  ### luci-app-ttnode
+  git clone https://github.com/jerrykuku/luci-app-ttnode.git package/jerrykuku/luci-app-ttnode
+
   ### autocore-arm-x86
   #git clone https://github.com/MatJeheyy/autocore-arm-x86.git package/MatJeheyy/autocore
   #rm -rf package//MatJeheyy/autocore/po
@@ -138,6 +141,7 @@ git clone https://github.com/kenzok8/small-package.git package/kenzok8
 rm -rf package/kenzok8/my-default-settings # using a dif
 rm -rf package/kenzok8/my-autocore # Using the one above in unsorted
 rm -rf package/kenzok8/luci-app-easyupdate
+rm -rf package/kenzok8/luci-app-ttnode # get from source
 rm -rf package/kenzok8/mosdns # Build Errors
 rm -rf package/kenzok8/luci-app-mosdns
 rm -rf package/kenzok8/luci-app-smartdns
@@ -361,55 +365,33 @@ echo "END of NueXini's Build packages"
 
 LUCI_THEMES() {
   echo "Fetching LUCI-Themes"
-  ### THEMES ###
-  ### new argon theme
-  # git clone -b master https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
-  ### New argon theme control program
-  # git clone -b master https://github.com/jerrykuku/luci-app-argon-config.git package/luci-app-argon-config
-  ### luci-theme-opentomcat
-  # git clone https://github.com/chaoxiaozhu/luci-theme-opentomcat.git package/luci-theme-opentomcat
-  ### luci-theme-rosy
-  # git clone https://github.com/rosywrt/luci-theme-rosy.git package/luci-theme-rosy
-  ### luci-theme-netgear
-  # git clone https://github.com/ysoyipek/luci-theme-netgear.git package/luci-theme-netgear
-  ### luci-theme-edge2 ###
-  # git clone -b main https://github.com/YL2209/luci-theme-edge2.git package/luci-theme-edge2
-  ### luci-theme-opentopd thme openwrt theme
-  # git clone https://github.com/sirpdboy/luci-theme-opentopd.git package/luci-theme-opentopd
-  ### btmod theme
-  # git clone https://github.com/sirpdboy/luci-theme-btmod.git package/luci-theme-btmob
-  ### luci-theme-opentomcat
-  # git clone https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
-  ### luci-theme-netgear
-  # git clone https://github.com/i028/luci-theme-netgear.git package/luci-theme-netgear
-  ### luci-theme-ifit
-  # git clone https://github.com/YL2209/luci-theme-ifit.git package/luci-theme-ifit
-  ### luci-theme-surfboard
-  # git clone https://github.com/SURFBOARD-ONE/luci-theme-surfboard.git package/luci-theme-surfboard
-  ### luci-theme-atmaterial
-  # git clone https://github.com/miccjing/luci-theme-atmaterial.git package/luci-theme-atmaterial
-  ### luci-theme-mcat
-  # git clone https://github.com/fszok/luci-theme-mcat.git package/luci-theme-mcat
-  ### luci-theme-fate
-  # git clone https://github.com/fatelpc/luci-theme-fate.git package/luci-theme-fate
+
+  ### luci-theme-argon
+  git clone https://github.com/jerrykuku/luci-theme-argon.git package/jerrykuku/luci-theme-argon
+  ### luci-app-argon-config
+  git clone https://github.com/jerrykuku/luci-app-argon-config.git package/jerrykuku/luci-app-argon-config
+
+  ### luci-theme-bootstrap-mod
+  svn export https://github.com/immortalwrt/luci/trunk/themes/luci-theme-bootstrap-mod package/immortalwrt/luci-theme-bootstrap-mod
+
   echo "Done Fetching LUCI-Themes"
 }
 
 ### -------------------------------------------------------------------------------------------------------------- ###
 
-LUCI_THEMES;
+LUCI_THEMES; ### ALWAYS GOES FIRST TO MAKE SURE NOT OVERWRITTEN ###
 PERSONAL_PACKAGES;
 UNSORTED_GIT_PACKAGES;
 UNSORTED_PACKAGES;
 SBWM1_PACKAGES;
 GSPOTX2F_PACKAGES;
 LINKEASE_PACKAGES;
-KENZOK8_PACKAGES;
+KENZOK8_PACKAGES; ### CAREFULL WITH THIS REPO ###
 #SUNDAQIANG_PACKAGES;
 LEAN_PACKAGES;
 SIRPDBOY_PACKAGES;
-#HELMIAU_PACKAGES;
-#NUEXINI_PACKAGES;
+#HELMIAU_PACKAGES; ### NOT USED - WARNING
+#NUEXINI_PACKAGES; ### NOT USED - WARNING
 # O-BUG_PACKAGES; # <-- Turn this off for now, Seems to be alot of issues when building, Check FILES:
 ### -------------------------------------------------------------------------------------------------------------- ###
 
