@@ -44,6 +44,9 @@ UNSORTED_GIT_PACKAGES(){
   ### luci-app-autorepeater
   git clone https://github.com/peter-tank/luci-app-autorepeater.git package/peter-tank/luci-app-autorepeater
 
+  ### luci-app-dnscrypt-proxy2
+  git clone https://github.com/peter-tank/luci-app-dnscrypt-proxy2.git package/peter-tank/luci-app-dnscrypt-proxy2
+
   ### autocore-arm-x86
   #git clone https://github.com/MatJeheyy/autocore-arm-x86.git package/MatJeheyy/autocore
   #rm -rf package//MatJeheyy/autocore/po
