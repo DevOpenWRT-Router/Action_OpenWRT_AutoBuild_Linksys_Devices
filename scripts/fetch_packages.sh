@@ -121,7 +121,10 @@ GSPOTX2F_PACKAGES() {
 
 LINKEASE_PACKAGES() {
   ### istore-packages
-  git clone https://github.com/linkease/istore-packages.git package/linkease/istore-packages
+  #git clone https://github.com/linkease/istore-packages.git package/linkease/istore-packages
+  ### iStore Package URL: https://github.com/orgs/linkease/repositories?type=source
+  svn export https://github.com/linkease/istore/trunk/luci/luci-app-store package/linkease/luci-app-store
+  svn export https://github.com/linkease/istore-ui/trunk/app-store-ui package/linkease/app-store-ui
 
   rm -rf package/linkease/istore-packages/luci-app-kodexplorer
 }
@@ -150,6 +153,8 @@ rm -rf package/kenzok8/luci-app-openvpn-server
 rm -rf package/kenzok8/luci-app-tencentddns
 rm -rf package/kenzok8/luci-app-udp2raw
 rm -rf package/kenzok8/luci-app-diskman
+rm -rf package/kenzok8/luci-app-store # We now get from source
+rm -rf package/kenzok8/app-store-ui # same as above
 rm -rf package/kenzok8/v2ray-core
 rm -rf package/kenzok8/v2ray-geodata
 rm -rf package/kenzok8/v2ray-plugin
@@ -398,7 +403,7 @@ UNSORTED_GIT_PACKAGES;
 UNSORTED_PACKAGES;
 SBWM1_PACKAGES;
 GSPOTX2F_PACKAGES;
-#LINKEASE_PACKAGES;
+LINKEASE_PACKAGES;
 KENZOK8_PACKAGES;
 #SUNDAQIANG_PACKAGES;
 LEAN_PACKAGES;
