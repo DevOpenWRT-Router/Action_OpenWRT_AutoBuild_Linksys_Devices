@@ -570,7 +570,7 @@ jobs:
           echo $?
           echo "::set-output name=status::success"
 ### --------------------------- ###
-      - name: If Error
+      - name: If Error (Compile the firmware)
         uses: actions/upload-artifact@main
         if: steps.compile.outcome == 'failure'
             && env.UPLOAD_BUILD_LOGS == 'true'
@@ -616,7 +616,7 @@ jobs:
           chmod +x scripts/$GITHUB_PUSH
           /bin/bash ${GITHUB_WORKSPACE}/scripts/github_push.sh
 ### --------------------------- ###
-      - name: If Error
+      - name: If Error (Prepare Packages/Kmods for Distribution)
         if: steps.distribution.outcome == 'failure'
         run: |
           echo "[+] Prepare Packages/Kmods for Distribution Failed"
