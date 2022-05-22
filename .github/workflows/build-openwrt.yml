@@ -182,6 +182,12 @@ jobs:
           git clone "$URL" -b "$BRANCH" openwrt
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 ### ----------------------------------------------------------------- ###
+      - name: Set build key
+        working-directory: '/workdir/openwrt'
+        run: |
+            echo -e "${{ secrets.SNAPSHOT_SECKEY }}" > "key-build"
+            echo -e "${{ secrets.SNAPSHOT_PUBKEY }}" > "key-build.pub"
+### ----------------------------------------------------------------- ###
       - name: Check Main space usage
         if: (!cancelled())
         run: |
