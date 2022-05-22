@@ -526,21 +526,77 @@ jobs:
           logs/build.log | grep -i -E "^make.*(error|[12345]...Entering
           directory)"
 ### ----------------------------------------------------------------- ###
-      - name: Compile the firmware
+      - name: Build Firmware (OpenWRT)
         id: compile
         continue-on-error: true
-        if: env.DEBUG_COMPILE == 'false' && env.IGNORE_COMPILE == 'false'
         run: |
           cd openwrt
           echo -e "$(nproc) thread compile"
           let Make_Process=$(nproc)+2
-          make -j${Make_Process} || make -j${Make_Process} V=s
+          make -j${Make_Process} target/install || make -j${Make_Process} target/install V=s
           echo $?
           echo "::set-output name=status::success"
 ### --------------------------- ###
-      - name: If Error (Compile the firmware)
+      - name: If Error (Build Firmware)
         uses: actions/upload-artifact@main
         if: steps.compile.outcome == 'failure'
+            && env.UPLOAD_BUILD_LOGS == 'true'
+        with:
+          name: 'OpenWrt_logs${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
+          path: openwrt/logs/
+### ----------------------------------------------------------------- ###
+      - name: Generate Buildinfo (OpenWRT)
+        id: buildinfo
+        continue-on-error: true
+        run: |
+          cd openwrt
+          echo -e "$(nproc) thread compile"
+          let Make_Process=$(nproc)+2
+          make buildinfo V=s
+          echo $?
+          echo "::set-output name=status::success"
+### --------------------------- ###
+      - name: If Error (Generate Buildinfo)
+        uses: actions/upload-artifact@main
+        if: steps.buildinfo.outcome == 'failure'
+            && env.UPLOAD_BUILD_LOGS == 'true'
+        with:
+          name: 'OpenWrt_logs${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
+          path: openwrt/logs/
+### ----------------------------------------------------------------- ###
+      - name: Generate JSON Overview (OpenWRT)
+        id: overview
+        continue-on-error: true
+        run: |
+          cd openwrt
+          echo -e "$(nproc) thread compile"
+          let Make_Process=$(nproc)+2
+          make json_overview_image_info V=s
+          echo $?
+          echo "::set-output name=status::success"
+### --------------------------- ###
+      - name: If Error (Generate JSON Overview)
+        uses: actions/upload-artifact@main
+        if: steps.overview.outcome == 'failure'
+            && env.UPLOAD_BUILD_LOGS == 'true'
+        with:
+          name: 'OpenWrt_logs${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
+          path: openwrt/logs/
+### ----------------------------------------------------------------- ###
+      - name: Generate HASH (OpenWRT)
+        id: hash
+        continue-on-error: true
+        run: |
+          cd openwrt
+          echo -e "$(nproc) thread compile"
+          let Make_Process=$(nproc)+2
+          make checksum V=s
+          echo $?
+          echo "::set-output name=status::success"
+### --------------------------- ###
+      - name: If Error (Generate HASH)
+        uses: actions/upload-artifact@main
+        if: steps.hash.outcome == 'failure'
             && env.UPLOAD_BUILD_LOGS == 'true'
         with:
           name: 'OpenWrt_logs${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
@@ -600,7 +656,7 @@ jobs:
       - name: Upload kmods
         uses: actions/upload-artifact@main
         if: >-
-          steps.compile.outputs.status == 'success' && env.UPLOAD_KMODS ==
+          steps.compile.outputs.status == 'success' && steps.compile.outcome == 'success' && env.UPLOAD_KMODS ==
           'true'
         with:
           name: 'OpenWrt_kmods${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
@@ -609,7 +665,7 @@ jobs:
       - name: Upload Packages
         uses: actions/upload-artifact@main
         if: >-
-          steps.compile.outputs.status == 'success' && env.UPLOAD_PACKAGES ==
+          steps.compile.outputs.status == 'success' && steps.compile.outcome == 'success' && env.UPLOAD_PACKAGES ==
           'true'
         with:
           name: 'OpenWrt_bin_packages${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
@@ -618,7 +674,7 @@ jobs:
       - name: Upload bin directory
         uses: actions/upload-artifact@main
         if: >-
-          steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR ==
+          steps.compile.outputs.status == 'success' && steps.compile.outcome == 'success' && env.UPLOAD_BIN_DIR ==
           'true'
         with:
           name: 'OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
@@ -642,7 +698,7 @@ jobs:
 ### ----------------------------------------------------------------- ###
       - name: Upload firmware directory
         uses: actions/upload-artifact@main
-        if: steps.organize.outputs.status == 'success' && !cancelled()
+        if: steps.organize.outputs.status == 'success' && steps.compile.outcome == 'success' && !cancelled()
         with:
           name: 'OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
           path: '${{ env.FIRMWARE }}'
@@ -660,7 +716,7 @@ jobs:
 ### ----------------------------------------------------------------- ###
       - name: Generate release tag
         id: tag
-        if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+        if: env.UPLOAD_RELEASE == 'true' && steps.compile.outcome == 'success' && !cancelled()
         run: >
           echo "::set-output name=release_tag::$HARDWARE_DEVICE-$(date
           +"%Y.%m.%d-%H%M")"
@@ -671,7 +727,7 @@ jobs:
 ### ----------------------------------------------------------------- ###
       - name: Upload firmware to release
         uses: softprops/action-gh-release@master
-        if: steps.tag.outputs.status == 'success' && !cancelled()
+        if: steps.tag.outputs.status == 'success' && steps.compile.outcome == 'success' && !cancelled()
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
         with:
