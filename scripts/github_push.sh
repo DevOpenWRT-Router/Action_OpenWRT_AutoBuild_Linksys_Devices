@@ -14,8 +14,19 @@ set -u  # script fails if trying to access to an undefined variable
 D="$(date +"%Y.%m.%d-%H%M")"
 
 echo "[+] Action start"
+<<<<<<< HEAD
 SOURCE_DIRECTORY_A="openwrt/bin/packages/arm_cortex-a9_vfpv3-d16"
 SOURCE_DIRECTORY_B="openwrt/bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR"
+=======
+export TOPDIR="$PWD"
+echo "TOP_DIR: $TOPDIR"
+echo "BIN_DIR: $BIN_DIR"
+echo "KMOD_DIR: $KMOD_DIR"
+echo "PKG_ARCH: $PKG_ARCH"
+### -------------------------------------------------------------------- ###
+SOURCE_DIRECTORY_A="$BIN_DIR"
+SOURCE_DIRECTORY_B="$BIN_DIR/kmods/$KMOD_DIR"
+>>>>>>> 0d5e04c (build: Just a kmod test)
 DESTINATION_GITHUB_USERNAME="DevOpenWRT-Router"
 DESTINATION_REPOSITORY_NAME="Linksys_OpenWRT_Releases"
 USER_EMAIL="github-actions[bot]@users.noreply.github.com"

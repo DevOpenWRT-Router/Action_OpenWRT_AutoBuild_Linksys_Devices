@@ -39,6 +39,7 @@ env:
   BOOTSTRAP_START: false
   PRINT_FAILLOGS: true
   SET_BUILDKEY: false
+  USE_KMODS_SCRIPT: true
   USE_FILES: true
   USE_CUST_THEMES: true
   USE_CUSTOM_CONFIGURATION: true
@@ -609,6 +610,56 @@ jobs:
         with:
           name: 'OpenWrt_logs${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
           path: openwrt/logs/
+### ----------------------------------------------------------------- ###
+      - name: Generate kmods feed
+        id: GKMOD
+        working-directory: '/workdir/openwrt'
+        continue-on-error: true
+        if: env.USE_KMODS_SCRIPT == 'true' && !cancelled()
+        run: |
+          chmod +x ${GITHUB_WORKSPACE}/scripts/create_kmods
+          ${GITHUB_WORKSPACE}/scripts/create_kmods
+### --------------------------- ###
+      - name: If Error (kmods feed)
+        if: steps.GKMOD.outcome == 'failure'
+        run: |
+          echo "Proccess Failed at level 1"
+### ----------------------------------------------------------------- ###
+      - name: Generate kmods Archives
+        id: PKMOD
+        working-directory: '/workdir/openwrt'
+        continue-on-error: true
+        if: env.USE_KMODS_SCRIPT == 'true' && !cancelled()
+        run: |
+          export TOPDIR="$PWD"
+          BIN_DIR="$(make --no-print-directory -C target/linux val.BIN_DIR)"
+          KMOD_DIR="$(make --no-print-directory -C target/linux val.LINUX_VERSION val.LINUX_RELEASE val.LINUX_VERMAGIC | tr '\n' '-' | head -c -1)"
+          PKG_ARCH="$(make --no-print-directory -C target/linux val.ARCH_PACKAGES)"
+          echo -e "PKG_ARCH=$PKG_ARCH" | tee -a "$GITHUB_ENV"
+
+          UL_TARGET="$(awk -F '/' '{print $(NF-1)}' <<< "$BIN_DIR")"
+          UL_SUBTARGET="$(awk -F '/' '{print $NF}' <<< "$BIN_DIR")"
+
+          echo "BIN_DIR=$BIN_DIR" >>"$GITHUB_ENV"
+          echo "KMOD_DIR=$KMOD_DIR" >>"$GITHUB_ENV"
+          echo "PKG_ARCH=$PKG_ARCH" >>"$GITHUB_ENV"
+
+          cd $BIN_DIR/kmods/$KMOD_DIR
+          tar -cvzf kmods_"$KMOD_DIR".tar.gz ./*
+          mv kmods_"$KMOD_DIR".tar.gz $BIN_DIR
+          cd "$GITHUB_WORKSPACE"/openwrt
+### --------------------------- ###
+      - name: If Error (kmods feed)
+        if: steps.PKMOD.outcome == 'failure'
+        run: |
+          echo "Proccess Failed at level 1"
+### ----------------------------------------------------------------- ###
+      - name: Create (KMOD) File for release
+        working-directory: '/workdir/openwrt'
+        continue-on-error: true
+        run: |
+          echo "$KMOD_DIR" >> "$GITHUB_WORKSPACE"/openwrt/kmod
+
 ### ----------------------------------------------------------------- ###
       - name: Get Device ID Name (HARDWARE ID)
         id: GET_DEVICEID
