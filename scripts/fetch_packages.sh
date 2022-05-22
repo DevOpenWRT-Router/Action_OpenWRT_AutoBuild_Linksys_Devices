@@ -379,6 +379,7 @@ LUCI_THEMES() {
 
   ### luci-theme-bootstrap-mod
   svn export https://github.com/immortalwrt/luci/trunk/themes/luci-theme-bootstrap-mod package/immortalwrt/luci-theme-bootstrap-mod
+  sed -i "s|include ../../luci.mk|include \$(TOPDIR)/feeds/luci/luci.mk|g" package/immortalwrt/luci-theme-bootstrap-mod/Makefile
 
   echo "Done Fetching LUCI-Themes"
 }
