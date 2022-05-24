@@ -70,8 +70,6 @@ env:
   ACL_LUCI: true
   GITLOGA: true
   GITLOGB: true
-  RUN_BEFORE_BUILD: true
-  RUN_AFTER_BUILD: false
   RUN_GITHUB_PUSH: true
   DEFAULT_THEME_CHANGE: false
   CHANGE_DEFAULT_BANNER: false
@@ -215,12 +213,6 @@ jobs:
           chmod +x scripts/$FUNCTIONS_SH
           source scripts/$FUNCTIONS_SH
           BOOTSTRAP_START
-### ----------------------------------------------------------------- ###
-      - name: Before Build
-        if: env.RUN_BEFORE_BUILD == 'true' && !cancelled()
-        run: |
-          chmod +x scripts/$BEFORE_BUILD
-          /bin/bash ${GITHUB_WORKSPACE}/scripts/before_build.sh
 ### ----------------------------------------------------------------- ###
       - name: Change Default Banner
         if: env.CHANGE_DEFAULT_BANNER == 'true' && !cancelled()
@@ -667,12 +659,6 @@ jobs:
           chmod +x scripts/$FUNCTIONS_SH
           source scripts/$FUNCTIONS_SH
           get_deviceID
-### ----------------------------------------------------------------- ###
-      - name: After Build
-        if: env.RUN_AFTER_BUILD == 'true' && !cancelled()
-        run: |
-          chmod +x scripts/$AFTER_BUILD
-          /bin/bash ${GITHUB_WORKSPACE}/scripts/after_build.sh
 ### ----------------------------------------------------------------- ###
       - name: Check space usage
         if: (!cancelled())
