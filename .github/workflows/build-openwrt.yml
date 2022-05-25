@@ -26,9 +26,6 @@ env:
   FUNCTIONS_SH: functions.sh
   FETCHPACKAGES_SH: fetch_packages.sh
   CREATE_ACL_SH: create_acl_for_luci.sh
-  BEFORE_BUILD: before_build.sh
-  AFTER_BUILD: after_build.sh
-  KERNEL_VERSION: kernel_version.sh
   GITHUB_RUN: github_push.sh
   EXT_INIT_ENV: environment.sh
   DEVICE_NAME: ''
