@@ -44,7 +44,6 @@ env:
   USE_PR_OPENWRT_PATCHES: true
   USE_DEVOPENWRT: true
   USE_FETCH_PACKAGES: true
-  USE_KERNEL_VERSION: true
   USE_CACHE: true
   USE_SMART_CHMOD: true
   SSH_TMATE: false
@@ -465,14 +464,6 @@ jobs:
           let make_process=$(nproc)+2
           make target/compile -j${make_process} V=s
 ### ----------------------------------------------------------------- ###
-      - name: Kernel Version (Part 1)
-        id: kernelversionA
-        if: env.USE_KERNEL_VERSION == 'true' && !cancelled()
-        run: |
-          chmod +x scripts/$FUNCTIONS_SH
-          source scripts/$FUNCTIONS_SH
-          kernel_version
-### ----------------------------------------------------------------- ###
       - name: Building packages
         id: makepackages
         if: env.BUILD_PACKAGES == 'true' && !cancelled()
@@ -500,14 +491,6 @@ jobs:
           make package/install -j${make_process} || make package/install
           -j${make_process} V=s 2>&1 | tee logs/build.log | grep -i -E
           "^make.*(error|[12345]...Entering directory)"
-### ----------------------------------------------------------------- ###
-      - name: Kernel Version (Part 2)
-        id: kernelversionB
-        if: env.USE_KERNEL_VERSION == 'true' && !cancelled()
-        run: |
-          chmod +x scripts/$FUNCTIONS_SH
-          source scripts/$FUNCTIONS_SH
-          package_archive
 ### ----------------------------------------------------------------- ###
       - name: Indexing packages
         id: indexingpackages
