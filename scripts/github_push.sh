@@ -20,7 +20,7 @@ echo "BIN_DIR: $BIN_DIR"
 echo "KMOD_DIR: $KMOD_DIR"
 echo "PKG_ARCH: $PKG_ARCH"
 ### -------------------------------------------------------------------- ###
-SOURCE_DIRECTORY_A="$BIN_DIR"
+SOURCE_DIRECTORY_A="openwrt/bin/packages/$PKG_ARCH"
 SOURCE_DIRECTORY_B="$BIN_DIR/kmods/$KMOD_DIR"
 DESTINATION_GITHUB_USERNAME="DevOpenWRT-Router"
 DESTINATION_REPOSITORY_NAME="Linksys_OpenWRT_Releases"
