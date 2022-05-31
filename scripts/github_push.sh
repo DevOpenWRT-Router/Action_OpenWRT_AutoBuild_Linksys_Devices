@@ -1,7 +1,7 @@
 #!/bin/sh -l
 #################################################################
-# (C) 2021 By Eliminater74 For OpenWRT
-# Updated: 20210822
+# (C) 2021 2022 By Eliminater74 For OpenWRT
+# Updated: 20220527
 #
 #
 #################################################################
@@ -14,8 +14,14 @@ set -u  # script fails if trying to access to an undefined variable
 D="$(date +"%Y.%m.%d-%H%M")"
 
 echo "[+] Action start"
-SOURCE_DIRECTORY_A="openwrt/bin/packages/arm_cortex-a9_vfpv3-d16"
-SOURCE_DIRECTORY_B="openwrt/bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR"
+export TOPDIR="$PWD"
+echo "TOP_DIR: $TOPDIR"
+echo "BIN_DIR: $BIN_DIR"
+echo "KMOD_DIR: $KMOD_DIR"
+echo "PKG_ARCH: $PKG_ARCH"
+### -------------------------------------------------------------------- ###
+SOURCE_DIRECTORY_A="openwrt/bin/packages/$PKG_ARCH"
+SOURCE_DIRECTORY_B="$BIN_DIR/kmods/$KMOD_DIR"
 DESTINATION_GITHUB_USERNAME="DevOpenWRT-Router"
 DESTINATION_REPOSITORY_NAME="Linksys_OpenWRT_Releases"
 USER_EMAIL="github-actions[bot]@users.noreply.github.com"
@@ -25,6 +31,7 @@ TARGET_BRANCH="main"
 COMMIT_MESSAGE="Updated: $D"
 TARGET_DIRECTORY_A="packages"
 TARGET_DIRECTORY_B="kmods/$KMOD_DIR"
+### -------------------------------------------------------------------- ###
 
 if [ "$DESTINATION_REPOSITORY_USERNAME" = "" ]
 then
@@ -124,8 +131,10 @@ fi
 
 ### ------------------------------------------------------------ ###
 
-echo "[+] Copying kmod file into $SOURCE_DIRECTORY_A"
-cp "$GITHUB_WORKSPACE/openwrt/kmod" "$SOURCE_DIRECTORY_A"
+if [ -f ""$GITHUB_WORKSPACE/openwrt/kmod"" ]; then
+	echo "[+] Copying kmod file into $SOURCE_DIRECTORY_A"
+	cp "$GITHUB_WORKSPACE/openwrt/kmod" "$SOURCE_DIRECTORY_A"
+fi
 
 echo "[+] Copying contents of source repository folder $SOURCE_DIRECTORY_A to folder $TARGET_DIRECTORY_A in git repo $DESTINATION_REPOSITORY_NAME"
 cp -ra "$SOURCE_DIRECTORY_A"/. "$CLONE_DIR/$TARGET_DIRECTORY_A"
