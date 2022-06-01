@@ -36,6 +36,7 @@ env:
   BOOTSTRAP_START: false
   PRINT_FAILLOGS: true
   SET_BUILDKEY: false
+  USE_CACHEWRTBUILD: true
   USE_KMODS_SCRIPT: true
   USE_FILES: true
   USE_CUST_THEMES: true
@@ -391,8 +392,9 @@ jobs:
           cd openwrt
           mkdir -p logs
 ### ----------------------------------------------------------------- ###
-      - name: Cache (Setup)
+      - name: Cache Acceleration (Secondary compilation of the same model with the same source code is valid within 7 days, and only one source code cache is retained each time)
         uses: klever1988/cachewrtbuild@main
+        if: env.USE_CACHEWRTBUILD == 'true' && !cancelled()
         with:
           ccache: 'true'
           toolchain: 'true'
