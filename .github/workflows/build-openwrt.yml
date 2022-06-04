@@ -93,12 +93,14 @@ env:
   TARGET_DIRECTORY_B: kmods/$KMOD_DIR
   TZ: America/New_York
 ### ----------------------------------------------------------------- ###
+### ----------------------------------------------------------------- ###
 jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@main
+### ----------------------------------------------------------------- ###
       - name: Show system
         env:
           DEBIAN_FRONTEND: noninteractive
@@ -115,8 +117,10 @@ jobs:
       - name: HARDWARE_DEVICE
         run: |
           echo "Device: $HARDWARE_DEVICE"
+### ----------------------------------------------------------------- ###          
       - name: Cleanup Environment
         uses: rokibhasansagar/slimhub_actions@main
+### ----------------------------------------------------------------- ###
       - name: Initializing environment
         run: >
           echo "::group::Install Build Env Tool"
