@@ -30,6 +30,7 @@ env:
   EXT_INIT_ENV: environment.sh
   DEVICE_NAME: ''
 ### --------------------------- ###
+  CLEANUP_ENVIROMENT: true
   RESET_OPENWRT_COMMIT: false
   INSTALL_LLVM: false
   LOAD_FUNCTIONS: true
@@ -119,6 +120,7 @@ jobs:
           echo "Device: $HARDWARE_DEVICE"
 ### ----------------------------------------------------------------- ###          
       - name: Cleanup Environment
+        if: env.CLEANUP_ENVIROMENT == 'true' && !cancelled()
         uses: rokibhasansagar/slimhub_actions@main
 ### ----------------------------------------------------------------- ###
       - name: Initializing environment
