@@ -1,0 +1,42 @@
+#!/bin/bash
+# shellcheck shell=bash
+#################################################################
+# Copyright (c) 2022 By Eliminater74                            #
+#                                                               #
+# This is free software, licensed under the MIT License.        #
+# See /LICENSE for more information.                            #
+#                                                               #
+#                                                               #
+# Updated By Eliminater74 05/12/2022                            #
+#################################################################
+
+sleep 50 ### <-- Needed to wait till internet is up before trying
+
+FILE=/root/ISTORE_ADDED
+
+if [ ! -f "$FILE" ]; then
+    if [[ -f "/www/luci-static/istore/index.js" ]]; then
+        if [[ ! -f "/www/luci-static/istore/index.js.bak" ]]; then
+            echo "Backing up original Chinese files..."
+            mv /www/luci-static/istore/index.js /www/luci-static/istore/index.js.bak
+	        mv /usr/lib/lua/luci/view/store/main.htm /usr/lib/lua/luci/view/store/main.htm.bak
+        fi
+        echo "Downloading English files..."
+        if [[ -f "/usr/bin/wget" ]]; then
+            wget -q -O /www/luci-static/istore/index.js https://glitchery.jp/istore/index.js
+	        wget -q -O /usr/lib/lua/luci/view/store/main.htm https://glitchery.jp/istore/main.htm
+      else
+            curl -s -o /www/luci-static/istore/index.js https://glitchery.jp/istore/index.js
+	        curl -s -o /usr/lib/lua/luci/view/store/main.htm https://glitchery.jp/istore/main.htm
+        fi
+        if [[ -f "/overlay/upper/usr/lib/lua/luci/view/store/main.htm" ]]; then
+            mv /overlay/upper/usr/lib/lua/luci/view/store/main.htm /overlay/upper/usr/lib/lua/luci/view/store/main.htm.bak
+	        cp /usr/lib/lua/luci/view/store/main.htm /overlay/upper/usr/lib/lua/luci/view/store/main.htm
+        fi
+        echo "Download complete, you may now enjoy English iStore"
+        else echo "iStore files not found, perhaps iStore isn't installed or you changed its default path?"
+    fi
+    touch $FILE
+fi
+
+exit 0

@@ -329,10 +329,13 @@ jobs:
           cd openwrt
           git log --pretty=oneline -n 1
 ### ----------------------------------------------------------------- ###
-      - name: Copy (files) Dir
+      - name: Preparing (FILES)
         if: env.USE_FILES == 'true' && !cancelled()
         run: |
-          [ -e configs/files ] && mv configs/files openwrt/files
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          cd openwrt
+          FILES_CHMOD
 ### ----------------------------------------------------------------- ###
       - name: Copy (.config)
         run: >
