@@ -40,6 +40,7 @@ env:
   USE_CACHEWRTBUILD: true
   USE_KMODS_SCRIPT: true
   USE_FILES: true
+  USE_OpenWrtScripts: true
   USE_CUST_THEMES: true
   USE_CUSTOM_CONFIGURATION: true
   USE_OPENWRT_PATCHES: true
@@ -336,6 +337,14 @@ jobs:
           source scripts/$FUNCTIONS_SH
           cd openwrt
           FILES_CHMOD
+### ----------------------------------------------------------------- ###
+      - name: Preparing (OpenWrtScripts)
+        if: env.USE_OpenWrtScripts == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          cd openwrt
+          FILES_OpenWrtScripts
 ### ----------------------------------------------------------------- ###
       - name: Copy (.config)
         run: >

@@ -10,6 +10,9 @@ sed -i 's/^export PS1.*/export PS1='\''\\\[\\033\[01;31m\\\]\\h\\\[\\033\[01;30m
 
 version=$(uci -q get base_config.@status[0].version)
 
+### Lets add OpenWrtScripts to PATH
+export PATH=/sbin/OpenWrtScripts:"$PATH"
+
 # Screen settings
 cat >> /etc/screenrc << EOF
 defscrollback 1000

@@ -191,6 +191,11 @@ FILES_CHMOD() {
   fi
 }
 
+FILES_OpenWrtScripts() {
+  echo "Downloading richb-hanover/OpenWrtScripts to files/sbin/OpenWrtScripts."
+  svn export https://github.com/richb-hanover/OpenWrtScripts files/sbin/OpenWrtScripts
+}
+
 ### Apply all patches that are in 'patch' directory
 APPLY_PATCHES() {
   mv "$GITHUB_WORKSPACE"/configs/patches "$GITHUB_WORKSPACE"/openwrt/patches
