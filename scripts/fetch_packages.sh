@@ -27,6 +27,8 @@ git clone https://github.com/DevOpenWRT-Router/luci-app-mqos.git package/PureFus
 git clone https://github.com/DevOpenWRT-Router/luci-app-ota.git package/PureFusionWRT/luci-app-ota
 ### luci-app-tn-netports
 git clone https://github.com/DevOpenWRT-Router/luci-app-tn-netports.git package/PureFusionWRT/luci-app-tn-netports
+### luci-app-tn-logview
+git clone https://github.com/DevOpenWRT-Router/luci-app-tn-logview.git package/PureFusionWRT/luci-app-tn-logview
 
 echo "END Fetching From DevOpenWRT-Router:"
 }
