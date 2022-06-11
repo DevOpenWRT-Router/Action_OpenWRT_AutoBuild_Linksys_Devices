@@ -391,6 +391,9 @@ LUCI_THEMES() {
   ### luci-app-argon-config
   git clone https://github.com/jerrykuku/luci-app-argon-config.git package/jerrykuku/luci-app-argon-config
 
+  ### luci-theme-tano (Custom By lynxnexy)
+  git clone https://github.com/lynxnexy/luci-theme-tano.git package/lynxnexy/luci-theme-tano
+
   ### luci-theme-bootstrap-mod
   svn export https://github.com/immortalwrt/luci/trunk/themes/luci-theme-bootstrap-mod package/immortalwrt/luci-theme-bootstrap-mod
   sed -i "s|include ../../luci.mk|include \$(TOPDIR)/feeds/luci/luci.mk|g" package/immortalwrt/luci-theme-bootstrap-mod/Makefile
