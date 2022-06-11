@@ -37,6 +37,7 @@ env:
   BOOTSTRAP_START: false
   PRINT_FAILLOGS: true
   SET_BUILDKEY: false
+  remove_languages: true
   USE_CACHEWRTBUILD: true
   USE_KMODS_SCRIPT: true
   USE_FILES: true
@@ -303,6 +304,16 @@ jobs:
           while read -r line; do
           cd openwrt && ./scripts/feeds uninstall $line
           done < "$file"
+### ----------------------------------------------------------------- ###
+      - name: Developer (English language Only)
+        id: po-english
+        continue-on-error: true
+        if: env.remove_languages == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          cd openwrt
+          REMOVE_LANGUAGES
 ### ----------------------------------------------------------------- ###
       - name: Run Custom OpenWRT Patches
         id: patches

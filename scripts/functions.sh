@@ -256,6 +256,13 @@ REMOVE_PO() {
   find ./package -name "po" | xargs rm -rf;
 }
 
+REMOVE_LANGUAGES() {
+  echo "Removing All Languages except English"
+  #find ./feeds/luci/modules/luci-base/po/ ! -name 'en' -type d -exec rm -rf {} +
+  find ./package -name "po" | xargs rm -rf;
+  find ./feeds -name "po" | xargs rm -rf;
+}
+
 ### This should 100% safe to use
 REMOVE_SVN() {
   echo "Removing all Directorys containing .svn"
