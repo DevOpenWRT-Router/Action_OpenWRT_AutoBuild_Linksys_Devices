@@ -47,6 +47,9 @@ UNSORTED_GIT_PACKAGES(){
   ### luci-app-ttnode
   git clone https://github.com/jerrykuku/luci-app-ttnode.git package/jerrykuku/luci-app-ttnode
 
+  ### luci-app-tinyfilemanager
+  git clone https://github.com/lynxnexy/luci-app-tinyfilemanager.git package/lynxnexy/luci-app-tinyfilemanager
+
   ### luci-app-autorepeater
   git clone https://github.com/peter-tank/luci-app-autorepeater.git package/peter-tank/luci-app-autorepeater
 
