@@ -119,10 +119,6 @@ GSPOTX2F_PACKAGES() {
   git clone https://github.com/gSpotx2f/luci-app-internet-detector.git package/gSpotx2f/luci-app-internet-detector
   rm -rf package/gSpotx2f/luci-app-internet-detector/po
 
-  ### luci-app-log
-  git clone https://github.com/gSpotx2f/luci-app-log.git package/gSpotx2f/luci-app-log
-  rm -rf package/gSpotx2f/luci-app-log/po
-
   ### luci-app-temp-status
   git clone https://github.com/gSpotx2f/luci-app-temp-status.git package/gSpotx2f/luci-app-temp-status
   rm -rf package/gSpotx2f/luci-app-temp-status/po
@@ -130,6 +126,18 @@ GSPOTX2F_PACKAGES() {
   ### luci-app-disks-info
   git clone https://github.com/gSpotx2f/luci-app-disks-info.git package/gSpotx2f/luci-app-disks-info
   rm -rf package/gSpotx2f/luci-app-disks-info/po
+
+  ### luci-app-log
+  git clone https://github.com/gSpotx2f/luci-app-log.git package/gSpotx2f/luci-app-log
+  rm -rf package/gSpotx2f/luci-app-log/po
+
+  ### luci-app-multilog
+  svn export https://github.com/gSpotx2f/luci-app-log/trunk/dev-mods-examples/mod-multilog package/gSpotx2f/luci-app-multilog
+  wget https://raw.githubusercontent.com/gSpotx2f/luci-app-log/master/Makefile -O package/gSpotx2f/luci-app-multilog/Makefile
+
+  ### luci-app-textarea
+  svn export https://github.com/gSpotx2f/luci-app-log/trunk/dev-mods-examples/mod-textarea package/gSpotx2f/luci-app-textarea
+  wget https://raw.githubusercontent.com/gSpotx2f/luci-app-log/master/Makefile -O package/gSpotx2f/luci-app-textarea/Makefile
 
   echo "END Fetching From gSpotx2f's Repos:"
 }
