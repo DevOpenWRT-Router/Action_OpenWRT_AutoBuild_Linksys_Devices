@@ -193,7 +193,7 @@ FILES_CHMOD() {
 
 FILES_OpenWrtScripts() {
   echo "Downloading richb-hanover/OpenWrtScripts to files/sbin/OpenWrtScripts."
-  svn export https://github.com/richb-hanover/OpenWrtScripts files/sbin/OpenWrtScripts
+  svn export https://github.com/richb-hanover/OpenWrtScripts/trunk files/sbin/OpenWrtScripts
 }
 
 ### Apply all patches that are in 'patch' directory
