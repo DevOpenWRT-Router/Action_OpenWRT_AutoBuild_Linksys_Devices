@@ -1,8 +1,8 @@
 #!/bin/sh
 ###################################################################
-# default-settings (C) 2021 By Eliminater74                       #
+# default-settings (C) 2021 - 2022 By Eliminater74                #
 #                                                                 #
-# Updated On: 09/05/2021                                          #
+# Updated On: 06/12/2022                                          #
 ###################################################################
 
 ### Cleanup some Crontabs
@@ -16,6 +16,7 @@ version=$(uci -q get base_config.@status[0].version)
 
 ### Lets add OpenWrtScripts to PATH
 export PATH=/sbin/OpenWrtScripts:"$PATH"
+echo "New Path: $PATH"
 
 # Screen settings
 cat >> /etc/screenrc << EOF
