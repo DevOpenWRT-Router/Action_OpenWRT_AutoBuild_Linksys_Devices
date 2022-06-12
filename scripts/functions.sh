@@ -193,7 +193,11 @@ FILES_CHMOD() {
 
 FILES_OpenWrtScripts() {
   echo "Downloading richb-hanover/OpenWrtScripts to files/sbin/OpenWrtScripts."
-  svn export https://github.com/richb-hanover/OpenWrtScripts/trunk files/sbin/OpenWrtScripts
+  svn export https://github.com/richb-hanover/OpenWrtScripts/trunk files/usr/lib/OpenWrtScripts
+  echo "Moving: autoSQM.sh"
+  mv "$GITHUB_WORKSPACE"/configs/DATA/autoSQM.sh "$GITHUB_WORKSPACE"/openwrt/files/usr/lib/OpenWrtScripts
+  echo "Moving: median.awk"
+  mv "$GITHUB_WORKSPACE"/configs/DATA/median.awk "$GITHUB_WORKSPACE"/openwrt/files/usr/lib/OpenWrtScripts
 }
 
 ### Apply all patches that are in 'patch' directory
