@@ -1,0 +1,19 @@
+#!/bin/ash
+# shellcheck shell=dash
+#################################################################
+# Copyright (c) 2022 By Eliminater74                            #
+#                                                               #
+# This is free software, licensed under the MIT License.        #
+# See /LICENSE for more information.                            #
+#                                                               #
+#                                                               #
+# Updated By Eliminater74 06/13/2022                            #
+#################################################################
+
+sleep 10 ### <-- Needed to wait till internet is up before trying
+
+### Lets add OpenWrtScripts to PATH
+export PATH=/usr/lib/OpenWrtScripts:"$PATH"
+echo "New Path: $PATH"
+
+exit 0
