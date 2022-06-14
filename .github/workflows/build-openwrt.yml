@@ -620,8 +620,9 @@ jobs:
         continue-on-error: true
         if: env.USE_KMODS_SCRIPT == 'true' && !cancelled()
         run: |
-          chmod +x ${GITHUB_WORKSPACE}/scripts/create_kmods
-          ${GITHUB_WORKSPACE}/scripts/create_kmods
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          CREATE_KMODS
 ### --------------------------- ###
       - name: If Error (kmods feed)
         if: steps.GKMOD.outcome == 'failure'
