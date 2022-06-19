@@ -1,0 +1,421 @@
+#!/bin/sh
+###################################################################
+# default-settings (C) 2021 - 2022 By Eliminater74                #
+#                                                                 #
+# Updated On: 06/12/2022                                          #
+###################################################################
+
+### Cleanup some Crontabs
+rm -rf /etc/crontabs/root
+
+
+#Prompt colors
+sed -i 's/^export PS1.*/export PS1='\''\\\[\\033\[01;31m\\\]\\h\\\[\\033\[01;30m\\\]@\\\[\\033\[01;32m\\\]\\w\\\[\\033\[01;34m\\\] #\\\[\\033\[00m\\\] '\''/' /etc/profile
+
+version=$(uci -q get base_config.@status[0].version)
+
+# Screen settings
+cat >> /etc/screenrc << EOF
+defscrollback 1000
+termcapinfo xterm ti@:te@
+hardstatus alwayslastline '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+vbell off
+EOF
+
+uci set luci.main.lang=auto
+uci commit luci
+
+uci set luci.main.mediaurlbase=/luci-static/bootstrap-dark
+uci commit luci
+
+uci set fstab.@global[0].anon_mount=1
+uci commit fstab
+
+uci -q set upnpd.config.enabled='1'
+uci commit upnpd
+
+uci -q batch <<-EOF
+set system.@system[0].timezone='UTC'
+set system.@system[0].zonename='America/New York'
+delete system.ntp.server
+add_list system.ntp.server='0.us.pool.ntp.org'
+add_list system.ntp.server='1.us.pool.ntp.org'
+add_list system.ntp.server='2.us.pool.ntp.org'
+add_list system.ntp.server='3.us.pool.ntp.org'
+EOF
+uci commit system
+
+# dnsmasq
+uci -q batch <<-EOF
+set dhcp.@dnsmasq[0].cachesize='1500'
+set dhcp.@dnsmasq[0].min_ttl='3600'
+set dhcp.@dnsmasq[0].filter_aaaa='0'
+set dhcp.@dnsmasq[0].localservice='0'
+set dhcp.@dnsmasq[0].nonwildcard='0'
+set dhcp.lan.ndp=''
+set dhcp.lan.ra='hybrid'
+set dhcp.lan.ndp='hybrid'
+set dhcp.lan.dhcpv6='hybrid'
+set dhcp.lan.ignore='0'
+set dhcp.lan.ra_management='1'
+set dhcp.lan.ra_default='1'
+set dhcp.lan.force='1'
+del dhcp.@dnsmasq[0].rebind_protection='1'
+EOF
+uci commit dhcp
+sed -i '/log-facility/d' /etc/dnsmasq.conf
+echo "log-facility=/dev/null" >> /etc/dnsmasq.conf
+
+
+uci -q batch <<-EOF
+set network.@globals[0].ula_prefix=''
+set network.lan.delegate='0'
+set network.wan.mtu=1460
+set network.wan.metric='41'
+set network.wan.delegate='0'
+set network.wan.ipv6='auto'
+EOF
+uci commit network
+
+# log level
+# 8 debug, 5 warning
+uci set system.@system[0].conloglevel='5'
+# 5 debug, 9 warning
+uci set system.@system[0].cronloglevel='9'
+uci commit system
+
+# zram
+uci set system.@system[0].zram_size_mb='1536'
+uci set system.@system[0].zram_comp_algo='lz4'
+uci commit system
+
+if [ "$(uci -q get dhcp.@dnsmasq[0].port)" != "53" ]; then
+	uci -q set dhcp.@dnsmasq[0].port='53'
+	uci commit dhcp
+fi
+
+echo "$(uci -q get uhttpd.main.index_page)" | grep -q "cgi-bin/luci" ||
+	uci -q add_list uhttpd.main.index_page='cgi-bin/luci' && uci commit uhttpd
+
+/etc/init.d/wizard disable
+
+sed -i "s/git-.*-\(.*\)/git-\1/g" /usr/lib/lua/luci/version.lua
+
+[ "$(echo "$(/sbin/cpuinfo 2>/dev/null)" | grep -i "MHz")" ] || sed -i "s/_('CPU Info'),cpuinfo.cpufreq,//" /www/luci-static/resources/view/status/include/10_system.js
+
+
+rm -f /usr/lib/lua/luci/view/admin_status/index/ddns.htm
+rm -f /usr/lib/lua/luci/view/admin_status/index/minidlna.htm
+rm -f /usr/lib/lua/luci/view/admin_status/index/mwan.htm
+rm -f /usr/lib/lua/luci/view/admin_status/index/upnp.htm
+
+echo 'src/gz purefusion_packages https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/packages/packages' >> /etc/opkg/distfeeds.conf
+echo 'src/gz purefusion_base https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/packages/base' >> /etc/opkg/distfeeds.conf
+echo 'src/gz purefusion_luci https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/packages/luci' >> /etc/opkg/distfeeds.conf
+echo 'src/gz purefusion_routing https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/packages/routing' >> /etc/opkg/distfeeds.conf
+echo 'src/gz purefusion_telephony https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/packages/telephony' >> /etc/opkg/distfeeds.conf
+
+ln -sf /sbin/ip /usr/bin/ip
+
+### -------------------------------------------- S Q M ------------------------------------------------------- ###
+
+WAN_IFACE=$(uci get network.wan.device)
+uci set sqm.eth1.interface="$WAN_IFACE"
+uci commit sqm
+/etc/init.d/sqm reload
+
+echo "0 6,14,22 * * * /usr/lib/OpenWrtScripts/autoSQM.sh" >> /etc/crontabs/root
+crontab /etc/crontabs/root
+
+### ---------------------------------------------------------------------------------------------------------- ###
+##### SPECIAL MODIFICATIONS #####
+##### --------------------- #####
+
+### Change /etc/profile to allow running scripts as bash
+sed 's/./bash/' /etc/profile
+### ---------------------------------------------------------------------------------------------------------- ###
+
+## Lets keep Wireless Enabled (after downloading the firmware, the wireless is turned off by default)
+## ref: https://forum.openwrt.org/t/solved-enable-wi-fi-and-connect-to-a-network-on-first-boot/47399/24
+sed -i '/option disabled/d' /etc/config/wireless
+# wifi off: set wireless.radio${devidx}.disabled=1
+# wifi on: set wireless.radio${devidx}.disabled=0
+sed -i '/set wireless.radio${devidx}.disabled/d' /lib/wifi/mac80211.sh
+wifi up
+
+# sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release
+# echo "DISTRIB_REVISION='R21.8.6'" >> /etc/openwrt_release
+# sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release
+# echo "DISTRIB_DESCRIPTION='OpenWrt '" >> /etc/openwrt_release
+
+sed -i '/log-facility/d' /etc/dnsmasq.conf
+echo "log-facility=/dev/null" >> /etc/dnsmasq.conf
+
+# kB
+memtotal=$(grep MemTotal /proc/meminfo | awk '{print $2}')
+if test "$memtotal" -ge 1048576; then
+	# > 1024M
+	cachesize=10000
+	dnsforwardmax=10000
+	nf_conntrack_max=262144
+elif test "$memtotal" -ge 524288; then
+	# <= 1024M
+	cachesize=10000
+	dnsforwardmax=10000
+	nf_conntrack_max=131072
+elif test "$memtotal" -ge 262144; then
+	# <= 512M
+	cachesize=8192
+	dnsforwardmax=8192
+	nf_conntrack_max=65536
+elif test "$memtotal" -ge 131072; then
+	# <= 256M
+	cachesize=4096
+	dnsforwardmax=4096
+	nf_conntrack_max=65536
+elif test "$memtotal" -ge 65536; then
+	# <= 128M
+	cachesize=2048
+	dnsforwardmax=2048
+	nf_conntrack_max=32768
+else
+	# < 64M
+	cachesize=1024
+	dnsforwardmax=1024
+	nf_conntrack_max=16384
+fi
+
+test "$version" -lt 1 && {
+	uci -q get dhcp.@dnsmasq[0] || uci -q add dhcp dnsmasq
+	uci -q set dhcp.@dnsmasq[0].cachesize="$cachesize"
+	uci -q set dhcp.@dnsmasq[0].dnsforwardmax="$dnsforwardmax"
+	uci -q set dhcp.@dnsmasq[0].localservice='0'
+	uci -q set dhcp.@dnsmasq[0].localise_queries='1'
+	uci -q set dhcp.@dnsmasq[0].rebind_protection='0'
+	uci -q set dhcp.@dnsmasq[0].rebind_localhost='1'
+	uci commit dhcp
+	uci -q set system.@system[0].zram_comp_algo='zstd'
+	uci -q set system.@system[0].zram_size_mb="$(expr "$memtotal" / 1024 / 3)"
+	uci commit system
+	version=1
+}
+
+# sysctl overwrite
+SYSCTL_LOCAL=/etc/sysctl.d/50-local.conf
+mkdir -p /etc/sysctl.d
+printf >"$SYSCTL_LOCAL"
+echo net.nf_conntrack_max="$nf_conntrack_max" >>"$SYSCTL_LOCAL"
+echo net.ipv4.ip_early_demux=0 >>"$SYSCTL_LOCAL"
+echo net.bridge.bridge-nf-call-iptables=0 >>"$SYSCTL_LOCAL"
+echo net.ipv4.fib_multipath_hash_policy=1 >>"$SYSCTL_LOCAL"
+echo net.ipv4.tcp_congestion_control=cubic >>"$SYSCTL_LOCAL"
+echo net.netfilter.nf_conntrack_helper=1 >>"$SYSCTL_LOCAL"
+echo kernel.msgmax = 65536 >>"$SYSCTL_LOCAL"
+echo kernel.msgmnb = 65536 >>"$SYSCTL_LOCAL"
+echo vm.swappiness=0 >>"$SYSCTL_LOCAL"
+
+# hsts=1/on/yes: same as --hsts
+# hsts=0/off/no: same as --no-hsts
+# --no-hsts
+### Wget supports HSTS (HTTP Strict Transport Security, RFC 6797) by default. Use ‘--no-hsts’ to make Wget 
+### act as a non-HSTS-compliant UA. As a consequence, Wget would ignore all the Strict-Transport-Security 
+### headers, and would not enforce any existing HSTS policy.
+echo 'hsts=0' > /root/.wgetrc
+
+# Flag packages
+opkg flag hold luci-app-firewall
+opkg flag hold firewall
+opkg flag hold dnsmasq-full
+
+# packet_steering
+# use every cpu to handle packet traffic
+uci set network.globals.packet_steering='1'
+uci commit network
+/etc/init.d/network restart
+
+cp -pR /www/cgi-bin/* /www/
+
+
+uci -q set base_config.@status[0].version="$version"
+uci commit base_config
+
+# disable coremark
+sed -i '/coremark/d' /etc/crontabs/root
+crontab /etc/crontabs/root
+
+# disable linkease
+uci set linkease.@linkease[0].enabled='0'
+uci commit linkease
+/etc/init.d/linkease restart
+
+# link
+ln -sf /bin/busybox /bin/top
+
+# luci cache
+rm -rf /tmp/luci-modulecache
+rm -f /tmp/luci-indexcache*
+rm -rf /tmp/luci-*
+
+##############################################################################
+# >>>>>>>>>>>>>>>>>>>>>>>  H  A  R  D  E  N  I  N  G <<<<<<<<<<<<<<<<<<<<<<< #
+##############################################################################
+
+### Restrict SSH access to the local network (LAN)
+
+uci set dropbear.@dropbear[0].Interface='lan'
+uci commit dropbear
+service dropbear restart 
+### -- END --
+
+### Ensure that we use/redirect to HTTPS always
+
+uci set uhttpd.main.redirect_https='1'
+uci commit uhttpd
+service uhttpd restart
+service uhttpd enable
+### -- END --
+
+### BCP38: http://www.bcp38.info/index.php/Main_Page
+
+## This is less about protecting your router and more about preventing your network's 
+## contribution to some types of DoS/DDoS attack
+uci set bcp38.@bcp38[0].enabled='0'
+uci set bcp38.@bcp38[0].interface=$WAN_IFACE #Adjust to match your WAN port - may be something like eth0.2 for example.
+uci commit bcp38 
+
+service bcp38 restart
+service bcp38 enable
+### -- END --
+
+
+### ---------------------------------------------------------------------------------------- ###
+###  BANIP: https://github.com/openwrt/packages/blob/master/net/banip/files/README.md        ###
+### ---------------------------------------------------------------------------------------- ###
+uci set banip.global.ban_enabled='0'
+uci set banip.global.ban_trigger='wan'
+uci set banip.global.ban_autodetect='1'
+uci set banip.global.ban_logsrc_enabled='1'
+uci set banip.global.ban_maxqueue='4'
+uci set banip.global.ban_fetchutil='wget'
+uci set banip.global.ban_fetchinsecure='1'
+uci set banip.global.ban_global_settype='src+dst'
+uci set banip.global.ban_target_src='DROP'
+uci set banip.global.ban_target_dst='REJECT'
+uci delete banip.global.ban_settype_src
+uci add_list banip.global.ban_settype_src='country'
+uci add_list banip.global.ban_settype_src='dshield'
+uci set banip.global.ban_loglimit='100'
+uci set banip.global.ban_logopts_src='-m limit --limit 2/sec'
+uci set banip.global.ban_localsources='blacklist'
+uci set banip.global.ban_autoblacklist='1'
+uci set banip.global.ban_autowhitelist='1'
+uci delete banip.global.ban_sources
+uci add_list banip.global.ban_sources='darklist'
+uci add_list banip.global.ban_sources='debl'
+uci add_list banip.global.ban_sources='drop'
+uci add_list banip.global.ban_sources='feodo'
+uci add_list banip.global.ban_sources='firehol1'
+uci add_list banip.global.ban_sources='greensnow'
+uci add_list banip.global.ban_sources='iblockads'
+uci add_list banip.global.ban_sources='iblockspy'
+uci add_list banip.global.ban_sources='myip'
+uci add_list banip.global.ban_sources='nixspam'
+uci add_list banip.global.ban_sources='proxy'
+uci add_list banip.global.ban_sources='sslbl'
+uci add_list banip.global.ban_sources='talos'
+uci add_list banip.global.ban_sources='threat'
+uci add_list banip.global.ban_sources='tor'
+uci add_list banip.global.ban_sources='uceprotect1'
+uci add_list banip.global.ban_sources='yoyo'
+uci delete banip.global.ban_countries
+uci add_list banip.global.ban_countries='ru'
+uci add_list banip.global.ban_countries='cn'
+uci add_list banip.global.ban_countries='af'
+uci add_list banip.global.ban_countries='iq'
+uci add_list banip.global.ban_countries='ua'
+uci add_list banip.global.ban_countries='ao'
+uci add_list banip.global.ban_countries='ai'
+uci add_list banip.global.ban_countries='ar'
+uci add_list banip.global.ban_countries='az'
+uci add_list banip.global.ban_countries='bd'
+uci add_list banip.global.ban_countries='by'
+uci add_list banip.global.ban_countries='br'
+
+# Allowlist a few sites that I've seen some blocklists break before.
+echo "enro.com" >> /etc/banip/banip.whitelist
+echo "www.reddit.com" >> /etc/banip/banip.whitelist
+echo "yelp.com" >> /etc/banip/banip.whitelist
+
+uci commit banip
+service banip restart
+service banip enable
+
+# refreshing the blocklists every 24 hours
+echo "15 07 * * * /etc/init.d/banip reload" >> /etc/crontabs/root
+crontab /etc/crontabs/root
+### -- END --
+
+### adblock
+uci set adblock.global.adb_enabled='0'
+uci set adblock.global.adb_trigger='wan'
+uci set adblock.global.adb_debug='0'
+uci set adblock.global.adb_dnsfilereset='0'
+uci set adblock.global.adb_mail='0'
+uci set adblock.global.adb_report='0'
+uci set adblock.global.adb_backup='1'
+uci set adblock.global.adb_maxqueue='4'
+uci set adblock.global.adb_dns='dnsmasq'
+uci set adblock.global.adb_fetchutil='wget'
+uci set adblock.global.adb_fetchinsecure='1'
+uci set adblock.global.adb_dnsinstance='0'
+uci set adblock.global.adb_eng_sources='bluGo/formats/domains.txt'
+uci set adblock.global.adb_forcedns='1'
+uci set adblock.global.adb_zonelist='lan'
+uci set adblock.global.adb_stb_sources='alternates/fakenews/hosts'
+uci set adblock.global.adb_safesearch='0'
+uci delete adblock.global.adb_utc_sources
+uci add_list adblock.global.adb_utc_sources='drogue'
+uci add_list adblock.global.adb_utc_sources='adult'
+uci add_list adblock.global.adb_utc_sources='associations_religieuses'
+uci add_list adblock.global.adb_utc_sources='bitcoin'
+uci add_list adblock.global.adb_utc_sources='phishing'
+uci add_list adblock.global.adb_utc_sources='malware'
+uci delete adblock.global.adb_sources
+uci add_list adblock.global.adb_sources='adaway'
+uci add_list adblock.global.adb_sources='adguard'
+uci add_list adblock.global.adb_sources='andryou'
+uci add_list adblock.global.adb_sources='anti_ad'
+uci add_list adblock.global.adb_sources='anudeep'
+uci add_list adblock.global.adb_sources='disconnect'
+uci add_list adblock.global.adb_sources='energized'
+uci add_list adblock.global.adb_sources='openphish'
+uci add_list adblock.global.adb_sources='reg_es'
+uci add_list adblock.global.adb_sources='spam404'
+uci add_list adblock.global.adb_sources='stevenblack'
+uci add_list adblock.global.adb_sources='stopforumspam'
+uci add_list adblock.global.adb_sources='whocares'
+uci add_list adblock.global.adb_sources='yoyo'
+
+uci commit adblock
+service adblock restart
+service adblock enable
+
+# refreshing the blocklists every 24 hours
+echo "16 07 * * * /etc/init.d/adblock reload" >> /etc/crontabs/root
+crontab /etc/crontabs/root
+### -- END --
+
+### Firewall DROP external connections
+if [ $(uci get firewall.@zone[0].name) = 'wan' ]; then zona=0
+elif [ $(uci get firewall.@zone[-1].name) = 'wan' ]; then zona=-1
+elif [ $(uci get firewall.@zone[-2].name) = 'wan' ]; then zona=-2
+fi
+
+uci set firewall.@zone[$zona].input='DROP'
+uci set firewall.@zone[$zona].forward='DROP'
+uci commit firewall
+service firewall restart
+### -- END --
+
+
+exit 0

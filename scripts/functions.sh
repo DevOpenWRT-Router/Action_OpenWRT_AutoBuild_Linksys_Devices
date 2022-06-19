@@ -171,6 +171,35 @@ SMART_CHMOD() {
   unset MY_Filter
 }
 
+### CHMOD -R +x everything in files
+FILES_CHMOD() {
+  if [ -e "$GITHUB_WORKSPACE"/configs/files ] ; then
+    echo "Preparing files"
+    mv "$GITHUB_WORKSPACE"/configs/files "$GITHUB_WORKSPACE"/openwrt/files
+    echo "Removing all Files containing EMPTY"
+    find  "$GITHUB_WORKSPACE"/openwrt/files -name "EMPTY" | xargs rm -rf;
+    echo "chmod -R +x files"
+    chmod -R +x "$GITHUB_WORKSPACE"/openwrt/files/bin
+    chmod -R +x "$GITHUB_WORKSPACE"/openwrt/files/sbin
+    chmod -R +x "$GITHUB_WORKSPACE"/openwrt/files/etc/profile.d
+    chmod -R +x "$GITHUB_WORKSPACE"/openwrt/files/etc/rc.d
+    chmod -R +x "$GITHUB_WORKSPACE"/openwrt/files/etc/init.d
+    chmod -R +x "$GITHUB_WORKSPACE"/openwrt/files/usr/share
+    echo "Finished preparing files"
+  else
+    echo "No ($GITHUB_WORKSPACE/configs/files) Found"
+  fi
+}
+
+FILES_OpenWrtScripts() {
+  echo "Downloading richb-hanover/OpenWrtScripts to files/sbin/OpenWrtScripts."
+  svn export https://github.com/richb-hanover/OpenWrtScripts/trunk files/usr/lib/OpenWrtScripts
+  echo "Moving: autoSQM.sh"
+  mv "$GITHUB_WORKSPACE"/configs/DATA/autoSQM.sh "$GITHUB_WORKSPACE"/openwrt/files/usr/lib/OpenWrtScripts
+  echo "Moving: median.awk"
+  mv "$GITHUB_WORKSPACE"/configs/DATA/median.awk "$GITHUB_WORKSPACE"/openwrt/files/usr/lib/OpenWrtScripts
+}
+
 ### Apply all patches that are in 'patch' directory
 APPLY_PATCHES() {
   mv "$GITHUB_WORKSPACE"/configs/patches "$GITHUB_WORKSPACE"/openwrt/patches
@@ -229,6 +258,13 @@ REMOVE_PO2LMO() {
 REMOVE_PO() {
   echo "Removing all Directorys containing po"
   find ./package -name "po" | xargs rm -rf;
+}
+
+REMOVE_LANGUAGES() {
+  echo "Removing All Languages except English"
+  #find ./feeds/luci/modules/luci-base/po/ ! -name 'en' -type d -exec rm -rf {} +
+  find ./package -name "po" | xargs rm -rf;
+  find ./feeds -name "po" | xargs rm -rf;
 }
 
 ### This should 100% safe to use
@@ -295,6 +331,42 @@ cd bin/targets/mvebu/cortexa9/kmods/"$KMOD_DIR" || exit
 tar -cvzf kmods_"$KMOD_DIR".tar.gz ./*
 mv kmods_"$KMOD_DIR".tar.gz "$GITHUB_WORKSPACE"/openwrt/bin/targets/mvebu/cortexa9/
 cd "$GITHUB_WORKSPACE"/openwrt || return
+}
+
+CREATE_KMODS() {
+  set -x
+
+  #STAGING_DIR_HOST="$(make --no-print-directory -C target/linux val.STAGING_DIR_HOST)"
+
+  export TOPDIR="$PWD"
+  export STAGING_DIR_HOST="$(make --no-print-directory -C target/linux val.STAGING_DIR_HOST)"
+  export MKHASH="$STAGING_DIR_HOST/bin/mkhash"
+  export PATH="$STAGING_DIR_HOST/bin":"$PATH"
+
+  BIN_DIR="$(make --no-print-directory -C target/linux val.BIN_DIR)"
+  KEY_BUILD="$(make --no-print-directory -C target/linux val.BUILD_KEY)"
+  KMOD_DIR="$(make --no-print-directory -C target/linux val.LINUX_VERSION val.LINUX_RELEASE val.LINUX_VERMAGIC | tr '\n' '-' | head -c -1)"
+
+  pushd "$BIN_DIR" || exit
+  rm -rf "kmods/$KMOD_DIR"
+  mkdir -p "kmods/$KMOD_DIR"
+
+  cp -fpR "packages"/automount* "kmods/$KMOD_DIR"/
+  for i in "packages"/kmod-*; do cp -fpR "$i" "kmods/$KMOD_DIR"/; done
+  popd
+
+  pushd "$BIN_DIR/kmods/$KMOD_DIR" || exit
+  "$TOPDIR"/scripts/ipkg-make-index.sh . 2>&1 > "Packages.manifest"
+  grep -vE "^(Maintainer|LicenseFiles|Source|SourceName|Require|SourceDateEpoch)" "Packages.manifest" > "Packages"
+  case "$(((64 + "$(stat -L -c%s "Packages")") % 128))" in
+	  110|111)
+		    echo -e "\033[33mWARNING: Applying padding in Packages to workaround usign SHA-512 bug!\033[0m"
+		    { echo ""; echo ""; } >> "Packages"
+	  ;;
+  esac
+  gzip -9nc "Packages" > "Packages.gz"
+  "$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
+  popd
 }
 ### ------------------------------------------------------------------------------------------------------- ###
 

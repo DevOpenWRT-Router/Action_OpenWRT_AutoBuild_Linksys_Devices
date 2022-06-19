@@ -1,0 +1,23 @@
+#!/bin/ash
+# shellcheck shell=dash
+#################################################################
+# Copyright (c) 2022 By Eliminater74                            #
+#                                                               #
+# This is free software, licensed under the MIT License.        #
+# See /LICENSE for more information.                            #
+#                                                               #
+#                                                               #
+# Updated By Eliminater74 04/17/2022                            #
+#################################################################
+
+sleep 50 ### <-- Needed to wait till internet is up before trying
+
+FILE=/root/KMODS_ADDED
+
+if [ ! -f "$FILE" ]; then
+    MAGIC=$(wget -qO - https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/packages/kmod | sed -n "1p")
+    echo "src/gz purefusion_kmods https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/kmods/$MAGIC" >> /etc/opkg/distfeeds.conf
+    touch $FILE
+fi
+
+exit 0

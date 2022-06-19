@@ -30,15 +30,18 @@ env:
   EXT_INIT_ENV: environment.sh
   DEVICE_NAME: ''
 ### --------------------------- ###
+  CLEANUP_ENVIROMENT: true
   RESET_OPENWRT_COMMIT: false
   INSTALL_LLVM: false
   LOAD_FUNCTIONS: true
   BOOTSTRAP_START: false
   PRINT_FAILLOGS: true
   SET_BUILDKEY: false
+  remove_languages: true
   USE_CACHEWRTBUILD: true
   USE_KMODS_SCRIPT: true
   USE_FILES: true
+  USE_OpenWrtScripts: true
   USE_CUST_THEMES: true
   USE_CUSTOM_CONFIGURATION: true
   USE_OPENWRT_PATCHES: true
@@ -93,12 +96,14 @@ env:
   TARGET_DIRECTORY_B: kmods/$KMOD_DIR
   TZ: America/New_York
 ### ----------------------------------------------------------------- ###
+### ----------------------------------------------------------------- ###
 jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@main
+### ----------------------------------------------------------------- ###
       - name: Show system
         env:
           DEBIAN_FRONTEND: noninteractive
@@ -115,8 +120,11 @@ jobs:
       - name: HARDWARE_DEVICE
         run: |
           echo "Device: $HARDWARE_DEVICE"
+### ----------------------------------------------------------------- ###          
       - name: Cleanup Environment
+        if: env.CLEANUP_ENVIROMENT == 'true' && !cancelled()
         uses: rokibhasansagar/slimhub_actions@main
+### ----------------------------------------------------------------- ###
       - name: Initializing environment
         run: >
           echo "::group::Install Build Env Tool"
@@ -297,6 +305,16 @@ jobs:
           cd $GITHUB_WORKSPACE/openwrt && ./scripts/feeds uninstall $line
           done < "$file"
 ### ----------------------------------------------------------------- ###
+      - name: Developer (English language Only)
+        id: po-english
+        continue-on-error: true
+        if: env.remove_languages == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          cd openwrt
+          REMOVE_LANGUAGES
+### ----------------------------------------------------------------- ###
       - name: Run Custom OpenWRT Patches
         id: patches
         continue-on-error: true
@@ -323,10 +341,21 @@ jobs:
           cd openwrt
           git log --pretty=oneline -n 1
 ### ----------------------------------------------------------------- ###
-      - name: Copy (files) Dir
+      - name: Preparing (FILES)
         if: env.USE_FILES == 'true' && !cancelled()
         run: |
-          [ -e configs/files ] && mv configs/files openwrt/files
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          cd openwrt
+          FILES_CHMOD
+### ----------------------------------------------------------------- ###
+      - name: Preparing (OpenWrtScripts)
+        if: env.USE_OpenWrtScripts == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          cd openwrt
+          FILES_OpenWrtScripts
 ### ----------------------------------------------------------------- ###
       - name: Copy (.config)
         run: >

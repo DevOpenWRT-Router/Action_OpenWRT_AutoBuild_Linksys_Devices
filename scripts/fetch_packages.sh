@@ -20,11 +20,19 @@ echo "Fetching From DevOpenWRT-Router:"
 ### luci-app-mqos
 git clone https://github.com/DevOpenWRT-Router/luci-app-mqos.git package/PureFusionWRT/luci-app-mqos
 ### luci-default-settings
-git clone https://github.com/DevOpenWRT-Router/luci-default-settings.git package/PureFusionWRT/luci-default-settings
+# git clone https://github.com/DevOpenWRT-Router/luci-default-settings.git package/PureFusionWRT/luci-default-settings
 ### my-default-settings (LUCI)
-git clone https://github.com/DevOpenWRT-Router/my-default-settings.git package/PureFusionWRT/my-default-settings
+# git clone https://github.com/DevOpenWRT-Router/my-default-settings.git package/PureFusionWRT/my-default-settings
 ### luci-app-ota
 git clone https://github.com/DevOpenWRT-Router/luci-app-ota.git package/PureFusionWRT/luci-app-ota
+### luci-app-tn-netports
+git clone https://github.com/DevOpenWRT-Router/luci-app-tn-netports.git package/PureFusionWRT/luci-app-tn-netports
+rm -rf package/PureFusionWRT/luci-app-tn-netports/po
+### luci-app-tn-logview
+# git clone https://github.com/DevOpenWRT-Router/luci-app-tn-logview.git package/PureFusionWRT/luci-app-tn-logview
+# rm -rf package/PureFusionWRT/luci-app-tn-logview/po
+### syslog_fc
+#git clone https://github.com/DevOpenWRT-Router/syslog_fc.git package/PureFusionWRT/syslog_fc
 
 echo "END Fetching From DevOpenWRT-Router:"
 }
@@ -40,6 +48,9 @@ UNSORTED_GIT_PACKAGES(){
 
   ### luci-app-ttnode
   git clone https://github.com/jerrykuku/luci-app-ttnode.git package/jerrykuku/luci-app-ttnode
+
+  ### luci-app-tinyfilemanager
+  git clone https://github.com/lynxnexy/luci-app-tinyfilemanager.git package/lynxnexy/luci-app-tinyfilemanager
 
   ### luci-app-autorepeater
   git clone https://github.com/peter-tank/luci-app-autorepeater.git package/peter-tank/luci-app-autorepeater
@@ -113,10 +124,6 @@ GSPOTX2F_PACKAGES() {
   git clone https://github.com/gSpotx2f/luci-app-internet-detector.git package/gSpotx2f/luci-app-internet-detector
   rm -rf package/gSpotx2f/luci-app-internet-detector/po
 
-  ### luci-app-log
-  git clone https://github.com/gSpotx2f/luci-app-log.git package/gSpotx2f/luci-app-log
-  rm -rf package/gSpotx2f/luci-app-log/po
-
   ### luci-app-temp-status
   git clone https://github.com/gSpotx2f/luci-app-temp-status.git package/gSpotx2f/luci-app-temp-status
   rm -rf package/gSpotx2f/luci-app-temp-status/po
@@ -124,6 +131,18 @@ GSPOTX2F_PACKAGES() {
   ### luci-app-disks-info
   git clone https://github.com/gSpotx2f/luci-app-disks-info.git package/gSpotx2f/luci-app-disks-info
   rm -rf package/gSpotx2f/luci-app-disks-info/po
+
+  ### luci-app-log
+  git clone https://github.com/gSpotx2f/luci-app-log.git package/gSpotx2f/luci-app-log
+  rm -rf package/gSpotx2f/luci-app-log/po
+
+  ### luci-app-multilog
+  svn export https://github.com/gSpotx2f/luci-app-log/trunk/dev-mods-examples/mod-multilog package/gSpotx2f/luci-app-multilog
+  wget https://raw.githubusercontent.com/gSpotx2f/luci-app-log/master/Makefile -O package/gSpotx2f/luci-app-multilog/Makefile
+
+  ### luci-app-textarea
+  svn export https://github.com/gSpotx2f/luci-app-log/trunk/dev-mods-examples/mod-textarea package/gSpotx2f/luci-app-textarea
+  wget https://raw.githubusercontent.com/gSpotx2f/luci-app-log/master/Makefile -O package/gSpotx2f/luci-app-textarea/Makefile
 
   echo "END Fetching From gSpotx2f's Repos:"
 }
@@ -377,9 +396,14 @@ LUCI_THEMES() {
   ### luci-app-argon-config
   git clone https://github.com/jerrykuku/luci-app-argon-config.git package/jerrykuku/luci-app-argon-config
 
+  ### luci-theme-tano (Custom By lynxnexy)
+  git clone https://github.com/lynxnexy/luci-theme-tano.git package/lynxnexy/luci-theme-tano
+
+  git clone https://github.com/DevOpenWRT-Router/luci-theme-tano-MOD.git package/PureFusionWRT/luci-theme-tano-MOD
+
   ### luci-theme-bootstrap-mod
-  svn export https://github.com/immortalwrt/luci/trunk/themes/luci-theme-bootstrap-mod package/immortalwrt/luci-theme-bootstrap-mod
-  sed -i "s|include ../../luci.mk|include \$(TOPDIR)/feeds/luci/luci.mk|g" package/immortalwrt/luci-theme-bootstrap-mod/Makefile
+  #svn export https://github.com/immortalwrt/luci/trunk/themes/luci-theme-bootstrap-mod package/immortalwrt/luci-theme-bootstrap-mod
+  #sed -i "s|include ../../luci.mk|include \$(TOPDIR)/feeds/luci/luci.mk|g" package/immortalwrt/luci-theme-bootstrap-mod/Makefile
 
   echo "Done Fetching LUCI-Themes"
 }
