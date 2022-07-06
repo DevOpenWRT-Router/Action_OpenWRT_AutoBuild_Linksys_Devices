@@ -664,19 +664,6 @@ jobs:
         continue-on-error: true
         if: env.USE_KMODS_SCRIPT == 'true' && !cancelled()
         run: |
-          export TOPDIR="$PWD"
-          BIN_DIR="$(make --no-print-directory -C target/linux val.BIN_DIR)"
-          KMOD_DIR="$(make --no-print-directory -C target/linux val.LINUX_VERSION val.LINUX_RELEASE val.LINUX_VERMAGIC | tr '\n' '-' | head -c -1)"
-          PKG_ARCH="$(make --no-print-directory -C target/linux val.ARCH_PACKAGES)"
-          echo -e "PKG_ARCH=$PKG_ARCH" | tee -a "$GITHUB_ENV"
-
-          UL_TARGET="$(awk -F '/' '{print $(NF-1)}' <<< "$BIN_DIR")"
-          UL_SUBTARGET="$(awk -F '/' '{print $NF}' <<< "$BIN_DIR")"
-
-          echo "BIN_DIR=$BIN_DIR" >>"$GITHUB_ENV"
-          echo "KMOD_DIR=$KMOD_DIR" >>"$GITHUB_ENV"
-          echo "PKG_ARCH=$PKG_ARCH" >>"$GITHUB_ENV"
-
           cd $BIN_DIR/kmods/$KMOD_DIR
           tar -cvzf kmods_"$KMOD_DIR".tar.gz ./*
           mv kmods_"$KMOD_DIR".tar.gz $BIN_DIR
