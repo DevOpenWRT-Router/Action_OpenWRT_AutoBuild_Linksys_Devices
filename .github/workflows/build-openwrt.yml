@@ -614,7 +614,7 @@ jobs:
           name: 'OpenWrt_logs${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
           path: openwrt/logs/
 ### ----------------------------------------------------------------- ###
-      - name: Variable Setups
+      - name: OpenWRT Variable Setups
         id: VBS
         working-directory: '/workdir/openwrt'
         continue-on-error: true
@@ -639,7 +639,7 @@ jobs:
           echo "KMOD_DIR=$KMOD_DIR"           >>"$GITHUB_ENV"
           echo "PKG_ARCH=$PKG_ARCH"           >>"$GITHUB_ENV"
 ### --------------------------- ###
-      - name: If Error (Variable Setups)
+      - name: If Error (OpenWRT Variable Setups)
         if: steps.VBS.outcome == 'failure'
         run: |
           echo "Proccess Failed at level 1"
