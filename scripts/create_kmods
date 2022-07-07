@@ -7,18 +7,6 @@
 
 set -x
 
-#STAGING_DIR_HOST="$(make --no-print-directory -C target/linux val.STAGING_DIR_HOST)"
-
-export TOPDIR="$PWD"
-export STAGING_DIR_HOST="$(make --no-print-directory -C target/linux val.STAGING_DIR_HOST)"
-export MKHASH="$STAGING_DIR_HOST/bin/mkhash"
-export PATH="$STAGING_DIR_HOST/bin":"$PATH"
-
-BIN_DIR="$(make --no-print-directory -C target/linux val.BIN_DIR)"
-PACKAGE_DIR="$(make --no-print-directory -C target/linux val.PACKAGE_DIR)"
-KEY_BUILD="$(make --no-print-directory -C target/linux val.BUILD_KEY)"
-KMOD_DIR="$(make --no-print-directory -C target/linux val.LINUX_VERSION val.LINUX_RELEASE val.LINUX_VERMAGIC | tr '\n' '-' | head -c -1)"
-
 echo "$PACKAGE_DIR"
 pushd "$BIN_DIR" || exit
 rm -rf "kmods/$KMOD_DIR"
