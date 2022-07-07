@@ -621,23 +621,31 @@ jobs:
         if: (!cancelled())
         run: |
           export TOPDIR="$PWD"
-          BUILD_LOG_DIR="$(make --no-print-directory -C target/linux val.BUILD_LOG_DIR)"
-          BIN_DIR="$(make --no-print-directory -C target/linux val.BIN_DIR)"
-          PKG_DIR="$(make --no-print-directory -C target/linux val.PACKAGE_DIR)"
-          KEY_BUILD="$(make --no-print-directory -C target/linux val.BUILD_KEY)"
-          KMOD_DIR="$(make --no-print-directory -C target/linux val.LINUX_VERSION val.LINUX_RELEASE val.LINUX_VERMAGIC | tr '\n' '-' | head -c -1)"
-          PKG_ARCH="$(make --no-print-directory -C target/linux val.ARCH_PACKAGES)"
+          export STAGING_DIR_HOST="$(make --no-print-directory -C target/linux val.STAGING_DIR_HOST)"
+          export MKHASH="$STAGING_DIR_HOST/bin/mkhash"
+          export PATH="$STAGING_DIR_HOST/bin":"$PATH"
+
+          export BUILD_LOG_DIR="$(make --no-print-directory -C target/linux val.BUILD_LOG_DIR)"
+          export BIN_DIR="$(make --no-print-directory -C target/linux val.BIN_DIR)"
+          export PKG_DIR="$(make --no-print-directory -C target/linux val.PACKAGE_DIR)"
+          export KEY_BUILD="$(make --no-print-directory -C target/linux val.BUILD_KEY)"
+          export KMOD_DIR="$(make --no-print-directory -C target/linux val.LINUX_VERSION val.LINUX_RELEASE val.LINUX_VERMAGIC | tr '\n' '-' | head -c -1)"
+          export PKG_ARCH="$(make --no-print-directory -C target/linux val.ARCH_PACKAGES)"
           echo -e "PKG_ARCH=$PKG_ARCH" | tee -a "$GITHUB_ENV"
 
           UL_TARGET="$(awk -F '/' '{print $(NF-1)}' <<< "$BIN_DIR")"
           UL_SUBTARGET="$(awk -F '/' '{print $NF}' <<< "$BIN_DIR")"
 
-          echo "BUILD_LOG_DIR=$BUILD_LOG_DIR" >>"$GITHUB_ENV"
-          echo "BIN_DIR=$BIN_DIR"             >>"$GITHUB_ENV"
-          echo "PKG_DIR=$PKG_DIR"             >>"$GITHUB_ENV"
-          echo "KEY_BUILD=$KEY_BUILD"         >>"$GITHUB_ENV"
-          echo "KMOD_DIR=$KMOD_DIR"           >>"$GITHUB_ENV"
-          echo "PKG_ARCH=$PKG_ARCH"           >>"$GITHUB_ENV"
+          echo "STAGING_DIR_HOST=$STAGING_DIR_HOST" >>"$GITHUB_ENV"
+          echo "MKHASH=$MKHASH"                     >>"$GITHUB_ENV"
+          echo "PATH=$PATH"                         >>"$GITHUB_ENV"
+
+          echo "BUILD_LOG_DIR=$BUILD_LOG_DIR"       >>"$GITHUB_ENV"
+          echo "BIN_DIR=$BIN_DIR"                   >>"$GITHUB_ENV"
+          echo "PKG_DIR=$PKG_DIR"                   >>"$GITHUB_ENV"
+          echo "KEY_BUILD=$KEY_BUILD"               >>"$GITHUB_ENV"
+          echo "KMOD_DIR=$KMOD_DIR"                 >>"$GITHUB_ENV"
+          echo "PKG_ARCH=$PKG_ARCH"                 >>"$GITHUB_ENV"
 ### --------------------------- ###
       - name: If Error (OpenWRT Variable Setups)
         if: steps.VBS.outcome == 'failure'
