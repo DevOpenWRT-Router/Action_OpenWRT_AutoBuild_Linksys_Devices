@@ -7,7 +7,8 @@
 
 set -x
 
-echo "$PACKAGE_DIR"
+export TOPDIR="$PWD"
+
 pushd "$BIN_DIR" || exit
 rm -rf "kmods/$KMOD_DIR"
 mkdir -p "kmods/$KMOD_DIR"
