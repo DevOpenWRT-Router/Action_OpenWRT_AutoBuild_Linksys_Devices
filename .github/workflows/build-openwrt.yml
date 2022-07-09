@@ -626,7 +626,6 @@ jobs:
           export PATH="$STAGING_DIR_HOST/bin":"$PATH"
 
           export BUILD_LOG_DIR="$(make --no-print-directory -C target/linux val.BUILD_LOG_DIR)"
-          export ARCH_PACKAGES="$(make --no-print-directory -C target/linux val.ARCH_PACKAGES)"
           export BIN_DIR="$(make --no-print-directory -C target/linux val.BIN_DIR)"
           export PKG_DIR="$(make --no-print-directory -C target/linux val.PACKAGE_DIR)"
           export KEY_BUILD="$(make --no-print-directory -C target/linux val.BUILD_KEY)"
