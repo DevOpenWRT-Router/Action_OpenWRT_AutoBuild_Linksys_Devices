@@ -653,6 +653,39 @@ jobs:
         run: |
           echo "Proccess Failed at level 1"
 ### ----------------------------------------------------------------- ###
+      - name: Sign Packages (KEY_BUILD)
+        id: SPKB
+        working-directory: '/workdir/openwrt'
+        continue-on-error: true
+        if: (!cancelled())
+        run: |
+          export TOPDIR="$PWD"
+          
+          pushd "/workdir/openwrt/bin/packages/$PKG_ARCH/routing" || exit
+          "$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
+          popd
+
+          pushd "/workdir/openwrt/bin/packages/$PKG_ARCH/packages" || exit
+          "$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
+          popd
+
+          pushd "/workdir/openwrt/bin/packages/$PKG_ARCH/base" || exit
+          "$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
+          popd
+
+          pushd "/workdir/openwrt/bin/packages/$PKG_ARCH/telephony" || exit
+          "$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
+          popd
+
+          pushd "/workdir/openwrt/bin/packages/$PKG_ARCH/luci" || exit
+          "$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
+          popd
+### --------------------------- ###
+      - name: If Error (KEY_BUILD)
+        if: steps.SPKB.outcome == 'failure'
+        run: |
+          echo "Proccess Failed at level 1"
+### ----------------------------------------------------------------- ###
       - name: Generate kmods feed
         id: GKMOD
         working-directory: '/workdir/openwrt'
