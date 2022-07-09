@@ -29,3 +29,29 @@ esac
 gzip -9nc "Packages" > "Packages.gz"
 "$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
 popd
+
+pushd "/workdir/openwrt/bin/packages/$PKG_ARCH/routing" || exit
+"$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
+popd
+
+pushd "/workdir/openwrt/bin/packages/$PKG_ARCH/packages" || exit
+"$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
+popd
+
+pushd "/workdir/openwrt/bin/packages/$PKG_ARCH/base" || exit
+"$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
+popd
+
+pushd "/workdir/openwrt/bin/packages/$PKG_ARCH/telephony" || exit
+"$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
+popd
+
+pushd "/workdir/openwrt/bin/packages/$PKG_ARCH/luci" || exit
+"$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
+popd
+
+
+
+
+
+
