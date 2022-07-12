@@ -104,25 +104,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
 ### ----------------------------------------------------------------- ###
-      - name: Check server configuration
+      - name: Build Server Configuration (Information)
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
+          echo  -e  "----------------------------[System Distribution]------------------------------------\n"
+          [ -f /etc/issue ] && cat /etc/issue
+          echo  -e  "----------------------------[WARNING]------------------------------------------------\n"
           echo  "Warning⚠"
           echo  "If the performance of the allocated server is insufficient, be sure to cancel it in time and run it again!"
-          echo  "It is known that the compilation is successful CPU model: 8370C, 8171M"
+          echo  "It is known that the compilation is successful CPU model: 8370C, 8171M, E5-2673"
           echo  "Known underperformance CPU model: 8272CL"
-          echo  -e  "------------------  ------------CPU info------------------- ------------------------\n"
+          echo  -e  "----------------------------[CPU info]-----------------------------------------------\n"
           echo  "CPU physical count: $(cat  /proc/cpuinfo|  grep  "physical  id"|  sort|  uniq|  wc  -l)"
           echo  -e  "CPU core and version information: $(cat  /proc/cpuinfo  |  grep  name  |  cut  -f2  -d:  |  uniq  -c)  \n"
-          echo  "-------------------------------Memory information--------------- ----------------------------"
+          echo  -e "-----------------------------[Memory information]-------------------------------------"
           echo  "Details of installed memory:"
           sudo lshw -short -C memory | grep GiB
           echo -e "\n"
-          echo  "-----------------------------HDD information ----------------- ----------------------------"
+          echo  -e "-----------------------------[Memory Free]--------------------------------------------"
+          free -h
+          echo -e "------------------------------[HDD information]----------------------------------------"
           echo  -e   "Number of hard disks: $(ls  /dev/sd*  |  grep  -v  [1-9]  |  wc  -l)  \n"
           echo  "HDD details:"
           df -Th
+          echo  -e "-----------------------------[System Resource Limits]---------------------------------\n"
+          ulimit -a
+
 ### ----------------------------------------------------------------- ###
       - name: HARDWARE_DEVICE
         run: |
