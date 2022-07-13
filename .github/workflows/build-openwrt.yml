@@ -155,11 +155,6 @@ jobs:
       - name: Set variables
         run: |
           echo "::set-output name=date::$(date +%F)"
-        id: var
-      - name: Initialization GIT environment
-        run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
 ### ----------------------------------------------------------------- ###
       - name: Clone OpenWRT source code
         working-directory: /workdir
