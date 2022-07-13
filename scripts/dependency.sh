@@ -25,6 +25,7 @@ curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
 chmod a+rx ~/.bin/repo
 echo "::endgroup::"
 
+echo "::group::Installing Necessary Packages"
 sudo -E apt-get -qq install build-essential asciidoc binutils bzip2 gawk 
 sudo -E apt-get -qq install gettext git libncurses5-dev libz-dev patch unzip 
 sudo -E apt-get -qq install zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex 
@@ -41,6 +42,7 @@ sudo -E apt-get -qq install libmpfr-dev mkisofs ninja-build pkgconf python-docut
 sudo -E apt-get -qq install xxd btrfs-progs dosfstools uuid-runtime mount util-linux parted rename genisoimage
 sudo -E apt-get -qq install libxml2-utils make zip patchelf minicom openjdk-8-jdk
 [ ${UBUNTU_CODENAME} = "bionic" ] && sudo -E apt-get -qq install python-networkx
+echo "::endgroup::"
 
 # uboot v2016
 sudo -E apt-get -qq install device-tree-compiler
@@ -96,16 +98,22 @@ sudo -E apt-get -qq install time gettext java-propose-classpath apt zstd
 sudo -E apt-get -qq install bc lzop xfonts-utils xfonts-utils xfonts-utils xsltproc libjson-perl
 
 # for openwrt armhf
-sudo -E apt-get -qq install libc6:i386
+#sudo -E apt-get -qq install libc6:i386
 
 # for wireguard
 sudo -E apt-get -qq install libmnl-dev
 
+echo "::group::Running Some Final Settings"
 sudo -E apt-get clean -qq
 for i in $(ls /usr/bin/*-8); do sudo -E ln -sf $i ${i%%-8*}; done
 sudo -E ln -sf /usr/include/asm-generic /usr/include/asm
 sudo timedatectl set-timezone "$TZ"
 sudo mkdir -p /workdir
 sudo chown $USER:$GROUPS /workdir
+echo "::endgroup::"
+
+# Running GIT ENV
+git config --global user.email "github-actions[bot]@users.noreply.github.com"
+git config --global user.name "github-actions[bot]"
 
 exit 0
