@@ -150,8 +150,6 @@ jobs:
 
           sudo -E apt-get -qq full-upgrade
 
-          sudo -E apt-get -qq install curl libstdc++6 git wget rsync aria2
-
           mkdir -p ~/.bin
 
           export PATH="${HOME}/.bin:${PATH}"
@@ -163,9 +161,7 @@ jobs:
 
           echo "::endgroup::"
 
-          sudo -E apt-get -qq install $(curl -fsSL bit.ly/depends-ubuntu-2004)
-
-          sudo -E apt-get -qq install -y rmlint lsb-release wget software-properties-common
+          sudo -E apt-get -qq install $(curl -fsSL bit.ly/depends-ubuntu-openwrt)
 
           wget -qO - https://bit.ly/build-env-on-ubuntu-bionic | sed
           's/python-/python3-/g' | /bin/bash
