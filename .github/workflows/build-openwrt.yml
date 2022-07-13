@@ -24,6 +24,7 @@ env:
   CLONE_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   FUNCTIONS_SH: functions.sh
+  DEPENDENCY_sh: dependency.sh
   FETCHPACKAGES_SH: fetch_packages.sh
   CREATE_ACL_SH: create_acl_for_luci.sh
   GITHUB_RUN: github_push.sh
@@ -141,39 +142,10 @@ jobs:
         uses: rokibhasansagar/slimhub_actions@main
 ### ----------------------------------------------------------------- ###
       - name: Initializing environment
-        run: >
-          echo "::group::Install Build Env Tool"
-
-          sudo -E apt-get clean
-
-          sudo -E apt-get -qq update
-
-          sudo -E apt-get -qq full-upgrade
-
-          mkdir -p ~/.bin
-
-          export PATH="${HOME}/.bin:${PATH}"
-
-          curl https://storage.googleapis.com/git-repo-downloads/repo >
-          ~/.bin/repo
-
-          chmod a+rx ~/.bin/repo
-
-          echo "::endgroup::"
-
-          sudo -E apt-get -qq install $(curl -fsSL bit.ly/depends-ubuntu-openwrt)
-
-          wget -qO - https://bit.ly/build-env-on-ubuntu-bionic | sed
-          's/python-/python3-/g' | /bin/bash
-### ----------------------------------------------------------------- ###
-      - name: environment extra
+        if: (!cancelled())
         run: |
-          sudo -E apt-get clean -qq
-          for i in $(ls /usr/bin/*-8); do sudo -E ln -sf $i ${i%%-8*}; done
-          sudo -E ln -sf /usr/include/asm-generic /usr/include/asm
-          sudo timedatectl set-timezone "$TZ"
-          sudo mkdir -p /workdir
-          sudo chown $USER:$GROUPS /workdir
+          chmod +x scripts/$DEPENDENCY_sh
+          source scripts/$DEPENDENCY_sh
 ### ----------------------------------------------------------------- ###
       - name: Install LLVM
         if: env.INSTALL_LLVM == 'true' && !cancelled()
