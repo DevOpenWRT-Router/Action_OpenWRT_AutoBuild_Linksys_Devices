@@ -11,14 +11,6 @@ fi
 # Make Sure The Environment Is Non-Interactive
 export DEBIAN_FRONTEND=noninteractive
 
-# Prepare: Just To Populate Workflow Output Window
-until [[ "${SECONDS_LEFT:=10}" = 0 ]]; do
-  printf "Please wait %ss ...\n" "${SECONDS_LEFT}"
-  sleep 0.5
-  SECONDS_LEFT=$(echo "${SECONDS_LEFT} - 0.5" | bc)
-done
-unset SECONDS_LEFT
-
 [ -f /etc/os-release ] && . /etc/os-release
 
 echo "::group::Install Build Env Tool"
