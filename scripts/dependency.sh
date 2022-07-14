@@ -97,15 +97,22 @@ sudo -E apt-get -qq install time gettext java-propose-classpath apt zstd
 # libreELEC
 sudo -E apt-get -qq install bc lzop xfonts-utils xfonts-utils xfonts-utils xsltproc libjson-perl
 
-# for openwrt armhf
+# for openwrt armhf <-- libc6:i386 NO Longer Used
 #sudo -E apt-get -qq install libc6:i386
 
 # for wireguard
 sudo -E apt-get -qq install libmnl-dev
 
+echo "::group::Symlink (GCC) Setup"
+[ -f /usr/bin/gcc-8 ] && for i in $(ls /usr/bin/*-8); do sudo -E ln -sf "$i" "${i%%-8*}"; done
+[ -f /usr/bin/gcc-9 ] && for i in $(ls /usr/bin/*-9); do sudo -E ln -sf "$i" "${i%%-9*}"; done
+[ -f /usr/bin/gcc-10 ] && for i in $(ls /usr/bin/*-10); do sudo -E ln -sf "$i" "${i%%-10*}"; done
+[ -f /usr/bin/gcc-11 ] && for i in $(ls /usr/bin/*-11); do sudo -E ln -sf "$i" "${i%%-11*}"; done
+[ -f /usr/bin/gcc-12 ] && for i in $(ls /usr/bin/*-12); do sudo -E ln -sf "$i" "${i%%-12*}"; done
+echo "::endgroup::"
+
 echo "::group::Running Some Final Settings"
 sudo -E apt-get clean -qq
-for i in $(ls /usr/bin/*-8); do sudo -E ln -sf $i ${i%%-8*}; done
 sudo -E ln -sf /usr/include/asm-generic /usr/include/asm
 sudo timedatectl set-timezone "$TZ"
 sudo mkdir -p /workdir
@@ -113,7 +120,9 @@ sudo chown $USER:$GROUPS /workdir
 echo "::endgroup::"
 
 # Running GIT ENV
+echo "::group::GIT: Setting up Action Bot Email and Name"
 git config --global user.email "github-actions[bot]@users.noreply.github.com"
 git config --global user.name "github-actions[bot]"
+echo "::endgroup::"
 
 exit 0
