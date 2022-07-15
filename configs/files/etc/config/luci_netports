@@ -1,0 +1,45 @@
+config global 'global'
+	option default_additional_info 'true'
+	option default_h_mode          'true'
+	option hv_mode_switch_button   'true'
+	
+config port
+	option ifname 'wan'
+	option type 'copper'
+
+config port
+	option ifname 'lan1'
+	option type 'copper'
+	
+config port
+	option ifname 'lan2'
+	option type 'copper'
+	
+config port
+	option ifname 'lan3'
+	option type 'copper'
+	
+config port
+	option ifname 'lan4'
+	option type 'copper'
+	
+config port
+	option ifname 'wlan0'
+	option type 'wifi'
+	
+config port
+	option ifname 'wlan1'
+	option type 'wifi'
+
+config port
+	option ifname 'wlan2'
+	option type 'wifi'
+
+config port
+	option ifname 'tun0'
+	option name 'VPN_NAS'
+	option type 'vpn'
+
+config port
+	option ifname 'tap0'
+	option type 'vpn'
