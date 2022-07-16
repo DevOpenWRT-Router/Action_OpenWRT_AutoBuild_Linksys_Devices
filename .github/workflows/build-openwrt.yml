@@ -775,7 +775,7 @@ jobs:
         run: |
           echo "[+] Prepare Packages/Kmods for Distribution Failed"
 ### ----------------------------------------------------------------- ###
-      - name: Print faillogs
+      - name: Print faillogs (Errors Logs)
         working-directory: /workdir/openwrt
         if: env.PRINT_FAILLOGS == 'true' && (!cancelled())
         run: |
