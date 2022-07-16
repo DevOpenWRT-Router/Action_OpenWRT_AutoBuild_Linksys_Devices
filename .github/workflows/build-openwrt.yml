@@ -327,8 +327,13 @@ jobs:
       - name: Current Commit After Feeds/Patches
         if: env.GITLOGB == 'true' && !cancelled()
         run: |
+          echo "openwrt:"
           cd openwrt
           git log --pretty=oneline -n 1
+          echo "openwrt/feeds/packages"
+          cd "$GITHUB_WORKSPACE"/openwrt/feeds/packages
+          git log --pretty=oneline -n 1
+          cd "$GITHUB_WORKSPACE"/openwrt
 ### ----------------------------------------------------------------- ###
       - name: Preparing (FILES)
         if: env.USE_FILES == 'true' && !cancelled()
