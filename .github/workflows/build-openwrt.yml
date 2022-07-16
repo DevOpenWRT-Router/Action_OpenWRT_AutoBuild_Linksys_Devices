@@ -295,7 +295,7 @@ jobs:
           REMOVE_LANGUAGES
 ### ----------------------------------------------------------------- ###
       - name: Run Custom OpenWRT Patches
-        id: patches
+        id: COP
         continue-on-error: true
         if: env.USE_OPENWRT_PATCHES == 'true' && !cancelled()
         run: |
@@ -303,9 +303,16 @@ jobs:
           source scripts/$FUNCTIONS_SH
           cd openwrt
           APPLY_PATCHES
+### --------------------------- ###
+      - name: If Error (OpenWRT Variable Setups)
+        if: steps.COP.outcome == 'failure'
+        run: |
+          echo "Error: $?"
+          echo "[*] 'git am patch' FAILED."
+          git am --abort
 ### ----------------------------------------------------------------- ###
       - name: Pull Request OpenWRT Patches (OpenWRT)
-        id: PRpatches
+        id: PROP
         continue-on-error: true
         if: env.USE_PR_OPENWRT_PATCHES == 'true' && !cancelled()
         run: |
@@ -313,9 +320,16 @@ jobs:
           source scripts/$FUNCTIONS_SH
           cd openwrt
           APPLY_PR_PATCHES
+### --------------------------- ###
+      - name: If Error (OpenWRT Variable Setups)
+        if: steps.PROP.outcome == 'failure'
+        run: |
+          echo "Error: $?"
+          echo "[*] 'git am $line.patch' FAILED."
+          git am --abort
 ### ----------------------------------------------------------------- ###
       - name: Pull Request OpenWRT Packages Patches (Packages)
-        id: PRpatchesPACKAGES
+        id: PROPP
         continue-on-error: true
         if: env.USE_PR_OPENWRT_PATCHES_PACKAGES == 'true' && !cancelled()
         run: |
@@ -323,6 +337,13 @@ jobs:
           source scripts/$FUNCTIONS_SH
           cd openwrt
           APPLY_PR_PATCHES_PACKAGES
+### --------------------------- ###
+      - name: If Error (OpenWRT Variable Setups)
+        if: steps.PROPP.outcome == 'failure'
+        run: |
+          echo "Error: $?"
+          echo "[*] 'git am $line.patch' FAILED."
+          git am --abort
 ### ----------------------------------------------------------------- ###
       - name: Current Commit After Feeds/Patches
         if: env.GITLOGB == 'true' && !cancelled()
