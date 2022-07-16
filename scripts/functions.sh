@@ -230,6 +230,23 @@ APPLY_PR_PATCHES() {
   done < "$file"
 }
 
+### When finished, this will auto download Pull Request Patches from openwrt and apply them
+APPLY_PR_PATCHES_PACKAGES() {
+  echo "This is WORKING Here:"
+  file="$GITHUB_WORKSPACE"/scripts/data/PR_patches_packages.txt
+  while read -r line; do
+  cd "$GITHUB_WORKSPACE"/openwrt/feeds/packages && wget https://patch-diff.githubusercontent.com/raw/openwrt/packages/pull/"$line".patch
+  echo "Applying $line.patch"
+  git am "$line".patch
+  if [ $? = 0 ] ; then
+    echo "[*] 'git am $line.patch' Ran successfully."
+  else
+    echo "[*] 'git am $line.patch' FAILED."
+  fi
+  done < "$file"
+  cd "$GITHUB_WORKSPACE"/openwrt
+}
+
 RESET_COMMIT() {
   echo "Reseting HEAD to $1, T:$0, T1:$1, T2:$2"
   git reset --hard "$1"
