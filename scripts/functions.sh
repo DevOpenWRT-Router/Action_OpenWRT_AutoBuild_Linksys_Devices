@@ -223,9 +223,17 @@ APPLY_PR_PATCHES() {
   echo "Applying $line.patch"
   git am "$line".patch
   if [ $? = 0 ] ; then
-    echo "[*] 'git am $line.patch' Ran successfully."
-  else
+      echo "[*] 'git am $line.patch' Ran successfully."
+  elif [ $? -eq 1 ]; then
+    echo "General error"
+  elif [ $? -eq 2 ]; then
+    echo "Misuse of shell builtins"
+  elif [ $? -eq 126 ]; then
+    echo "Command invoked cannot execute"
+  elif [ $? -eq 128 ]; then
     echo "[*] 'git am $line.patch' FAILED."
+    git am --abort
+    echo "Invalid argument"
   fi
   done < "$file"
 }
@@ -239,9 +247,17 @@ APPLY_PR_PATCHES_PACKAGES() {
   echo "Applying $line.patch"
   git am "$line".patch
   if [ $? = 0 ] ; then
-    echo "[*] 'git am $line.patch' Ran successfully."
-  else
+      echo "[*] 'git am $line.patch' Ran successfully."
+  elif [ $? -eq 1 ]; then
+    echo "General error"
+  elif [ $? -eq 2 ]; then
+    echo "Misuse of shell builtins"
+  elif [ $? -eq 126 ]; then
+    echo "Command invoked cannot execute"
+  elif [ $? -eq 128 ]; then
     echo "[*] 'git am $line.patch' FAILED."
+    git am --abort
+    echo "Invalid argument"
   fi
   done < "$file"
   cd "$GITHUB_WORKSPACE"/openwrt
