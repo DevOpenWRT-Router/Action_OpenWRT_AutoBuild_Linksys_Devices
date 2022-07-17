@@ -200,15 +200,25 @@ FILES_OpenWrtScripts() {
   mv "$GITHUB_WORKSPACE"/configs/DATA/median.awk "$GITHUB_WORKSPACE"/openwrt/files/usr/lib/OpenWrtScripts
 }
 
+### -------------------------------------------------------------------------------------------------------- ###
 ### Apply all patches that are in 'patch' directory
 APPLY_PATCHES() {
   mv "$GITHUB_WORKSPACE"/configs/patches "$GITHUB_WORKSPACE"/openwrt/patches
   cd "$GITHUB_WORKSPACE"/openwrt || exit
   git am patches/*.patch
+  echo "Error: $?"
   if [ $? = 0 ] ; then
-    echo "[*] 'git am patches/*.patch' Ran successfully."
-  else
-    echo "[*] 'git am patches/*.patch' FAILED."
+      echo "[*] 'git am $line.patch' Ran successfully."
+  elif [ $? -eq 1 ]; then
+    echo "General error"
+  elif [ $? -eq 2 ]; then
+    echo "Misuse of shell builtins"
+  elif [ $? -eq 126 ]; then
+    echo "Command invoked cannot execute"
+  elif [ $? -eq 128 ]; then
+    echo "[*] 'git am $line.patch' FAILED."
+    git am --abort
+    echo "Invalid argument"
   fi
   rm -rf patches
 
@@ -222,6 +232,7 @@ APPLY_PR_PATCHES() {
   cd "$GITHUB_WORKSPACE"/openwrt && wget https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/"$line".patch
   echo "Applying $line.patch"
   git am "$line".patch
+  echo "Error: $?"
   if [ $? = 0 ] ; then
       echo "[*] 'git am $line.patch' Ran successfully."
   elif [ $? -eq 1 ]; then
@@ -246,6 +257,7 @@ APPLY_PR_PATCHES_PACKAGES() {
   cd "$GITHUB_WORKSPACE"/openwrt/feeds/packages && wget https://patch-diff.githubusercontent.com/raw/openwrt/packages/pull/"$line".patch
   echo "Applying $line.patch"
   git am "$line".patch
+  echo "Error: $?"
   if [ $? = 0 ] ; then
       echo "[*] 'git am $line.patch' Ran successfully."
   elif [ $? -eq 1 ]; then
@@ -262,6 +274,8 @@ APPLY_PR_PATCHES_PACKAGES() {
   done < "$file"
   cd "$GITHUB_WORKSPACE"/openwrt
 }
+
+### -------------------------------------------------------------------------------------------------------- ###
 
 RESET_COMMIT() {
   echo "Reseting HEAD to $1, T:$0, T1:$1, T2:$2"
