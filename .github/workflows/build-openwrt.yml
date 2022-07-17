@@ -304,7 +304,7 @@ jobs:
           cd openwrt
           APPLY_PATCHES
 ### --------------------------- ###
-      - name: If Error (OpenWRT Variable Setups)
+      - name: If Error (Patches Main)
         if: steps.COP.outcome == 'failure'
         run: |
           echo "Error: $?"
@@ -321,7 +321,7 @@ jobs:
           cd openwrt
           APPLY_PR_PATCHES
 ### --------------------------- ###
-      - name: If Error (OpenWRT Variable Setups)
+      - name: If Error (PR Patches Main)
         if: steps.PROP.outcome == 'failure'
         run: |
           echo "Error: $?"
@@ -338,7 +338,7 @@ jobs:
           cd openwrt
           APPLY_PR_PATCHES_PACKAGES
 ### --------------------------- ###
-      - name: If Error (OpenWRT Variable Setups)
+      - name: If Error (PR Patches Packages)
         if: steps.PROPP.outcome == 'failure'
         run: |
           echo "Error: $?"
