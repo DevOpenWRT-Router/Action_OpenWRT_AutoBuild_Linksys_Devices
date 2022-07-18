@@ -760,6 +760,10 @@ jobs:
           du -h --max-depth=10 ./bin
           echo "=============================================="
 ### ----------------------------------------------------------------- ###
+      - name: Copy (.config) for releases
+        run: |
+          mv ${GITHUB_WORKSPACE}/openwrt/.config $BIN_DIR
+### ----------------------------------------------------------------- ###
       - name: Prepare Packages/Kmods for Distribution
         id: distribution
         continue-on-error: true
