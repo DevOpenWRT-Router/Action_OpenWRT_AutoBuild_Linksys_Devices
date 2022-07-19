@@ -404,6 +404,9 @@ LUCI_THEMES() {
   ### luci-theme-lafite-port
   git clone https://github.com/DevOpenWRT-Router/luci-theme-lafite-port.git package/PureFusionWRT/luci-theme-lafite-port
 
+  ### luci-theme-netgear
+  git clone https://github.com/i028/luci-theme-netgear.git package/i028/luci-theme-netgear
+
   ### luci-theme-infinityfreedom
   svn export https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom/trunk/luci-theme-infinityfreedom package/xiaoqingfengATGH/luci-theme-infinityfreedom
 
