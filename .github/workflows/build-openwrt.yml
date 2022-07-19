@@ -775,12 +775,15 @@ jobs:
         run: |
           echo "[+] Prepare Packages/Kmods for Distribution Failed"
 ### ----------------------------------------------------------------- ###
-      - name: Print faillogs (Errors Logs)
+      - name: Print faillogs (Errors Logs) [Logs Main, Package, Target, Toolchain, Tools]
         working-directory: /workdir/openwrt
         if: env.PRINT_FAILLOGS == 'true' && (!cancelled())
         run: |
           [ ! -e "./logs/error.txt" ] || cat "./logs/error.txt"
           [ ! -e "./logs/package/error.txt" ] || cat "./logs/package/error.txt"
+          [ ! -e "./logs/target/error.txt" ] || cat "./logs/target/error.txt"
+          [ ! -e "./logs/toolchain/error.txt" ] || cat "./logs/toolchain/error.txt"
+          [ ! -e "./logs/tools/error.txt" ] || cat "./logs/tools/error.txt"
 ### ----------------------------------------------------------------- ###
 
       - name: Upload kmods
