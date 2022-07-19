@@ -32,7 +32,7 @@ env:
   DEVICE_NAME: ''
 ### --------------------------- ###
   CLEANUP_ENVIROMENT: true
-  RESET_OPENWRT_COMMIT: false
+  RESET_OPENWRT_COMMIT: true
   INSTALL_LLVM: false
   LOAD_FUNCTIONS: true
   BOOTSTRAP_START: false
@@ -212,7 +212,7 @@ jobs:
           chmod +x scripts/$FUNCTIONS_SH
           source scripts/$FUNCTIONS_SH
           cd openwrt
-          RESET_COMMIT "771ea6f2e3868b208b5261ae676160d5ef6544e8"
+          RESET_COMMIT "864fdf2bf3f4b5c71e57a27c514672b966580148"
 ### ----------------------------------------------------------------- ###
       - name: Current Commit Before Feeds/Patches
         if: env.GITLOGA == 'true' && !cancelled()
