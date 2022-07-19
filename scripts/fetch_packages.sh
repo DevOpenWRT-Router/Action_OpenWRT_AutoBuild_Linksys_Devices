@@ -404,6 +404,9 @@ LUCI_THEMES() {
   ### luci-theme-lafite-port
   git clone https://github.com/DevOpenWRT-Router/luci-theme-lafite-port.git package/PureFusionWRT/luci-theme-lafite-port
 
+  ### luci-theme-infinityfreedom
+  svn export https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom/trunk/luci-theme-infinityfreedom package/xiaoqingfengATGH/luci-theme-infinityfreedom
+
   ### luci-theme-bootstrap-mod
   #svn export https://github.com/immortalwrt/luci/trunk/themes/luci-theme-bootstrap-mod package/immortalwrt/luci-theme-bootstrap-mod
   #sed -i "s|include ../../luci.mk|include \$(TOPDIR)/feeds/luci/luci.mk|g" package/immortalwrt/luci-theme-bootstrap-mod/Makefile
