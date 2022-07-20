@@ -442,6 +442,7 @@ jobs:
         with:
           ccache: 'true'
           toolchain: 'true'
+          skip: true
           clean: '${{ contains(github.event.action, ''nocache'') }}'
           prefix: '${{ github.workspace }}/openwrt'
 ### ----------------------------------------------------------------- ###
