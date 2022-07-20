@@ -24,6 +24,7 @@ env:
   CLONE_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   FUNCTIONS_SH: functions.sh
+  DEPENDENCY_sh: dependency.sh
   FETCHPACKAGES_SH: fetch_packages.sh
   CREATE_ACL_SH: create_acl_for_luci.sh
   GITHUB_RUN: github_push.sh
@@ -46,6 +47,7 @@ env:
   USE_CUSTOM_CONFIGURATION: true
   USE_OPENWRT_PATCHES: true
   USE_PR_OPENWRT_PATCHES: false
+  USE_PR_OPENWRT_PATCHES_PACKAGES: false
   USE_DEVOPENWRT: true
   USE_FETCH_PACKAGES: true
   USE_CACHE: true
@@ -104,18 +106,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
 ### ----------------------------------------------------------------- ###
-      - name: Show system
+      - name: Build Server Configuration (Information)
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          echo -e "Total CPU cores\t: $(nproc)"
-          cat /proc/cpuinfo | grep 'model name'
-          free -h
-          uname -a
-          [ -f /proc/version ] && cat /proc/version
-          [ -f /etc/issue.net ] && cat /etc/issue.net
+          echo  -e  "----------------------------[System Distribution]------------------------------------\n"
           [ -f /etc/issue ] && cat /etc/issue
+          echo  -e  "----------------------------[WARNING]------------------------------------------------\n"
+          echo  "Warning⚠"
+          echo  "If the performance of the allocated server is insufficient, be sure to cancel it in time and run it again!"
+          echo  "It is known that the compilation is successful CPU model: 8370C, 8171M, E5-2673"
+          echo  "Known underperformance CPU model: 8272CL"
+          echo  -e  "----------------------------[CPU info]-----------------------------------------------\n"
+          echo  "CPU physical count: $(cat  /proc/cpuinfo|  grep  "physical  id"|  sort|  uniq|  wc  -l)"
+          echo  -e  "CPU core and version information: $(cat  /proc/cpuinfo  |  grep  name  |  cut  -f2  -d:  |  uniq  -c)  \n"
+          echo  -e "-----------------------------[Memory information]-------------------------------------"
+          echo  "Details of installed memory:"
+          sudo lshw -short -C memory | grep GiB
+          echo -e "\n"
+          echo  -e "-----------------------------[Memory Free]--------------------------------------------"
+          free -h
+          echo -e "------------------------------[HDD information]----------------------------------------"
+          echo  -e   "Number of hard disks: $(ls  /dev/sd*  |  grep  -v  [1-9]  |  wc  -l)  \n"
+          echo  "HDD details:"
+          df -Th
+          echo  -e "-----------------------------[System Resource Limits]---------------------------------\n"
           ulimit -a
+
 ### ----------------------------------------------------------------- ###
       - name: HARDWARE_DEVICE
         run: |
@@ -126,43 +143,10 @@ jobs:
         uses: rokibhasansagar/slimhub_actions@main
 ### ----------------------------------------------------------------- ###
       - name: Initializing environment
-        run: >
-          echo "::group::Install Build Env Tool"
-
-          sudo -E apt-get clean
-
-          sudo -E apt-get -qq update
-
-          sudo -E apt-get -qq full-upgrade
-
-          sudo -E apt-get -qq install curl libstdc++6 git wget rsync aria2
-
-          mkdir -p ~/.bin
-
-          export PATH="${HOME}/.bin:${PATH}"
-
-          curl https://storage.googleapis.com/git-repo-downloads/repo >
-          ~/.bin/repo
-
-          chmod a+rx ~/.bin/repo
-
-          echo "::endgroup::"
-
-          sudo -E apt-get -qq install $(curl -fsSL bit.ly/depends-ubuntu-2004)
-
-          sudo -E apt-get -qq install -y rmlint lsb-release wget software-properties-common
-
-          wget -qO - https://bit.ly/build-env-on-ubuntu-bionic | sed
-          's/python-/python3-/g' | /bin/bash
-### ----------------------------------------------------------------- ###
-      - name: environment extra
+        if: (!cancelled())
         run: |
-          sudo -E apt-get clean -qq
-          for i in $(ls /usr/bin/*-8); do sudo -E ln -sf $i ${i%%-8*}; done
-          sudo -E ln -sf /usr/include/asm-generic /usr/include/asm
-          sudo timedatectl set-timezone "$TZ"
-          sudo mkdir -p /workdir
-          sudo chown $USER:$GROUPS /workdir
+          chmod +x scripts/$DEPENDENCY_sh
+          source scripts/$DEPENDENCY_sh
 ### ----------------------------------------------------------------- ###
       - name: Install LLVM
         if: env.INSTALL_LLVM == 'true' && !cancelled()
@@ -172,11 +156,6 @@ jobs:
       - name: Set variables
         run: |
           echo "::set-output name=date::$(date +%F)"
-        id: var
-      - name: Initialization GIT environment
-        run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
 ### ----------------------------------------------------------------- ###
       - name: Clone OpenWRT source code
         working-directory: /workdir
@@ -316,7 +295,7 @@ jobs:
           REMOVE_LANGUAGES
 ### ----------------------------------------------------------------- ###
       - name: Run Custom OpenWRT Patches
-        id: patches
+        id: COP
         continue-on-error: true
         if: env.USE_OPENWRT_PATCHES == 'true' && !cancelled()
         run: |
@@ -324,9 +303,16 @@ jobs:
           source scripts/$FUNCTIONS_SH
           cd openwrt
           APPLY_PATCHES
+### --------------------------- ###
+      - name: If Error (Patches Main)
+        if: steps.COP.outcome == 'failure'
+        run: |
+          echo "Error: $?"
+          echo "[*] 'git am patch' FAILED."
+          git am --abort
 ### ----------------------------------------------------------------- ###
-      - name: Pull Request OpenWRT Patches
-        id: PRpatches
+      - name: Pull Request OpenWRT Patches (OpenWRT)
+        id: PROP
         continue-on-error: true
         if: env.USE_PR_OPENWRT_PATCHES == 'true' && !cancelled()
         run: |
@@ -334,12 +320,41 @@ jobs:
           source scripts/$FUNCTIONS_SH
           cd openwrt
           APPLY_PR_PATCHES
+### --------------------------- ###
+      - name: If Error (PR Patches Main)
+        if: steps.PROP.outcome == 'failure'
+        run: |
+          echo "Error: $?"
+          echo "[*] 'git am $line.patch' FAILED."
+          git am --abort
+### ----------------------------------------------------------------- ###
+      - name: Pull Request OpenWRT Packages Patches (Packages)
+        id: PROPP
+        continue-on-error: true
+        if: env.USE_PR_OPENWRT_PATCHES_PACKAGES == 'true' && !cancelled()
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          cd openwrt
+          APPLY_PR_PATCHES_PACKAGES
+### --------------------------- ###
+      - name: If Error (PR Patches Packages)
+        if: steps.PROPP.outcome == 'failure'
+        run: |
+          echo "Error: $?"
+          echo "[*] 'git am $line.patch' FAILED."
+          git am --abort
 ### ----------------------------------------------------------------- ###
       - name: Current Commit After Feeds/Patches
         if: env.GITLOGB == 'true' && !cancelled()
         run: |
+          echo "openwrt:"
           cd openwrt
           git log --pretty=oneline -n 1
+          echo "openwrt/feeds/packages"
+          cd "$GITHUB_WORKSPACE"/openwrt/feeds/packages
+          git log --pretty=oneline -n 1
+          cd "$GITHUB_WORKSPACE"/openwrt
 ### ----------------------------------------------------------------- ###
       - name: Preparing (FILES)
         if: env.USE_FILES == 'true' && !cancelled()
@@ -422,11 +437,12 @@ jobs:
           mkdir -p logs
 ### ----------------------------------------------------------------- ###
       - name: Cache Acceleration (Secondary compilation of the same model with the same source code is valid within 7 days, and only one source code cache is retained each time)
-        uses: klever1988/cachewrtbuild@main
+        uses: DevOpenWRT-Router/Cache-OpenWRT-Builds@main
         if: env.USE_CACHEWRTBUILD == 'true' && !cancelled()
         with:
           ccache: 'true'
           toolchain: 'true'
+          skip: 'true'
           clean: '${{ contains(github.event.action, ''nocache'') }}'
           prefix: '${{ github.workspace }}/openwrt'
 ### ----------------------------------------------------------------- ###
@@ -614,6 +630,78 @@ jobs:
           name: 'OpenWrt_logs${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}'
           path: openwrt/logs/
 ### ----------------------------------------------------------------- ###
+      - name: OpenWRT Variable Setups
+        id: VBS
+        working-directory: '/workdir/openwrt'
+        continue-on-error: true
+        if: (!cancelled())
+        run: |
+          export TOPDIR="$PWD"
+          export STAGING_DIR_HOST="$(make --no-print-directory -C target/linux val.STAGING_DIR_HOST)"
+          export MKHASH="$STAGING_DIR_HOST/bin/mkhash"
+          export PATH="$STAGING_DIR_HOST/bin":"$PATH"
+
+          export BUILD_LOG_DIR="$(make --no-print-directory -C target/linux val.BUILD_LOG_DIR)"
+          export BIN_DIR="$(make --no-print-directory -C target/linux val.BIN_DIR)"
+          export PKG_DIR="$(make --no-print-directory -C target/linux val.PACKAGE_DIR)"
+          export KEY_BUILD="$(make --no-print-directory -C target/linux val.BUILD_KEY)"
+          export KMOD_DIR="$(make --no-print-directory -C target/linux val.LINUX_VERSION val.LINUX_RELEASE val.LINUX_VERMAGIC | tr '\n' '-' | head -c -1)"
+          export PKG_ARCH="$(make --no-print-directory -C target/linux val.ARCH_PACKAGES)"
+          echo -e "PKG_ARCH=$PKG_ARCH" | tee -a "$GITHUB_ENV"
+
+          UL_TARGET="$(awk -F '/' '{print $(NF-1)}' <<< "$BIN_DIR")"
+          UL_SUBTARGET="$(awk -F '/' '{print $NF}' <<< "$BIN_DIR")"
+
+          echo "STAGING_DIR_HOST=$STAGING_DIR_HOST" >>"$GITHUB_ENV"
+          echo "MKHASH=$MKHASH"                     >>"$GITHUB_ENV"
+          echo "PATH=$PATH"                         >>"$GITHUB_ENV"
+
+          echo "BUILD_LOG_DIR=$BUILD_LOG_DIR"       >>"$GITHUB_ENV"
+          echo "ARCH_PACKAGES=$ARCH_PACKAGES"       >>"$GITHUB_ENV"
+          echo "BIN_DIR=$BIN_DIR"                   >>"$GITHUB_ENV"
+          echo "PKG_DIR=$PKG_DIR"                   >>"$GITHUB_ENV"
+          echo "KEY_BUILD=$KEY_BUILD"               >>"$GITHUB_ENV"
+          echo "KMOD_DIR=$KMOD_DIR"                 >>"$GITHUB_ENV"
+          echo "PKG_ARCH=$PKG_ARCH"                 >>"$GITHUB_ENV"
+### --------------------------- ###
+      - name: If Error (OpenWRT Variable Setups)
+        if: steps.VBS.outcome == 'failure'
+        run: |
+          echo "Proccess Failed at level 1"
+### ----------------------------------------------------------------- ###
+      - name: Sign Packages (KEY_BUILD)
+        id: SPKB
+        working-directory: '/workdir/openwrt'
+        continue-on-error: true
+        if: (!cancelled())
+        run: |
+          export TOPDIR="$PWD"
+          
+          pushd "/workdir/openwrt/bin/packages/$PKG_ARCH/routing" || exit
+          "$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
+          popd
+
+          pushd "/workdir/openwrt/bin/packages/$PKG_ARCH/packages" || exit
+          "$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
+          popd
+
+          pushd "/workdir/openwrt/bin/packages/$PKG_ARCH/base" || exit
+          "$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
+          popd
+
+          pushd "/workdir/openwrt/bin/packages/$PKG_ARCH/telephony" || exit
+          "$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
+          popd
+
+          pushd "/workdir/openwrt/bin/packages/$PKG_ARCH/luci" || exit
+          "$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
+          popd
+### --------------------------- ###
+      - name: If Error (KEY_BUILD)
+        if: steps.SPKB.outcome == 'failure'
+        run: |
+          echo "Proccess Failed at level 1"
+### ----------------------------------------------------------------- ###
       - name: Generate kmods feed
         id: GKMOD
         working-directory: '/workdir/openwrt'
@@ -634,19 +722,6 @@ jobs:
         continue-on-error: true
         if: env.USE_KMODS_SCRIPT == 'true' && !cancelled()
         run: |
-          export TOPDIR="$PWD"
-          BIN_DIR="$(make --no-print-directory -C target/linux val.BIN_DIR)"
-          KMOD_DIR="$(make --no-print-directory -C target/linux val.LINUX_VERSION val.LINUX_RELEASE val.LINUX_VERMAGIC | tr '\n' '-' | head -c -1)"
-          PKG_ARCH="$(make --no-print-directory -C target/linux val.ARCH_PACKAGES)"
-          echo -e "PKG_ARCH=$PKG_ARCH" | tee -a "$GITHUB_ENV"
-
-          UL_TARGET="$(awk -F '/' '{print $(NF-1)}' <<< "$BIN_DIR")"
-          UL_SUBTARGET="$(awk -F '/' '{print $NF}' <<< "$BIN_DIR")"
-
-          echo "BIN_DIR=$BIN_DIR" >>"$GITHUB_ENV"
-          echo "KMOD_DIR=$KMOD_DIR" >>"$GITHUB_ENV"
-          echo "PKG_ARCH=$PKG_ARCH" >>"$GITHUB_ENV"
-
           cd $BIN_DIR/kmods/$KMOD_DIR
           tar -cvzf kmods_"$KMOD_DIR".tar.gz ./*
           mv kmods_"$KMOD_DIR".tar.gz $BIN_DIR
@@ -686,6 +761,10 @@ jobs:
           du -h --max-depth=10 ./bin
           echo "=============================================="
 ### ----------------------------------------------------------------- ###
+      - name: Copy (.config) for releases
+        run: |
+          mv ${GITHUB_WORKSPACE}/openwrt/.config $BIN_DIR
+### ----------------------------------------------------------------- ###
       - name: Prepare Packages/Kmods for Distribution
         id: distribution
         continue-on-error: true
@@ -701,12 +780,15 @@ jobs:
         run: |
           echo "[+] Prepare Packages/Kmods for Distribution Failed"
 ### ----------------------------------------------------------------- ###
-      - name: Print faillogs
+      - name: Print faillogs (Errors Logs) [Logs Main, Package, Target, Toolchain, Tools]
         working-directory: /workdir/openwrt
         if: env.PRINT_FAILLOGS == 'true' && (!cancelled())
         run: |
           [ ! -e "./logs/error.txt" ] || cat "./logs/error.txt"
           [ ! -e "./logs/package/error.txt" ] || cat "./logs/package/error.txt"
+          [ ! -e "./logs/target/error.txt" ] || cat "./logs/target/error.txt"
+          [ ! -e "./logs/toolchain/error.txt" ] || cat "./logs/toolchain/error.txt"
+          [ ! -e "./logs/tools/error.txt" ] || cat "./logs/tools/error.txt"
 ### ----------------------------------------------------------------- ###
 
       - name: Upload kmods

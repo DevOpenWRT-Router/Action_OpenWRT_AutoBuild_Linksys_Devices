@@ -401,6 +401,15 @@ LUCI_THEMES() {
 
   git clone https://github.com/DevOpenWRT-Router/luci-theme-tano-MOD.git package/PureFusionWRT/luci-theme-tano-MOD
 
+  ### luci-theme-lafite-port
+  git clone https://github.com/DevOpenWRT-Router/luci-theme-lafite-port.git package/PureFusionWRT/luci-theme-lafite-port
+
+  ### luci-theme-netgear
+  git clone https://github.com/i028/luci-theme-netgear.git package/i028/luci-theme-netgear
+
+  ### luci-theme-infinityfreedom
+  svn export https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom/trunk/luci-theme-infinityfreedom package/xiaoqingfengATGH/luci-theme-infinityfreedom
+
   ### luci-theme-bootstrap-mod
   #svn export https://github.com/immortalwrt/luci/trunk/themes/luci-theme-bootstrap-mod package/immortalwrt/luci-theme-bootstrap-mod
   #sed -i "s|include ../../luci.mk|include \$(TOPDIR)/feeds/luci/luci.mk|g" package/immortalwrt/luci-theme-bootstrap-mod/Makefile
@@ -419,7 +428,7 @@ GSPOTX2F_PACKAGES;
 LINKEASE_PACKAGES;
 KENZOK8_PACKAGES; ### CAREFULL WITH THIS REPO ###
 #SUNDAQIANG_PACKAGES;
-LEAN_PACKAGES;
+# LEAN_PACKAGES; ### <-- Lets Turn this OFF now, its no longer at vaule to use
 SIRPDBOY_PACKAGES;
 #HELMIAU_PACKAGES; ### NOT USED - WARNING
 #NUEXINI_PACKAGES; ### NOT USED - WARNING
