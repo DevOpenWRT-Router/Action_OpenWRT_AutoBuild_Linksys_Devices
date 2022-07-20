@@ -437,12 +437,12 @@ jobs:
           mkdir -p logs
 ### ----------------------------------------------------------------- ###
       - name: Cache Acceleration (Secondary compilation of the same model with the same source code is valid within 7 days, and only one source code cache is retained each time)
-        uses: klever1988/cachewrtbuild@main
+        uses: DevOpenWRT-Router/Cache-OpenWRT-Builds@main
         if: env.USE_CACHEWRTBUILD == 'true' && !cancelled()
         with:
           ccache: 'true'
           toolchain: 'true'
-          skip: true
+          skip: 'true'
           clean: '${{ contains(github.event.action, ''nocache'') }}'
           prefix: '${{ github.workspace }}/openwrt'
 ### ----------------------------------------------------------------- ###
