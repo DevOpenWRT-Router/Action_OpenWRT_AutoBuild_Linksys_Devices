@@ -417,5 +417,7 @@ uci commit firewall
 service firewall restart
 ### -- END --
 
+mkdir -p /etc/backup
+[ ! -e "/etc/backup/installed_packages.txt" ] || /usr/lib/OpenWrtScripts/opkgscript.sh write /etc/backup/installed_packages.txt
 
 exit 0
