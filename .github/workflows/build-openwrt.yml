@@ -763,7 +763,10 @@ jobs:
 ### ----------------------------------------------------------------- ###
       - name: Copy (.config) for releases
         run: |
-          mv ${GITHUB_WORKSPACE}/openwrt/.config $BIN_DIR
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          COPY_DEFCONFIG
+          
 ### ----------------------------------------------------------------- ###
       - name: Prepare Packages/Kmods for Distribution
         id: distribution

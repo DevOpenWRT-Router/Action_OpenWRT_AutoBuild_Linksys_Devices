@@ -200,6 +200,11 @@ FILES_OpenWrtScripts() {
   mv "$GITHUB_WORKSPACE"/configs/DATA/median.awk "$GITHUB_WORKSPACE"/openwrt/files/usr/lib/OpenWrtScripts
 }
 
+COPY_DEFCONFIG() {
+  echo "Copying .config to main bin Dir:"
+  mv ${GITHUB_WORKSPACE}/openwrt/.config $BIN_DIR
+}
+
 ### -------------------------------------------------------------------------------------------------------- ###
 ### Apply all patches that are in 'patch' directory
 APPLY_PATCHES() {
