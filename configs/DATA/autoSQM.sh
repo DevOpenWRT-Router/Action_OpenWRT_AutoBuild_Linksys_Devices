@@ -3,7 +3,7 @@
  if [ ! -d /tmp/speedtestResult ]; then
  mkdir /tmp/speedtestResult
  fi
- sh betterspeedtest.sh -t 15 -n 15 -p www.google.com -H netperf-west.bufferbloat.net >> /tmp/speedtestResult/speedtestLog-"$(date +"%Y-%m-%d").log"
+ sh /usr/lib/OpenWrtScripts/betterspeedtest.sh -t 15 -n 15 -p www.google.com -H netperf-west.bufferbloat.net >> /tmp/speedtestResult/speedtestLog-"$(date +"%Y-%m-%d").log"
  /etc/init.d/sqm start
  
  #Get list of speedtest
