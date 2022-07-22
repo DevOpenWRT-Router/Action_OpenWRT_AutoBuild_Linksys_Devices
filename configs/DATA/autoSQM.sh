@@ -10,10 +10,16 @@
  cat /tmp/speedtestResult/speedtestLog-"$(date +"%Y-%m-%d").log" | grep -i download | tr -d "Download: " | tr -d Mbps | sort -n > /tmp/download.txt
  cat /tmp/speedtestResult/speedtestLog-"$(date +"%Y-%m-%d").log" | grep -i upload | tr -d "Upload: " | tr -d Mbps | sort -n > /tmp/upload.txt
  
+ ## remove old log
+ rm -rf /tmp/speedtestResult/speedtestLog-"$(date +"%Y-%m-%d").log"
+
  #get average speed for download & upload
  download=$(cat /tmp/download.txt  | awk -f /usr/lib/OpenWrtScripts/median.awk)
  upload=$(cat /tmp/upload.txt  | awk -f /usr/lib/OpenWrtScripts/median.awk)
  
+ ## Remove old leftover files
+ rm -rf /tmp/download.txt /tmp/upload.txt
+
  #convert to Kbps & adjust to 90% speed
  downloadKbps=$(awk "BEGIN {download = $download; print download*1000*90/100}")
  uploadKbps=$(awk "BEGIN {upload = $upload; print upload*1000*90/100}")
