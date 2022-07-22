@@ -126,7 +126,6 @@ uci -q batch <<-EOF
 set sqm.eth1.interface="$WAN_IFACE"
 set sqm.eth1.debug_logging '0'
 set sqm.eth1.verbosity '5'
-set sqm.eth1.interface 'wan'
 set sqm.eth1.qdisc 'cake'
 set sqm.eth1.qdisc_advanced '1'
 set sqm.eth1.squash_ingress '0'
