@@ -2,8 +2,10 @@
 ###################################################################
 # default-settings (C) 2021 - 2022 By Eliminater74                #
 #                                                                 #
-# Updated On: 06/12/2022                                          #
+# Updated On: 07/23/2022                                          #
 ###################################################################
+
+logger -t 99-default-settings -p info "Loading Settings.."
 
 ### Cleanup some Crontabs
 rm -rf /etc/crontabs/root
@@ -65,6 +67,8 @@ EOF
 uci commit dhcp
 sed -i '/log-facility/d' /etc/dnsmasq.conf
 echo "log-facility=/dev/null" >> /etc/dnsmasq.conf
+
+logger -t 99-default-settings -p info "dnsmasq: Settings Applied and Loaded."
 
 
 uci -q batch <<-EOF
@@ -161,6 +165,8 @@ crontab /etc/crontabs/root
 ## Run @hourly
 echo "@hourly /usr/lib/OpenWrtScripts/autoSQM.sh" >> /etc/crontabs/root
 crontab /etc/crontabs/root
+
+logger -t 99-default-settings -p info "SQM Settings Applied and Loaded"
 
 ### ---------------------------------------------------------------------------------------------------------- ###
 ##### SPECIAL MODIFICATIONS #####
@@ -320,6 +326,8 @@ uci commit bcp38
 
 service bcp38 restart
 service bcp38 enable
+
+logger -t 99-default-settings -p info "bcp38 Loaded."
 ### -- END --
 
 
@@ -388,6 +396,8 @@ service banip enable
 # refreshing the blocklists every 24 hours
 echo "15 07 * * * /etc/init.d/banip reload" >> /etc/crontabs/root
 crontab /etc/crontabs/root
+
+logger -t 99-default-settings -p info "banip Loaded: (BROKE)"
 ### -- END --
 
 ### adblock
@@ -438,6 +448,8 @@ service adblock enable
 # refreshing the blocklists every 24 hours
 echo "16 07 * * * /etc/init.d/adblock reload" >> /etc/crontabs/root
 crontab /etc/crontabs/root
+
+logger -t 99-default-settings -p info "adblock Loaded."
 ### -- END --
 
 ### Firewall DROP external connections
@@ -454,5 +466,7 @@ service firewall restart
 
 mkdir -p /etc/backup
 [ ! -e "/etc/backup/installed_packages.txt" ] || /usr/lib/OpenWrtScripts/opkgscript.sh write /etc/backup/installed_packages.txt
+
+logger -t 99-default-settings -p info "99-default-settings Fully Loaded.."
 
 exit 0
