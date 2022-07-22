@@ -280,6 +280,56 @@ APPLY_PR_PATCHES_PACKAGES() {
   cd "$GITHUB_WORKSPACE"/openwrt
 }
 
+APPLY_PR_PATCHES_NEW() {
+  nums=(10252 10271 2916)
+for patch in "${nums[@]}"
+do 
+  wget https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/"$patch".patch
+  echo "Applying $patch.patch"
+  git am "$patch".patch
+  rm -rf "$patch".patch
+  echo "Error: $?"
+  if [ $? = 0 ] ; then
+      echo "[*] 'git am $line.patch' Ran successfully."
+  elif [ $? -eq 1 ]; then
+    echo "General error"
+  elif [ $? -eq 2 ]; then
+    echo "Misuse of shell builtins"
+  elif [ $? -eq 126 ]; then
+    echo "Command invoked cannot execute"
+  elif [ $? -eq 128 ]; then
+    echo "[*] 'git am $line.patch' FAILED."
+    git am --abort
+    echo "Invalid argument"
+  fi
+done
+}
+
+APPLY_PR_PATCHES_PACKAGES_NEW() {
+  nums=()
+for patch in "${nums[@]}"
+do 
+  wget https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/"$patch".patch
+  echo "Applying $patch.patch"
+  git am "$patch".patch
+  rm -rf "$patch".patch
+  echo "Error: $?"
+  if [ $? = 0 ] ; then
+      echo "[*] 'git am $line.patch' Ran successfully."
+  elif [ $? -eq 1 ]; then
+    echo "General error"
+  elif [ $? -eq 2 ]; then
+    echo "Misuse of shell builtins"
+  elif [ $? -eq 126 ]; then
+    echo "Command invoked cannot execute"
+  elif [ $? -eq 128 ]; then
+    echo "[*] 'git am $line.patch' FAILED."
+    git am --abort
+    echo "Invalid argument"
+  fi
+done
+}
+
 ### -------------------------------------------------------------------------------------------------------- ###
 
 RESET_COMMIT() {
