@@ -158,8 +158,8 @@ uci commit sqm
 echo "0 6,14,22 * * * /usr/lib/OpenWrtScripts/autoSQM.sh" >> /etc/crontabs/root
 crontab /etc/crontabs/root
 
-## Run After reboot
-echo "@reboot /usr/lib/OpenWrtScripts/autoSQM.sh" >> /etc/crontabs/root
+## Run @hourly
+echo "@hourly /usr/lib/OpenWrtScripts/autoSQM.sh" >> /etc/crontabs/root
 crontab /etc/crontabs/root
 
 ### ---------------------------------------------------------------------------------------------------------- ###
