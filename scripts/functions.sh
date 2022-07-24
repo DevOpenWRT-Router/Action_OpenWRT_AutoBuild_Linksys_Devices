@@ -221,7 +221,7 @@ APPLY_PATCHES() {
    if ! git am "$f";
     then
       git am --abort
-      echo "Patch Failed"
+      echo "Patch Failed, Aborting Patch"
   fi
   done
   rm -rf patches
@@ -239,7 +239,7 @@ APPLY_PR_PATCHES() {
   if ! git am "$line".patch;
     then
       git am --abort
-      echo "Patch Failed"
+      echo "Patch Failed, Aborting Patch"
   fi
   done < "$file"
 }
@@ -256,7 +256,7 @@ APPLY_PR_PATCHES_PACKAGES() {
   if ! git am "$line".patch;
     then
       git am --abort
-      echo "Patch Failed"
+      echo "Patch Failed, Aborting Patch"
   fi
   done < "$file"
   cd "$GITHUB_WORKSPACE"/openwrt
@@ -274,7 +274,7 @@ do
   if ! git am "$line".patch;
     then
       git am --abort
-      echo "Patch Failed"
+      echo "Patch Failed, Aborting Patch"
   fi
 done
 }
@@ -291,7 +291,7 @@ do
   if ! git am "$line".patch;
     then
       git am --abort
-      echo "Patch Failed"
+      echo "Patch Failed, Aborting Patch"
   fi
 done
 }
