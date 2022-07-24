@@ -241,6 +241,15 @@ jobs:
           path: ${{ github.workspace }}/openwrt/staging_dir
           key: ${{ env.CACHE_NAME }}-"PureFusionWRT"
 ### ----------------------------------------------------------------- ###
+      - name: 'Restore package Directory from cache'
+        id: package-cache
+        uses: actions/cache@v3
+        env:
+          CACHE_NAME: 'package-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/package
+          key: ${{ env.CACHE_NAME }}-"PureFusionWRT"
+### ----------------------------------------------------------------- ###
       - name: 'Restore downloads Directory from cache'
         id: dl-cache
         uses: actions/cache@v3
