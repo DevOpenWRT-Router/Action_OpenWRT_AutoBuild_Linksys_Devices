@@ -202,6 +202,68 @@ jobs:
           source scripts/$FUNCTIONS_SH
           BOOTSTRAP_START
 ### ----------------------------------------------------------------- ###
+      - name: Cache Acceleration (Secondary compilation of the same model with the same source code is valid within 7 days, and only one source code cache is retained each time)
+        uses: DevOpenWRT-Router/Cache-OpenWRT-Builds@main
+        if: env.USE_CACHEWRTBUILD == 'true' && !cancelled()
+        with:
+          ccache: 'true'
+          toolchain: 'true'
+          skip: 'false'
+          clean: '${{ contains(github.event.action, ''nocache'') }}'
+          prefix: '${{ github.workspace }}/openwrt'
+### ----------------------------------------------------------------- ###
+      - name: 'Restore feeds from cache'
+        id: feeds-cache
+        uses: actions/cache@v3
+        env:
+          CACHE_NAME: 'feeds-cache'
+        with:
+          path: |
+            ${{ github.workspace }}/openwrt/feeds/packages
+            ${{ github.workspace }}/openwrt/feeds/luci
+          key: ${{ env.CACHE_NAME }}-${{ steps.date.outputs.date }}
+### ----------------------------------------------------------------- ###
+      - name: 'Restore build Directory from cache'
+        id: staging-cache
+        uses: actions/cache@v3
+        env:
+          CACHE_NAME: 'staging-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/staging_dir
+          key: ${{ env.CACHE_NAME }}-${{ steps.date.outputs.date }}
+### ----------------------------------------------------------------- ###
+      - name: 'Restore staging Directory from cache'
+        id: staging-cache
+        uses: actions/cache@v3
+        env:
+          CACHE_NAME: 'staging-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/staging_dir
+          key: ${{ env.CACHE_NAME }}-${{ steps.date.outputs.date }}
+### ----------------------------------------------------------------- ###
+      - name: 'Restore downloads Directory from cache'
+        id: dl-cache
+        uses: actions/cache@v3
+        env:
+          CACHE_NAME: 'dl-cache'
+        with:
+          path: ${{ github.workspace }}/.dl
+          key: ${{ env.CACHE_NAME }}-${{ steps.date.outputs.date }}
+ ### ----------------------------------------------------------------- ###
+      - name: 'Restore .ccache from cache'
+        id: ccache-cache
+        uses: actions/cache@v3
+        env:
+          CACHE_NAME: 'ccache-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/.ccache
+          key: ${{ env.CACHE_NAME }}-${{ steps.date.outputs.date }}
+### ----------------------------------------------------------------- ###
+      - name: Cache (ccache list)
+        id: ccache
+        run: |
+          ccache -s
+### ----------------------------------------------------------------- ###
       - name: Change Default Banner
         if: env.CHANGE_DEFAULT_BANNER == 'true' && !cancelled()
         run: |
@@ -473,68 +535,6 @@ jobs:
           echo -e "Creating (logs) Directory:"
           cd openwrt
           mkdir -p logs
-### ----------------------------------------------------------------- ###
-      - name: Cache Acceleration (Secondary compilation of the same model with the same source code is valid within 7 days, and only one source code cache is retained each time)
-        uses: DevOpenWRT-Router/Cache-OpenWRT-Builds@main
-        if: env.USE_CACHEWRTBUILD == 'true' && !cancelled()
-        with:
-          ccache: 'true'
-          toolchain: 'true'
-          skip: 'false'
-          clean: '${{ contains(github.event.action, ''nocache'') }}'
-          prefix: '${{ github.workspace }}/openwrt'
-### ----------------------------------------------------------------- ###
-      - name: 'Restore feeds from cache'
-        id: feeds-cache
-        uses: actions/cache@v3
-        env:
-          CACHE_NAME: 'feeds-cache'
-        with:
-          path: |
-            ${{ github.workspace }}/openwrt/feeds/packages
-            ${{ github.workspace }}/openwrt/feeds/luci
-          key: ${{ env.CACHE_NAME }}-${{ steps.date.outputs.date }}
-### ----------------------------------------------------------------- ###
-      - name: 'Restore build Directory from cache'
-        id: staging-cache
-        uses: actions/cache@v3
-        env:
-          CACHE_NAME: 'staging-cache'
-        with:
-          path: ${{ github.workspace }}/openwrt/staging_dir
-          key: ${{ env.CACHE_NAME }}-${{ steps.date.outputs.date }}
-### ----------------------------------------------------------------- ###
-      - name: 'Restore staging Directory from cache'
-        id: staging-cache
-        uses: actions/cache@v3
-        env:
-          CACHE_NAME: 'staging-cache'
-        with:
-          path: ${{ github.workspace }}/openwrt/staging_dir
-          key: ${{ env.CACHE_NAME }}-${{ steps.date.outputs.date }}
-### ----------------------------------------------------------------- ###
-      - name: 'Restore downloads Directory from cache'
-        id: dl-cache
-        uses: actions/cache@v3
-        env:
-          CACHE_NAME: 'dl-cache'
-        with:
-          path: ${{ github.workspace }}/.dl
-          key: ${{ env.CACHE_NAME }}-${{ steps.date.outputs.date }}
- ### ----------------------------------------------------------------- ###
-      - name: 'Restore .ccache from cache'
-        id: ccache-cache
-        uses: actions/cache@v3
-        env:
-          CACHE_NAME: 'ccache-cache'
-        with:
-          path: ${{ github.workspace }}/openwrt/.ccache
-          key: ${{ env.CACHE_NAME }}-${{ steps.date.outputs.date }}
-### ----------------------------------------------------------------- ###
-      - name: Cache (ccache list)
-        id: ccache
-        run: |
-          ccache -s
 ### ----------------------------------------------------------------- ###
       - name: Start SSH via tmate
         uses: P3TERX/ssh2actions@main
