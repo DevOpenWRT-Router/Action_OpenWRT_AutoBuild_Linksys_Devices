@@ -974,3 +974,10 @@ jobs:
           delete_tags: true
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+### ----------------------------------------------------------------- ###
+      - name: PreCache - Clean
+        run: |
+          git -C "${GITHUB_WORKSPACE}/openwrt/feeds/luci" reset --hard HEAD^
+          cd ${GITHUB_WORKSPACE}/openwrt/staging_dir
+          rm -rf packages target-*
+### ----------------------------------------------------------------- ###
