@@ -443,40 +443,6 @@ jobs:
           git am --abort
 ### ----------------------------------------------------------------- ###
       - name: Pull Request OpenWRT Patches (OpenWRT)
-        id: PROPNEW
-        continue-on-error: true
-        if: env.USE_PR_OPENWRT_PATCHES_NEW == 'true' && !cancelled()
-        run: |
-          chmod +x scripts/$FUNCTIONS_SH
-          source scripts/$FUNCTIONS_SH
-          cd openwrt
-          APPLY_PR_PATCHES_NEW
-### --------------------------- ###
-      - name: If Error (PR Patches Main)
-        if: steps.PROPNEW.outcome == 'failure'
-        run: |
-          echo "Error: $?"
-          echo "[*] 'git am $line.patch' FAILED."
-          git am --abort
-### ----------------------------------------------------------------- ###
-      - name: Pull Request OpenWRT Packages Patches (Packages)
-        id: PROPPNEW
-        continue-on-error: true
-        if: env.USE_PR_OPENWRT_PATCHES_PACKAGES_NEW == 'true' && !cancelled()
-        run: |
-          chmod +x scripts/$FUNCTIONS_SH
-          source scripts/$FUNCTIONS_SH
-          cd openwrt
-          APPLY_PR_PATCHES_PACKAGES_NEW
-### --------------------------- ###
-      - name: If Error (PR Patches Packages)
-        if: steps.PROPPNEW.outcome == 'failure'
-        run: |
-          echo "Error: $?"
-          echo "[*] 'git am $line.patch' FAILED."
-          git am --abort
-### ----------------------------------------------------------------- ###
-      - name: Pull Request OpenWRT Patches (OpenWRT)
         id: PROP
         continue-on-error: true
         if: env.USE_PR_OPENWRT_PATCHES == 'true' && !cancelled()
