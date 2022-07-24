@@ -482,6 +482,53 @@ jobs:
           clean: '${{ contains(github.event.action, ''nocache'') }}'
           prefix: '${{ github.workspace }}/openwrt'
 ### ----------------------------------------------------------------- ###
+      - name: 'Restore feeds from cache'
+        id: feeds-cache
+        uses: actions/cache@v3
+        env:
+          CACHE_NAME: 'feeds-cache'
+        with:
+          path: |
+            ${{ github.workspace }}/openwrt/feeds/packages
+            ${{ github.workspace }}/openwrt/feeds/luci
+          key: ${{ env.CACHE_NAME }}
+### ----------------------------------------------------------------- ###
+      - name: 'Restore build Directory from cache'
+        id: staging-cache
+        uses: actions/cache@v3
+        env:
+          CACHE_NAME: 'staging-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/staging_dir
+          key: ${{ env.CACHE_NAME }}
+### ----------------------------------------------------------------- ###
+      - name: 'Restore staging Directory from cache'
+        id: staging-cache
+        uses: actions/cache@v3
+        env:
+          CACHE_NAME: 'staging-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/staging_dir
+          key: ${{ env.CACHE_NAME }}
+### ----------------------------------------------------------------- ###
+      - name: 'Restore downloads Directory from cache'
+        id: dl-cache
+        uses: actions/cache@v3
+        env:
+          CACHE_NAME: 'dl-cache'
+        with:
+          path: ${{ github.workspace }}/.dl
+          key: ${{ env.CACHE_NAME }}
+ ### ----------------------------------------------------------------- ###
+      - name: 'Restore .ccache from cache'
+        id: ccache-cache
+        uses: actions/cache@v3
+        env:
+          CACHE_NAME: 'ccache-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/.ccache
+          key: ${{ env.CACHE_NAME }}
+### ----------------------------------------------------------------- ###
       - name: Cache (ccache list)
         id: ccache
         run: |
