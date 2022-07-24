@@ -271,7 +271,7 @@ jobs:
         env:
           CACHE_NAME: 'dl-cache'
         with:
-          path: ${{ github.workspace }}/dl
+          path: ${{ github.workspace }}/openwrt/dl
           key: ${{ env.CACHE_NAME }}-"PureFusionWRT"
  ### ----------------------------------------------------------------- ###
       - name: 'Restore build_dir/toolchain Directory from cache'
@@ -281,7 +281,7 @@ jobs:
         env:
           CACHE_NAME: 'build_dir_toolchain-cache'
         with:
-          path: ${{ github.workspace }}/build_dir/toolchain-*
+          path: ${{ github.workspace }}/openwrt/build_dir/toolchain-*
           key: ${{ env.CACHE_NAME }}-"PureFusionWRT"
  ### ----------------------------------------------------------------- ###
       - name: 'Restore build_dir/target Directory from cache'
@@ -291,7 +291,7 @@ jobs:
         env:
           CACHE_NAME: 'build_dir_target-cache'
         with:
-          path: ${{ github.workspace }}/build_dir/target-*
+          path: ${{ github.workspace }}/openwrt/build_dir/target-*
           key: ${{ env.CACHE_NAME }}-"PureFusionWRT"
  ### ----------------------------------------------------------------- ###
       - name: 'Restore build_dir/host Directory from cache'
@@ -301,7 +301,7 @@ jobs:
         env:
           CACHE_NAME: 'build_dir_host-cache'
         with:
-          path: ${{ github.workspace }}/build_dir/host
+          path: ${{ github.workspace }}/openwrt/build_dir/host
           key: ${{ env.CACHE_NAME }}-"PureFusionWRT"
  ### ----------------------------------------------------------------- ###
       - name: 'Restore build_dir/hostpkg Directory from cache'
@@ -311,7 +311,7 @@ jobs:
         env:
           CACHE_NAME: 'build_dir_hostpkg-cache'
         with:
-          path: ${{ github.workspace }}/build_dir/hostpkg
+          path: ${{ github.workspace }}/openwrt/build_dir/hostpkg
           key: ${{ env.CACHE_NAME }}-"PureFusionWRT"
  ### ----------------------------------------------------------------- ###
       - name: 'Restore .ccache from cache'
