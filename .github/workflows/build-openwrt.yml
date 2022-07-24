@@ -154,10 +154,12 @@ jobs:
         if: env.INSTALL_LLVM == 'true' && !cancelled()
         run: |
           sudo -E bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
-### ----------------------------------------------------------------- ###        
-      - name: Set variables
+### ----------------------------------------------------------------- ###
+      - name: Get current date
+        id: date
         run: |
-          echo "::set-output name=date::$(date +%F)"
+          echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
 ### ----------------------------------------------------------------- ###
       - name: Clone OpenWRT source code
         working-directory: /workdir
@@ -491,7 +493,7 @@ jobs:
           path: |
             ${{ github.workspace }}/openwrt/feeds/packages
             ${{ github.workspace }}/openwrt/feeds/luci
-          key: ${{ env.CACHE_NAME }}
+          key: ${{ env.CACHE_NAME }}-${{ steps.date.outputs.date }}
 ### ----------------------------------------------------------------- ###
       - name: 'Restore build Directory from cache'
         id: staging-cache
@@ -500,7 +502,7 @@ jobs:
           CACHE_NAME: 'staging-cache'
         with:
           path: ${{ github.workspace }}/openwrt/staging_dir
-          key: ${{ env.CACHE_NAME }}
+          key: ${{ env.CACHE_NAME }}-${{ steps.date.outputs.date }}
 ### ----------------------------------------------------------------- ###
       - name: 'Restore staging Directory from cache'
         id: staging-cache
@@ -509,7 +511,7 @@ jobs:
           CACHE_NAME: 'staging-cache'
         with:
           path: ${{ github.workspace }}/openwrt/staging_dir
-          key: ${{ env.CACHE_NAME }}
+          key: ${{ env.CACHE_NAME }}-${{ steps.date.outputs.date }}
 ### ----------------------------------------------------------------- ###
       - name: 'Restore downloads Directory from cache'
         id: dl-cache
@@ -518,7 +520,7 @@ jobs:
           CACHE_NAME: 'dl-cache'
         with:
           path: ${{ github.workspace }}/.dl
-          key: ${{ env.CACHE_NAME }}
+          key: ${{ env.CACHE_NAME }}-${{ steps.date.outputs.date }}
  ### ----------------------------------------------------------------- ###
       - name: 'Restore .ccache from cache'
         id: ccache-cache
@@ -527,7 +529,7 @@ jobs:
           CACHE_NAME: 'ccache-cache'
         with:
           path: ${{ github.workspace }}/openwrt/.ccache
-          key: ${{ env.CACHE_NAME }}
+          key: ${{ env.CACHE_NAME }}-${{ steps.date.outputs.date }}
 ### ----------------------------------------------------------------- ###
       - name: Cache (ccache list)
         id: ccache
