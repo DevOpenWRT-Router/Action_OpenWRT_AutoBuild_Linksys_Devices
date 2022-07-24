@@ -40,7 +40,7 @@ env:
   SET_BUILDKEY: false
   remove_languages: true
   RESTORE_FEEDS_CACHE: true
-  RESTORE_BUILD_CACHE: true
+  RESTORE_BUILD_CACHE: false
   RESTORE_STAGING_CACHE: true
   RESTORE_PACKAGE_CACHE: false
   RESTORE_DL_CACHE: true
