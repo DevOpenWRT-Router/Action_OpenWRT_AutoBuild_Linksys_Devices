@@ -210,21 +210,20 @@ COPY_DEFCONFIG() {
 APPLY_PATCHES() {
   mv "$GITHUB_WORKSPACE"/configs/patches "$GITHUB_WORKSPACE"/openwrt/patches
   cd "$GITHUB_WORKSPACE"/openwrt || exit
-  git am patches/*.patch
-  echo "Error: $?"
-  if [ $? = 0 ] ; then
-      echo "[*] 'git am $line.patch' Ran successfully."
-  elif [ $? -eq 1 ]; then
-    echo "General error"
-  elif [ $? -eq 2 ]; then
-    echo "Misuse of shell builtins"
-  elif [ $? -eq 126 ]; then
-    echo "Command invoked cannot execute"
-  elif [ $? -eq 128 ]; then
-    echo "[*] 'git am $line.patch' FAILED."
-    git am --abort
-    echo "Invalid argument"
+  # use nullglob in case there are no matching files
+  shopt -s nullglob
+
+  # create an array with all the filer/dir inside ~/myDir
+  patch=(./patches/*.patch)
+  for f in "${patch[@]}"; do
+   echo "$f"
+   git am "$f"
+   if ! git "$f";
+    then
+      git am --abort
+      echo "Patch Failed"
   fi
+  done
   rm -rf patches
 
 }
@@ -237,19 +236,10 @@ APPLY_PR_PATCHES() {
   cd "$GITHUB_WORKSPACE"/openwrt && wget https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/"$line".patch
   echo "Applying $line.patch"
   git am "$line".patch
-  echo "Error: $?"
-  if [ $? = 0 ] ; then
-      echo "[*] 'git am $line.patch' Ran successfully."
-  elif [ $? -eq 1 ]; then
-    echo "General error"
-  elif [ $? -eq 2 ]; then
-    echo "Misuse of shell builtins"
-  elif [ $? -eq 126 ]; then
-    echo "Command invoked cannot execute"
-  elif [ $? -eq 128 ]; then
-    echo "[*] 'git am $line.patch' FAILED."
-    git am --abort
-    echo "Invalid argument"
+  if ! git am "$line".patch;
+    then
+      git am --abort
+      echo "Patch Failed"
   fi
   done < "$file"
 }
@@ -263,18 +253,10 @@ APPLY_PR_PATCHES_PACKAGES() {
   echo "Applying $line.patch"
   git am "$line".patch
   echo "Error: $?"
-  if [ $? = 0 ] ; then
-      echo "[*] 'git am $line.patch' Ran successfully."
-  elif [ $? -eq 1 ]; then
-    echo "General error"
-  elif [ $? -eq 2 ]; then
-    echo "Misuse of shell builtins"
-  elif [ $? -eq 126 ]; then
-    echo "Command invoked cannot execute"
-  elif [ $? -eq 128 ]; then
-    echo "[*] 'git am $line.patch' FAILED."
-    git am --abort
-    echo "Invalid argument"
+  if ! git am "$line".patch;
+    then
+      git am --abort
+      echo "Patch Failed"
   fi
   done < "$file"
   cd "$GITHUB_WORKSPACE"/openwrt
@@ -289,18 +271,10 @@ do
   git am "$patch".patch
   rm -rf "$patch".patch
   echo "Error: $?"
-  if [ $? = 0 ] ; then
-      echo "[*] 'git am $line.patch' Ran successfully."
-  elif [ $? -eq 1 ]; then
-    echo "General error"
-  elif [ $? -eq 2 ]; then
-    echo "Misuse of shell builtins"
-  elif [ $? -eq 126 ]; then
-    echo "Command invoked cannot execute"
-  elif [ $? -eq 128 ]; then
-    echo "[*] 'git am $line.patch' FAILED."
-    git am --abort
-    echo "Invalid argument"
+  if ! git am "$line".patch;
+    then
+      git am --abort
+      echo "Patch Failed"
   fi
 done
 }
@@ -314,18 +288,10 @@ do
   git am "$patch".patch
   rm -rf "$patch".patch
   echo "Error: $?"
-  if [ $? = 0 ] ; then
-      echo "[*] 'git am $line.patch' Ran successfully."
-  elif [ $? -eq 1 ]; then
-    echo "General error"
-  elif [ $? -eq 2 ]; then
-    echo "Misuse of shell builtins"
-  elif [ $? -eq 126 ]; then
-    echo "Command invoked cannot execute"
-  elif [ $? -eq 128 ]; then
-    echo "[*] 'git am $line.patch' FAILED."
-    git am --abort
-    echo "Invalid argument"
+  if ! git am "$line".patch;
+    then
+      git am --abort
+      echo "Patch Failed"
   fi
 done
 }
