@@ -218,7 +218,7 @@ APPLY_PATCHES() {
   for f in "${patch[@]}"; do
    echo "$f"
    git am "$f"
-   if ! git "$f";
+   if ! git am "$f";
     then
       git am --abort
       echo "Patch Failed"
