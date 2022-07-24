@@ -44,6 +44,10 @@ env:
   RESTORE_STAGING_CACHE: true
   RESTORE_PACKAGE_CACHE: false
   RESTORE_DL_CACHE: true
+  RESTORE_BUILD_DIR_TOOLCHAIN_CACHE: true
+  RESTORE_BUILD_DIR_TARGET_CACHE: true
+  RESTORE_BUILD_DIR_HOST_CACHE: true
+  RESTORE_BUILD_DIR_HOSTPKG_CACHE: true
   RESTORE_CCACHE_CACHE: true
   USE_CACHEWRTBUILD: true
   USE_KMODS_SCRIPT: true
@@ -268,6 +272,46 @@ jobs:
           CACHE_NAME: 'dl-cache'
         with:
           path: ${{ github.workspace }}/dl
+          key: ${{ env.CACHE_NAME }}-"PureFusionWRT"
+ ### ----------------------------------------------------------------- ###
+      - name: 'Restore build_dir/toolchain Directory from cache'
+        id: build_dir_toolchain-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_BUILD_DIR_TOOLCHAIN_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'build_dir_toolchain-cache'
+        with:
+          path: ${{ github.workspace }}/build_dir/toolchain-*
+          key: ${{ env.CACHE_NAME }}-"PureFusionWRT"
+ ### ----------------------------------------------------------------- ###
+      - name: 'Restore build_dir/target Directory from cache'
+        id: build_dir_target-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_BUILD_DIR_TARGET_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'build_dir_target-cache'
+        with:
+          path: ${{ github.workspace }}/build_dir/target-*
+          key: ${{ env.CACHE_NAME }}-"PureFusionWRT"
+ ### ----------------------------------------------------------------- ###
+      - name: 'Restore build_dir/host Directory from cache'
+        id: build_dir_host-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_BUILD_DIR_HOST_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'build_dir_host-cache'
+        with:
+          path: ${{ github.workspace }}/build_dir/host
+          key: ${{ env.CACHE_NAME }}-"PureFusionWRT"
+ ### ----------------------------------------------------------------- ###
+      - name: 'Restore build_dir/hostpkg Directory from cache'
+        id: build_dir_hostpkg-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_BUILD_DIR_HOSTPKG_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'build_dir_hostpkg-cache'
+        with:
+          path: ${{ github.workspace }}/build_dir/hostpkg
           key: ${{ env.CACHE_NAME }}-"PureFusionWRT"
  ### ----------------------------------------------------------------- ###
       - name: 'Restore .ccache from cache'
