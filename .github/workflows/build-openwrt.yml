@@ -221,7 +221,7 @@ jobs:
           path: |
             ${{ github.workspace }}/openwrt/feeds/packages
             ${{ github.workspace }}/openwrt/feeds/luci
-          key: ${{ env.CACHE_NAME }}-"PureFusionWRT"
+          key: ${{ env.CACHE_NAME }}-PureFusionWRT
 ### ----------------------------------------------------------------- ###
       - name: 'Restore build Directory from cache'
         id: build-cache
@@ -230,7 +230,7 @@ jobs:
           CACHE_NAME: 'build-cache'
         with:
           path: ${{ github.workspace }}/openwrt/build_dir
-          key: ${{ env.CACHE_NAME }}-"PureFusionWRT"
+          key: ${{ env.CACHE_NAME }}-PureFusionWRT
 ### ----------------------------------------------------------------- ###
       - name: 'Restore staging Directory from cache'
         id: staging-cache
@@ -239,7 +239,7 @@ jobs:
           CACHE_NAME: 'staging-cache'
         with:
           path: ${{ github.workspace }}/openwrt/staging_dir
-          key: ${{ env.CACHE_NAME }}-"PureFusionWRT"
+          key: ${{ env.CACHE_NAME }}-PureFusionWRT
 ### ----------------------------------------------------------------- ###
       - name: 'Restore package Directory from cache'
         id: package-cache
@@ -248,7 +248,7 @@ jobs:
           CACHE_NAME: 'package-cache'
         with:
           path: ${{ github.workspace }}/openwrt/package
-          key: ${{ env.CACHE_NAME }}-"PureFusionWRT"
+          key: ${{ env.CACHE_NAME }}-PureFusionWRT
 ### ----------------------------------------------------------------- ###
       - name: 'Restore downloads Directory from cache'
         id: dl-cache
@@ -266,7 +266,7 @@ jobs:
           CACHE_NAME: 'ccache-cache'
         with:
           path: ${{ github.workspace }}/openwrt/.ccache
-          key: ${{ env.CACHE_NAME }}-"PureFusionWRT"
+          key: ${{ env.CACHE_NAME }}-PureFusionWRT
 ### ----------------------------------------------------------------- ###
       - name: Cache (ccache list)
         id: ccache
