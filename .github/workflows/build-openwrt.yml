@@ -224,12 +224,12 @@ jobs:
           key: ${{ env.CACHE_NAME }}-${{ steps.date.outputs.date }}
 ### ----------------------------------------------------------------- ###
       - name: 'Restore build Directory from cache'
-        id: staging-cache
+        id: build-cache
         uses: actions/cache@v3
         env:
-          CACHE_NAME: 'staging-cache'
+          CACHE_NAME: 'build-cache'
         with:
-          path: ${{ github.workspace }}/openwrt/staging_dir
+          path: ${{ github.workspace }}/openwrt/build_dir
           key: ${{ env.CACHE_NAME }}-${{ steps.date.outputs.date }}
 ### ----------------------------------------------------------------- ###
       - name: 'Restore staging Directory from cache'
