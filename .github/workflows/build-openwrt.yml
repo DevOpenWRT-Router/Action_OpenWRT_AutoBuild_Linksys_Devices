@@ -53,7 +53,7 @@ env:
   USE_DEVOPENWRT: true
   USE_FETCH_PACKAGES: true
   USE_CACHE: true
-  USE_SMART_CHMOD: true
+  USE_SMART_CHMOD: false
   SSH_TMATE: false
   SSH_NGROK: false
   EXTERNAL_BUILD_USER_DOMAIN_SETUP: true
