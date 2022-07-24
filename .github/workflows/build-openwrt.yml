@@ -487,13 +487,12 @@ jobs:
           configs/${HARDWARE_DEVICE}.config openwrt/.config
 ### ----------------------------------------------------------------- ###
       - name: Smart Chmod
+        working-directory: '/workdir/openwrt'
         if: env.USE_SMART_CHMOD == 'true' && !cancelled()
         run: |
           chmod +x scripts/$FUNCTIONS_SH
           source scripts/$FUNCTIONS_SH
-          cd openwrt
           SMART_CHMOD
-
 ### ----------------------------------------------------------------- ###
       - name: Change Build user/Domain
         run: |
