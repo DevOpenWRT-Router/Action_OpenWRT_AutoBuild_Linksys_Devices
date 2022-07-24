@@ -39,6 +39,12 @@ env:
   PRINT_FAILLOGS: true
   SET_BUILDKEY: false
   remove_languages: true
+  RESTORE_FEEDS_CACHE: true
+  RESTORE_BUILD_CACHE: true
+  RESTORE_STAGING_CACHE: true
+  RESTORE_PACKAGE_CACHE: false
+  RESTORE_DL_CACHE: true
+  RESTORE_CCACHE_CACHE: true
   USE_CACHEWRTBUILD: true
   USE_KMODS_SCRIPT: true
   USE_FILES: true
@@ -215,6 +221,7 @@ jobs:
       - name: 'Restore feeds from cache'
         id: feeds-cache
         uses: actions/cache@v3
+        if: env.RESTORE_FEEDS_CACHE == 'true' && !cancelled()
         env:
           CACHE_NAME: 'feeds-cache'
         with:
@@ -226,6 +233,7 @@ jobs:
       - name: 'Restore build Directory from cache'
         id: build-cache
         uses: actions/cache@v3
+        if: env.RESTORE_BUILD_CACHE == 'true' && !cancelled()
         env:
           CACHE_NAME: 'build-cache'
         with:
@@ -235,6 +243,7 @@ jobs:
       - name: 'Restore staging Directory from cache'
         id: staging-cache
         uses: actions/cache@v3
+        if: env.RESTORE_STAGING_CACHE == 'true' && !cancelled()
         env:
           CACHE_NAME: 'staging-cache'
         with:
@@ -244,6 +253,7 @@ jobs:
       - name: 'Restore package Directory from cache'
         id: package-cache
         uses: actions/cache@v3
+        if: env.RESTORE_PACKAGE_CACHE == 'true' && !cancelled()
         env:
           CACHE_NAME: 'package-cache'
         with:
@@ -253,6 +263,7 @@ jobs:
       - name: 'Restore downloads Directory from cache'
         id: dl-cache
         uses: actions/cache@v3
+        if: env.RESTORE_DL_CACHE == 'true' && !cancelled()
         env:
           CACHE_NAME: 'dl-cache'
         with:
@@ -262,6 +273,7 @@ jobs:
       - name: 'Restore .ccache from cache'
         id: ccache-cache
         uses: actions/cache@v3
+        if: env.RESTORE_CCACHE_CACHE == 'true' && !cancelled()
         env:
           CACHE_NAME: 'ccache-cache'
         with:
