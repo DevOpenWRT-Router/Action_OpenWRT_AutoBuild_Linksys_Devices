@@ -256,7 +256,7 @@ jobs:
         env:
           CACHE_NAME: 'dl-cache'
         with:
-          path: ${{ github.workspace }}/.dl
+          path: ${{ github.workspace }}/dl
           key: ${{ env.CACHE_NAME }}-"PureFusionWRT"
  ### ----------------------------------------------------------------- ###
       - name: 'Restore .ccache from cache'
