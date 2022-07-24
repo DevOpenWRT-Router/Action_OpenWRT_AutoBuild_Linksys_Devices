@@ -871,8 +871,13 @@ jobs:
           df -hT
           echo "=============================================="
           du -h --max-depth=1 ./ --exclude=build_dir --exclude=bin
+          du -h --max-depth=1 ./staging_dir
+          du -h --max-depth=1 ./staging_dir/tools
           du -h --max-depth=1 ./build_dir
+          du -h --max-depth=1 ./build_dir/tools
           du -h --max-depth=1 ./bin
+          du -h --max-depth=1 ./package
+          du -h --max-depth=1 .ccache
           du -h --max-depth=10 ./bin
           echo "=============================================="
 ### ----------------------------------------------------------------- ###
