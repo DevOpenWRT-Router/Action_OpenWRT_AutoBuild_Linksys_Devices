@@ -201,8 +201,8 @@ FILES_OpenWrtScripts() {
 }
 
 COPY_DEFCONFIG() {
-  echo "Copying .config to main bin Dir:"
-  mv ${GITHUB_WORKSPACE}/openwrt/.config $BIN_DIR
+  echo "Sending .config to $BIN_DIR/latest.config:"
+  mv "${GITHUB_WORKSPACE}"/openwrt/.config "$BIN_DIR"/latest.config
 }
 
 ### -------------------------------------------------------------------------------------------------------- ###
