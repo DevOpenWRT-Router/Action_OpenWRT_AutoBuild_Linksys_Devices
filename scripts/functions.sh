@@ -145,13 +145,17 @@ sed -ne '/^CONFIG_LIBC=/ { s!^CONFIG_LIBC="\(.*\)"!\1!; s!^musl$!!; s!.\+!-&!p }
 ### This will setup ccache support
 ### CCACHE SETUP ###
 CCACHE_SETUP() {
-echo "Seeding .config (enable ccache):"
-printf 'CONFIG_CCACHE=y\n' >> .config
 echo "Setting ccache directory:"
 export CCACHE_DIR="$GITHUB_WORKSPACE"/openwrt/.ccache
 echo "Fix Sloppiness of ccache:"
 ccache --set-config=sloppiness=file_macro,locale,time_macros
 ccache -s
+}
+
+### Enable ccache support in .config
+CCACHE_CONFIG_SETUP() {
+  echo "Seeding .config (enable ccache):"
+  printf 'CONFIG_CCACHE=y\n' >> .config
 }
 
 ### Not even sure why I still have this here, I dont really use it
