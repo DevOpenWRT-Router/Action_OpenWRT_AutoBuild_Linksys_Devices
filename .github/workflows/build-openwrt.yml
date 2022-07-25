@@ -848,6 +848,8 @@ jobs:
           get_deviceID
 ### ----------------------------------------------------------------- ###
       - name: Check space usage
+        id: space
+        continue-on-error: true
         if: (!cancelled())
         run: |
           cd openwrt
@@ -858,9 +860,7 @@ jobs:
           echo "=============================================="
           du -h --max-depth=1 ./ --exclude=build_dir --exclude=bin
           du -h --max-depth=1 ./staging_dir
-          du -h --max-depth=1 ./staging_dir/tools
           du -h --max-depth=1 ./build_dir
-          du -h --max-depth=1 ./build_dir/tools
           du -h --max-depth=1 ./bin
           du -h --max-depth=1 ./package
           du -h --max-depth=1 .ccache
