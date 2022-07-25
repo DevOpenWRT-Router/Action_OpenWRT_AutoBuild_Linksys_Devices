@@ -296,12 +296,15 @@ jobs:
           path: ${{ github.workspace }}/openwrt/.ccache
           key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
 ### ----------------------------------------------------------------- ###
-      - name: Cache (ccache list)
+      - name: Setup cache for OpenWRT (ccache)
         id: ccache
         continue-on-error: true
         run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          cd openwrt
+          CCACHE_SETUP
           ccache -s
-          ccache --help
 ### ----------------------------------------------------------------- ###
       - name: Set build key
         working-directory: '/workdir/openwrt'
@@ -515,12 +518,12 @@ jobs:
           cd openwrt
           PRE_DEFCONFIG_ADDONS
 ### ----------------------------------------------------------------- ###
-      - name: Set defconfig to use ccache
+      - name: CCACHE - Setup .config to use cache
         run: |
           chmod +x scripts/$FUNCTIONS_SH
           source scripts/$FUNCTIONS_SH
           cd openwrt
-          CCACHE_SETUP
+          CCACHE_CONFIG_SETUP
 ### ----------------------------------------------------------------- ###
       - name: Change Default theme Settings
         if: env.DEFAULT_THEME_CHANGE == 'true' && !cancelled()
