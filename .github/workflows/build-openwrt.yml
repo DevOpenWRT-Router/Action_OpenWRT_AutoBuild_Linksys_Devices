@@ -326,8 +326,10 @@ jobs:
 ### ----------------------------------------------------------------- ###
       - name: Cache (ccache list)
         id: ccache
+        continue-on-error: true
         run: |
           ccache -s
+          ccache --help
 ### ----------------------------------------------------------------- ###
       - name: Change Default Banner
         if: env.CHANGE_DEFAULT_BANNER == 'true' && !cancelled()
