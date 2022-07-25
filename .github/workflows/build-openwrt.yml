@@ -31,6 +31,20 @@ env:
   EXT_INIT_ENV: environment.sh
   DEVICE_NAME: ''
 ### --------------------------- ###
+###     [ CACHE SETTINGS ]      ###
+### --------------------------- ###
+  USE_CACHEWRTBUILD: true
+  RESTORE_CCACHE_CACHE: true
+  RESTORE_FEEDS_CACHE: true
+  RESTORE_STAGING_CACHE: true
+  RESTORE_DL_CACHE: true
+  RESTORE_BUILD_CACHE: true
+  RESTORE_BUILD_DIR_TOOLCHAIN_CACHE: false
+  RESTORE_BUILD_DIR_TARGET_CACHE: false
+  RESTORE_BUILD_DIR_HOST_CACHE: false
+  RESTORE_BUILD_DIR_HOSTPKG_CACHE: false
+  RESTORE_PACKAGE_CACHE: false
+### --------------------------- ###  
   CLEANUP_ENVIROMENT: true
   RESET_OPENWRT_COMMIT: false
   INSTALL_LLVM: false
@@ -40,17 +54,6 @@ env:
   VIEW_BUILD_LOGS: true
   SET_BUILDKEY: false
   remove_languages: true
-  RESTORE_FEEDS_CACHE: true
-  RESTORE_BUILD_CACHE: false
-  RESTORE_STAGING_CACHE: true
-  RESTORE_PACKAGE_CACHE: false
-  RESTORE_DL_CACHE: true
-  RESTORE_BUILD_DIR_TOOLCHAIN_CACHE: true
-  RESTORE_BUILD_DIR_TARGET_CACHE: true
-  RESTORE_BUILD_DIR_HOST_CACHE: true
-  RESTORE_BUILD_DIR_HOSTPKG_CACHE: true
-  RESTORE_CCACHE_CACHE: true
-  USE_CACHEWRTBUILD: true
   USE_KMODS_SCRIPT: true
   USE_FILES: true
   USE_OpenWrtScripts: true
