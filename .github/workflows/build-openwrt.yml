@@ -817,6 +817,13 @@ jobs:
         run: |
           echo "Proccess Failed at level 1"
 ### ----------------------------------------------------------------- ###
+      - name: List SHA256SUMS of dl Directory
+        id: sha256
+        working-directory: '/workdir/openwrt/dl'
+        run: |
+          find . -type f -exec sha256sum {} \; >> sha256sum.txt
+          cat "sha256sum.txt"
+### ----------------------------------------------------------------- ###
       - name: Generate kmods feed
         id: GKMOD
         working-directory: '/workdir/openwrt'
