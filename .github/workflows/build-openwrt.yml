@@ -37,6 +37,7 @@ env:
   LOAD_FUNCTIONS: true
   BOOTSTRAP_START: false
   PRINT_FAILLOGS: true
+  VIEW_BUILD_LOGS: true
   SET_BUILDKEY: false
   remove_languages: true
   RESTORE_FEEDS_CACHE: true
@@ -901,7 +902,12 @@ jobs:
           [ ! -e "./logs/toolchain/error.txt" ] || cat "./logs/toolchain/error.txt"
           [ ! -e "./logs/tools/error.txt" ] || cat "./logs/tools/error.txt"
 ### ----------------------------------------------------------------- ###
-
+      - name: View Build Logs (Build Logs) [Build.log Viewable]
+        working-directory: /workdir/openwrt
+        if: env.VIEW_BUILD_LOGS == 'true' && (!cancelled())
+        run: |
+          [ ! -e "./logs/build.log" ] || cat "./logs/build.log"
+### ----------------------------------------------------------------- ###
       - name: Upload kmods
         uses: actions/upload-artifact@main
         if: >-
