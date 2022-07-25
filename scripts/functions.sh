@@ -22,6 +22,14 @@ source scripts/lib/oo-bootstrap.sh
 import util/log util/exception util/tryCatch util/namedParameters util/class
 }
 
+### Error Control used in for while loop ###
+error_return()
+{
+    echo "Error: $1"
+    git am --abort
+    return 1
+}
+
 ### Modify default theme
 ### Modify  luci-theme-opentomato  as the default theme, you can modify according to your,
 ### favorite into the other (do not select the default theme theme will automatically,
@@ -217,12 +225,7 @@ APPLY_PATCHES() {
   patch=(./patches/*.patch)
   for f in "${patch[@]}"; do
    echo "$f"
-   git am "$f"
-   if ! git am "$f";
-    then
-      git am --abort
-      echo "Patch Failed, Aborting Patch"
-  fi
+   git am "$f" || error_return "Patch Failed, Aborting Patch"
   done
   rm -rf patches
 
@@ -235,12 +238,7 @@ APPLY_PR_PATCHES() {
   while read -r line; do
   cd "$GITHUB_WORKSPACE"/openwrt && wget https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/"$line".patch
   echo "Applying $line.patch"
-  git am "$line".patch
-  if ! git am "$line".patch;
-    then
-      git am --abort
-      echo "Patch Failed, Aborting Patch"
-  fi
+  git am "$line".patch || error_return "Patch Failed, Aborting Patch"
   done < "$file"
 }
 
@@ -251,13 +249,8 @@ APPLY_PR_PATCHES_PACKAGES() {
   while read -r line; do
   cd "$GITHUB_WORKSPACE"/openwrt/feeds/packages && wget https://patch-diff.githubusercontent.com/raw/openwrt/packages/pull/"$line".patch
   echo "Applying $line.patch"
-  git am "$line".patch
+  git am "$line".patch || error_return "Patch Failed, Aborting Patch"
   echo "Error: $?"
-  if ! git am "$line".patch;
-    then
-      git am --abort
-      echo "Patch Failed, Aborting Patch"
-  fi
   done < "$file"
   cd "$GITHUB_WORKSPACE"/openwrt
 }
@@ -268,14 +261,9 @@ for patch in "${nums[@]}"
 do 
   wget https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/"$patch".patch
   echo "Applying $patch.patch"
-  git am "$patch".patch
+  git am "$patch".patch || error_return "Patch Failed, Aborting Patch"
   rm -rf "$patch".patch
   echo "Error: $?"
-  if ! git am "$line".patch;
-    then
-      git am --abort
-      echo "Patch Failed, Aborting Patch"
-  fi
 done
 }
 
@@ -285,14 +273,9 @@ for patch in "${nums[@]}"
 do 
   wget https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/"$patch".patch
   echo "Applying $patch.patch"
-  git am "$patch".patch
+  git am "$patch".patch || error_return "Patch Failed, Aborting Patch"
   rm -rf "$patch".patch
   echo "Error: $?"
-  if ! git am "$line".patch;
-    then
-      git am --abort
-      echo "Patch Failed, Aborting Patch"
-  fi
 done
 }
 
