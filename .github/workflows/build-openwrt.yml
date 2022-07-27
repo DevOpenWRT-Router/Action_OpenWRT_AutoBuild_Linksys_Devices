@@ -33,12 +33,12 @@ env:
 ### --------------------------- ###
 ###     [ CACHE SETTINGS ]      ###
 ### --------------------------- ###
-  USE_CACHEWRTBUILD: false
-  RESTORE_CCACHE_CACHE: false
-  RESTORE_FEEDS_CACHE: false
-  RESTORE_STAGING_CACHE: false
-  RESTORE_DL_CACHE: false
-  RESTORE_BUILD_CACHE: false
+  USE_CACHEWRTBUILD: true
+  RESTORE_CCACHE_CACHE: true
+  RESTORE_FEEDS_CACHE: true
+  RESTORE_STAGING_CACHE: true
+  RESTORE_DL_CACHE: true
+  RESTORE_BUILD_CACHE: true
   RESTORE_BUILD_DIR_TOOLCHAIN_CACHE: false
   RESTORE_BUILD_DIR_TARGET_CACHE: false
   RESTORE_BUILD_DIR_HOST_CACHE: false
@@ -183,128 +183,6 @@ jobs:
           BRANCH=$CLONE_BRANCH
           git clone "$URL" -b "$BRANCH" openwrt
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
-### ----------------------------------------------------------------- ###
-      - name: Cache Acceleration (Secondary compilation of the same model with the same source code is valid within 7 days, and only one source code cache is retained each time)
-        uses: DevOpenWRT-Router/Cache-OpenWRT-Builds@main
-        if: env.USE_CACHEWRTBUILD == 'true' && !cancelled()
-        with:
-          ccache: 'true'
-          toolchain: 'true'
-          skip: 'false'
-          clean: '${{ contains(github.event.action, ''nocache'') }}'
-          prefix: '${{ github.workspace }}/openwrt'
-### ----------------------------------------------------------------- ###
-      - name: 'Restore feeds from cache'
-        id: feeds-cache
-        uses: actions/cache@v3
-        if: env.RESTORE_FEEDS_CACHE == 'true' && !cancelled()
-        env:
-          CACHE_NAME: 'feeds-cache'
-        with:
-          path: |
-            ${{ github.workspace }}/openwrt/feeds/packages
-            ${{ github.workspace }}/openwrt/feeds/luci
-          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
-### ----------------------------------------------------------------- ###
-      - name: 'Restore build Directory from cache'
-        id: build-cache
-        uses: actions/cache@v3
-        if: env.RESTORE_BUILD_CACHE == 'true' && !cancelled()
-        env:
-          CACHE_NAME: 'build-cache'
-        with:
-          path: ${{ github.workspace }}/openwrt/build_dir
-          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
-### ----------------------------------------------------------------- ###
-      - name: 'Restore staging Directory from cache'
-        id: staging-cache
-        uses: actions/cache@v3
-        if: env.RESTORE_STAGING_CACHE == 'true' && !cancelled()
-        env:
-          CACHE_NAME: 'staging-cache'
-        with:
-          path: ${{ github.workspace }}/openwrt/staging_dir
-          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
-### ----------------------------------------------------------------- ###
-      - name: 'Restore package Directory from cache'
-        id: package-cache
-        uses: actions/cache@v3
-        if: env.RESTORE_PACKAGE_CACHE == 'true' && !cancelled()
-        env:
-          CACHE_NAME: 'package-cache'
-        with:
-          path: ${{ github.workspace }}/openwrt/package
-          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
-### ----------------------------------------------------------------- ###
-      - name: 'Restore downloads Directory from cache'
-        id: dl-cache
-        uses: actions/cache@v3
-        if: env.RESTORE_DL_CACHE == 'true' && !cancelled()
-        env:
-          CACHE_NAME: 'dl-cache'
-        with:
-          path: ${{ github.workspace }}/openwrt/dl
-          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
- ### ----------------------------------------------------------------- ###
-      - name: 'Restore build_dir/toolchain Directory from cache'
-        id: build_dir_toolchain-cache
-        uses: actions/cache@v3
-        if: env.RESTORE_BUILD_DIR_TOOLCHAIN_CACHE == 'true' && !cancelled()
-        env:
-          CACHE_NAME: 'build_dir_toolchain-cache'
-        with:
-          path: ${{ github.workspace }}/openwrt/build_dir/toolchain-*
-          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
- ### ----------------------------------------------------------------- ###
-      - name: 'Restore build_dir/target Directory from cache'
-        id: build_dir_target-cache
-        uses: actions/cache@v3
-        if: env.RESTORE_BUILD_DIR_TARGET_CACHE == 'true' && !cancelled()
-        env:
-          CACHE_NAME: 'build_dir_target-cache'
-        with:
-          path: ${{ github.workspace }}/openwrt/build_dir/target-*
-          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
- ### ----------------------------------------------------------------- ###
-      - name: 'Restore build_dir/host Directory from cache'
-        id: build_dir_host-cache
-        uses: actions/cache@v3
-        if: env.RESTORE_BUILD_DIR_HOST_CACHE == 'true' && !cancelled()
-        env:
-          CACHE_NAME: 'build_dir_host-cache'
-        with:
-          path: ${{ github.workspace }}/openwrt/build_dir/host
-          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
- ### ----------------------------------------------------------------- ###
-      - name: 'Restore build_dir/hostpkg Directory from cache'
-        id: build_dir_hostpkg-cache
-        uses: actions/cache@v3
-        if: env.RESTORE_BUILD_DIR_HOSTPKG_CACHE == 'true' && !cancelled()
-        env:
-          CACHE_NAME: 'build_dir_hostpkg-cache'
-        with:
-          path: ${{ github.workspace }}/openwrt/build_dir/hostpkg
-          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
- ### ----------------------------------------------------------------- ###
-      - name: 'Restore .ccache from cache'
-        id: ccache-cache
-        uses: actions/cache@v3
-        if: env.RESTORE_CCACHE_CACHE == 'true' && !cancelled()
-        env:
-          CACHE_NAME: 'ccache-cache'
-        with:
-          path: ${{ github.workspace }}/openwrt/.ccache
-          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
-### ----------------------------------------------------------------- ###
-      - name: Setup cache for OpenWRT (ccache)
-        id: ccache
-        continue-on-error: true
-        run: |
-          chmod +x scripts/$FUNCTIONS_SH
-          source scripts/$FUNCTIONS_SH
-          cd openwrt
-          CCACHE_SETUP
-          ccache -s
 ### ----------------------------------------------------------------- ###
       - name: Set build key
         working-directory: '/workdir/openwrt'
@@ -503,6 +381,128 @@ jobs:
           chmod +x "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
           source "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
           SMART_CHMOD
+### ----------------------------------------------------------------- ###
+      - name: Cache Acceleration (Secondary compilation of the same model with the same source code is valid within 7 days, and only one source code cache is retained each time)
+        uses: DevOpenWRT-Router/Cache-OpenWRT-Builds@main
+        if: env.USE_CACHEWRTBUILD == 'true' && !cancelled()
+        with:
+          ccache: 'true'
+          toolchain: 'true'
+          skip: 'false'
+          clean: '${{ contains(github.event.action, ''nocache'') }}'
+          prefix: '${{ github.workspace }}/openwrt'
+### ----------------------------------------------------------------- ###
+      - name: 'Restore feeds from cache'
+        id: feeds-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_FEEDS_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'feeds-cache'
+        with:
+          path: |
+            ${{ github.workspace }}/openwrt/feeds/packages
+            ${{ github.workspace }}/openwrt/feeds/luci
+          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
+### ----------------------------------------------------------------- ###
+      - name: 'Restore build Directory from cache'
+        id: build-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_BUILD_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'build-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/build_dir
+          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
+### ----------------------------------------------------------------- ###
+      - name: 'Restore staging Directory from cache'
+        id: staging-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_STAGING_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'staging-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/staging_dir
+          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
+### ----------------------------------------------------------------- ###
+      - name: 'Restore package Directory from cache'
+        id: package-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_PACKAGE_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'package-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/package
+          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
+### ----------------------------------------------------------------- ###
+      - name: 'Restore downloads Directory from cache'
+        id: dl-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_DL_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'dl-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/dl
+          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
+ ### ----------------------------------------------------------------- ###
+      - name: 'Restore build_dir/toolchain Directory from cache'
+        id: build_dir_toolchain-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_BUILD_DIR_TOOLCHAIN_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'build_dir_toolchain-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/build_dir/toolchain-*
+          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
+ ### ----------------------------------------------------------------- ###
+      - name: 'Restore build_dir/target Directory from cache'
+        id: build_dir_target-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_BUILD_DIR_TARGET_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'build_dir_target-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/build_dir/target-*
+          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
+ ### ----------------------------------------------------------------- ###
+      - name: 'Restore build_dir/host Directory from cache'
+        id: build_dir_host-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_BUILD_DIR_HOST_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'build_dir_host-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/build_dir/host
+          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
+ ### ----------------------------------------------------------------- ###
+      - name: 'Restore build_dir/hostpkg Directory from cache'
+        id: build_dir_hostpkg-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_BUILD_DIR_HOSTPKG_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'build_dir_hostpkg-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/build_dir/hostpkg
+          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
+ ### ----------------------------------------------------------------- ###
+      - name: 'Restore .ccache from cache'
+        id: ccache-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_CCACHE_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'ccache-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/.ccache
+          key: ${{ env.CACHE_NAME }}-PureFusionWRT-2023
+### ----------------------------------------------------------------- ###
+      - name: Setup cache for OpenWRT (ccache)
+        id: ccache
+        continue-on-error: true
+        run: |
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          cd openwrt
+          CCACHE_SETUP
+          ccache -s
 ### ----------------------------------------------------------------- ###
       - name: Change Build user/Domain
         run: |
