@@ -127,33 +127,58 @@ ln -sf /sbin/ip /usr/bin/ip
 WAN_IFACE=$(uci get network.wan.device)
 
 uci -q batch <<-EOF
+# set sqm.eth1.config queue='eth1'					# Not sure on this
+set sqm.eth1.debug_logging='0'
+set sqm.eth1.verbosity='5'
 set sqm.eth1.interface="$WAN_IFACE"
-set sqm.eth1.debug_logging '0'
-set sqm.eth1.verbosity '5'
-set sqm.eth1.qdisc 'cake'
-set sqm.eth1.qdisc_advanced '1'
-set sqm.eth1.squash_ingress '0'
-set sqm.eth1.squash_dscp '0'
-set sqm.eth1.ingress_ecn 'ECN'
-set sqm.eth1.linklayer 'ethernet'
-set sqm.eth1.linklayer_advanced '1'
-set sqm.eth1.tcMPU '64'
-set sqm.eth1.egress_ecn 'NOECN'
-set sqm.eth1.qdisc_really_really_advanced '1'
-set sqm.eth1.eqdisc_opts 'nat dual-srchost'
-set sqm.eth1.linklayer_adaptation_mechanism 'cake'
-set sqm.eth1.ilimit '64'
-set sqm.eth1.elimit '64'
-set sqm.eth1.iqdisc_opts 'nat dual-dsthost ingress'
-set sqm.eth1.overhead '18'
-set sqm.eth1.tcMTU '1518'
-set sqm.eth1.tcTSIZE '95'
-set sqm.eth1.enabled '1'
-# set sqm.eth1.download '500000' 			# Set by autoSQM
-# set sqm.eth1.upload '20000' 				# Set by autoSQM
-set sqm.eth1.script 'piece_of_cake.qos'
+set sqm.eth1.qdisc_advanced='1'
+set sqm.eth1.squash_ingress='0'
+set sqm.eth1.squash_dscp='0'
+set sqm.eth1.ingress_ecn='ECN'
+set sqm.eth1.linklayer='ethernet'
+set sqm.eth1.egress_ecn='NOECN'
+set sqm.eth1.overhead='18'
+set sqm.eth1.script='piece_of_cake.qos'
+set sqm.eth1.enabled='1'
+# set sqm.eth1.download=''							# Set by autoSQM
+# set sqm.eth1.upload=''							# Set by autoSQM
+set sqm.eth1.qdisc='pie'
+set sqm.eth1.linklayer_advanced='1'
+set sqm.eth1.tcMTU='1518'
+set sqm.eth1.tcTSIZE='95'
+set sqm.eth1.tcMPU='64'
+set sqm.eth1.linklayer_adaptation_mechanism='cake'
 EOF
 uci commit sqm
+
+# uci -q batch <<-EOF
+# set sqm.eth1.interface="$WAN_IFACE"
+# set sqm.eth1.debug_logging='0'
+# set sqm.eth1.verbosity='5'
+# set sqm.eth1.qdisc='cake'
+# set sqm.eth1.qdisc_advanced='1'
+# set sqm.eth1.squash_ingress='0'
+# set sqm.eth1.squash_dscp='0'
+# set sqm.eth1.ingress_ecn='ECN'
+# set sqm.eth1.linklayer='ethernet'
+# set sqm.eth1.linklayer_advanced='1'
+# set sqm.eth1.tcMPU='64'
+# set sqm.eth1.egress_ecn='NOECN'
+# set sqm.eth1.qdisc_really_really_advanced='1'
+# set sqm.eth1.eqdisc_opts='nat dual-srchost'
+# set sqm.eth1.linklayer_adaptation_mechanism='cake'
+# set sqm.eth1.ilimit='64'
+# set sqm.eth1.elimit='64'
+# set sqm.eth1.iqdisc_opts='nat dual-dsthost ingress'
+# set sqm.eth1.overhead='18'
+# set sqm.eth1.tcMTU='1518'
+# set sqm.eth1.tcTSIZE='95'
+# set sqm.eth1.enabled='1'
+# # set sqm.eth1.download=''							# Set by autoSQM
+# # set sqm.eth1.upload=''							# Set by autoSQM
+# set sqm.eth1.script='piece_of_cake.qos'
+# EOF
+# uci commit sqm
 
 # Restart SQM
 /etc/init.d/sqm reload
