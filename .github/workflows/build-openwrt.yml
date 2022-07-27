@@ -500,8 +500,8 @@ jobs:
         working-directory: '/workdir/openwrt'
         if: env.USE_SMART_CHMOD == 'true' && !cancelled()
         run: |
-          chmod +x scripts/$FUNCTIONS_SH
-          source scripts/$FUNCTIONS_SH
+          chmod +x "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
+          source "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
           SMART_CHMOD
 ### ----------------------------------------------------------------- ###
       - name: Change Build user/Domain
