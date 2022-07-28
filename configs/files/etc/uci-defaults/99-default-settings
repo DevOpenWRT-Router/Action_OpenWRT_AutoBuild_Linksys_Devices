@@ -2,13 +2,14 @@
 ###################################################################
 # default-settings (C) 2021 - 2022 By Eliminater74                #
 #                                                                 #
-# Updated On: 07/23/2022                                          #
+# Updated On: 07/28/2022                                          #
 ###################################################################
 
 # SQM: Set to "cake" or "pie"
 SQM="pie"
 
-
+# BANIP: turn on "true" or off "false"
+BANIP="false" # (BROKEN)
 
 ### ----------------------------------------------------------------------------------------------------- ###
 ###      WARNING: WARNING: DO NOT EDIT BELOW THIS UNLESS YOU KNOW WHAT YOUR DOING!! WARNING: WARNING:     ###
@@ -360,112 +361,116 @@ service bcp38 enable
 ### ---------------------------------------------------------------------------------------- ###
 ###  BANIP: https://github.com/openwrt/packages/blob/master/net/banip/files/README.md        ###
 ### ---------------------------------------------------------------------------------------- ###
-uci set banip.global.ban_enabled='0'
-uci set banip.global.ban_trigger='wan'
-uci set banip.global.ban_autodetect='1'
-uci set banip.global.ban_logsrc_enabled='1'
-uci set banip.global.ban_maxqueue='4'
-uci set banip.global.ban_fetchutil='wget'
-uci set banip.global.ban_fetchinsecure='1'
-uci set banip.global.ban_global_settype='src+dst'
-uci set banip.global.ban_target_src='DROP'
-uci set banip.global.ban_target_dst='REJECT'
-uci delete banip.global.ban_settype_src
-uci add_list banip.global.ban_settype_src='country'
-uci add_list banip.global.ban_settype_src='dshield'
-uci set banip.global.ban_loglimit='100'
-uci set banip.global.ban_logopts_src='-m limit --limit 2/sec'
-uci set banip.global.ban_localsources='blacklist'
-uci set banip.global.ban_autoblacklist='1'
-uci set banip.global.ban_autowhitelist='1'
-uci delete banip.global.ban_sources
-uci add_list banip.global.ban_sources='darklist'
-uci add_list banip.global.ban_sources='debl'
-uci add_list banip.global.ban_sources='drop'
-uci add_list banip.global.ban_sources='feodo'
-uci add_list banip.global.ban_sources='firehol1'
-uci add_list banip.global.ban_sources='greensnow'
-uci add_list banip.global.ban_sources='iblockads'
-uci add_list banip.global.ban_sources='iblockspy'
-uci add_list banip.global.ban_sources='myip'
-uci add_list banip.global.ban_sources='nixspam'
-uci add_list banip.global.ban_sources='proxy'
-uci add_list banip.global.ban_sources='sslbl'
-uci add_list banip.global.ban_sources='talos'
-uci add_list banip.global.ban_sources='threat'
-uci add_list banip.global.ban_sources='tor'
-uci add_list banip.global.ban_sources='uceprotect1'
-uci add_list banip.global.ban_sources='yoyo'
-uci delete banip.global.ban_countries
-uci add_list banip.global.ban_countries='ru'
-uci add_list banip.global.ban_countries='cn'
-uci add_list banip.global.ban_countries='af'
-uci add_list banip.global.ban_countries='iq'
-uci add_list banip.global.ban_countries='ua'
-uci add_list banip.global.ban_countries='ao'
-uci add_list banip.global.ban_countries='ai'
-uci add_list banip.global.ban_countries='ar'
-uci add_list banip.global.ban_countries='az'
-uci add_list banip.global.ban_countries='bd'
-uci add_list banip.global.ban_countries='by'
-uci add_list banip.global.ban_countries='br'
+if [ $BANIP = "false" ]; then
+	uci -q batch <<-EOF
+	set banip.global.ban_enabled='0'
+	set banip.global.ban_trigger='wan'
+	set banip.global.ban_autodetect='1'
+	set banip.global.ban_logsrc_enabled='1'
+	set banip.global.ban_maxqueue='4'
+	set banip.global.ban_fetchutil='wget'
+	set banip.global.ban_fetchinsecure='1'
+	set banip.global.ban_global_settype='src+dst'
+	set banip.global.ban_target_src='DROP'
+	set banip.global.ban_target_dst='REJECT'
+	delete banip.global.ban_settype_src
+	add_list banip.global.ban_settype_src='country'
+	add_list banip.global.ban_settype_src='dshield'
+	set banip.global.ban_loglimit='100'
+	set banip.global.ban_logopts_src='-m limit --limit 2/sec'
+	set banip.global.ban_localsources='blacklist'
+	set banip.global.ban_autoblacklist='1'
+	set banip.global.ban_autowhitelist='1'
+	delete banip.global.ban_sources
+	add_list banip.global.ban_sources='darklist'
+	add_list banip.global.ban_sources='debl'
+	add_list banip.global.ban_sources='drop'
+	add_list banip.global.ban_sources='feodo'
+	add_list banip.global.ban_sources='firehol1'
+	add_list banip.global.ban_sources='greensnow'
+	add_list banip.global.ban_sources='iblockads'
+	add_list banip.global.ban_sources='iblockspy'
+	add_list banip.global.ban_sources='myip'
+	add_list banip.global.ban_sources='nixspam'
+	add_list banip.global.ban_sources='proxy'
+	add_list banip.global.ban_sources='sslbl'
+	add_list banip.global.ban_sources='talos'
+	add_list banip.global.ban_sources='threat'
+	add_list banip.global.ban_sources='tor'
+	add_list banip.global.ban_sources='uceprotect1'
+	add_list banip.global.ban_sources='yoyo'
+	delete banip.global.ban_countries
+	add_list banip.global.ban_countries='ru'
+	add_list banip.global.ban_countries='cn'
+	add_list banip.global.ban_countries='af'
+	add_list banip.global.ban_countries='iq'
+	add_list banip.global.ban_countries='ua'
+	add_list banip.global.ban_countries='ao'
+	add_list banip.global.ban_countries='ai'
+	add_list banip.global.ban_countries='ar'
+	add_list banip.global.ban_countries='az'
+	add_list banip.global.ban_countries='bd'
+	add_list banip.global.ban_countries='by'
+	add_list banip.global.ban_countries='br'
+	EOF
+	uci commit banip
 
-# Allowlist a few sites that I've seen some blocklists break before.
-echo "enro.com" >> /etc/banip/banip.whitelist
-echo "www.reddit.com" >> /etc/banip/banip.whitelist
-echo "yelp.com" >> /etc/banip/banip.whitelist
+	# Allowlist a few sites that I've seen some blocklists break before.
+	echo "enro.com" >> /etc/banip/banip.whitelist
+	echo "www.reddit.com" >> /etc/banip/banip.whitelist
+	echo "yelp.com" >> /etc/banip/banip.whitelist
 
-uci commit banip
-service banip restart
-service banip enable
+	service banip restart
+	service banip enable
 
-# refreshing the blocklists every 24 hours
-echo "15 07 * * * /etc/init.d/banip reload" >> /etc/crontabs/root
-crontab /etc/crontabs/root
-
+	# refreshing the blocklists every 24 hours
+	echo "15 07 * * * /etc/init.d/banip reload" >> /etc/crontabs/root
+	crontab /etc/crontabs/root
+fi
 ### -- END --
 
 ### adblock
-uci set adblock.global.adb_enabled='0'
-uci set adblock.global.adb_trigger='wan'
-uci set adblock.global.adb_debug='0'
-uci set adblock.global.adb_dnsfilereset='0'
-uci set adblock.global.adb_mail='0'
-uci set adblock.global.adb_report='0'
-uci set adblock.global.adb_backup='1'
-uci set adblock.global.adb_maxqueue='4'
-uci set adblock.global.adb_dns='dnsmasq'
-uci set adblock.global.adb_fetchutil='wget'
-uci set adblock.global.adb_fetchinsecure='1'
-uci set adblock.global.adb_dnsinstance='0'
-uci set adblock.global.adb_eng_sources='bluGo/formats/domains.txt'
-uci set adblock.global.adb_forcedns='1'
-uci set adblock.global.adb_zonelist='lan'
-uci set adblock.global.adb_stb_sources='alternates/fakenews/hosts'
-uci set adblock.global.adb_safesearch='0'
-uci delete adblock.global.adb_utc_sources
-uci add_list adblock.global.adb_utc_sources='drogue'
-uci add_list adblock.global.adb_utc_sources='adult'
-uci add_list adblock.global.adb_utc_sources='associations_religieuses'
-uci add_list adblock.global.adb_utc_sources='bitcoin'
-uci add_list adblock.global.adb_utc_sources='phishing'
-uci add_list adblock.global.adb_utc_sources='malware'
-uci delete adblock.global.adb_sources
-uci add_list adblock.global.adb_sources='adaway'
-uci add_list adblock.global.adb_sources='adguard'
-uci add_list adblock.global.adb_sources='andryou'
-uci add_list adblock.global.adb_sources='anti_ad'
-uci add_list adblock.global.adb_sources='anudeep'
-uci add_list adblock.global.adb_sources='disconnect'
-uci add_list adblock.global.adb_sources='energized'
-uci add_list adblock.global.adb_sources='openphish'
-uci add_list adblock.global.adb_sources='reg_es'
-uci add_list adblock.global.adb_sources='spam404'
-uci add_list adblock.global.adb_sources='stevenblack'
-uci add_list adblock.global.adb_sources='stopforumspam'
-uci add_list adblock.global.adb_sources='whocares'
-uci add_list adblock.global.adb_sources='yoyo'
-
+uci -q batch <<-EOF
+set adblock.global.adb_enabled='0'
+set adblock.global.adb_trigger='wan'
+set adblock.global.adb_debug='0'
+set adblock.global.adb_dnsfilereset='0'
+set adblock.global.adb_mail='0'
+set adblock.global.adb_report='0'
+set adblock.global.adb_backup='1'
+set adblock.global.adb_maxqueue='4'
+set adblock.global.adb_dns='dnsmasq'
+set adblock.global.adb_fetchutil='wget'
+set adblock.global.adb_fetchinsecure='1'
+set adblock.global.adb_dnsinstance='0'
+set adblock.global.adb_eng_sources='bluGo/formats/domains.txt'
+set adblock.global.adb_forcedns='1'
+set adblock.global.adb_zonelist='lan'
+set adblock.global.adb_stb_sources='alternates/fakenews/hosts'
+set adblock.global.adb_safesearch='0'
+delete adblock.global.adb_utc_sources
+add_list adblock.global.adb_utc_sources='drogue'
+add_list adblock.global.adb_utc_sources='adult'
+add_list adblock.global.adb_utc_sources='associations_religieuses'
+add_list adblock.global.adb_utc_sources='bitcoin'
+add_list adblock.global.adb_utc_sources='phishing'
+add_list adblock.global.adb_utc_sources='malware'
+delete adblock.global.adb_sources
+add_list adblock.global.adb_sources='adaway'
+add_list adblock.global.adb_sources='adguard'
+add_list adblock.global.adb_sources='andryou'
+add_list adblock.global.adb_sources='anti_ad'
+add_list adblock.global.adb_sources='anudeep'
+add_list adblock.global.adb_sources='disconnect'
+add_list adblock.global.adb_sources='energized'
+add_list adblock.global.adb_sources='openphish'
+add_list adblock.global.adb_sources='reg_es'
+add_list adblock.global.adb_sources='spam404'
+add_list adblock.global.adb_sources='stevenblack'
+add_list adblock.global.adb_sources='stopforumspam'
+add_list adblock.global.adb_sources='whocares'
+add_list adblock.global.adb_sources='yoyo'
+EOF
 uci commit adblock
 service adblock restart
 service adblock enable
