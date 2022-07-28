@@ -227,7 +227,7 @@ else
 	nf_conntrack_max=16384
 fi
 
-test "$version" -lt 1 && {
+test "$version" -lt 2 && {
 	# dnsmasq
 	uci -q batch <<-EOF
 	get dhcp.@dnsmasq[0] || add dhcp dnsmasq
