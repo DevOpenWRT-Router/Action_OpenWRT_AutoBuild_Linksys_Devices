@@ -42,47 +42,11 @@ uci commit fstab
 uci -q set upnpd.config.enabled='1'
 uci commit upnpd
 
-uci -q batch <<-EOF
-set system.@system[0].timezone='UTC'
-set system.@system[0].zonename='America/New York'
-delete system.ntp.server
-add_list system.ntp.server='0.us.pool.ntp.org'
-add_list system.ntp.server='1.us.pool.ntp.org'
-add_list system.ntp.server='2.us.pool.ntp.org'
-add_list system.ntp.server='3.us.pool.ntp.org'
-EOF
-uci commit system
 
-# dnsmasq
-uci -q batch <<-EOF
-set dhcp.@dnsmasq[0].cachesize='1500'
-set dhcp.@dnsmasq[0].min_ttl='3600'
-set dhcp.@dnsmasq[0].filter_aaaa='0'
-set dhcp.@dnsmasq[0].localservice='0'
-set dhcp.@dnsmasq[0].nonwildcard='0'
-set dhcp.lan.ndp=''
-set dhcp.lan.ra='hybrid'
-set dhcp.lan.ndp='hybrid'
-set dhcp.lan.dhcpv6='hybrid'
-set dhcp.lan.ignore='0'
-set dhcp.lan.ra_management='1'
-set dhcp.lan.ra_default='1'
-set dhcp.lan.force='1'
-del dhcp.@dnsmasq[0].rebind_protection='1'
-EOF
-uci commit dhcp
-sed -i '/log-facility/d' /etc/dnsmasq.conf
-echo "log-facility=/dev/null" >> /etc/dnsmasq.conf
 
-uci -q batch <<-EOF
-set network.@globals[0].ula_prefix=''
-set network.lan.delegate='0'
-set network.wan.mtu=1460
-set network.wan.metric='41'
-set network.wan.delegate='0'
-set network.wan.ipv6='auto'
-EOF
-uci commit network
+### ---------------------------------------------------------------- ###
+
+
 
 # log level
 # 8 debug, 5 warning
@@ -260,6 +224,7 @@ else
 fi
 
 test "$version" -lt 1 && {
+	# dnsmasq
 	uci -q get dhcp.@dnsmasq[0] || uci -q add dhcp dnsmasq
 	uci -q set dhcp.@dnsmasq[0].cachesize="$cachesize"
 	uci -q set dhcp.@dnsmasq[0].dnsforwardmax="$dnsforwardmax"
@@ -268,11 +233,48 @@ test "$version" -lt 1 && {
 	uci -q set dhcp.@dnsmasq[0].rebind_protection='0'
 	uci -q set dhcp.@dnsmasq[0].rebind_localhost='1'
 	uci commit dhcp
+	sed -i '/log-facility/d' /etc/dnsmasq.conf
+	echo "log-facility=/dev/null" >> /etc/dnsmasq.conf
+	# system
 	uci -q set system.@system[0].zram_comp_algo='zstd'
 	uci -q set system.@system[0].zram_size_mb="$(expr "$memtotal" / 1024 / 3)"
 	uci commit system
 	version=1
 }
+### ------------------------------------------------------------------------------------------ ###
+
+uci -q batch <<-EOF
+set system.@system[0].timezone='UTC'
+set system.@system[0].zonename='America/New York'
+delete system.ntp.server
+add_list system.ntp.server='0.us.pool.ntp.org'
+add_list system.ntp.server='1.us.pool.ntp.org'
+add_list system.ntp.server='2.us.pool.ntp.org'
+add_list system.ntp.server='3.us.pool.ntp.org'
+EOF
+uci commit system
+
+# unbound
+uci -q batch <<-EOF
+set unbound.ub_main.rebind_localhost='1'
+set unbound.ub_main.rebind_protection='1'
+set unbound.ub_main.listen_port='1053'
+set unbound.ub_main.dhcp_link='dnsmasq'
+EOF
+uci commit unbound
+
+# network
+uci -q batch <<-EOF
+set network.@globals[0].ula_prefix=''
+set network.lan.delegate='0'
+set network.wan.mtu=1460
+set network.wan.metric='41'
+set network.wan.delegate='0'
+set network.wan.ipv6='auto'
+EOF
+uci commit network
+
+### ------------------------------------------------------------------------------------------ ###
 
 # sysctl overwrite
 SYSCTL_LOCAL=/etc/sysctl.d/50-local.conf
