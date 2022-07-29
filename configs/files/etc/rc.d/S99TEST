@@ -1,0 +1,20 @@
+#!/bin/ash
+# shellcheck shell=dash
+#################################################################
+# Copyright (c) 2022 By Eliminater74                            #
+#                                                               #
+# This is free software, licensed under the MIT License.        #
+# See /LICENSE for more information.                            #
+#                                                               #
+#                                                               #
+# Updated By Eliminater74 07/29/2022                            #
+#################################################################
+
+[ ! -e "/root/FIRST_BOOT" ] || exit
+
+sleep 15 ### <-- Needed to wait till internet is up before trying
+
+TOUCH /root/FIRST_BOOT-TEST
+
+
+exit 0
