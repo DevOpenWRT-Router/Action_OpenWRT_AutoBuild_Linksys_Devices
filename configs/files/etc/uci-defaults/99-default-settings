@@ -15,7 +15,7 @@ BANIP="false" # (BROKEN)
 ###      WARNING: WARNING: DO NOT EDIT BELOW THIS UNLESS YOU KNOW WHAT YOUR DOING!! WARNING: WARNING:     ###
 ### ----------------------------------------------------------------------------------------------------- ###
 
-FILE=/root/FIRST_BOOT
+FIRSTBOOT=/root/FIRST_BOOT
 
 # set version to "0" after an upgrade or first boot
 FILE=/root/KMODS_ADDED
@@ -229,7 +229,7 @@ else
 	nf_conntrack_max=16384
 fi
 
-if [ ! -f "$FILE" ]; then
+if [ ! -f "$FIRSTBOOT" ]; then
 	# dnsmasq
 	uci -q batch <<-EOF
 	get dhcp.@dnsmasq[0] || add dhcp dnsmasq
@@ -282,7 +282,7 @@ if [ ! -f "$FILE" ]; then
 	# Set version back to 1
 	uci set base_config.@status[0].version='1'
 	uci commit base_config
-	touch $FILE
+	touch $FIRSTBOOT
 fi
 ### ------------------------------------------------------------------------------------------ ###
 
