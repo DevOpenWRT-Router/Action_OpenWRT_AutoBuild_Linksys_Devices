@@ -282,7 +282,7 @@ if [ ! -f "$FIRSTBOOT" ]; then
 	# Set version back to 1
 	uci set base_config.@status[0].version='1'
 	uci commit base_config
-	touch $FIRSTBOOT
+	# touch $FIRSTBOOT # <-- Ran from rc.d/S99FirstBoot script
 fi
 ### ------------------------------------------------------------------------------------------ ###
 
