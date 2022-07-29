@@ -515,6 +515,6 @@ miniupnpd=/var/upnp.leases
 touch $miniupnpd
 
 mkdir -p /etc/backup
-[ ! -e "/etc/backup/installed_packages.txt" ] || /usr/lib/OpenWrtScripts/opkgscript.sh write /etc/backup/installed_packages.txt
-
+[ -e "/etc/backup/installed_packages.txt" ] || /usr/lib/OpenWrtScripts/opkgscript.sh write /etc/backup/installed_packages.txt
+[ -e "/etc/backup/backup.tar.gz" ] || /sbin/sysbackup -b /etc/backup/backup.tar.gz
 exit 0
