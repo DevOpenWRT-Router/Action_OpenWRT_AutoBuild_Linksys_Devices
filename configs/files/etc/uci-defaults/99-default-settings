@@ -510,6 +510,10 @@ uci commit firewall
 service firewall restart
 ### -- END --
 
+# Create file to stop: daemon.err miniupnpd[8591]: could not open lease file: /var/upnp.leases
+miniupnpd=/var/upnp.leases
+touch $miniupnpd
+
 mkdir -p /etc/backup
 [ ! -e "/etc/backup/installed_packages.txt" ] || /usr/lib/OpenWrtScripts/opkgscript.sh write /etc/backup/installed_packages.txt
 
