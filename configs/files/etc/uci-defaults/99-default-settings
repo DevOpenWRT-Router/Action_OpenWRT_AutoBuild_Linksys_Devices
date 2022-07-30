@@ -30,19 +30,6 @@ version=$(uci -q get base_config.@status[0].version)
 ### Cleanup some Crontabs
 rm -rf /etc/crontabs/root
 
-# Prompt colors
-sed -i 's/^export PS1.*/export PS1='\''\\\[\\033\[01;31m\\\]\\h\\\[\\033\[01;30m\\\]@\\\[\\033\[01;32m\\\]\\w\\\[\\033\[01;34m\\\] #\\\[\\033\[00m\\\] '\''/' /etc/profile
-
-
-
-# Screen settings
-cat >> /etc/screenrc << EOF
-defscrollback 1000
-termcapinfo xterm ti@:te@
-hardstatus alwayslastline '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
-vbell off
-EOF
-
 uci set luci.main.lang=auto
 uci commit luci
 
@@ -54,12 +41,6 @@ uci commit fstab
 
 uci -q set upnpd.config.enabled='1'
 uci commit upnpd
-
-
-
-### ---------------------------------------------------------------- ###
-
-
 
 # log level
 # 8 debug, 5 warning
@@ -78,28 +59,7 @@ if [ "$(uci -q get dhcp.@dnsmasq[0].port)" != "53" ]; then
 	uci commit dhcp
 fi
 
-echo "$(uci -q get uhttpd.main.index_page)" | grep -q "cgi-bin/luci" ||
-	uci -q add_list uhttpd.main.index_page='cgi-bin/luci' && uci commit uhttpd
-
-/etc/init.d/wizard disable
-
-sed -i "s/git-.*-\(.*\)/git-\1/g" /usr/lib/lua/luci/version.lua
-
 [ "$(echo "$(/sbin/cpuinfo 2>/dev/null)" | grep -i "MHz")" ] || sed -i "s/_('CPU Info'),cpuinfo.cpufreq,//" /www/luci-static/resources/view/status/include/10_system.js
-
-
-rm -f /usr/lib/lua/luci/view/admin_status/index/ddns.htm
-rm -f /usr/lib/lua/luci/view/admin_status/index/minidlna.htm
-rm -f /usr/lib/lua/luci/view/admin_status/index/mwan.htm
-rm -f /usr/lib/lua/luci/view/admin_status/index/upnp.htm
-
-echo 'src/gz purefusion_packages https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/packages/packages' >> /etc/opkg/distfeeds.conf
-echo 'src/gz purefusion_base https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/packages/base' >> /etc/opkg/distfeeds.conf
-echo 'src/gz purefusion_luci https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/packages/luci' >> /etc/opkg/distfeeds.conf
-echo 'src/gz purefusion_routing https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/packages/routing' >> /etc/opkg/distfeeds.conf
-echo 'src/gz purefusion_telephony https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/packages/telephony' >> /etc/opkg/distfeeds.conf
-
-ln -sf /sbin/ip /usr/bin/ip
 
 ### -------------------------------------------- S Q M ------------------------------------------------------- ###
 
@@ -178,23 +138,7 @@ crontab /etc/crontabs/root
 echo "@hourly /usr/lib/OpenWrtScripts/autoSQM.sh" >> /etc/crontabs/root
 crontab /etc/crontabs/root
 
-### ---------------------------------------------------------------------------------------------------------- ###
-##### SPECIAL MODIFICATIONS #####
-##### --------------------- #####
 
-### Change /etc/profile to allow running scripts as bash
-sed 's/./bash/' /etc/profile
-### ---------------------------------------------------------------------------------------------------------- ###
-
-## Lets keep Wireless Enabled (after downloading the firmware, the wireless is turned off by default)
-## ref: https://forum.openwrt.org/t/solved-enable-wi-fi-and-connect-to-a-network-on-first-boot/47399/24
-sed -i '/option disabled/d' /etc/config/wireless
-# wifi off: set wireless.radio${devidx}.disabled=1
-# wifi on: set wireless.radio${devidx}.disabled=0
-sed -i '/set wireless.radio${devidx}.disabled/d' /lib/wifi/mac80211.sh
-wifi up
-
-### ------------------------------------------------------------------------------------------ ###
 # kB
 memtotal=$(grep MemTotal /proc/meminfo | awk '{print $2}')
 if test "$memtotal" -ge 1048576; then
@@ -300,13 +244,7 @@ echo kernel.msgmax = 65536 >>"$SYSCTL_LOCAL"
 echo kernel.msgmnb = 65536 >>"$SYSCTL_LOCAL"
 echo vm.swappiness=0 >>"$SYSCTL_LOCAL"
 
-# hsts=1/on/yes: same as --hsts
-# hsts=0/off/no: same as --no-hsts
-# --no-hsts
-### Wget supports HSTS (HTTP Strict Transport Security, RFC 6797) by default. Use ‘--no-hsts’ to make Wget 
-### act as a non-HSTS-compliant UA. As a consequence, Wget would ignore all the Strict-Transport-Security 
-### headers, and would not enforce any existing HSTS policy.
-echo 'hsts=0' > /root/.wgetrc
+
 
 # Flag packages
 opkg flag hold luci-app-firewall
@@ -325,22 +263,10 @@ cp -pR /www/cgi-bin/* /www/
 uci -q set base_config.@status[0].version="$version"
 uci commit base_config
 
-# disable coremark
-sed -i '/coremark/d' /etc/crontabs/root
-crontab /etc/crontabs/root
-
 # disable linkease
 uci set linkease.@linkease[0].enabled='0'
 uci commit linkease
 /etc/init.d/linkease restart
-
-# link
-ln -sf /bin/busybox /bin/top
-
-# luci cache
-rm -rf /tmp/luci-modulecache
-rm -f /tmp/luci-indexcache*
-rm -rf /tmp/luci-*
 
 ##############################################################################
 # >>>>>>>>>>>>>>>>>>>>>>>  H  A  R  D  E  N  I  N  G <<<<<<<<<<<<<<<<<<<<<<< #
@@ -510,9 +436,7 @@ uci commit firewall
 service firewall restart
 ### -- END --
 
-# Create file to stop: daemon.err miniupnpd[8591]: could not open lease file: /var/upnp.leases
-miniupnpd=/var/upnp.leases
-touch $miniupnpd
+
 
 mkdir -p /etc/backup
 [ -e "/etc/backup/installed_packages.txt" ] || /usr/lib/OpenWrtScripts/opkgscript.sh write /etc/backup/installed_packages.txt
