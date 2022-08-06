@@ -172,6 +172,15 @@ CACHE_DIRECTORY_SETUP() {
 		ln -s ../../build_dir/host build_dir/host
 }
 
+CACHE_DEPENDENCY() {
+  cache_toolchain=$('git log --pretty=tformat:"%h" -n1 tools toolchain')
+  cache_feeds=$('git log --pretty=tformat:"%h" -n1 feeds')
+  cache_package=$('git log --pretty=tformat:"%h" -n1 package')
+  cache_target=$('git log --pretty=tformat:"%h" -n1 target')
+  cache_staging_dir=$('git log --pretty=tformat:"%h" -n1 staging_dir')
+
+}
+
 ### This is a quick way to apply correct chmod to all files and directorys needed
 SMART_CHMOD() {
   set -x
