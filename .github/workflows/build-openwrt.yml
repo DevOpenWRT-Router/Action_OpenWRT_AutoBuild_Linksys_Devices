@@ -381,6 +381,13 @@ jobs:
           source "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
           SMART_CHMOD
 ### ----------------------------------------------------------------- ###
+      - name: Cache Key Get/Check
+        working-directory: '/workdir/openwrt'
+        run: |
+          chmod +x "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
+          source "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
+          CACHE_DEPENDENCY
+### ----------------------------------------------------------------- ###
       - name: Cache Acceleration (Secondary compilation of the same model with the same source code is valid within 7 days, and only one source code cache is retained each time)
         uses: DevOpenWRT-Router/Cache-OpenWRT-Builds@main
         if: env.USE_CACHEWRTBUILD == 'true' && !cancelled()

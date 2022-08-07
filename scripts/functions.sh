@@ -173,11 +173,17 @@ CACHE_DIRECTORY_SETUP() {
 }
 
 CACHE_DEPENDENCY() {
-  cache_toolchain=$('git log --pretty=tformat:"%h" -n1 tools toolchain')
-  cache_feeds=$('git log --pretty=tformat:"%h" -n1 feeds')
-  cache_package=$('git log --pretty=tformat:"%h" -n1 package')
-  cache_target=$('git log --pretty=tformat:"%h" -n1 target')
-  cache_staging_dir=$('git log --pretty=tformat:"%h" -n1 staging_dir')
+  export cache_toolchain=$('git log --pretty=tformat:"%h" -n1 tools toolchain')
+  export cache_feeds=$('git log --pretty=tformat:"%h" -n1 feeds')
+  export cache_package=$('git log --pretty=tformat:"%h" -n1 package')
+  export cache_target=$('git log --pretty=tformat:"%h" -n1 target')
+  export cache_staging_dir=$('git log --pretty=tformat:"%h" -n1 staging_dir')
+
+  echo "$cache_toolchain"     >>"$GITHUB_ENV"
+  echo "$cache_feeds"         >>"$GITHUB_ENV"
+  echo "$cache_package"       >>"$GITHUB_ENV"
+  echo "$cache_target"        >>"$GITHUB_ENV"
+  echo "$cache_staging_dir"   >>"$GITHUB_ENV"
 
 }
 
