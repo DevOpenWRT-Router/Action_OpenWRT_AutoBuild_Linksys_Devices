@@ -384,10 +384,17 @@ jobs:
       - name: Cache Key Get/Check
         working-directory: '/workdir/openwrt'
         run: |
-          cd "$GITHUB_WORKSPACE"/openwrt
-          chmod +x "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
-          source "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
-          CACHE_DEPENDENCY
+          export cache_toolchain=$(git log --pretty=tformat:"%h" -n1 tools toolchain)
+          export cache_feeds=$(git log --pretty=tformat:"%h" -n1 feeds)
+          export cache_package=$(git log --pretty=tformat:"%h" -n1 package)
+          export cache_target=$(git log --pretty=tformat:"%h" -n1 target)
+          export cache_staging_dir=$(git log --pretty=tformat:"%h" -n1 staging_dir)
+        
+          echo "cache_toolchain=$cache_toolchain"       >>"$GITHUB_ENV"
+          echo "cache_feeds=$cache_feeds"               >>"$GITHUB_ENV"
+          echo "cache_package=$cache_package"           >>"$GITHUB_ENV"
+          echo "cache_target=$cache_target"             >>"$GITHUB_ENV"
+          echo "cache_staging_dir=$cache_staging_dir"   >>"$GITHUB_ENV"
 ### ----------------------------------------------------------------- ###
       - name: Cache Acceleration (Secondary compilation of the same model with the same source code is valid within 7 days, and only one source code cache is retained each time)
         uses: DevOpenWRT-Router/Cache-OpenWRT-Builds@main
