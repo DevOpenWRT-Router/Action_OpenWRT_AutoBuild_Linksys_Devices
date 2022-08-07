@@ -384,6 +384,7 @@ jobs:
       - name: Cache Key Get/Check
         working-directory: '/workdir/openwrt'
         run: |
+          cd "$GITHUB_WORKSPACE"/openwrt
           chmod +x "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
           source "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
           CACHE_DEPENDENCY
@@ -408,7 +409,7 @@ jobs:
           path: |
             ${{ github.workspace }}/openwrt/feeds/packages
             ${{ github.workspace }}/openwrt/feeds/luci
-          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}
 ### ----------------------------------------------------------------- ###
       - name: 'Restore build Directory from cache'
         id: build-cache
@@ -418,7 +419,7 @@ jobs:
           CACHE_NAME: 'build-cache'
         with:
           path: ${{ github.workspace }}/openwrt/build_dir
-          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}
 ### ----------------------------------------------------------------- ###
       - name: 'Restore staging Directory from cache'
         id: staging-cache
@@ -428,7 +429,7 @@ jobs:
           CACHE_NAME: 'staging-cache'
         with:
           path: ${{ github.workspace }}/openwrt/staging_dir
-          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}
 ### ----------------------------------------------------------------- ###
       - name: 'Restore package Directory from cache'
         id: package-cache
@@ -438,7 +439,7 @@ jobs:
           CACHE_NAME: 'package-cache'
         with:
           path: ${{ github.workspace }}/openwrt/package
-          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}
 ### ----------------------------------------------------------------- ###
       - name: 'Restore downloads Directory from cache'
         id: dl-cache
@@ -448,7 +449,7 @@ jobs:
           CACHE_NAME: 'dl-cache'
         with:
           path: ${{ github.workspace }}/openwrt/dl
-          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}
  ### ----------------------------------------------------------------- ###
       - name: 'Restore build_dir/toolchain Directory from cache'
         id: build_dir_toolchain-cache
@@ -458,7 +459,7 @@ jobs:
           CACHE_NAME: 'build_dir_toolchain-cache'
         with:
           path: ${{ github.workspace }}/openwrt/build_dir/toolchain-*
-          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}
  ### ----------------------------------------------------------------- ###
       - name: 'Restore build_dir/target Directory from cache'
         id: build_dir_target-cache
@@ -468,7 +469,7 @@ jobs:
           CACHE_NAME: 'build_dir_target-cache'
         with:
           path: ${{ github.workspace }}/openwrt/build_dir/target-*
-          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}
  ### ----------------------------------------------------------------- ###
       - name: 'Restore build_dir/host Directory from cache'
         id: build_dir_host-cache
@@ -478,7 +479,7 @@ jobs:
           CACHE_NAME: 'build_dir_host-cache'
         with:
           path: ${{ github.workspace }}/openwrt/build_dir/host
-          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}
  ### ----------------------------------------------------------------- ###
       - name: 'Restore build_dir/hostpkg Directory from cache'
         id: build_dir_hostpkg-cache
@@ -488,7 +489,7 @@ jobs:
           CACHE_NAME: 'build_dir_hostpkg-cache'
         with:
           path: ${{ github.workspace }}/openwrt/build_dir/hostpkg
-          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}
  ### ----------------------------------------------------------------- ###
       - name: 'Restore .ccache from cache'
         id: ccache-cache
@@ -498,7 +499,7 @@ jobs:
           CACHE_NAME: 'ccache-cache'
         with:
           path: ${{ github.workspace }}/openwrt/.ccache
-          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}
 ### ----------------------------------------------------------------- ###
       - name: Setup cache for OpenWRT (ccache)
         id: ccache
