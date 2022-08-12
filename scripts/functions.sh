@@ -22,6 +22,14 @@ source scripts/lib/oo-bootstrap.sh
 import util/log util/exception util/tryCatch util/namedParameters util/class
 }
 
+### Error Control used in for while loop ###
+error_return()
+{
+    echo "Error: $1"
+    git am --abort
+    return 1
+}
+
 ### Modify default theme
 ### Modify  luci-theme-opentomato  as the default theme, you can modify according to your,
 ### favorite into the other (do not select the default theme theme will automatically,
@@ -137,13 +145,17 @@ sed -ne '/^CONFIG_LIBC=/ { s!^CONFIG_LIBC="\(.*\)"!\1!; s!^musl$!!; s!.\+!-&!p }
 ### This will setup ccache support
 ### CCACHE SETUP ###
 CCACHE_SETUP() {
-echo "Seeding .config (enable ccache):"
-printf 'CONFIG_CCACHE=y\n' >> .config
 echo "Setting ccache directory:"
 export CCACHE_DIR="$GITHUB_WORKSPACE"/openwrt/.ccache
 echo "Fix Sloppiness of ccache:"
 ccache --set-config=sloppiness=file_macro,locale,time_macros
 ccache -s
+}
+
+### Enable ccache support in .config
+CCACHE_CONFIG_SETUP() {
+  echo "Seeding .config (enable ccache):"
+  printf 'CONFIG_CCACHE=y\n' >> .config
 }
 
 ### Not even sure why I still have this here, I dont really use it
@@ -160,8 +172,24 @@ CACHE_DIRECTORY_SETUP() {
 		ln -s ../../build_dir/host build_dir/host
 }
 
+CACHE_DEPENDENCY() {
+  export cache_toolchain=$('git log --pretty=tformat:"%h" -n1 tools toolchain')
+  export cache_feeds=$('git log --pretty=tformat:"%h" -n1 feeds')
+  export cache_package=$('git log --pretty=tformat:"%h" -n1 package')
+  export cache_target=$('git log --pretty=tformat:"%h" -n1 target')
+  export cache_staging_dir=$('git log --pretty=tformat:"%h" -n1 staging_dir')
+
+  echo "$cache_toolchain"     >>"$GITHUB_ENV"
+  echo "$cache_feeds"         >>"$GITHUB_ENV"
+  echo "$cache_package"       >>"$GITHUB_ENV"
+  echo "$cache_target"        >>"$GITHUB_ENV"
+  echo "$cache_staging_dir"   >>"$GITHUB_ENV"
+
+}
+
 ### This is a quick way to apply correct chmod to all files and directorys needed
 SMART_CHMOD() {
+  set -x
   MY_Filter=$(mktemp)
   echo '/\.git' >  "${MY_Filter}"
   echo '/\.svn' >> "${MY_Filter}"
@@ -169,6 +197,7 @@ SMART_CHMOD() {
   find ./ -type f | grep -v -f "${MY_Filter}" | xargs -s1024 file | grep 'executable\|ELF' | cut -d ':' -f1 | xargs -s1024 chmod 755
   rm -f "${MY_Filter}"
   unset MY_Filter
+  set +x
 }
 
 ### CHMOD -R +x everything in files
@@ -200,26 +229,25 @@ FILES_OpenWrtScripts() {
   mv "$GITHUB_WORKSPACE"/configs/DATA/median.awk "$GITHUB_WORKSPACE"/openwrt/files/usr/lib/OpenWrtScripts
 }
 
+COPY_DEFCONFIG() {
+  echo "Sending .config to $BIN_DIR/latest.config:"
+  mv "${GITHUB_WORKSPACE}"/openwrt/.config "$BIN_DIR"/latest.config
+}
+
 ### -------------------------------------------------------------------------------------------------------- ###
 ### Apply all patches that are in 'patch' directory
 APPLY_PATCHES() {
   mv "$GITHUB_WORKSPACE"/configs/patches "$GITHUB_WORKSPACE"/openwrt/patches
   cd "$GITHUB_WORKSPACE"/openwrt || exit
-  git am patches/*.patch
-  echo "Error: $?"
-  if [ $? = 0 ] ; then
-      echo "[*] 'git am $line.patch' Ran successfully."
-  elif [ $? -eq 1 ]; then
-    echo "General error"
-  elif [ $? -eq 2 ]; then
-    echo "Misuse of shell builtins"
-  elif [ $? -eq 126 ]; then
-    echo "Command invoked cannot execute"
-  elif [ $? -eq 128 ]; then
-    echo "[*] 'git am $line.patch' FAILED."
-    git am --abort
-    echo "Invalid argument"
-  fi
+  # use nullglob in case there are no matching files
+  shopt -s nullglob
+
+  # create an array with all the filer/dir inside ~/myDir
+  patch=(./patches/*.patch)
+  for f in "${patch[@]}"; do
+   echo "$f"
+   git am "$f" || error_return "Patch Failed, Aborting Patch"
+  done
   rm -rf patches
 
 }
@@ -231,21 +259,7 @@ APPLY_PR_PATCHES() {
   while read -r line; do
   cd "$GITHUB_WORKSPACE"/openwrt && wget https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/"$line".patch
   echo "Applying $line.patch"
-  git am "$line".patch
-  echo "Error: $?"
-  if [ $? = 0 ] ; then
-      echo "[*] 'git am $line.patch' Ran successfully."
-  elif [ $? -eq 1 ]; then
-    echo "General error"
-  elif [ $? -eq 2 ]; then
-    echo "Misuse of shell builtins"
-  elif [ $? -eq 126 ]; then
-    echo "Command invoked cannot execute"
-  elif [ $? -eq 128 ]; then
-    echo "[*] 'git am $line.patch' FAILED."
-    git am --abort
-    echo "Invalid argument"
-  fi
+  git am "$line".patch || error_return "Patch Failed, Aborting Patch"
   done < "$file"
 }
 
@@ -256,23 +270,34 @@ APPLY_PR_PATCHES_PACKAGES() {
   while read -r line; do
   cd "$GITHUB_WORKSPACE"/openwrt/feeds/packages && wget https://patch-diff.githubusercontent.com/raw/openwrt/packages/pull/"$line".patch
   echo "Applying $line.patch"
-  git am "$line".patch
+  git am "$line".patch || error_return "Patch Failed, Aborting Patch"
   echo "Error: $?"
-  if [ $? = 0 ] ; then
-      echo "[*] 'git am $line.patch' Ran successfully."
-  elif [ $? -eq 1 ]; then
-    echo "General error"
-  elif [ $? -eq 2 ]; then
-    echo "Misuse of shell builtins"
-  elif [ $? -eq 126 ]; then
-    echo "Command invoked cannot execute"
-  elif [ $? -eq 128 ]; then
-    echo "[*] 'git am $line.patch' FAILED."
-    git am --abort
-    echo "Invalid argument"
-  fi
   done < "$file"
   cd "$GITHUB_WORKSPACE"/openwrt
+}
+
+APPLY_PR_PATCHES_NEW() {
+  nums=(10252 10271 2916)
+for patch in "${nums[@]}"
+do 
+  wget https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/"$patch".patch
+  echo "Applying $patch.patch"
+  git am "$patch".patch || error_return "Patch Failed, Aborting Patch"
+  rm -rf "$patch".patch
+  echo "Error: $?"
+done
+}
+
+APPLY_PR_PATCHES_PACKAGES_NEW() {
+  nums=()
+for patch in "${nums[@]}"
+do 
+  wget https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/"$patch".patch
+  echo "Applying $patch.patch"
+  git am "$patch".patch || error_return "Patch Failed, Aborting Patch"
+  rm -rf "$patch".patch
+  echo "Error: $?"
+done
 }
 
 ### -------------------------------------------------------------------------------------------------------- ###
@@ -345,75 +370,32 @@ fi
   echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> "$GITHUB_ENV"
 }
 
-### This is needed for creation of kmods directory
-kernel_version() {
-cd openwrt || return
-find build_dir/ -name .vermagic -exec cat {} \; >VERMAGIC  # Find hash
-find build_dir/ -name "linux-5.*.*" -type d >KERNELVERSION # find kernel version
-kv=$(tail -n +2 KERNELVERSION | sed 's/.*x-//')
-vm=$(head -n 1 VERMAGIC)                                # read kernel hash from file                                     # Get last 7 chars from kernel version
-rm -rf VERMAGIC KERNELVERSION                              # remove both files, Not needed anymore
-cd bin/targets/*/* || return
-echo "TARGET_DIR=$PWD" >>"$GITHUB_ENV"
-# TARGET_DIR=$PWD
-KERNEL_VER=$kv"-"$vm                      # add together to complete
-KMOD_DIR=$kv"-"$vm                        # add together to complete
-echo "KERNEL_VER=$kv"-"$vm" >>"$GITHUB_ENV" # store in get actions
-echo "KMOD_DIR=$kv"-"$vm" >>"$GITHUB_ENV"   # store in get actions
-echo "------------------------------------------------"
-echo "Kernel: $KERNEL_VER" # testing
-echo "DIR: $KMOD_DIR"
-echo "------------------------------------------------"
-echo "$KMOD_DIR" >> "$GITHUB_WORKSPACE"/openwrt/kmod
-cat "$GITHUB_WORKSPACE"/openwrt/kmod
-}
-
-### This is really 2nd part of above kernel version
-package_archive() {
-cd "$GITHUB_WORKSPACE"/openwrt || return
-mkdir -p bin/targets/mvebu/cortexa9/kmods/"$KMOD_DIR"
-rsync '--include=/kmod-*.ipk' '--exclude=*' -va bin/targets/mvebu/cortexa9/packages/ bin/targets/mvebu/cortexa9/kmods/"$KMOD_DIR"/
-make -j32 package/index V=s CONFIG_SIGNED_PACKAGES= PACKAGE_SUBDIRS=bin/targets/mvebu/cortexa9/kmods/"$KMOD_DIR"/
-cd bin/targets/mvebu/cortexa9/kmods/"$KMOD_DIR" || exit
-tar -cvzf kmods_"$KMOD_DIR".tar.gz ./*
-mv kmods_"$KMOD_DIR".tar.gz "$GITHUB_WORKSPACE"/openwrt/bin/targets/mvebu/cortexa9/
-cd "$GITHUB_WORKSPACE"/openwrt || return
-}
-
 CREATE_KMODS() {
-  set -x
+set -x
 
-  #STAGING_DIR_HOST="$(make --no-print-directory -C target/linux val.STAGING_DIR_HOST)"
+export TOPDIR="$PWD"
 
-  export TOPDIR="$PWD"
-  export STAGING_DIR_HOST="$(make --no-print-directory -C target/linux val.STAGING_DIR_HOST)"
-  export MKHASH="$STAGING_DIR_HOST/bin/mkhash"
-  export PATH="$STAGING_DIR_HOST/bin":"$PATH"
+pushd "$BIN_DIR" || exit
+rm -rf "kmods/$KMOD_DIR"
+mkdir -p "kmods/$KMOD_DIR"
 
-  BIN_DIR="$(make --no-print-directory -C target/linux val.BIN_DIR)"
-  KEY_BUILD="$(make --no-print-directory -C target/linux val.BUILD_KEY)"
-  KMOD_DIR="$(make --no-print-directory -C target/linux val.LINUX_VERSION val.LINUX_RELEASE val.LINUX_VERMAGIC | tr '\n' '-' | head -c -1)"
+cp -fpR "packages"/automount* "kmods/$KMOD_DIR"/
+for i in "packages"/kmod-*; do cp -fpR "$i" "kmods/$KMOD_DIR"/; done
+popd
 
-  pushd "$BIN_DIR" || exit
-  rm -rf "kmods/$KMOD_DIR"
-  mkdir -p "kmods/$KMOD_DIR"
+pushd "$BIN_DIR/kmods/$KMOD_DIR" || exit
+"$TOPDIR"/scripts/ipkg-make-index.sh . 2>&1 > "Packages.manifest"
+grep -vE "^(Maintainer|LicenseFiles|Source|SourceName|Require|SourceDateEpoch)" "Packages.manifest" > "Packages"
+case "$(((64 + "$(stat -L -c%s "Packages")") % 128))" in
+	110|111)
+		echo -e "\033[33mWARNING: Applying padding in Packages to workaround usign SHA-512 bug!\033[0m"
+		{ echo ""; echo ""; } >> "Packages"
+	;;
+esac
+gzip -9nc "Packages" > "Packages.gz"
+"$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
+popd
 
-  cp -fpR "packages"/automount* "kmods/$KMOD_DIR"/
-  for i in "packages"/kmod-*; do cp -fpR "$i" "kmods/$KMOD_DIR"/; done
-  popd
-
-  pushd "$BIN_DIR/kmods/$KMOD_DIR" || exit
-  "$TOPDIR"/scripts/ipkg-make-index.sh . 2>&1 > "Packages.manifest"
-  grep -vE "^(Maintainer|LicenseFiles|Source|SourceName|Require|SourceDateEpoch)" "Packages.manifest" > "Packages"
-  case "$(((64 + "$(stat -L -c%s "Packages")") % 128))" in
-	  110|111)
-		    echo -e "\033[33mWARNING: Applying padding in Packages to workaround usign SHA-512 bug!\033[0m"
-		    { echo ""; echo ""; } >> "Packages"
-	  ;;
-  esac
-  gzip -9nc "Packages" > "Packages.gz"
-  "$STAGING_DIR_HOST"/bin/usign -S -m "Packages" -s "$KEY_BUILD"
-  popd
 }
 ### ------------------------------------------------------------------------------------------------------- ###
 

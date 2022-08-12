@@ -31,21 +31,37 @@ env:
   EXT_INIT_ENV: environment.sh
   DEVICE_NAME: ''
 ### --------------------------- ###
+###     [ CACHE SETTINGS ]      ###
+### --------------------------- ###
+  USE_CACHEWRTBUILD: true
+  RESTORE_CCACHE_CACHE: true
+  RESTORE_FEEDS_CACHE: true
+  RESTORE_STAGING_CACHE: true
+  RESTORE_DL_CACHE: true
+  RESTORE_BUILD_CACHE: true
+  RESTORE_BUILD_DIR_TOOLCHAIN_CACHE: false
+  RESTORE_BUILD_DIR_TARGET_CACHE: false
+  RESTORE_BUILD_DIR_HOST_CACHE: false
+  RESTORE_BUILD_DIR_HOSTPKG_CACHE: false
+  RESTORE_PACKAGE_CACHE: false
+### --------------------------- ###  
   CLEANUP_ENVIROMENT: true
   RESET_OPENWRT_COMMIT: false
   INSTALL_LLVM: false
   LOAD_FUNCTIONS: true
   BOOTSTRAP_START: false
   PRINT_FAILLOGS: true
+  VIEW_BUILD_LOGS: true
   SET_BUILDKEY: false
   remove_languages: true
-  USE_CACHEWRTBUILD: true
   USE_KMODS_SCRIPT: true
   USE_FILES: true
   USE_OpenWrtScripts: true
   USE_CUST_THEMES: true
   USE_CUSTOM_CONFIGURATION: true
   USE_OPENWRT_PATCHES: true
+  USE_PR_OPENWRT_PATCHES_NEW: false
+  USE_PR_OPENWRT_PATCHES_PACKAGES_NEW: false
   USE_PR_OPENWRT_PATCHES: false
   USE_PR_OPENWRT_PATCHES_PACKAGES: false
   USE_DEVOPENWRT: true
@@ -152,10 +168,11 @@ jobs:
         if: env.INSTALL_LLVM == 'true' && !cancelled()
         run: |
           sudo -E bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
-### ----------------------------------------------------------------- ###        
-      - name: Set variables
+### ----------------------------------------------------------------- ###
+      - name: Get current date
+        id: date
         run: |
-          echo "::set-output name=date::$(date +%F)"
+          echo "::set-output name=date::$(date +'%s')"
 ### ----------------------------------------------------------------- ###
       - name: Clone OpenWRT source code
         working-directory: /workdir
@@ -303,13 +320,6 @@ jobs:
           source scripts/$FUNCTIONS_SH
           cd openwrt
           APPLY_PATCHES
-### --------------------------- ###
-      - name: If Error (Patches Main)
-        if: steps.COP.outcome == 'failure'
-        run: |
-          echo "Error: $?"
-          echo "[*] 'git am patch' FAILED."
-          git am --abort
 ### ----------------------------------------------------------------- ###
       - name: Pull Request OpenWRT Patches (OpenWRT)
         id: PROP
@@ -320,13 +330,6 @@ jobs:
           source scripts/$FUNCTIONS_SH
           cd openwrt
           APPLY_PR_PATCHES
-### --------------------------- ###
-      - name: If Error (PR Patches Main)
-        if: steps.PROP.outcome == 'failure'
-        run: |
-          echo "Error: $?"
-          echo "[*] 'git am $line.patch' FAILED."
-          git am --abort
 ### ----------------------------------------------------------------- ###
       - name: Pull Request OpenWRT Packages Patches (Packages)
         id: PROPP
@@ -337,13 +340,6 @@ jobs:
           source scripts/$FUNCTIONS_SH
           cd openwrt
           APPLY_PR_PATCHES_PACKAGES
-### --------------------------- ###
-      - name: If Error (PR Patches Packages)
-        if: steps.PROPP.outcome == 'failure'
-        run: |
-          echo "Error: $?"
-          echo "[*] 'git am $line.patch' FAILED."
-          git am --abort
 ### ----------------------------------------------------------------- ###
       - name: Current Commit After Feeds/Patches
         if: env.GITLOGB == 'true' && !cancelled()
@@ -378,13 +374,149 @@ jobs:
           configs/${HARDWARE_DEVICE}.config openwrt/.config
 ### ----------------------------------------------------------------- ###
       - name: Smart Chmod
+        working-directory: '/workdir/openwrt'
         if: env.USE_SMART_CHMOD == 'true' && !cancelled()
+        run: |
+          chmod +x "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
+          source "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
+          SMART_CHMOD
+### ----------------------------------------------------------------- ###
+      - name: Cache Key Get/Check
+        working-directory: '/workdir/openwrt'
+        run: |
+          export cache_toolchain=$(git log --pretty=tformat:"%h" -n1 tools toolchain)
+          export cache_feeds=$(git log --pretty=tformat:"%h" -n1 feeds)
+          export cache_package=$(git log --pretty=tformat:"%h" -n1 package)
+          export cache_target=$(git log --pretty=tformat:"%h" -n1 target)
+          export cache_staging_dir=$(git log --pretty=tformat:"%h" -n1 staging_dir)
+        
+          echo "cache_toolchain=$cache_toolchain"       >>"$GITHUB_ENV"
+          echo "cache_feeds=$cache_feeds"               >>"$GITHUB_ENV"
+          echo "cache_package=$cache_package"           >>"$GITHUB_ENV"
+          echo "cache_target=$cache_target"             >>"$GITHUB_ENV"
+          echo "cache_staging_dir=$cache_staging_dir"   >>"$GITHUB_ENV"
+### ----------------------------------------------------------------- ###
+      - name: Cache Acceleration (Secondary compilation of the same model with the same source code is valid within 7 days, and only one source code cache is retained each time)
+        uses: DevOpenWRT-Router/Cache-OpenWRT-Builds@main
+        if: env.USE_CACHEWRTBUILD == 'true' && !cancelled()
+        with:
+          ccache: 'true'
+          toolchain: 'true'
+          skip: 'false'
+          clean: '${{ contains(github.event.action, ''nocache'') }}'
+          prefix: '${{ github.workspace }}/openwrt'
+### ----------------------------------------------------------------- ###
+      - name: 'Restore feeds from cache'
+        id: feeds-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_FEEDS_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'feeds-cache'
+        with:
+          path: |
+            ${{ github.workspace }}/openwrt/feeds/packages
+            ${{ github.workspace }}/openwrt/feeds/luci
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+### ----------------------------------------------------------------- ###
+      - name: 'Restore build Directory from cache'
+        id: build-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_BUILD_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'build-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/build_dir
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+### ----------------------------------------------------------------- ###
+      - name: 'Restore staging Directory from cache'
+        id: staging-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_STAGING_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'staging-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/staging_dir
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+### ----------------------------------------------------------------- ###
+      - name: 'Restore package Directory from cache'
+        id: package-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_PACKAGE_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'package-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/package
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+### ----------------------------------------------------------------- ###
+      - name: 'Restore downloads Directory from cache'
+        id: dl-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_DL_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'dl-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/dl
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+ ### ----------------------------------------------------------------- ###
+      - name: 'Restore build_dir/toolchain Directory from cache'
+        id: build_dir_toolchain-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_BUILD_DIR_TOOLCHAIN_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'build_dir_toolchain-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/build_dir/toolchain-*
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+ ### ----------------------------------------------------------------- ###
+      - name: 'Restore build_dir/target Directory from cache'
+        id: build_dir_target-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_BUILD_DIR_TARGET_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'build_dir_target-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/build_dir/target-*
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+ ### ----------------------------------------------------------------- ###
+      - name: 'Restore build_dir/host Directory from cache'
+        id: build_dir_host-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_BUILD_DIR_HOST_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'build_dir_host-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/build_dir/host
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+ ### ----------------------------------------------------------------- ###
+      - name: 'Restore build_dir/hostpkg Directory from cache'
+        id: build_dir_hostpkg-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_BUILD_DIR_HOSTPKG_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'build_dir_hostpkg-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/build_dir/hostpkg
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+ ### ----------------------------------------------------------------- ###
+      - name: 'Restore .ccache from cache'
+        id: ccache-cache
+        uses: actions/cache@v3
+        if: env.RESTORE_CCACHE_CACHE == 'true' && !cancelled()
+        env:
+          CACHE_NAME: 'ccache-cache'
+        with:
+          path: ${{ github.workspace }}/openwrt/.ccache
+          key: ${{ env.CACHE_NAME }}-${{ runner.os }}-${{ steps.date.outputs.date }}
+### ----------------------------------------------------------------- ###
+      - name: Setup cache for OpenWRT (ccache)
+        id: ccache
+        continue-on-error: true
         run: |
           chmod +x scripts/$FUNCTIONS_SH
           source scripts/$FUNCTIONS_SH
           cd openwrt
-          SMART_CHMOD
-
+          CCACHE_SETUP
+          ccache -s
 ### ----------------------------------------------------------------- ###
       - name: Change Build user/Domain
         run: |
@@ -400,12 +532,12 @@ jobs:
           cd openwrt
           PRE_DEFCONFIG_ADDONS
 ### ----------------------------------------------------------------- ###
-      - name: Set defconfig to use ccache
+      - name: CCACHE - Setup .config to use cache
         run: |
           chmod +x scripts/$FUNCTIONS_SH
           source scripts/$FUNCTIONS_SH
           cd openwrt
-          CCACHE_SETUP
+          CCACHE_CONFIG_SETUP
 ### ----------------------------------------------------------------- ###
       - name: Change Default theme Settings
         if: env.DEFAULT_THEME_CHANGE == 'true' && !cancelled()
@@ -435,21 +567,6 @@ jobs:
           echo -e "Creating (logs) Directory:"
           cd openwrt
           mkdir -p logs
-### ----------------------------------------------------------------- ###
-      - name: Cache Acceleration (Secondary compilation of the same model with the same source code is valid within 7 days, and only one source code cache is retained each time)
-        uses: DevOpenWRT-Router/Cache-OpenWRT-Builds@main
-        if: env.USE_CACHEWRTBUILD == 'true' && !cancelled()
-        with:
-          ccache: 'true'
-          toolchain: 'true'
-          skip: 'true'
-          clean: '${{ contains(github.event.action, ''nocache'') }}'
-          prefix: '${{ github.workspace }}/openwrt'
-### ----------------------------------------------------------------- ###
-      - name: Cache (ccache list)
-        id: ccache
-        run: |
-          ccache -s
 ### ----------------------------------------------------------------- ###
       - name: Start SSH via tmate
         uses: P3TERX/ssh2actions@main
@@ -702,6 +819,13 @@ jobs:
         run: |
           echo "Proccess Failed at level 1"
 ### ----------------------------------------------------------------- ###
+      - name: List SHA256SUMS of dl Directory
+        id: sha256
+        working-directory: '/workdir/openwrt/dl'
+        run: |
+          find . -type f -exec sha256sum {} \; >> sha256sum.txt
+          cat "sha256sum.txt"
+### ----------------------------------------------------------------- ###
       - name: Generate kmods feed
         id: GKMOD
         working-directory: '/workdir/openwrt'
@@ -747,6 +871,8 @@ jobs:
           get_deviceID
 ### ----------------------------------------------------------------- ###
       - name: Check space usage
+        id: space
+        continue-on-error: true
         if: (!cancelled())
         run: |
           cd openwrt
@@ -756,14 +882,20 @@ jobs:
           df -hT
           echo "=============================================="
           du -h --max-depth=1 ./ --exclude=build_dir --exclude=bin
+          du -h --max-depth=1 ./staging_dir
           du -h --max-depth=1 ./build_dir
           du -h --max-depth=1 ./bin
+          du -h --max-depth=1 ./package
+          du -h --max-depth=1 .ccache
           du -h --max-depth=10 ./bin
           echo "=============================================="
 ### ----------------------------------------------------------------- ###
       - name: Copy (.config) for releases
         run: |
-          mv ${GITHUB_WORKSPACE}/openwrt/.config $BIN_DIR
+          chmod +x scripts/$FUNCTIONS_SH
+          source scripts/$FUNCTIONS_SH
+          COPY_DEFCONFIG
+          
 ### ----------------------------------------------------------------- ###
       - name: Prepare Packages/Kmods for Distribution
         id: distribution
@@ -790,7 +922,12 @@ jobs:
           [ ! -e "./logs/toolchain/error.txt" ] || cat "./logs/toolchain/error.txt"
           [ ! -e "./logs/tools/error.txt" ] || cat "./logs/tools/error.txt"
 ### ----------------------------------------------------------------- ###
-
+      - name: View Build Logs (Build Logs) [Build.log Viewable]
+        working-directory: /workdir/openwrt
+        if: env.VIEW_BUILD_LOGS == 'true' && (!cancelled())
+        run: |
+          [ ! -e "./logs/build.log" ] || cat "./logs/build.log"
+### ----------------------------------------------------------------- ###
       - name: Upload kmods
         uses: actions/upload-artifact@main
         if: >-
@@ -886,3 +1023,10 @@ jobs:
           delete_tags: true
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+### ----------------------------------------------------------------- ###
+      - name: PreCache - Clean
+        run: |
+          git -C "${GITHUB_WORKSPACE}/openwrt/feeds/luci" reset --hard HEAD^
+          cd ${GITHUB_WORKSPACE}/openwrt/staging_dir
+          rm -rf packages target-*
+### ----------------------------------------------------------------- ###

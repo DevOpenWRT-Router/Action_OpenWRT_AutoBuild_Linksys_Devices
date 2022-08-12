@@ -12,12 +12,13 @@ jobs:
   Cleanup-Old-Releases:
     runs-on: ubuntu-20.04
     steps:
-      - name: Delete Older Releases
-        uses: dev-drprasad/delete-older-releases@master
+      - uses: dev-drprasad/delete-older-releases@v0.2.0
         with:
+          repo: <owner>/<repoName> # defaults to current repo
           keep_latest: 1
           delete_tags: true
-          env:
+          delete_tag_pattern: ""
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   Cleanup-Old-Artifacts:

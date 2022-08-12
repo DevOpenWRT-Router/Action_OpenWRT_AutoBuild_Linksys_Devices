@@ -10,14 +10,11 @@
 # Updated By Eliminater74 07/29/2022                            #
 #################################################################
 
-sleep 45 ### <-- Needed to wait till internet is up before trying
+[ ! -e "/root/FIRST_BOOT" ] || exit
 
-FILE=/root/KMODS_ADDED
+sleep 15 ### <-- Needed to wait till internet is up before trying
 
-if [ ! -f "$FILE" ]; then
-    MAGIC=$(wget -qO - https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/packages/kmod | sed -n "1p")
-    echo "src/gz purefusion_kmods https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/kmods/$MAGIC" >> /etc/opkg/distfeeds.conf
-    touch $FILE
-fi
+TOUCH /root/FIRST_BOOT-TEST
+
 
 exit 0
