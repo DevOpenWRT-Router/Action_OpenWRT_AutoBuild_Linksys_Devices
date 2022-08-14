@@ -305,7 +305,7 @@ service bcp38 enable
 ### ---------------------------------------------------------------------------------------- ###
 ###  BANIP: https://github.com/openwrt/packages/blob/master/net/banip/files/README.md        ###
 ### ---------------------------------------------------------------------------------------- ###
-if [ $BANIP = "false" ]; then
+if [ $BANIP = "true" ]; then
 	uci -q batch <<-EOF
 	set banip.global.ban_enabled='0'
 	set banip.global.ban_trigger='wan'
