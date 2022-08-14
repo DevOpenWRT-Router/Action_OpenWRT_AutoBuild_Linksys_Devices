@@ -126,7 +126,13 @@ APPLY_PR_PATCHES_MANUAL() {
   done < "$file"
 }
 
-APPLY_PR_PATCHES_MANUAL
+file=data/PR_patches.txt
+line=$(head -n 1 filename)
+    if [ "$line" != "" ]; then
+    APPLY_PR_PATCHES_MANUAL
+    fi
+
+
 
 echo "Make Menuconfig"
 make menuconfig
