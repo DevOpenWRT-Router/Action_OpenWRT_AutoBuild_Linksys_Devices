@@ -39,6 +39,7 @@ echo "                   "
 echo "scripts (Directory)"
 echo "       functions.sh"
 echo "       fetch_packages.sh"
+echo "       data (Directory"
 echo "configs (Directory)"
 echo "       feeds.conf.default <-- Can use the default version if you want" 
 echo "       wrtmulti.config <-- This is needed regardless unless you change the name"
@@ -53,6 +54,11 @@ if [ ! -f "$FILE" ]; then
 fi
 FILE=fetch_packages.sh
 if [ ! -f "$FILE" ]; then
+    echo "$FILE does not exist."
+    exit
+fi
+FILE=data
+if [ ! -d "$FILE" ]; then
     echo "$FILE does not exist."
     exit
 fi
@@ -106,6 +112,21 @@ PRE_DEFCONFIG_ADDONS
 CCACHE_SETUP
 #DEFAULT_THEME_CHANGE
 REMOVE_LANGUAGES
+
+
+APPLY_PR_PATCHES_MANUAL() {
+  echo "This is WORKING Here:"
+  file=data/PR_patches.txt
+  while read -r line; do
+    if [ "$line" = "" ]; then continue
+    fi
+  cd "$GITHUB_WORKSPACE"/openwrt && wget https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/"$line".patch
+  echo "Applying $line.patch"
+  git am "$line".patch || error_return "Patch Failed, Aborting Patch"
+  done < "$file"
+}
+
+APPLY_PR_PATCHES_MANUAL
 
 echo "Make Menuconfig"
 make menuconfig
