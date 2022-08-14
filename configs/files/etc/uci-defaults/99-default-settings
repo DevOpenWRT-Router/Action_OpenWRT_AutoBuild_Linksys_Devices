@@ -11,6 +11,8 @@ SQM="pie"
 # BANIP: turn on "true" or off "false"
 BANIP="false" # (BROKEN)
 
+# ADBLOCK
+ADBLOCK="false"
 ### ----------------------------------------------------------------------------------------------------- ###
 ###      WARNING: WARNING: DO NOT EDIT BELOW THIS UNLESS YOU KNOW WHAT YOUR DOING!! WARNING: WARNING:     ###
 ### ----------------------------------------------------------------------------------------------------- ###
@@ -372,55 +374,56 @@ fi
 ### -- END --
 
 ### adblock
-uci -q batch <<-EOF
-set adblock.global.adb_enabled='0'
-set adblock.global.adb_trigger='wan'
-set adblock.global.adb_debug='0'
-set adblock.global.adb_dnsfilereset='0'
-set adblock.global.adb_mail='0'
-set adblock.global.adb_report='0'
-set adblock.global.adb_backup='1'
-set adblock.global.adb_maxqueue='4'
-set adblock.global.adb_dns='dnsmasq'
-set adblock.global.adb_fetchutil='wget'
-set adblock.global.adb_fetchinsecure='1'
-set adblock.global.adb_dnsinstance='0'
-set adblock.global.adb_eng_sources='bluGo/formats/domains.txt'
-set adblock.global.adb_forcedns='1'
-set adblock.global.adb_zonelist='lan'
-set adblock.global.adb_stb_sources='alternates/fakenews/hosts'
-set adblock.global.adb_safesearch='0'
-delete adblock.global.adb_utc_sources
-add_list adblock.global.adb_utc_sources='drogue'
-add_list adblock.global.adb_utc_sources='adult'
-add_list adblock.global.adb_utc_sources='associations_religieuses'
-add_list adblock.global.adb_utc_sources='bitcoin'
-add_list adblock.global.adb_utc_sources='phishing'
-add_list adblock.global.adb_utc_sources='malware'
-delete adblock.global.adb_sources
-add_list adblock.global.adb_sources='adaway'
-add_list adblock.global.adb_sources='adguard'
-add_list adblock.global.adb_sources='andryou'
-add_list adblock.global.adb_sources='anti_ad'
-add_list adblock.global.adb_sources='anudeep'
-add_list adblock.global.adb_sources='disconnect'
-add_list adblock.global.adb_sources='energized'
-add_list adblock.global.adb_sources='openphish'
-add_list adblock.global.adb_sources='reg_es'
-add_list adblock.global.adb_sources='spam404'
-add_list adblock.global.adb_sources='stevenblack'
-add_list adblock.global.adb_sources='stopforumspam'
-add_list adblock.global.adb_sources='whocares'
-add_list adblock.global.adb_sources='yoyo'
-EOF
-uci commit adblock
-service adblock restart
-service adblock enable
-
-# refreshing the blocklists every 24 hours
-echo "16 07 * * * /etc/init.d/adblock reload" >> /etc/crontabs/root
-crontab /etc/crontabs/root
-
+if [ "$ADBLOCK" = "true" ]; then
+	uci -q batch <<-EOF
+	set adblock.global.adb_enabled='0'
+	set adblock.global.adb_trigger='wan'
+	set adblock.global.adb_debug='0'
+	set adblock.global.adb_dnsfilereset='0'
+	set adblock.global.adb_mail='0'
+	set adblock.global.adb_report='0'
+	set adblock.global.adb_backup='1'
+	set adblock.global.adb_maxqueue='4'
+	set adblock.global.adb_dns='dnsmasq'
+	set adblock.global.adb_fetchutil='wget'
+	set adblock.global.adb_fetchinsecure='1'
+	set adblock.global.adb_dnsinstance='0'
+	set adblock.global.adb_eng_sources='bluGo/formats/domains.txt'
+	set adblock.global.adb_forcedns='1'
+	set adblock.global.adb_zonelist='lan'
+	set adblock.global.adb_stb_sources='alternates/fakenews/hosts'
+	set adblock.global.adb_safesearch='0'
+	delete adblock.global.adb_utc_sources
+	add_list adblock.global.adb_utc_sources='drogue'
+	add_list adblock.global.adb_utc_sources='adult'
+	add_list adblock.global.adb_utc_sources='associations_religieuses'
+	add_list adblock.global.adb_utc_sources='bitcoin'
+	add_list adblock.global.adb_utc_sources='phishing'
+	add_list adblock.global.adb_utc_sources='malware'
+	delete adblock.global.adb_sources
+	add_list adblock.global.adb_sources='adaway'
+	add_list adblock.global.adb_sources='adguard'
+	add_list adblock.global.adb_sources='andryou'
+	add_list adblock.global.adb_sources='anti_ad'
+	add_list adblock.global.adb_sources='anudeep'
+	add_list adblock.global.adb_sources='disconnect'
+	add_list adblock.global.adb_sources='energized'
+	add_list adblock.global.adb_sources='openphish'
+	add_list adblock.global.adb_sources='reg_es'
+	add_list adblock.global.adb_sources='spam404'
+	add_list adblock.global.adb_sources='stevenblack'
+	add_list adblock.global.adb_sources='stopforumspam'
+	add_list adblock.global.adb_sources='whocares'
+	add_list adblock.global.adb_sources='yoyo'
+	EOF
+	uci commit adblock
+	service adblock restart
+	service adblock enable
+	
+	# refreshing the blocklists every 24 hours
+	echo "16 07 * * * /etc/init.d/adblock reload" >> /etc/crontabs/root
+	crontab /etc/crontabs/root
+fi
 ### -- END --
 
 ### Firewall DROP external connections
