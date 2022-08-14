@@ -257,6 +257,8 @@ APPLY_PR_PATCHES() {
   echo "This is WORKING Here:"
   file="$GITHUB_WORKSPACE"/scripts/data/PR_patches.txt
   while read -r line; do
+    if [ "$line" = "" ]; then continue
+    fi
   cd "$GITHUB_WORKSPACE"/openwrt && wget https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/"$line".patch
   echo "Applying $line.patch"
   git am "$line".patch || error_return "Patch Failed, Aborting Patch"
@@ -268,6 +270,8 @@ APPLY_PR_PATCHES_PACKAGES() {
   echo "This is WORKING Here:"
   file="$GITHUB_WORKSPACE"/scripts/data/PR_patches_packages.txt
   while read -r line; do
+   if [ "$line" = "" ]; then continue
+   fi
   cd "$GITHUB_WORKSPACE"/openwrt/feeds/packages && wget https://patch-diff.githubusercontent.com/raw/openwrt/packages/pull/"$line".patch
   echo "Applying $line.patch"
   git am "$line".patch || error_return "Patch Failed, Aborting Patch"
