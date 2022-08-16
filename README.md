@@ -34,7 +34,7 @@
 
 [wrt All-In-One: WRT1200AC, WRT1900AC v1, WRT1900AC v2, WRT1900ACS v1, WRT1900ACS v1 & v2, WRT3200ACM, WRT32X ][307783dd]
 
-[Check out Our Beta releases](https://https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices-TEST/releases)
+[(Check Out Our Beta releases)](https://https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices-TEST/releases)
 
 ---
 
