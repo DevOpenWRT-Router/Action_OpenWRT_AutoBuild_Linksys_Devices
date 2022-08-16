@@ -16,15 +16,15 @@
 - mwlwifi is taken from: [Lean's Openwrt source code repository](https://github.com/coolsnowwolf/lede/tree/master/package/kernel/mwlwifi)
 - modifications to action script By Eliminater74
 
-_______________________________________________________________________
-[Join Us on Discord][0b9719c2]
+---
 
-  [0b9719c2]: https://discord.gg/png5rqZk "Discord"
+[Join Us on Discord][0b9719c2]
 
 ![Discord Server ON](https://img.shields.io/badge/Discord-877232316756418580?style=for-the-badge&logo=discord&logoColor=white)
 
 ![Discord Server](https://img.shields.io/discord/877232316756418580)
-_______________________________________________________________________
+
+---
 
 ![GitHub Downloads](https://img.shields.io/github/release-date/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices?style=plastic)
 
@@ -33,15 +33,13 @@ _______________________________________________________________________
 [Get The Latest Release][a6e54f9f]
 
 [wrt All-In-One: WRT1200AC, WRT1900AC v1, WRT1900AC v2, WRT1900ACS v1, WRT1900ACS v1 & v2, WRT3200ACM, WRT32X ][307783dd]
-_______________________________________________________________________
 
-  [307783dd]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases?q=wrtMulti&expanded=true "wrt All-In-One"
+[Check out Our Beta releases](https://https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices-TEST/releases)
+
+---
 
 ![Older Releases](images/2021/09/older-releases.png)
 [Get Older Releases][48fb9c00]
-
-  [a6e54f9f]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases/latest "Latest Release"
-  [48fb9c00]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases "Older Releases"
 
 ### Latest Release Downloads
 
@@ -54,13 +52,16 @@ _______________________________________________________________________
 ## Actions-OpenWrt
 
 [![Visits Badge](https://badges.pufler.dev/visits/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices)](https://badges.pufler.dev)
-_______________________________________________________________________
+
+---
+
 [![Cleaning](https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/actions/workflows/cleanup.yml/badge.svg)](https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/actions/workflows/cleanup.yml)
 
 [![Build OpenWrt Snapshot (TESTING)](https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/actions/workflows/build-openwrt-snapshot.yml/badge.svg)](https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/actions/workflows/build-openwrt-snapshot.yml)
 
 [![Build OpenWrt (Linksys Devices)](https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/actions/workflows/build-openwrt.yml/badge.svg)](https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/actions/workflows/build-openwrt.yml)
-_______________________________________________________________________
+
+---
 
 ## Repo Updated
 
@@ -68,7 +69,7 @@ _______________________________________________________________________
 
 ![Your Repository’s Stats](https://github-readme-stats.vercel.app/api?username=Eliminater74&show_icons=true)
 
-_______________________________________________________________________
+---
 
 ## Acknowledgments
 
@@ -88,3 +89,8 @@ _______________________________________________________________________
 - [dev-drprasad/delete-older-releases](https://github.com/dev-drprasad/delete-older-releases)
 
 [![LICENSE](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square&label=License)](https://github.com/DevOpenWRT-Router/Actions_Build-00_LinksysWRT3200ACM-Private/blob/master/LICENSE) ![GitHub Stars](https://img.shields.io/github/stars/DevOpenWRT-Router/Actions_Build-00_LinksysWRT3200ACM-Private.svg?style=flat-square&label=Stars&logo=github) ![GitHub Forks](https://img.shields.io/github/forks/DevOpenWRT-Router/Actions_Build-00_LinksysWRT3200ACM-Private.svg?style=flat-square&label=Forks&logo=github)
+
+[0b9719c2]: https://discord.gg/png5rqZk
+[307783dd]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases?q=wrtMulti&expanded=true
+[a6e54f9f]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases/latest
+[48fb9c00]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases
