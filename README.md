@@ -34,12 +34,14 @@
 
 [wrt All-In-One: WRT1200AC, WRT1900AC v1, WRT1900AC v2, WRT1900ACS v1, WRT1900ACS v1 & v2, WRT3200ACM, WRT32X ][307783dd]
 
+---
+
+
+![](assets/20220816_180036_beta.png)
+
 [(Check Out Our Beta releases)](https://https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices-TEST/releases)
 
 ---
-
-![Older Releases](images/2021/09/older-releases.png)
-[Get Older Releases][48fb9c00]
 
 ### Latest Release Downloads
 
@@ -90,7 +92,8 @@
 
 [![LICENSE](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square&label=License)](https://github.com/DevOpenWRT-Router/Actions_Build-00_LinksysWRT3200ACM-Private/blob/master/LICENSE) ![GitHub Stars](https://img.shields.io/github/stars/DevOpenWRT-Router/Actions_Build-00_LinksysWRT3200ACM-Private.svg?style=flat-square&label=Stars&logo=github) ![GitHub Forks](https://img.shields.io/github/forks/DevOpenWRT-Router/Actions_Build-00_LinksysWRT3200ACM-Private.svg?style=flat-square&label=Forks&logo=github)
 
+[48fb9c00]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases![Older Releases](images/2021/09/older-releases.png)[Get Older Releases][48fb9c00]
+
 [0b9719c2]: https://discord.gg/png5rqZk
 [307783dd]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases?q=wrtMulti&expanded=true
 [a6e54f9f]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases/latest
-[48fb9c00]: https://github.com/DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices/releases
