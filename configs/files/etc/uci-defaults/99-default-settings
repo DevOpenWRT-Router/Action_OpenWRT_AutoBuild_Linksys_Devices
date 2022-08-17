@@ -140,6 +140,24 @@ if [ ! -f "$FIRSTBOOT" ]; then
 	crontab /etc/crontabs/root
 fi # End of FirstBoot
 
+if [ ! -f "$FIRSTBOOT" ]; then
+	uci -q batch <<-EOF
+	set wireless.radio0.htmode='VHT80'
+	set wireless.radio0.distance='75'
+	set wireless.radio0.beacon_int='175'
+	set wireless.default_radio0.max_inactivity='150'
+	set wireless.default_radio0.wpa_group_rekey='86400'
+	set wireless.radio1.htmode='HT40'
+	set wireless.radio1.cell_density='0'
+	set wireless.radio1.distance='75'
+	set wireless.radio1.beacon_int='175'
+	set wireless.default_radio1.wpa_group_rekey='86400'
+	set wireless.default_radio1.max_inactivity='150'
+	uci commit wireless
+	wifi # restart wifi system
+fi
+
+
 # kB
 memtotal=$(grep MemTotal /proc/meminfo | awk '{print $2}')
 if test "$memtotal" -ge 1048576; then
