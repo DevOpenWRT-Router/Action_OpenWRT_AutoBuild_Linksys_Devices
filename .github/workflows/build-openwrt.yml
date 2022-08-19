@@ -108,8 +108,8 @@ env:
   SOURCE_DIRECTORY_B: openwrt/bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR
   DESTINATION_GITHUB_USERNAME: DevOpenWRT-Router
   DESTINATION_REPOSITORY_NAME: Linksys_OpenWRT_Releases
-  USER_EMAIL: BuildBot2021@gmail.com
-  USER_NAME: BuildBot2021
+  USER_EMAIL: github-actions[bot]@users.noreply.github.com
+  USER_NAME: github-actions[bot]
   DESTINATION_REPOSITORY_USERNAME: DevOpenWRT-Router
   TARGET_BRANCH: main
   COMMIT_MESSAGE: 'Updated: $D'
