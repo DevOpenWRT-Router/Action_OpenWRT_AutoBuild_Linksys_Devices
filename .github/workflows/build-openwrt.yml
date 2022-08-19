@@ -111,7 +111,7 @@ env:
   USER_EMAIL: github-actions[bot]@users.noreply.github.com
   USER_NAME: github-actions[bot]
   DESTINATION_REPOSITORY_USERNAME: DevOpenWRT-Router
-  TARGET_BRANCH: $DEFAULT_BRANCH
+  TARGET_BRANCH: ${{ github.event.repository.default_branch }}
   COMMIT_MESSAGE: 'Updated: $D'
   TARGET_DIRECTORY_A: packages
   TARGET_DIRECTORY_B: kmods/$KMOD_DIR
@@ -392,7 +392,7 @@ jobs:
           echo "Default Branch is: $DEFAULT_BRANCH"
           echo "BETA: $BRANCH_BETA"
           echo "STABLE: $BRANCH_STABLE"
-          sed -i 's/BRANCH="stable"/BRANCH="$DEFAULT_BRANCH"/g' "$GITHUB_WORKSPACE"/configs/files/etc/rc.d/S99kmods
+          sed -i 's/BRANCH="stable"/BRANCH="$DEFAULT_BRANCH"/g' "$GITHUB_WORKSPACE"/openwrt/files/etc/rc.d/S99kmods
 ### ----------------------------------------------------------------- ###
       - name: Branch Stable
         working-directory: '/workdir/openwrt'
@@ -402,7 +402,7 @@ jobs:
           echo "Default Branch is: $DEFAULT_BRANCH"
           echo "BETA: $BRANCH_BETA"
           echo "STABLE: $BRANCH_STABLE"
-          sed -i 's/BRANCH="beta"/BRANCH="$DEFAULT_BRANCH"/g' "$GITHUB_WORKSPACE"/configs/files/etc/rc.d/S99kmods
+          sed -i 's/BRANCH="beta"/BRANCH="$DEFAULT_BRANCH"/g' "$GITHUB_WORKSPACE"/openwrt/files/etc/rc.d/S99kmods
 ### ----------------------------------------------------------------- ###
       - name: Cache Key Get/Check
         working-directory: '/workdir/openwrt'
