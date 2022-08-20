@@ -10,7 +10,7 @@
 # Updated By Eliminater74 03/20/2022
 ##########################################################################################
 ### ---------------------------------------------------------------------------------- ###
-###         [MAKE SURE YOU KNOW WHAT YOUR DOING BEFORE CHANGING ALL THIS]              ###
+###         [MAKE SURE YOU KNOW WHAT YOUR DOING BEFORE CHANGING ALL THIS]          BRANCH="beta"    ###
 ### ---------------------------------------------------------------------------------- ###
 ##########################################################################################
 echo "Loading Functions into Memory.."
@@ -156,6 +156,11 @@ ccache -s
 CCACHE_CONFIG_SETUP() {
   echo "Seeding .config (enable ccache):"
   printf 'CONFIG_CCACHE=y\n' >> .config
+}
+
+SWITCH_KERNEL() {
+  echo "Switching to 5.10 Kernel."
+  printf 'CONFIG_TESTING_KERNEL=n\n' >> .config
 }
 
 ### Not even sure why I still have this here, I dont really use it

@@ -391,24 +391,21 @@ jobs:
           source "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
           SMART_CHMOD
 ### ----------------------------------------------------------------- ###
+### [ BETA BRANCH ]
       - name: Branch Beta
         working-directory: '/workdir/openwrt'
         if: env.DEFAULT_BRANCH == env.BRANCH_BETA && !cancelled()
         run: |
-          echo "Success"
-          echo "Default Branch is: $DEFAULT_BRANCH"
-          echo "BETA: $BRANCH_BETA"
-          echo "STABLE: $BRANCH_STABLE"
           sed -i 's/BRANCH="stable"/BRANCH="$DEFAULT_BRANCH"/g' "$GITHUB_WORKSPACE"/openwrt/files/etc/rc.d/S99kmods
 ### ----------------------------------------------------------------- ###
+### [ STABLE BRANCH ]
       - name: Branch Stable
         working-directory: '/workdir/openwrt'
         if: env.DEFAULT_BRANCH == env.BRANCH_STABLE && !cancelled()
         run: |
-          echo "Success"
-          echo "Default Branch is: $DEFAULT_BRANCH"
-          echo "BETA: $BRANCH_BETA"
-          echo "STABLE: $BRANCH_STABLE"
+          chmod +x "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
+          source "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
+          SWITCH_KERNEL
           sed -i 's/BRANCH="beta"/BRANCH="$DEFAULT_BRANCH"/g' "$GITHUB_WORKSPACE"/openwrt/files/etc/rc.d/S99kmods
 ### ----------------------------------------------------------------- ###
       - name: Cache Key Get/Check
