@@ -396,7 +396,8 @@ jobs:
         working-directory: '/workdir/openwrt'
         if: env.DEFAULT_BRANCH == env.BRANCH_BETA && !cancelled()
         run: |
-          sed -i 's/BRANCH="stable"/BRANCH="$DEFAULT_BRANCH"/g' "$GITHUB_WORKSPACE"/openwrt/files/etc/rc.d/S99kmods
+          sed -i 's/BRANCH="stable"/BRANCH="'"$DEFAULT_BRANCH"'"/g' "$GITHUB_WORKSPACE"/openwrt/files/etc/rc.d/S99FirstBoot
+          sed -i 's/BRANCH="stable"/BRANCH="'"$DEFAULT_BRANCH"'"/g' "$GITHUB_WORKSPACE"/openwrt/files/etc/rc.d/S99kmods
 ### ----------------------------------------------------------------- ###
 ### [ STABLE BRANCH ]
       - name: Branch Stable
@@ -406,7 +407,8 @@ jobs:
           chmod +x "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
           source "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
           SWITCH_KERNEL
-          sed -i 's/BRANCH="beta"/BRANCH="$DEFAULT_BRANCH"/g' "$GITHUB_WORKSPACE"/openwrt/files/etc/rc.d/S99kmods
+          sed -i 's/BRANCH="beta"/BRANCH="'"$DEFAULT_BRANCH"'"/g' "$GITHUB_WORKSPACE"/openwrt/files/etc/rc.d/S99FirstBoot
+          sed -i 's/BRANCH="beta"/BRANCH="'"$DEFAULT_BRANCH"'"/g' "$GITHUB_WORKSPACE"/openwrt/files/etc/rc.d/S99kmods
 ### ----------------------------------------------------------------- ###
       - name: Cache Key Get/Check
         working-directory: '/workdir/openwrt'

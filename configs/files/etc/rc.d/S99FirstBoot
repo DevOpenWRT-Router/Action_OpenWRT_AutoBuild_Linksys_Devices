@@ -7,7 +7,7 @@
 # See /LICENSE for more information.                            #
 #                                                               #
 #                                                               #
-# Updated By Eliminater74 07/31/2022                            #
+# Updated By Eliminater74 08/20/2022                            #
 #################################################################
 
 
@@ -16,6 +16,8 @@
 ### ----------------------------------------------------------------------------------------------------- ###
 
 [ ! -e "/root/FIRST_BOOT" ] || exit
+
+BRANCH="stable"
 
 # Prompt colors
 sed -i 's/^export PS1.*/export PS1='\''\\\[\\033\[01;31m\\\]\\h\\\[\\033\[01;30m\\\]@\\\[\\033\[01;32m\\\]\\w\\\[\\033\[01;34m\\\] #\\\[\\033\[00m\\\] '\''/' /etc/profile
@@ -70,11 +72,11 @@ rm -f /usr/lib/lua/luci/view/admin_status/index/mwan.htm
 rm -f /usr/lib/lua/luci/view/admin_status/index/upnp.htm
 
 # add package database to distfeeds.conf
-echo 'src/gz purefusion_packages https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/packages/packages' >> /etc/opkg/distfeeds.conf
-echo 'src/gz purefusion_base https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/packages/base' >> /etc/opkg/distfeeds.conf
-echo 'src/gz purefusion_luci https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/packages/luci' >> /etc/opkg/distfeeds.conf
-echo 'src/gz purefusion_routing https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/packages/routing' >> /etc/opkg/distfeeds.conf
-echo 'src/gz purefusion_telephony https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/packages/telephony' >> /etc/opkg/distfeeds.conf
+echo "src/gz purefusion_packages https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/$BRANCH/packages/packages" >> /etc/opkg/distfeeds.conf
+echo "src/gz purefusion_base https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/$BRANCH/packages/base" >> /etc/opkg/distfeeds.conf
+echo "src/gz purefusion_luci https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/$BRANCH/packages/luci" >> /etc/opkg/distfeeds.conf
+echo "src/gz purefusion_routing https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/$BRANCH/packages/routing" >> /etc/opkg/distfeeds.conf
+echo "src/gz purefusion_telephony https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/$BRANCH/packages/telephony" >> /etc/opkg/distfeeds.conf
 
 echo "$(uci -q get uhttpd.main.index_page)" | grep -q "cgi-bin/luci" ||
 	uci -q add_list uhttpd.main.index_page='cgi-bin/luci' && uci commit uhttpd
