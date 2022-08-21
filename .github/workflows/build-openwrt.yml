@@ -158,7 +158,11 @@ jobs:
           df -Th
           echo  -e "-----------------------------[System Resource Limits]---------------------------------\n"
           ulimit -a
-
+## ----------------------------------------------------------------- ###
+      - name: Show environment
+        run: env | grep ^GITHUB
+      - name: Show ref
+        run: echo "===============> Version from $GITHUB_REF"
 ### ----------------------------------------------------------------- ###
       - name: HARDWARE_DEVICE
         run: |
