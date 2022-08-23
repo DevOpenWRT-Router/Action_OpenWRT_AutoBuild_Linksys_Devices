@@ -129,11 +129,8 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-      - name: Stable Checkout
+      - name: Checkout
         uses: actions/checkout@main
-        with:
-          repository: DevOpenWRT-Router/Action_OpenWRT_AutoBuild_Linksys_Devices-TEST
-          ref: stable
 ### ----------------------------------------------------------------- ###
       - name: Build Server Configuration (Information)
         env:
