@@ -52,7 +52,7 @@ env:
   RESTORE_PACKAGE_CACHE: false
 ### --------------------------- ###  
   CLEANUP_ENVIROMENT: true
-  RESET_OPENWRT_COMMIT: true
+  RESET_OPENWRT_COMMIT: false
   INSTALL_LLVM: false
   LOAD_FUNCTIONS: true
   BOOTSTRAP_START: false
@@ -239,7 +239,7 @@ jobs:
           chmod +x scripts/$FUNCTIONS_SH
           source scripts/$FUNCTIONS_SH
           cd openwrt
-          RESET_COMMIT "f39d9ea0c26a61261dfd03091aaa6c4b1cb8c8a6"
+          RESET_COMMIT "771ea6f2e3868b208b5261ae676160d5ef6544e8"
 ### ----------------------------------------------------------------- ###
       - name: Current Commit Before Feeds/Patches
         if: env.GITLOGA == 'true' && !cancelled()
