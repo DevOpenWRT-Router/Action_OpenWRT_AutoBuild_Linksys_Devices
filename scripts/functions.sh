@@ -10,7 +10,7 @@
 # Updated By Eliminater74 03/20/2022
 ##########################################################################################
 ### ---------------------------------------------------------------------------------- ###
-###         [MAKE SURE YOU KNOW WHAT YOUR DOING BEFORE CHANGING ALL THIS]              ###
+###         [MAKE SURE YOU KNOW WHAT YOUR DOING BEFORE CHANGING ALL THIS]          BRANCH="beta"    ###
 ### ---------------------------------------------------------------------------------- ###
 ##########################################################################################
 echo "Loading Functions into Memory.."
@@ -158,6 +158,11 @@ CCACHE_CONFIG_SETUP() {
   printf 'CONFIG_CCACHE=y\n' >> .config
 }
 
+SWITCH_KERNEL() {
+  echo "Switching to 5.10 Kernel."
+  printf 'CONFIG_TESTING_KERNEL=n\n' >> .config
+}
+
 ### Not even sure why I still have this here, I dont really use it
 CACHE_DIRECTORY_SETUP() {
   if [ ! -d '../staging_dir' ]; then
@@ -257,6 +262,8 @@ APPLY_PR_PATCHES() {
   echo "This is WORKING Here:"
   file="$GITHUB_WORKSPACE"/scripts/data/PR_patches.txt
   while read -r line; do
+    if [ "$line" = "" ]; then continue
+    fi
   cd "$GITHUB_WORKSPACE"/openwrt && wget https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/"$line".patch
   echo "Applying $line.patch"
   git am "$line".patch || error_return "Patch Failed, Aborting Patch"
@@ -268,6 +275,8 @@ APPLY_PR_PATCHES_PACKAGES() {
   echo "This is WORKING Here:"
   file="$GITHUB_WORKSPACE"/scripts/data/PR_patches_packages.txt
   while read -r line; do
+   if [ "$line" = "" ]; then continue
+   fi
   cd "$GITHUB_WORKSPACE"/openwrt/feeds/packages && wget https://patch-diff.githubusercontent.com/raw/openwrt/packages/pull/"$line".patch
   echo "Applying $line.patch"
   git am "$line".patch || error_return "Patch Failed, Aborting Patch"

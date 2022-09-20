@@ -1,17 +1,23 @@
-################################################################################
-# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>                          #
-#                                                                              #
-# Updated: 04/04/2022 Eliminater74                                             #
-#                                                                              #
-# This is free software, licensed under the MIT License.                       #
-# See /LICENSE for more information.                                           #
-#                                                                              #
-# https://github.com/P3TERX/Actions-OpenWrt                                    #
-# Description: Build OpenWrt using GitHub Actions                              #
-#                                                                              #
-################################################################################
-#  MAIN BUILD CONTROL SECTION: DO NOT RUN THIS ACTION DIRECT, USE Builds:      #
-################################################################################
+####################################################################################
+# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>                              #
+#                                                                                  #
+# Copyright (C) 2021-2022 Eliminater74                                             #
+#                                                                                  #
+# Updated: 08/20/2022 Eliminater74                                                 #
+#                                                                                  #
+# This is free software, licensed under the MIT License.                           #
+# See /LICENSE for more information.                                               #
+#                                                                                  #
+# https://github.com/P3TERX/Actions-OpenWrt                                        #
+# Description: Build OpenWrt using GitHub Actions                                  #
+#                                                                                  #
+####################################################################################
+#        WARNING: Not Intended to Be Ran Direct, Use The wrtMulti Workflow         #
+#        [-----------------------------------------------------------------]       #
+#                    [ This is the Main Control Workflow ]                         #
+# [WARNING] [WARNING] [WARNING] [WARNING] [WARNING] [WARNING] [WARNING] [WARNING]  #
+#            DO NOT EDIT BELOW THIS, UNLESS YOU KNOW WHAT YOU ARE DOING!!          #
+####################################################################################
 
 name: OpenWRT AutoBuild (T) (Linksys Devices)
 'on':
@@ -101,14 +107,18 @@ env:
   UPLOAD_RELEASE: true
   TARGZIP_PACKAGES: true
 ### --------------------------- ###
-  SOURCE_DIRECTORY_A: openwrt/bin/packages/arm_cortex-a9_vfpv3-d16
-  SOURCE_DIRECTORY_B: openwrt/bin/targets/mvebu/cortexa9/kmods/$KMOD_DIR
+  DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+  BRANCH_STABLE: stable
+  BRANCH_BETA: beta
+  ### --------------------------- ###
+  # SOURCE_DIRECTORY_A: openwrt/bin/packages/$PKG_ARCH
+  # SOURCE_DIRECTORY_B: $BIN_DIR/kmods/$KMOD_DIR
   DESTINATION_GITHUB_USERNAME: DevOpenWRT-Router
   DESTINATION_REPOSITORY_NAME: Linksys_OpenWRT_Releases
-  USER_EMAIL: BuildBot2021@gmail.com
-  USER_NAME: BuildBot2021
+  USER_EMAIL: github-actions[bot]@users.noreply.github.com
+  USER_NAME: github-actions[bot]
   DESTINATION_REPOSITORY_USERNAME: DevOpenWRT-Router
-  TARGET_BRANCH: main
+  TARGET_BRANCH: ${{ github.event.repository.default_branch }}
   COMMIT_MESSAGE: 'Updated: $D'
   TARGET_DIRECTORY_A: packages
   TARGET_DIRECTORY_B: kmods/$KMOD_DIR
@@ -380,6 +390,25 @@ jobs:
           chmod +x "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
           source "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
           SMART_CHMOD
+### ----------------------------------------------------------------- ###
+### [ BETA BRANCH ]
+      - name: Branch Beta
+        working-directory: '/workdir/openwrt'
+        if: env.DEFAULT_BRANCH == env.BRANCH_BETA && !cancelled()
+        run: |
+          sed -i 's/BRANCH="stable"/BRANCH="'"$DEFAULT_BRANCH"'"/g' "$GITHUB_WORKSPACE"/openwrt/files/etc/rc.d/S99FirstBoot
+          sed -i 's/BRANCH="stable"/BRANCH="'"$DEFAULT_BRANCH"'"/g' "$GITHUB_WORKSPACE"/openwrt/files/etc/rc.d/S99kmods
+### ----------------------------------------------------------------- ###
+### [ STABLE BRANCH ]
+      - name: Branch Stable
+        working-directory: '/workdir/openwrt'
+        if: env.DEFAULT_BRANCH == env.BRANCH_STABLE && !cancelled()
+        run: |
+          chmod +x "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
+          source "$GITHUB_WORKSPACE"/scripts/$FUNCTIONS_SH
+          SWITCH_KERNEL
+          sed -i 's/BRANCH="beta"/BRANCH="'"$DEFAULT_BRANCH"'"/g' "$GITHUB_WORKSPACE"/openwrt/files/etc/rc.d/S99FirstBoot
+          sed -i 's/BRANCH="beta"/BRANCH="'"$DEFAULT_BRANCH"'"/g' "$GITHUB_WORKSPACE"/openwrt/files/etc/rc.d/S99kmods
 ### ----------------------------------------------------------------- ###
       - name: Cache Key Get/Check
         working-directory: '/workdir/openwrt'

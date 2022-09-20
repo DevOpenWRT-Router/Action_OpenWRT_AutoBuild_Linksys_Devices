@@ -11,6 +11,8 @@ SQM="pie"
 # BANIP: turn on "true" or off "false"
 BANIP="false" # (BROKEN)
 
+# ADBLOCK
+ADBLOCK="false"
 ### ----------------------------------------------------------------------------------------------------- ###
 ###      WARNING: WARNING: DO NOT EDIT BELOW THIS UNLESS YOU KNOW WHAT YOUR DOING!! WARNING: WARNING:     ###
 ### ----------------------------------------------------------------------------------------------------- ###
@@ -71,28 +73,28 @@ if [ ! -f "$FIRSTBOOT" ]; then
 	if [ $SQM = "pie" ]; then
 		uci -q batch <<-EOF
 		set sqm.eth1.interface="$WAN_IFACE"
-		set sqm.eth1.debug_logging='0'
-		set sqm.eth1.verbosity='5'
-		set sqm.eth1.qdisc_advanced='1'
-		set sqm.eth1.squash_ingress='0'
-		set sqm.eth1.squash_dscp='0'
-		set sqm.eth1.ingress_ecn='ECN'
-		set sqm.eth1.linklayer='ethernet'
-		set sqm.eth1.overhead='18'
-		set sqm.eth1.enabled='1'
-		set sqm.eth1.qdisc='pie'
-		set sqm.eth1.linklayer_advanced='1'
-		set sqm.eth1.tcMTU='1518'
-		set sqm.eth1.tcTSIZE='95'
-		set sqm.eth1.tcMPU='64'
-		set sqm.eth1.script='layer_cake.qos'
-		set sqm.eth1.qdisc_really_really_advanced='1'
-		set sqm.eth1.itarget='15ms'
-		set sqm.eth1.etarget='15ms'
-		set sqm.eth1.linklayer_adaptation_mechanism='cake'
-		set sqm.eth1.egress_ecn='ECN'
-		set sqm.eth1.iqdisc_opts='mpu 64 dual-dsthost'
-		set sqm.eth1.eqdisc_opts='mpu 64 dual-srchost'
+		sqm.eth1.ingress_ecn='ECN'
+		sqm.eth1.debug_logging='0'
+		sqm.eth1.verbosity='5'
+		sqm.eth1.qdisc_advanced='1'
+		sqm.eth1.squash_ingress='0'
+		sqm.eth1.squash_dscp='0'
+		sqm.eth1.linklayer='ethernet'
+		sqm.eth1.overhead='18'
+		sqm.eth1.enabled='1'
+		sqm.eth1.qdisc='pie'
+		sqm.eth1.linklayer_advanced='1'
+		sqm.eth1.tcMTU='1518'
+		sqm.eth1.tcTSIZE='95'
+		sqm.eth1.tcMPU='64'
+		sqm.eth1.script='layer_cake.qos'
+		sqm.eth1.qdisc_really_really_advanced='1'
+		sqm.eth1.itarget='15ms'
+		sqm.eth1.etarget='15ms'
+		sqm.eth1.egress_ecn='ECN'
+		sqm.eth1.iqdisc_opts='mpu 64 dual-dsthost'
+		sqm.eth1.eqdisc_opts='mpu 64 dual-srchost'
+		sqm.eth1.linklayer_adaptation_mechanism='tc_stab'	
 		# set sqm.eth1.download=''										# Set by autoSQM
 		# set sqm.eth1.upload=''										# Set by autoSQM
 		EOF
@@ -137,6 +139,24 @@ if [ ! -f "$FIRSTBOOT" ]; then
 	echo "0 6,14,22 * * * /usr/lib/OpenWrtScripts/autoSQM.sh" >> /etc/crontabs/root
 	crontab /etc/crontabs/root
 fi # End of FirstBoot
+
+if [ ! -f "$FIRSTBOOT" ]; then
+	uci -q batch <<-EOF
+	set wireless.radio0.htmode='VHT80'
+	set wireless.radio0.distance='75'
+	set wireless.radio0.beacon_int='175'
+	set wireless.default_radio0.max_inactivity='150'
+	set wireless.default_radio0.wpa_group_rekey='86400'
+	set wireless.radio1.htmode='HT40'
+	set wireless.radio1.cell_density='0'
+	set wireless.radio1.distance='75'
+	set wireless.radio1.beacon_int='175'
+	set wireless.default_radio1.wpa_group_rekey='86400'
+	set wireless.default_radio1.max_inactivity='150'
+	uci commit wireless
+	wifi # restart wifi system
+fi
+
 
 # kB
 memtotal=$(grep MemTotal /proc/meminfo | awk '{print $2}')
@@ -303,7 +323,7 @@ service bcp38 enable
 ### ---------------------------------------------------------------------------------------- ###
 ###  BANIP: https://github.com/openwrt/packages/blob/master/net/banip/files/README.md        ###
 ### ---------------------------------------------------------------------------------------- ###
-if [ $BANIP = "false" ]; then
+if [ $BANIP = "true" ]; then
 	uci -q batch <<-EOF
 	set banip.global.ban_enabled='0'
 	set banip.global.ban_trigger='wan'
@@ -372,55 +392,56 @@ fi
 ### -- END --
 
 ### adblock
-uci -q batch <<-EOF
-set adblock.global.adb_enabled='0'
-set adblock.global.adb_trigger='wan'
-set adblock.global.adb_debug='0'
-set adblock.global.adb_dnsfilereset='0'
-set adblock.global.adb_mail='0'
-set adblock.global.adb_report='0'
-set adblock.global.adb_backup='1'
-set adblock.global.adb_maxqueue='4'
-set adblock.global.adb_dns='dnsmasq'
-set adblock.global.adb_fetchutil='wget'
-set adblock.global.adb_fetchinsecure='1'
-set adblock.global.adb_dnsinstance='0'
-set adblock.global.adb_eng_sources='bluGo/formats/domains.txt'
-set adblock.global.adb_forcedns='1'
-set adblock.global.adb_zonelist='lan'
-set adblock.global.adb_stb_sources='alternates/fakenews/hosts'
-set adblock.global.adb_safesearch='0'
-delete adblock.global.adb_utc_sources
-add_list adblock.global.adb_utc_sources='drogue'
-add_list adblock.global.adb_utc_sources='adult'
-add_list adblock.global.adb_utc_sources='associations_religieuses'
-add_list adblock.global.adb_utc_sources='bitcoin'
-add_list adblock.global.adb_utc_sources='phishing'
-add_list adblock.global.adb_utc_sources='malware'
-delete adblock.global.adb_sources
-add_list adblock.global.adb_sources='adaway'
-add_list adblock.global.adb_sources='adguard'
-add_list adblock.global.adb_sources='andryou'
-add_list adblock.global.adb_sources='anti_ad'
-add_list adblock.global.adb_sources='anudeep'
-add_list adblock.global.adb_sources='disconnect'
-add_list adblock.global.adb_sources='energized'
-add_list adblock.global.adb_sources='openphish'
-add_list adblock.global.adb_sources='reg_es'
-add_list adblock.global.adb_sources='spam404'
-add_list adblock.global.adb_sources='stevenblack'
-add_list adblock.global.adb_sources='stopforumspam'
-add_list adblock.global.adb_sources='whocares'
-add_list adblock.global.adb_sources='yoyo'
-EOF
-uci commit adblock
-service adblock restart
-service adblock enable
-
-# refreshing the blocklists every 24 hours
-echo "16 07 * * * /etc/init.d/adblock reload" >> /etc/crontabs/root
-crontab /etc/crontabs/root
-
+if [ "$ADBLOCK" = "true" ]; then
+	uci -q batch <<-EOF
+	set adblock.global.adb_enabled='0'
+	set adblock.global.adb_trigger='wan'
+	set adblock.global.adb_debug='0'
+	set adblock.global.adb_dnsfilereset='0'
+	set adblock.global.adb_mail='0'
+	set adblock.global.adb_report='0'
+	set adblock.global.adb_backup='1'
+	set adblock.global.adb_maxqueue='4'
+	set adblock.global.adb_dns='dnsmasq'
+	set adblock.global.adb_fetchutil='wget'
+	set adblock.global.adb_fetchinsecure='1'
+	set adblock.global.adb_dnsinstance='0'
+	set adblock.global.adb_eng_sources='bluGo/formats/domains.txt'
+	set adblock.global.adb_forcedns='1'
+	set adblock.global.adb_zonelist='lan'
+	set adblock.global.adb_stb_sources='alternates/fakenews/hosts'
+	set adblock.global.adb_safesearch='0'
+	delete adblock.global.adb_utc_sources
+	add_list adblock.global.adb_utc_sources='drogue'
+	add_list adblock.global.adb_utc_sources='adult'
+	add_list adblock.global.adb_utc_sources='associations_religieuses'
+	add_list adblock.global.adb_utc_sources='bitcoin'
+	add_list adblock.global.adb_utc_sources='phishing'
+	add_list adblock.global.adb_utc_sources='malware'
+	delete adblock.global.adb_sources
+	add_list adblock.global.adb_sources='adaway'
+	add_list adblock.global.adb_sources='adguard'
+	add_list adblock.global.adb_sources='andryou'
+	add_list adblock.global.adb_sources='anti_ad'
+	add_list adblock.global.adb_sources='anudeep'
+	add_list adblock.global.adb_sources='disconnect'
+	add_list adblock.global.adb_sources='energized'
+	add_list adblock.global.adb_sources='openphish'
+	add_list adblock.global.adb_sources='reg_es'
+	add_list adblock.global.adb_sources='spam404'
+	add_list adblock.global.adb_sources='stevenblack'
+	add_list adblock.global.adb_sources='stopforumspam'
+	add_list adblock.global.adb_sources='whocares'
+	add_list adblock.global.adb_sources='yoyo'
+	EOF
+	uci commit adblock
+	service adblock restart
+	service adblock enable
+	
+	# refreshing the blocklists every 24 hours
+	echo "16 07 * * * /etc/init.d/adblock reload" >> /etc/crontabs/root
+	crontab /etc/crontabs/root
+fi
 ### -- END --
 
 ### Firewall DROP external connections

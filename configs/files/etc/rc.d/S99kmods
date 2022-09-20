@@ -14,9 +14,11 @@ sleep 45 ### <-- Needed to wait till internet is up before trying
 
 FILE=/root/KMODS_ADDED
 
+BRANCH="stable"
+
 if [ ! -f "$FILE" ]; then
-    MAGIC=$(wget -qO - https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/packages/kmod | sed -n "1p")
-    echo "src/gz purefusion_kmods https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/main/kmods/$MAGIC" >> /etc/opkg/distfeeds.conf
+    MAGIC=$(wget -qO - https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/$BRANCH/packages/kmod | sed -n "1p")
+    echo "src/gz purefusion_kmods https://raw.githubusercontent.com/DevOpenWRT-Router/Linksys_OpenWRT_Releases/$BRANCH/kmods/$MAGIC" >> /etc/opkg/distfeeds.conf
     touch $FILE
 fi
 
